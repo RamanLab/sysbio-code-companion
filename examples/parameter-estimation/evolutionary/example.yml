@@ -1,0 +1,14 @@
+title: An evolutionary algorithm
+book: "Ch. 6, §6.3.4 (Evolutionary algorithms)"
+needs:
+  matlab: []
+  python: [numpy]
+# MATLAB and Python draw different random numbers, so the two runs follow
+# different paths. Both must end close to the least-squares optimum found in
+# fit_inhibition; across 30 random seeds in Python, the worst run was
+# within 0.04% of that SSE and 4% of each parameter.
+compare: [best, n_evaluations]
+tolerance: {rtol: 0.05, atol: 1.0e-6}
+expected:
+  best: {SSE: 63.77654, vmax: 25.77985, KM: 11.60575, KI: 36.82588}
+  n_evaluations: 2450

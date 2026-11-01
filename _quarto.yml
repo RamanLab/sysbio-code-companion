@@ -16,6 +16,7 @@ book:
     - index.qmd
     - chapters/getting-started.qmd
     - chapters/odes.qmd
+    - chapters/parameter-estimation.qmd
     - chapters/constraint-based.qmd
     - references.qmd
 

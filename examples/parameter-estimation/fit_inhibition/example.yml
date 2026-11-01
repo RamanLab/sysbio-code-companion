@@ -1,0 +1,15 @@
+title: Fitting a rate law by weighted least squares
+book: "Ch. 6, §6.2.2 (Least squares) and Exercise 6.1"
+needs:
+  matlab: [Optimization Toolbox]
+  python: [scipy]
+# From D1 or D2 alone, KM and KI are not identifiable: the fitted values
+# depend on the starting point and on the algorithm, so they are not
+# compared. vmax, KM*(1 + I/KI) and the SSE are, as is the full estimate
+# from D1 and D2 together.
+compare: [D1, D2, D1_D2]
+tolerance: {rtol: 1.0e-5, atol: 1.0e-6}
+# Values obtained with this primer (not given in the book); they guard
+# against unintended changes.
+expected:
+  D1_D2: {SSE: 63.77654, vmax: 25.77985, KM: 11.60575, KI: 36.82588}

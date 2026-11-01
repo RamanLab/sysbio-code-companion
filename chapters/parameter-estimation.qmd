@@ -1,0 +1,147 @@
+# Parameter estimation {#sec-pestim}
+
+Every dynamic model carries parameters, such as rate constants, Michaelis constants and inhibition constants, and only a few of them can be looked up. The rest must be estimated from experimental data: we look for the parameter values that make the model's predictions agree best with the measurements. This chapter sets up that problem for a small enzyme-kinetic model, solves it in three different ways, and shows what the data can and cannot tell us about the parameters.
+
+::: {.callout-note appearance="simple"}
+## In the book
+Chapter 6, *Parameter Estimation*: least squares and its weighted forms (§6.2.2), maximum likelihood (§6.2.3), algorithms for optimisation, from direct search to evolutionary algorithms (§6.3), post-regression diagnostics (§6.4) and troubleshooting, including identifiability and the curse of dimensionality (§6.5). Exercise 6.1 uses the same model.
+:::
+
+## The model and the data
+
+An enzyme follows Michaelis–Menten kinetics with a competitive inhibitor $I$:
+
+$$
+v = \frac{v_\text{max}\,S}{K_M\left(1 + \dfrac{I}{K_I}\right) + S}.
+$$
+
+We want $v_\text{max}$, $K_M$ and $K_I$. The initial rate $v$ was measured at 20 substrate concentrations, from 1 to 20 mM, once with the inhibitor at $I = 10$ mM (dataset D1) and once at $I = 20$ mM (dataset D2). The data are in `data/competitive_inhibition.csv`.
+
+Each measurement is assumed to carry an error of about 10% of its value, $\delta = 0.1$. A good fit should therefore be judged by *relative* errors, and the cost we minimise is the weighted sum of squared errors (book, Eq. 6.5):
+
+$$
+\text{SSE}(\Theta) = \sum_{i=1}^{n} \left( \frac{v_{\text{pred},i}(\Theta) - v_i}{\delta\, v_i} \right)^2,
+\qquad \Theta = (v_\text{max}, K_M, K_I).
+$$
+
+If the measurement errors are independent and normally distributed with standard deviation $\delta v_i$, minimising this SSE is the same as finding the maximum-likelihood estimate (book, §6.2.3).
+
+## Fitting by least squares
+
+Both MATLAB and SciPy have solvers made for least-squares problems. They take a function that returns the vector of weighted *residuals*, one per data point, and minimise the sum of their squares. They use the structure of the problem to converge quickly, but, like all local methods, they need a starting guess.
+
+| | MATLAB | Python (SciPy) |
+|---|---|---|
+| Least squares (residual vector) | `lsqnonlin` (Optimization Toolbox) | `scipy.optimize.least_squares` |
+| General minimisation, no derivatives | `fminsearch` (core MATLAB) | `scipy.optimize.minimize(method="Nelder-Mead")` |
+| Global search | `ga`, `particleswarm` (Global Optimization Toolbox) | `scipy.optimize.differential_evolution` |
+
+: Optimisers used for parameter estimation. {#tbl-optimisers}
+
+We fit each dataset, D1, D2 and both together, from the same eight starting guesses.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs the Optimization Toolbox (for `lsqnonlin`).*
+
+```{.matlab include="/examples/parameter-estimation/fit_inhibition/fit_inhibition.m"}
+```
+
+![](/examples/parameter-estimation/fit_inhibition/out/matlab/fig-fit-inhibition.png)
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/parameter-estimation/fit_inhibition/fit_inhibition.py"}
+```
+
+![](/examples/parameter-estimation/fit_inhibition/out/python/fig-fit-inhibition.png)
+:::
+
+With both datasets, all eight starts arrive at the same answer, $v_\text{max} = 25.8$ mmol L^−1^ s^−1^, $K_M = 11.6$ mM and $K_I = 36.8$ mM, and the curves follow the data well (left panel).
+
+With D1 alone, something quite different happens. All eight starts again reach exactly the same SSE and the same $v_\text{max}$, and every one of them reports a successful fit. Yet $K_M$ ranges from about 1 to 15 mM and $K_I$ from below 1 to several hundred mM. The right panel shows why. At a single inhibitor concentration, $K_M$ and $K_I$ enter the rate law only through the combination
+
+$$
+K_M^\text{app} = K_M\left(1 + \frac{I}{K_I}\right),
+$$
+
+the apparent Michaelis constant. Every pair $(K_M, K_I)$ on the grey curve gives the same $K_M^\text{app}$, and hence identical predictions for every data point. The data determine $v_\text{max}$ and $K_M^\text{app}$, and nothing more: $K_M$ and $K_I$ are **structurally non-identifiable** from D1. More data of the same kind would not help. A second inhibitor concentration does, because $K_M^\text{app}$ changes with $I$ in a way that depends on $K_I$ (red star).
+
+Two lessons follow. First, a solver that reports success has found *a* minimum; it says nothing about whether the minimum is unique. Fitting from several starting points is a simple and effective check. Second, identifiability is a property of the model *and* the experiment together, and it is best examined before the experiments are done (book, §6.5.3).
+
+## The error landscape, and grid search
+
+The simplest way to minimise a function is to evaluate it everywhere, on a grid, and keep the best point (book, §6.3.3). Grid search needs no starting guess and cannot be trapped by a local minimum, and it shows the whole error landscape, which makes it a good tool for seeing what is going on.
+
+Here, one more trick keeps the grid small. The rate law is proportional to $v_\text{max}$, so for given $K_M$ and $K_I$ the weighted residuals are linear in $v_\text{max}$, and the best $v_\text{max}$ follows from a one-line formula, just as in linear regression. The search is then over $K_M$ and $K_I$ only: whole numbers from 1 to 60 mM, 3600 points.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/parameter-estimation/sse_landscape/sse_landscape.m"}
+```
+
+![](/examples/parameter-estimation/sse_landscape/out/matlab/fig-sse-landscape.png)
+
+## Python
+
+*Needs NumPy and Matplotlib.*
+
+```{.python include="/examples/parameter-estimation/sse_landscape/sse_landscape.py"}
+```
+
+![](/examples/parameter-estimation/sse_landscape/out/python/fig-sse-landscape.png)
+:::
+
+For D1, the landscape has a long, curved valley with an almost flat floor: the curve of constant $K_M^\text{app}$ from the previous section. The grid point that happens to be lowest ($K_M = 12$, $K_I = 33$) is no better than many others along the valley; 185 grid points come within one unit of the best SSE, with $K_I$ anywhere from 2 to 60 mM. For D1 and D2 together, the valley closes into a basin with a single minimum, at $K_M = 12$, $K_I = 39$ on the grid, close to the least-squares estimate. The basin is still long in the $K_I$ direction: grid points from 28 to 54 mM fit almost as well. $K_I$ is identifiable from these data, although only loosely determined.
+
+Grid search becomes hopeless quickly as parameters are added. Sixty values for each of two parameters makes 3600 evaluations; sixty values for each of ten parameters would make about $6 \times 10^{17}$. This is the curse of dimensionality (book, §6.5.5), and it is why grid search is used for small problems, for a first look at a landscape, or to choose starting points for a local method.
+
+## Evolutionary algorithms
+
+Between local methods, which are fast but need a good starting guess, and grid search, which is thorough but expensive, lie stochastic global methods such as simulated annealing and evolutionary algorithms (book, §6.3.4). Evolutionary algorithms borrow the logic of natural selection: a *population* of parameter sets is varied at random, and the better ones are more likely to survive into the next generation.
+
+The algorithm below is one of the simplest of them, a (10 + 40) evolution strategy. It keeps 10 parent parameter sets. In each generation it makes 40 children by adding small random changes ("mutations") to copies of randomly chosen parents, and the best 10 of all 50 become the next parents. The mutations shrink slowly from one generation to the next, so the search moves from exploring widely to refining locally. The parameters are searched on a logarithmic scale, which suits parameters whose plausible values span orders of magnitude.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/parameter-estimation/evolutionary/evolutionary.m"}
+```
+
+![](/examples/parameter-estimation/evolutionary/out/matlab/fig-evolutionary.png)
+
+## Python
+
+*Needs NumPy and Matplotlib.*
+
+```{.python include="/examples/parameter-estimation/evolutionary/evolutionary.py"}
+```
+
+![](/examples/parameter-estimation/evolutionary/out/python/fig-evolutionary.png)
+:::
+
+Starting from parameter sets scattered across more than three orders of magnitude, the population gathers into the basin we saw in the landscape and closes in on the least-squares estimate. After 60 generations, or 2450 evaluations of the SSE, the best parameter set is within a few per cent of the least-squares estimates, and its SSE is within 0.02% of the least-squares minimum. Notice that, on the way, the parents spread out along the same valley as before: the algorithm finds $K_M^\text{app}$ well before it pins down $K_M$ and $K_I$ separately.
+
+MATLAB and Python draw different random numbers, so the two versions follow different paths and end at slightly different points; the automated checks require both to land within 5% of the least-squares optimum. Run either version with a few different seeds to see how much the result varies.
+
+The trade-off is clear from this small problem. The evolutionary algorithm needed no starting guess and no derivatives, but it used about 2450 evaluations to reach an approximate answer, whereas the least-squares solver reached the exact optimum in a few dozen evaluations, counting those used to estimate derivatives. For larger models, a common strategy is to combine the two: a global method to find the right basin, followed by a local method to finish the job.
+
+## Exercises
+
+1. Fit D2 alone from the eight starting points. Which combination of $K_M$ and $K_I$ do all the fits agree on?
+2. Fit D1 and D2 together using the *unweighted* SSE (book, Eq. 6.2). How do the estimates change, and which data points now dominate the fit?
+3. Estimate the uncertainty of the parameters fitted to D1 and D2 together. Both least-squares solvers return the Jacobian $J$ of the residuals at the solution; the covariance of the estimates is approximately $(J^\top J)^{-1}$. Compute the correlation between $K_M$ and $K_I$ (book, Eq. 6.11). Is it close to $\pm 1$? Repeat for D1 alone: what happens to $J^\top J$?
+4. Book Exercise 6.1: evaluate the SSE of the parameter sets $\theta_1$, $\theta_2$ and $\theta_3$ given there. Which is best, and can the data tell them apart?
+5. Run the evolutionary algorithm with ten different random seeds. How much do the final estimates vary? Then halve the number of generations, or start with a smaller mutation size, and repeat.
+
+## Going further
+
+Here the model was a single algebraic rate law. Fitting a system of ODEs to time-course data works in exactly the same way, with the ODE solver of @sec-odes called inside the residual function; the questions of identifiability and of local versus global search only become more pressing.
