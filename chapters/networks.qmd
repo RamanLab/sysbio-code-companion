@@ -1,0 +1,127 @@
+# Networks {#sec-networks}
+
+Many biological systems are naturally described as networks: proteins that bind one another, genes that regulate one another, metabolites linked by reactions. Before building detailed dynamic models of such systems, a great deal can be learnt from the structure of the network alone. This chapter computes the standard network parameters for a small example, and then generates the three classic network models, random, small-world and scale-free, to see how they differ.
+
+::: {.callout-note appearance="simple"}
+## In the book
+Chapter 2, *Introduction to Graph Theory*: graphs, their representation as adjacency matrices and edge lists, and paths. Chapter 3, *Structure of Networks*: network parameters such as degree, clustering, path length and centrality (§3.1), and the canonical network models of Erdős and Rényi, Watts and Strogatz, and Barabási and Albert (§3.2). Communities, motifs and perturbations (§3.3–3.5) are left as exercises here.
+:::
+
+## Network parameters
+
+A network, or graph, is a set of nodes joined by edges. For an undirected network of $n$ nodes, the **adjacency matrix** $\mathbf{A}$ has $a_{ij} = 1$ if nodes $i$ and $j$ are joined, and 0 otherwise. Most network parameters follow directly from it:
+
+* the **degree** $k_i = \sum_j a_{ij}$, the number of neighbours of node $i$;
+* the **clustering coefficient** $C_i$, the fraction of pairs of neighbours of $i$ that are themselves joined. Because $(\mathbf{A}^3)_{ii}$ counts the closed walks of length three from $i$, which is twice the number of triangles through $i$, $C_i = (\mathbf{A}^3)_{ii} / k_i(k_i - 1)$;
+* the **shortest-path length** $d_{ij}$ between every pair of nodes, from which follow the **diameter** (the largest $d_{ij}$) and the **characteristic path length** (the mean $d_{ij}$ over all pairs);
+* two measures of how central a node is: **closeness**, $(n-1)/\sum_j d_{ij}$, the reciprocal of the mean distance to all other nodes, and **betweenness**, the number of shortest paths between other pairs of nodes that pass through the node (a path shared by several equally short alternatives counts fractionally).
+
+In MATLAB, networks are `graph` objects (or `digraph` for directed networks), part of core MATLAB. In Python, the standard package is NetworkX. Both provide shortest paths and centrality measures; we compute the clustering coefficient and closeness from their definitions, so that both languages use exactly the same formulas as the book.
+
+| | MATLAB | Python (NetworkX) |
+|---|---|---|
+| Build a network | `G = graph(s, t)` | `G = nx.Graph(); G.add_edges_from(edges)` |
+| Adjacency matrix | `adjacency(G)` (sparse) | `nx.to_numpy_array(G)` |
+| Degrees | `degree(G)` | `dict(G.degree())` |
+| Shortest-path lengths | `distances(G)` | `nx.floyd_warshall_numpy(G)` |
+| Betweenness | `centrality(G, 'betweenness')` | `nx.betweenness_centrality(G, normalized=False)` |
+
+: Working with networks in MATLAB and NetworkX. {#tbl-graphs}
+
+Our example is a small network of ten proteins, two tightly knit groups joined through protein E.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/networks/graph_basics/graph_basics.m"}
+```
+
+![](/examples/networks/graph_basics/out/matlab/fig-graph-basics.png)
+
+## Python
+
+*Needs NetworkX.*
+
+```{.python include="/examples/networks/graph_basics/graph_basics.py"}
+```
+
+![](/examples/networks/graph_basics/out/python/fig-graph-basics.png)
+:::
+
+The different measures pick out different nodes. D has the largest degree, but E and F, with only two and three neighbours, carry the most shortest paths: every path between the two groups passes through both of them, so removing either would split the network in two. A, B and C, inside a complete group of four, have the highest clustering coefficient and no betweenness at all. Which measure matters depends on the question being asked; for example, betweenness, more than degree, often marks nodes whose removal disrupts communication across a network (book, §3.1.3 and §3.5).
+
+## Random and small-world networks
+
+To judge whether a property of a real network is remarkable, we need something to compare it with. The simplest null model is the **Erdős–Rényi** random network, in which each of the $\binom{n}{2}$ possible edges is present independently with probability $p$. Its degrees follow a binomial distribution, close to a Poisson distribution for large $n$; its clustering coefficient is about $p$, which is very small for a sparse network; and its paths are short, growing only as $\ln n$.
+
+Real networks often combine short paths with high clustering. Watts and Strogatz showed how this can arise [@watts1998]. Start from a **ring lattice**, in which each node is joined to its $k$ nearest neighbours on either side: clustering is high, but paths are long, since getting to the far side of the ring takes many steps. Then rewire each edge, with probability $p$, to a randomly chosen node. The code below computes the mean clustering coefficient $C(p)$ and characteristic path length $L(p)$ as $p$ rises from $10^{-4}$ to 1, for networks of 500 nodes with ten neighbours each, averaging over ten networks at each $p$. This is also the first problem of the BT5240 network assignment.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/networks/small_world/small_world.m"}
+```
+
+![](/examples/networks/small_world/out/matlab/fig-small-world.png)
+
+## Python
+
+*Needs NumPy and SciPy.*
+
+```{.python include="/examples/networks/small_world/small_world.py"}
+```
+
+![](/examples/networks/small_world/out/python/fig-small-world.png)
+:::
+
+The two curves fall at very different rewiring probabilities. Rewiring 1% of the edges already shortens the typical path by about 70%, because each rewired edge is a shortcut across the ring, while clustering hardly changes, because each rewired edge removes only a few of the many triangles around it. Between $p \approx 0.001$ and $p \approx 0.1$, the networks are **small worlds**: clustered like a lattice, with paths almost as short as in a random network. At $p = 1$, they are essentially random, and their clustering coefficient and path length are close to those of Erdős–Rényi networks with the same numbers of nodes and edges (about 0.02 and 2.9).
+
+Since these networks are random, MATLAB and Python, which draw different random numbers, give slightly different results; the automated checks compare the averages, within 10%.
+
+## Scale-free networks
+
+Erdős–Rényi and small-world networks share one feature that many biological networks do not: most nodes have roughly the same degree. In protein interaction and metabolic networks, by contrast, most nodes have very few neighbours while a few **hubs** have very many, and the degree distribution has a long tail, close to a power law, $P(k) \propto k^{-\gamma}$. Such networks are called **scale-free**.
+
+Barabási and Albert proposed a simple mechanism [@barabasi1999]. The network grows one node at a time, and each new node attaches to $m$ existing nodes, chosen with probability proportional to their degree: **preferential attachment**, or "the rich get richer". For large networks this gives $P(k) = 2m(m+1)/k(k+1)(k+2)$, which falls as $k^{-3}$.
+
+There is a neat way to choose a node with probability proportional to its degree: keep a list of the two ends of every edge, so that each node appears in it as many times as it has links, and pick an entry of that list uniformly at random.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/networks/scale_free/scale_free.m"}
+```
+
+![](/examples/networks/scale_free/out/matlab/fig-scale-free.png)
+
+## Python
+
+*Needs NumPy.*
+
+```{.python include="/examples/networks/scale_free/scale_free.py"}
+```
+
+![](/examples/networks/scale_free/out/python/fig-scale-free.png)
+:::
+
+Both networks have 2000 nodes and a mean degree of about four. In the random network, no node has more than about a dozen neighbours. With preferential attachment, half of the nodes have only the minimum two links, and the most connected node has, on average over ten networks, more than a hundred. On logarithmic axes the tail of the distribution follows the predicted straight line until it runs out of nodes.
+
+Plotting the fraction of nodes with degree *at least* $k$ (right panel), in place of the fraction with degree exactly $k$, avoids most of the noise in the tail, where only one or two nodes have each degree. Even so, deciding whether a real network is truly scale-free from a straight-looking line on a log–log plot is risky; the book discusses better tests (§3.6.1).
+
+## Exercises
+
+1. Remove node E from the example network. Recompute all the parameters. What happens to the diameter, and why do the shortest-path functions report infinite distances?
+2. Generate Erdős–Rényi networks with $n = 1000$ and mean degree from 0.2 to 3. Plot the size of the largest connected component (`conncomp` in MATLAB, `nx.connected_components` in Python) against the mean degree. What happens at a mean degree of 1?
+3. For the scale-free network, remove nodes one at a time, either at random or in order of decreasing degree, and track the size of the largest connected component. Repeat for the Erdős–Rényi network. Which network is more robust to random failures, and which to targeted attack (book, §3.5.2)?
+4. Download a biological network, for example a protein interaction network from <https://networkrepository.com/>, and compute its degree distribution, mean clustering coefficient and characteristic path length. Compare them with an Erdős–Rényi network with the same numbers of nodes and edges. (This is the second problem of the BT5240 network assignment.)
+5. The book's code repository has a function `barabasi_albert.m` for $m = 1$. What kind of network does it always produce, and what is its clustering coefficient?
+
+## Going further
+
+Detecting communities and network motifs (book, §3.3–3.4) builds on the same tools, together with randomised networks that preserve each node's degree. Chapter 4 of the book applies these ideas to biological questions, from predicting essential genes to finding disease modules.

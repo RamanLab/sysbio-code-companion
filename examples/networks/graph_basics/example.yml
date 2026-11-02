@@ -1,0 +1,13 @@
+title: Basic network parameters
+book: "Ch. 2 and Ch. 3, §3.1 (Network parameters)"
+needs:
+  matlab: []
+  python: [networkx]
+compare: [degree, clustering, mean_clustering, diameter, char_path_length,
+          closeness, betweenness]
+tolerance: {rtol: 1.0e-12, atol: 1.0e-12}
+# Worked out by hand for this small network
+expected:
+  degree: [3, 3, 3, 4, 2, 3, 3, 3, 3, 1]
+  diameter: 6
+  betweenness: [0, 0, 0, 18, 20, 20, 6, 6, 8, 0]

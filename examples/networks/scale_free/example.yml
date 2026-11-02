@@ -1,0 +1,14 @@
+title: Scale-free networks
+book: "Ch. 3, §3.2.3 (Scale-free networks)"
+needs:
+  matlab: []
+  python: [numpy]
+# Random networks: only averages are compared. Over eight random seeds in
+# Python, these averages varied by at most about 6%.
+compare: [mean_degree, ba, er]
+tolerance: {rtol: 0.15, atol: 1.0e-9}
+expected:
+  # Edges: m(m+1)/2 in the starting clique, plus m for each later node
+  mean_degree: 3.997
+  # Large-n theory: P(k) = 2m(m+1)/(k(k+1)(k+2)), P(K >= k) = m(m+1)/(k(k+1))
+  ba: {P2: 0.5, P3: 0.2, P_ge_10: 0.054545}

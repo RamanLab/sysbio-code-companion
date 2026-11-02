@@ -15,6 +15,7 @@ book:
   chapters:
     - index.qmd
     - chapters/getting-started.qmd
+    - chapters/networks.qmd
     - chapters/odes.qmd
     - chapters/parameter-estimation.qmd
     - chapters/constraint-based.qmd

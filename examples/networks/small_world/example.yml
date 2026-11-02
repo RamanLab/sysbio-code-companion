@@ -1,0 +1,13 @@
+title: Small-world networks
+book: "Ch. 3, §3.2.1 (Erdős–Rényi) and §3.2.2 (Small-world networks)"
+needs:
+  matlab: []
+  python: [numpy, scipy]
+# Random networks: MATLAB and Python draw different random numbers, so only
+# averages are compared. Over seven random seeds in Python, the compared
+# averages varied by at most about 5%.
+compare: [lattice, ws, er]
+tolerance: {rtol: 0.1, atol: 1.0e-9}
+expected:
+  # Ring lattice with k neighbours on each side: C = 3(k-1)/(2(2k-1))
+  lattice: {C: 0.6666667}
