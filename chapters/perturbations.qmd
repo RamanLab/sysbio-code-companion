@@ -1,0 +1,89 @@
+# Perturbations to metabolic networks {#sec-perturbations}
+
+One of the most common uses of a metabolic model is to predict what happens when something is taken away: a gene knocked out, an enzyme inhibited by a drug. Which reactions can the cell not do without? Which pairs of reactions back each other up, so that either can be lost but not both? Constraint-based models answer such questions quickly, at the scale of whole genomes, and these predictions are used to find drug targets in pathogens and to design strains for metabolic engineering. This chapter builds on @sec-cbm and uses the same *E. coli* core model.
+
+::: {.callout-note appearance="simple"}
+## In the book
+Chapter 10, *Perturbations to Metabolic Networks*: knock-outs (§10.1), gene versus reaction deletions and gene–protein–reaction rules (§10.1.1), synthetic lethals and algorithms to find them, including Fast-SL (§10.2), and applications such as drug target identification (§10.6). Chapter 9 covers methods that predict the flux distribution after a perturbation, such as MoMA (§9.2).
+:::
+
+## Single deletions
+
+To delete a reaction from a constraint-based model, we fix its flux to zero by setting both its lower and upper bounds to zero (book, Eq. 10.2), and solve the FBA problem again. If the maximum growth rate falls below some small fraction of the wild type, 1% here, the deletion is called **lethal**, and the reaction **essential**.
+
+Experiments delete genes, not reactions, and the two do not map one to one. Each reaction in the model carries a **gene–protein–reaction (GPR) rule**, a Boolean expression of the genes needed for it. An enzyme made of several subunits needs all of them (AND); isozymes can stand in for one another (OR). A gene deletion removes exactly those reactions whose rule becomes false. COBRApy and the COBRA Toolbox evaluate these rules for us.
+
+We delete each of the 74 internal reactions of the model in turn (leaving out exchange reactions and the biomass reaction), and then each of its 137 genes, in the standard aerobic glucose medium.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs the [COBRA Toolbox](https://opencobra.github.io/cobratoolbox/); run `initCobraToolbox` once per session before this script.*
+
+```{.matlab include="/examples/perturbations/single_deletions/single_deletions.m"}
+```
+
+![](/examples/perturbations/single_deletions/out/matlab/fig-single-deletions.png)
+
+## Python
+
+*Needs COBRApy.*
+
+```{.python include="/examples/perturbations/single_deletions/single_deletions.py"}
+```
+
+![](/examples/perturbations/single_deletions/out/python/fig-single-deletions.png)
+:::
+
+Thirteen reactions are essential (red), among them the glucose uptake system (GLCpts), the lower steps of glycolysis (GAPD, PGK, PGM, ENO), the first steps of the TCA cycle (CS, ACONTa/b, ICDHyr), and the uptake of ammonium and phosphate. Losing another 23 reactions slows growth without stopping it (orange): the network reroutes flux, at a cost. Deleting the ATP maintenance reaction, ATPM, even *increases* growth slightly, since the ATP it consumes is freed for biosynthesis.
+
+Only seven genes are essential, although thirteen reactions are. The difference comes from the GPR rules. Aconitase (ACONTa and ACONTb), for example, is encoded by two genes, *acnA* and *acnB*, either of which suffices, so neither gene is essential although the reaction is. In the other direction, *ptsH* and *ptsI* are each essential because the glucose transport system needs both. Predictions about genes, which are what experiments test, can therefore differ substantially from predictions about reactions.
+
+## Synthetic lethals
+
+Two reactions form a **synthetic lethal** pair if deleting either one alone leaves the cell viable, but deleting both is lethal (book, §10.2). Such pairs reveal how a network backs itself up, and they are attractive targets for combination drugs.
+
+The obvious way to find them is to test every pair of non-essential reactions. For the core model that is $\binom{61}{2} = 1830$ double deletions, which is easy; for a genome-scale model with 2000 reactions it is about two million, and for triplets more than a billion. The Fast-SL algorithm, developed in our group, cuts down the search with a simple argument [@pratapa2015]. If some flux distribution that supports growth uses neither reaction of a pair, deleting both leaves that distribution intact, so the pair cannot be lethal. Hence:
+
+* at least one reaction of a lethal pair, call it $i$, must carry flux in a wild-type solution; and
+* the other reaction, $j$, must carry flux in a solution that remains once $i$ is deleted.
+
+The sparser these solutions, the fewer pairs need to be tested, so Fast-SL uses solutions that achieve the maximum growth with the minimum total flux, $\sum_j |v_j|$ (parsimonious FBA; book, §8.8.5). The code below finds all synthetic lethal pairs both ways, and checks that the answers agree.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs the [COBRA Toolbox](https://opencobra.github.io/cobratoolbox/).*
+
+```{.matlab include="/examples/perturbations/synthetic_lethals/synthetic_lethals.m"}
+```
+
+![](/examples/perturbations/synthetic_lethals/out/matlab/fig-synthetic-lethals.png)
+
+## Python
+
+*Needs COBRApy.*
+
+```{.python include="/examples/perturbations/synthetic_lethals/synthetic_lethals.py"}
+```
+
+![](/examples/perturbations/synthetic_lethals/out/python/fig-synthetic-lethals.png)
+:::
+
+Both searches find the same 88 synthetic lethal pairs, but Fast-SL simulates only about a quarter as many double deletions. The saving grows rapidly with the size of the network and with the order of the deletions, which is what makes searches for lethal triplets and quadruplets in genome-scale models feasible.
+
+Many of the pairs make biological sense. The reactions of upper glycolysis (PGI, PFK, FBA, TPI) are each paired with reactions of the pentose phosphate pathway (G6PDH2r, PGL, GND, RPE, TALA, TKT1, TKT2): the two pathways are alternative routes from glucose 6-phosphate into lower glycolysis, and the cell can use either, but not neither. Glutamate can be made by glutamate dehydrogenase (GLUDy) or by glutamate synthase (GLUSy), and anaplerotic PEP carboxylase (PPC) is backed up by the glyoxylate shunt (ICL, MALS). Other pairs, such as those involving water transport (H2Ot), arise from the way the model is written, and are a reminder that every prediction must be checked against biology (book, §10.7).
+
+The exact number of double deletions that Fast-SL needs depends on which of several equally sparse solutions the solver returns, so it can differ slightly between MATLAB and Python; the set of lethal pairs cannot, and the automated checks require it to be identical.
+
+## Exercises
+
+1. Repeat the single deletions for anaerobic growth (oxygen uptake set to zero). Which reactions become essential, and why?
+2. Use the gene-deletion functions (`single_gene_deletion` in COBRApy, `singleGeneDeletion` in the COBRA Toolbox) to find essential genes, and the GPR rules to explain every case where a reaction is essential but none of its genes is.
+3. Change the lethality cut-off from 1% to 5% and to 50% of wild-type growth. How do the lists of essential reactions and synthetic lethal pairs change?
+4. Extend the Fast-SL code to find synthetic lethal *triplets*: three reactions whose joint deletion is lethal, when no pair among them is. How many triple deletions does it test, compared with the $\binom{n}{3}$ of an exhaustive search? (For genome-scale models, use the full implementations at <https://github.com/RamanLab/FastSL> and <https://github.com/RamanLab/FastSL-py>.)
+5. A **minimal reactome** is a set of reactions that supports growth, from which no reaction can be removed without killing the cell. Starting from all reactions, remove reactions one at a time, in random order, keeping each removal only if the cell still grows. How large is the result, and does it change with the order? (This is the second problem of the BT5240 constraint-based assignment.)
+
+## Going further
+
+Deletions are the simplest perturbations. Over-expression, enzyme inhibition and changes of medium can be modelled in the same framework, and methods such as MoMA and ROOM predict how fluxes redistribute after a perturbation, instead of assuming that the mutant immediately grows optimally (book, Chapters 9 and 10).

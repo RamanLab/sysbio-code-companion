@@ -24,7 +24,8 @@ KI_grid = np.arange(1, 61)
 
 
 def best_vmax_and_sse(KM, KI, S, I, v):
-    """Weighted residuals are vmax*a - b, so the best vmax is sum(a*b)/sum(a^2)."""
+    """Weighted residuals are vmax*a - b, so the best vmax is
+    sum(a*b) / sum(a^2)."""
     a = S / (KM * (1 + I / KI) + S) / (delta * v)
     b = 1 / delta
     vmax = np.sum(a * b) / np.sum(a * a)

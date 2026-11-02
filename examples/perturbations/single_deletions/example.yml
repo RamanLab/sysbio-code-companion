@@ -1,0 +1,16 @@
+title: Single reaction and gene deletions
+book: "Ch. 10, §10.1 (Knock-outs) and §10.1.1 (Gene vs. reaction deletions)"
+needs:
+  matlab: [COBRA Toolbox]
+  python: [cobra]
+# FBA growth rates are unique, so all growth ratios are compared. No
+# deletion leaves growth anywhere between 0.1% and 10% of the wild type, so
+# the 1% cut-off for lethality is not sensitive to solver tolerances.
+compare: [wild_type_growth, growth_ratio, essential_reactions,
+          essential_genes]
+tolerance: {rtol: 1.0e-5, atol: 1.0e-6}
+expected:
+  wild_type_growth: 0.8739215
+  essential_reactions: [ACONTa, ACONTb, CS, ENO, GAPD, GLCpts, GLNS, ICDHyr,
+                        NH4t, PGK, PGM, PIt2r, RPI]
+  essential_genes: [b0720, b1136, b1779, b2415, b2416, b2779, b2926]

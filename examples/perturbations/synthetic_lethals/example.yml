@@ -1,0 +1,14 @@
+title: Synthetic lethal reaction pairs
+book: "Ch. 10, §10.2 (Synthetic lethals) and Fast-SL"
+needs:
+  matlab: [COBRA Toolbox]
+  python: [cobra]
+# The set of lethal pairs is unique. The number of pairs Fast-SL tests
+# depends on which sparse flux solution the solver returns, so it may
+# differ between languages and is not compared.
+compare: [n_candidates, n_pairs_exhaustive, lethal_pairs, same_as_exhaustive]
+tolerance: {rtol: 0, atol: 0}
+expected:
+  n_candidates: 61
+  n_pairs_exhaustive: 1830
+  same_as_exhaustive: true

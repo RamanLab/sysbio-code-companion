@@ -21,6 +21,7 @@ book:
     - chapters/boolean.qmd
     - chapters/stochastic.qmd
     - chapters/constraint-based.qmd
+    - chapters/perturbations.qmd
     - references.qmd
 
 bibliography: references.bib
