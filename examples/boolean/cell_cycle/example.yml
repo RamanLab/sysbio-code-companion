@@ -1,0 +1,13 @@
+title: Boolean model of the mammalian cell cycle
+book: "Ch. 7, Eqs. 7.4 and §7.2.2 (Synchronous vs. asynchronous updates)"
+needs:
+  matlab: []
+  python: [networkx]
+compare: [synchronous, asynchronous, trajectory]
+tolerance: {rtol: 0, atol: 0}
+# Fauré et al. (2006) report, for this model, a stable state (CycD off) and
+# a cycle of seven states (CycD on) with synchronous updating, and a stable
+# state and a complex attractor of 112 states with asynchronous updating.
+expected:
+  synchronous: [{period: 1, CycD: 0}, {period: 7, CycD: 1}]
+  asynchronous: [{size: 1, CycD: 0}, {size: 112, CycD: 1}]

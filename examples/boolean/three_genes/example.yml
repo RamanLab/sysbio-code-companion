@@ -1,0 +1,13 @@
+title: A three-gene Boolean network
+book: "Ch. 7, §7.2 (Fig. 7.1, Eqs. 7.3, and the transitions listed in §7.2.1)"
+needs:
+  matlab: []
+  python: [networkx]
+compare: [successor, attractors, basin_sizes]
+tolerance: {rtol: 0, atol: 0}
+# From the book: the successor of each state 000, 001, ..., 111, and the
+# two attractors
+expected:
+  successor: ["011", "010", "111", "011", "001", "000", "101", "001"]
+  attractors: [["011"], ["001", "010", "111"]]
+  basin_sizes: [4, 4]

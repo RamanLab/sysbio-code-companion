@@ -18,6 +18,7 @@ book:
     - chapters/networks.qmd
     - chapters/odes.qmd
     - chapters/parameter-estimation.qmd
+    - chapters/boolean.qmd
     - chapters/constraint-based.qmd
     - references.qmd
 

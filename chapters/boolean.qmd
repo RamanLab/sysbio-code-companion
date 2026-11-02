@@ -1,0 +1,93 @@
+# Boolean networks {#sec-boolean}
+
+ODE models need rate laws and parameters, and for gene regulatory and signalling networks these are rarely known. Often all we know is who activates or represses whom, and whether a gene is on or off. Boolean networks work at exactly that level: each gene is either ON (1) or OFF (0), time moves in discrete steps, and each gene's next state is a logical function of the current states of its regulators. Such models have no parameters to estimate, and yet they can reproduce the qualitative behaviour of quite complex systems.
+
+::: {.callout-note appearance="simple"}
+## In the book
+Chapter 7, *Discrete Dynamic Models: Boolean Networks*: transfer functions (§7.2), state transitions and attractors (§7.2.1), synchronous and asynchronous updates (§7.2.2), and other formalisms, from probabilistic Boolean networks to Petri nets (§7.3).
+:::
+
+## Transfer functions, states and attractors
+
+A Boolean network of $n$ variables is defined by a **transfer function** for each variable, built from AND, OR and NOT:
+
+$$
+X_i(t) = F_i\big(X_1(t-1), X_2(t-1), \ldots, X_n(t-1)\big).
+$$
+
+With **synchronous** updating, as written here, all variables are updated at once from the previous state. The network then has $2^n$ possible states, and each state has exactly one successor. Starting anywhere, the network must eventually revisit a state, and from then on it repeats itself. The states it repeats form an **attractor**: a single state that maps to itself (a steady state, or point attractor), or a cycle of states. The states that lead to an attractor form its **basin**.
+
+For small networks, we can simply examine every state. Our first example is the three-gene network of the book's Fig. 7.1:
+
+$$
+g_1^* = g_2 \text{ AND NOT } g_3, \qquad
+g_2^* = \text{NOT } g_1, \qquad
+g_3^* = (\text{NOT } g_3) \text{ OR } g_2,
+$$
+
+where $g_i^*$ is the next state of $g_i$. States are written as three digits, $g_1 g_2 g_3$; state 011, for example, has $g_1$ OFF and $g_2$, $g_3$ ON.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/boolean/three_genes/three_genes.m"}
+```
+
+![](/examples/boolean/three_genes/out/matlab/fig-three-genes.png)
+
+## Python
+
+*Needs NetworkX (for drawing the state transitions).*
+
+```{.python include="/examples/boolean/three_genes/three_genes.py"}
+```
+
+![](/examples/boolean/three_genes/out/python/fig-three-genes.png)
+:::
+
+The transitions are those listed in the book (§7.2.1). The network has two attractors, each with a basin of four states: a steady state, 011, in which $g_1$ stays off while $g_2$ and $g_3$ stay on; and a cycle of period three, 001 → 010 → 111 → 001, in which the genes switch on and off in a repeating pattern. Which of the two the network ends up in depends only on where it starts, and no state can reach both.
+
+Following each state forward until it repeats, as the code does, finds every attractor of a synchronous network. With $n$ variables there are $2^n$ states to examine, which is quick up to $n \approx 20$; beyond that, attractors must be sought by sampling starting states, or by specialised algorithms.
+
+## The mammalian cell cycle
+
+The second example is a model of the mammalian cell cycle by Fauré and colleagues [@faure2006], with ten variables: the cyclins CycD, CycE, CycA and CycB, the retinoblastoma protein Rb, the transcription factor E2F, the inhibitor p27, and the regulators Cdc20, Cdh1 and UbcH10 (Ubc). Its transfer functions are the book's Eqs. 7.4. CycD stands for the growth signal: it has no regulators in the model, so it simply keeps its initial value.
+
+With ten variables there are 1024 states, still few enough to examine every one. We do so twice. The first time with synchronous updating. The second time with **asynchronous** updating, which drops the assumption that every process takes exactly one time step: at each step, any one of the variables whose transfer function calls for a change may change, in any order. A state can then have several possible successors, so the states and their possible transitions form a directed graph, the **state transition graph**. An attractor is now a set of states that, once entered, can never be left: a strongly connected component of that graph with no transitions leading out of it, which graph libraries find directly.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/boolean/cell_cycle/cell_cycle.m"}
+```
+
+![](/examples/boolean/cell_cycle/out/matlab/fig-cell-cycle.png)
+
+## Python
+
+*Needs NetworkX.*
+
+```{.python include="/examples/boolean/cell_cycle/cell_cycle.py"}
+```
+
+![](/examples/boolean/cell_cycle/out/python/fig-cell-cycle.png)
+:::
+
+With synchronous updating, each half of the state space (CycD off, or CycD on) leads to a single attractor. Without the growth signal, the network settles into a steady state, a quiescent cell with Rb, p27 and Cdh1 active. With the growth signal, it settles into a cycle of seven states, in which E2F, then cyclin E, cyclin A and cyclin B rise and fall in turn, much as they do through the phases of a real cell cycle (figure). These are exactly the attractors reported by Fauré and colleagues.
+
+Asynchronous updating keeps the quiescent steady state, but the seven-state cycle becomes a **complex attractor** of 112 states: the same sequence of events can now happen with many different relative timings, and the network wanders among all of them without ever leaving. Synchronous updating is easy to simulate and to reason about, but its fixed timing can create or destroy cycles that would not survive in a real cell; comparing both, as here, is a useful check on any conclusion drawn from a Boolean model (book, §7.5).
+
+## Exercises
+
+1. In the three-gene network, change the rule for $g_3$ to $g_3^* = (\text{NOT } g_3) \text{ AND } g_2$. Find the new attractors and their basins.
+2. Simulate a **knock-out** in the cell-cycle model: fix one variable at 0 (for example, Cdh1) and find the attractors again, with both kinds of updating. Which knock-outs abolish the cycle?
+3. Start the cell-cycle model in its quiescent steady state, switch CycD on, and update synchronously. Through which states does the network pass before it joins the seven-state cycle, and how many steps does that take?
+4. Write a function that generates a random Boolean network (Kauffman's "NK" network): $n$ genes, each with $K$ randomly chosen regulators and a random truth table. For $n = 12$ and $K = 1, 2, 3, 4$, find the number of attractors and their periods, averaged over many networks. How does the behaviour change with $K$?
+
+## Going further
+
+Boolean networks lie at one end of a spectrum of models. Between them and ODE models sit multi-valued logical models and Petri nets (book, §7.3). The next chapter returns to continuous quantities, but treats the small numbers of molecules inside a single cell as random events.
