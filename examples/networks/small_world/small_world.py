@@ -87,7 +87,7 @@ ax.legend(frameon=False, loc="lower left")
 sbp.save_figure(fig, __file__, "fig-small-world")
 
 at = {f"p_{p:g}".replace(".", "_"): i
-      for i, p in enumerate(probs) if p in (0.01, 0.1, 1.0)}
+      for i, p in enumerate(probs) if p in (0.1, 1.0)}
 sbp.save_results(__file__, {
     "lattice": {"C": C0, "L": L0},
     "ws": {name: {"C_ratio": C_ratio[i], "L_ratio": L_ratio[i]}

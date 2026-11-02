@@ -4,8 +4,10 @@ needs:
   matlab: []
   python: [numpy, scipy]
 # Random networks: MATLAB and Python draw different random numbers, so only
-# averages are compared. Over seven random seeds in Python, the compared
-# averages varied by at most about 5%.
+# averages are compared, at p = 0.1 and p = 1, where they varied by at most
+# about 5% over seven random seeds in Python. At smaller p, each network
+# has only a few shortcuts and the path length varies more (about 10% at
+# p = 0.01), so it is shown but not compared.
 compare: [lattice, ws, er]
 tolerance: {rtol: 0.1, atol: 1.0e-9}
 expected:

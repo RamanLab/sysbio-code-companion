@@ -50,7 +50,7 @@ box off
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-small-world');
 
 results.lattice = struct('C', C0, 'L', L0);
-for p = [0.01 0.1 1]
+for p = [0.1 1]
     i = find(abs(probs - p) < 1e-12);
     name = strrep(sprintf('p_%g', p), '.', '_');
     results.ws.(name) = struct('C_ratio', C_ratio(i), ...
