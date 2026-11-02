@@ -1,0 +1,14 @@
+title: Noise in gene expression
+book: "Beyond the book, which treats deterministic models (see §1.4.3)"
+needs:
+  matlab: []
+  python: [numpy]
+# Stochastic simulation: MATLAB and Python draw different random numbers.
+# Over six random seeds in Python (with runs half as long), the estimates
+# were within 6% of theory; both languages must be within 15% of theory.
+compare: [A, B]
+tolerance: {rtol: 0.15, atol: 1.0e-9}
+# Theory: mean = km*kp/(gm*gp); Fano factor = 1 + kp/(gm + gp)
+expected:
+  A: {mean: 50, fano: 3.2727}
+  B: {mean: 50, fano: 23.727}

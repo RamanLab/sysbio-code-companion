@@ -1,0 +1,104 @@
+# Stochastic simulation {#sec-stochastic}
+
+The ODE models of @sec-odes treat concentrations as smooth, continuous quantities. Inside a single cell, however, many molecules are present in tiny numbers: a gene has one or two copies, and a given mRNA may be present as a handful of molecules. Each reaction is then a discrete, random event, and two genetically identical cells in the same environment can hold quite different numbers of a protein. This chapter simulates such systems with Gillespie's algorithm, and shows how the random fluctuations, or **noise**, depend on the reactions that produce them.
+
+::: {.callout-note appearance="simple"}
+## In the book
+The book deals with deterministic models, and notes that stochastic models, widely simulated with Gillespie's algorithm, are important when molecule numbers are small (§1.4.3, *Modelling paradigms*). This chapter fills in that topic. For a fuller treatment, see the reviews by @gillespie2007 and @raj2008.
+:::
+
+## Gillespie's algorithm
+
+Consider a set of reactions, each with a **propensity** $a_j(\mathbf{x})$: the probability per unit time that reaction $j$ occurs, given the current numbers of molecules $\mathbf{x}$. For a reaction $\text{M} \to \emptyset$ with rate constant $\gamma$, for instance, the propensity is $\gamma M$, since each of the $M$ molecules can be degraded. Gillespie's **stochastic simulation algorithm** (SSA) generates exact sample paths of such a system [@gillespie1977]:
+
+1. Compute all propensities and their sum, $a_0 = \sum_j a_j(\mathbf{x})$.
+2. Draw the time to the next reaction from an exponential distribution with mean $1/a_0$: $\tau = -\ln(r_1)/a_0$, with $r_1$ uniform on $(0, 1)$.
+3. Choose which reaction occurs: reaction $j$ with probability $a_j/a_0$.
+4. Advance time by $\tau$, update $\mathbf{x}$ for that reaction, and repeat.
+
+Both languages have a short implementation of these four steps in the primer's helper package (`sbp.gillespie`), which returns the state at a chosen set of times. Here is the Python version; the MATLAB one, in `matlab/+sbp/gillespie.m`, follows it line by line.
+
+```{.python include="/python/sbp/ssa.py"}
+```
+
+## Production and degradation of an mRNA
+
+The simplest example is an mRNA made at a constant rate $k$ and degraded at rate $\gamma$ per molecule:
+
+$$
+\emptyset \xrightarrow{k} \text{M}, \qquad \text{M} \xrightarrow{\gamma M} \emptyset .
+$$
+
+The ODE model, $dM/dt = k - \gamma M$, rises smoothly to $M = k/\gamma$. The stochastic model has a steady state too, but it is a steady *distribution*: the number of molecules keeps fluctuating, and for this model it follows a Poisson distribution with mean $k/\gamma$, whose variance is equal to its mean. We take $k = 10$ per minute and $\gamma = 1$ per minute, and run the SSA 2000 times.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/stochastic/birth_death/birth_death.m"}
+```
+
+![](/examples/stochastic/birth_death/out/matlab/fig-birth-death.png)
+
+## Python
+
+*Needs SciPy (for the Poisson distribution).*
+
+```{.python include="/examples/stochastic/birth_death/birth_death.py"}
+```
+
+![](/examples/stochastic/birth_death/out/python/fig-birth-death.png)
+:::
+
+Individual runs (left) are jagged and differ from one another; at steady state, any one of them may hold anywhere from about 3 to 18 molecules. Their *average*, on the other hand, follows the ODE closely. For reactions such as these, where every propensity is at most linear in the numbers of molecules, the ODE gives the mean behaviour exactly; for nonlinear reactions, such as dimerisation, it is only an approximation. The distribution across runs (right) matches the Poisson distribution.
+
+A useful way to describe the size of fluctuations is the **Fano factor**, the variance divided by the mean. It is 1 for a Poisson distribution, whatever the mean. Relative fluctuations, measured by the coefficient of variation $\sigma/\mu = 1/\sqrt{\mu}$, shrink as numbers grow: with 10 molecules they are about 32%, with 10,000 about 1%. That is why ODEs work well for abundant molecules and stochastic models matter for scarce ones.
+
+## Noise in gene expression
+
+Proteins are made from mRNAs, and each mRNA is translated many times before it is degraded. Adding these two steps,
+
+$$
+\emptyset \xrightarrow{k_m} \text{M}, \qquad
+\text{M} \xrightarrow{\gamma_m M} \emptyset, \qquad
+\text{M} \xrightarrow{k_p M} \text{M} + \text{P}, \qquad
+\text{P} \xrightarrow{\gamma_p P} \emptyset ,
+$$
+
+the mean number of proteins at steady state is $k_m k_p / \gamma_m \gamma_p$, and the Fano factor of the protein is approximately $1 + k_p/(\gamma_m + \gamma_p)$ [@thattai2001]. The ratio $k_p/\gamma_m$ is the mean number of proteins made from one mRNA, the **burst size**. So two genes can make the same average amount of protein with very different noise: gene A is transcribed often, with small bursts of 2.5 proteins per mRNA, while gene B is transcribed ten times less often, with bursts of 25. Here we simulate each gene for 40,000 minutes and sample the protein number once a minute.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/stochastic/gene_expression/gene_expression.m"}
+```
+
+![](/examples/stochastic/gene_expression/out/matlab/fig-gene-expression.png)
+
+## Python
+
+*Needs NumPy and Matplotlib.*
+
+```{.python include="/examples/stochastic/gene_expression/gene_expression.py"}
+```
+
+![](/examples/stochastic/gene_expression/out/python/fig-gene-expression.png)
+:::
+
+Both genes average about 50 proteins, but gene B jumps up in bursts, each time one of its rare mRNAs is translated many times over, and then decays; its Fano factor is about 24, against about 3 for gene A, and its distribution is wide and skewed. Ozbudak and colleagues found exactly this in *Bacillus subtilis*: increasing translation increased noise far more than increasing transcription did [@ozbudak2002]. Cells can therefore tune their noise, and not just their mean expression, through the balance of transcription and translation.
+
+Since MATLAB and Python draw different random numbers, the two versions give slightly different estimates. The automated checks require both to be within 10% of theory for the mRNA example, and within 15% for the noisier protein estimates.
+
+## Exercises
+
+1. In the mRNA example, start each run with 50 molecules in place of none. How does the mean approach the steady state? Compare with the solution of the ODE.
+2. Add a dimerisation reaction, $2\text{P} \to \text{D}$, with propensity $k_d P(P-1)/2$, to the birth–death model for a protein P. Compare the mean of many SSA runs with the solution of the corresponding ODE for small and large numbers of molecules. When do they differ?
+3. For the gene-expression model, vary $k_p$ from 1 to 50 while adjusting $k_m$ to keep the mean at 50 proteins. Plot the Fano factor against the burst size $k_p/\gamma_m$ and compare with the theory.
+4. Simulating every reaction becomes slow when molecules are abundant. Look up the **tau-leaping** method, which fires many reactions in each time step, and implement it for the mRNA example. How large can the time step be before the distribution is visibly wrong?
+
+## Going further
+
+Noise is not always a nuisance. In circuits with two stable states, such as the toggle switch, noise can flip cells between states, letting a population hedge its bets. Exploring such circuits needs both the ODE tools of @sec-odes and the stochastic tools of this chapter.

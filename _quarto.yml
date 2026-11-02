@@ -19,6 +19,7 @@ book:
     - chapters/odes.qmd
     - chapters/parameter-estimation.qmd
     - chapters/boolean.qmd
+    - chapters/stochastic.qmd
     - chapters/constraint-based.qmd
     - references.qmd
 

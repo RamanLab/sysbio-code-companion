@@ -1,0 +1,14 @@
+title: Stochastic birth and death of an mRNA
+book: "Beyond the book, which treats deterministic models (see §1.4.3)"
+needs:
+  matlab: []
+  python: [scipy]
+# Stochastic simulation: MATLAB and Python draw different random numbers.
+# With 2000 runs, the standard error is about 1% for the mean and 3% for
+# the variance, so both must lie within 10% of the theory, and of each
+# other.
+compare: [steady_state, mean_trajectory]
+tolerance: {rtol: 0.1, atol: 0.2}
+# Theory: Poisson distribution with mean = variance = k/gamma = 10
+expected:
+  steady_state: {mean: 10, variance: 10}
