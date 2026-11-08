@@ -1,0 +1,12 @@
+title: The SIR model
+book: "Ch. 1, §1.5.2 (Eqs. 1.6 to 1.9)"
+needs:
+  matlab: []
+  python: [scipy]
+compare: [peak_infected, peak_day, final_R, final_size_R0_3,
+          final_size_simulated]
+tolerance: {rtol: 1.0e-5, atol: 1.0e-6}
+# The final-size equation, R_inf = 1 - S0*exp(-R0*R_inf), solved for R0 = 3
+expected:
+  final_size_R0_3: 0.9404870
+  final_R: 0.9404870

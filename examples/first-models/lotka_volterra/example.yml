@@ -1,0 +1,11 @@
+title: Lotka-Volterra predator-prey model
+book: "Ch. 1, §1.5.1 (Eqs. 1.4 and 1.5)"
+needs:
+  matlab: []
+  python: [scipy]
+# Both solvers run with tolerances of 1e-10, so they agree closely. The
+# drift in V measures solver error and is not compared, only shown.
+compare: [steady_state, period, D_every_5_years, L_every_5_years]
+tolerance: {rtol: 1.0e-6, atol: 1.0e-6}
+expected:
+  steady_state: [25, 10]

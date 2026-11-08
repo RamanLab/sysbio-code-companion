@@ -1,0 +1,9 @@
+title: Bistability and hysteresis
+book: "Ch. 12 (synthetic circuits); stability of steady states"
+needs:
+  matlab: []
+  python: [scipy]
+compare: [bistable_range, n_states, switch_up, switch_down, up, down]
+tolerance: {rtol: 1.0e-5, atol: 1.0e-6}
+expected:
+  bistable_range: [3.7, 8.7]

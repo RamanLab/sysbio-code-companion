@@ -1,0 +1,105 @@
+# First models {#sec-first-models}
+
+Before turning to cells and molecules, two classic models show what a dynamic model is and what it can tell us. Both are systems of two or three ODEs, simple enough to understand completely, and yet each makes a prediction that is far from obvious from its equations: predator and prey populations rise and fall in endless cycles, and an epidemic either fizzles out or sweeps through most of a population, depending on a single number.
+
+::: {.callout-note appearance="simple"}
+## In the book
+Chapter 1, *Introduction to Modelling*: why we model, the modelling process (§1.4), and the two models of this chapter (§1.5). Solving ODEs is the subject of @sec-odes and book Chapter 5; here we simply use the standard solvers, `ode45` in MATLAB and `solve_ivp` in Python.
+:::
+
+## Predators and prey
+
+The Lotka–Volterra model follows two populations, deer $D$ (the prey) and lions $L$ (the predators):
+
+$$
+\frac{dD}{dt} = bD - pLD, \qquad \frac{dL}{dt} = rDL - dL .
+$$
+
+Deer are born at rate $b$ and are eaten at a rate proportional to how often deer and lions meet, $pLD$. Lions grow by eating deer, $rDL$, and die at rate $d$. Setting both derivatives to zero gives the **steady state**, where the populations would stay forever if left there: $D^* = d/r$ and $L^* = b/p$. Away from it, something more interesting happens.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/first-models/lotka_volterra/lotka_volterra.m"}
+```
+
+![](/examples/first-models/lotka_volterra/out/matlab/fig-lotka-volterra.png)
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/first-models/lotka_volterra/lotka_volterra.py"}
+```
+
+![](/examples/first-models/lotka_volterra/out/python/fig-lotka-volterra.png)
+:::
+
+The populations oscillate, with the lions lagging behind the deer: plenty of deer lets the lions multiply, more lions eat more deer, the deer decline, the lions starve, and the cycle begins again, about every nine years. In the **phase plane** (right), where time is left out and the two populations are plotted against each other, each starting point traces its own closed loop around the steady state. The loops never grow or shrink, because the quantity $V = rD - d\ln D + pL - b\ln L$ stays exactly constant along every solution; the code checks this, and the tiny change it finds measures the error of the numerical solver.
+
+The code also shows a useful feature of both solvers: **events**. Asked to watch for the moments at which $D - D^*$ crosses zero upwards, the solver reports them precisely, which gives the period of the cycle. For small oscillations around the steady state, the period is $2\pi/\sqrt{bd} \approx 8.9$ years; our larger cycle is a little slower.
+
+Closed loops that depend on the starting point are a sign that this model is fragile: almost any change to its equations, such as a limit on the number of deer the land can support, turns the loops into spirals. We return to such questions in @sec-dynamics.
+
+## An epidemic
+
+The SIR model divides a population into those susceptible to an infection ($S$), those infected ($I$) and those recovered and immune ($R$), as fractions of the whole:
+
+$$
+\frac{dS}{dt} = -\beta SI, \qquad
+\frac{dI}{dt} = \beta SI - \gamma I, \qquad
+\frac{dR}{dt} = \gamma I .
+$$
+
+Susceptible people are infected at a rate proportional to their contacts with infected people, $\beta SI$, and infected people recover at rate $\gamma$, after $1/\gamma$ days on average. The infected fraction grows only while $\beta S > \gamma$. At the start of an outbreak, nearly everyone is susceptible, $S \approx 1$, and so an outbreak can grow only if the **basic reproduction number**
+
+$$
+R_0 = \frac{\beta}{\gamma},
+$$
+
+the number of people each infected person infects in a fully susceptible population, is greater than one. (Book Eq. 1.9 writes $\beta S/\gamma$, which is the reproduction number at a time when a fraction $S$ is still susceptible; at the start, the two are the same.)
+
+How many people are eventually infected? Dividing the equations for $dS/dt$ and $dR/dt$ and integrating gives an equation for the final size of the epidemic, $R_\infty$:
+
+$$
+R_\infty = 1 - S_0\, e^{-R_0 R_\infty},
+$$
+
+which has exactly one solution between 0 and 1, easily found with `fzero` in MATLAB or `brentq` in Python. The code simulates an epidemic with $R_0 = 3$, starting from one infected person in 10,000, and then compares simulated and predicted final sizes for $R_0$ from 0.5 to 4.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/first-models/sir/sir.m"}
+```
+
+![](/examples/first-models/sir/out/matlab/fig-sir.png)
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/first-models/sir/sir.py"}
+```
+
+![](/examples/first-models/sir/out/python/fig-sir.png)
+:::
+
+With $R_0 = 3$, the epidemic peaks after about 50 days, with 30% of the population infected at once, and by the end 94% of the population has been infected. The epidemic stops before everyone is infected because the susceptible pool runs low: once $S < 1/R_0$, each infected person infects fewer than one other, and the outbreak dies away, even though about 6% of people never catch the infection. This is the idea behind **herd immunity**: vaccinating a fraction $1 - 1/R_0$ of the population prevents an epidemic altogether.
+
+The final-size curve (right) shows the **threshold** at $R_0 = 1$. Below it, the outbreak stays tiny. Above it, the final size rises steeply, and for $R_0$ around 2 to 3, typical of many respiratory infections, most of the population is eventually infected. The simulations agree with the final-size equation throughout.
+
+## Exercises
+
+1. Add a carrying capacity for the deer, replacing $bD$ by $bD(1 - D/K)$ with $K = 100$. What happens to the oscillations, and where do the trajectories end up?
+2. Vary the initial number of lions in the Lotka–Volterra model, keeping 40 deer. Plot the period of the cycle against the amplitude of the deer oscillation.
+3. In the SIR model with $R_0 = 3$, vaccinate a fraction $v$ of the population at the start (move it from $S$ to $R$). Plot the peak and the final size of the epidemic against $v$. At what value of $v$ does the epidemic no longer grow?
+4. Add a loss of immunity, $R \to S$ at rate $\omega$ (the SIRS model). Simulate for 1000 days with $\omega = 0.01$ per day. What happens in the long run?
+
+## Going further
+
+Both models assume well-mixed populations, in which everyone meets everyone else equally often. Real contacts follow networks, which changes how epidemics spread (book, §4.3); @sec-networks introduces the tools for studying such networks.

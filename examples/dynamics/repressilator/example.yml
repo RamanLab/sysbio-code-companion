@@ -1,0 +1,12 @@
+title: The repressilator
+book: "Ch. 12 (synthetic circuits); stability of steady states"
+needs:
+  matlab: []
+  python: [scipy]
+compare: [steady_state, max_real_eigenvalue, period, amplitude, n_unstable,
+          unstable]
+# The period comes from event times on a 300-unit simulation, so it is
+# compared a little more loosely than the algebraic results.
+tolerance: {rtol: 1.0e-4, atol: 1.0e-6}
+expected:
+  n_unstable: 821

@@ -1,0 +1,12 @@
+title: The toggle switch in the phase plane
+book: "Ch. 12 (synthetic circuits); stability of steady states"
+needs:
+  matlab: []
+  python: [scipy]
+compare: [steady_states, fraction_to_high_u]
+tolerance: {rtol: 1.0e-6, atol: 1.0e-8}
+# By symmetry (a1 = a2), the middle steady state is u = v, where
+# u = a/(1 + u^2) gives u = 2 for a = 10.
+expected:
+  steady_states: [{stable: true}, {u: 2, v: 2, stable: false},
+                  {stable: true}]
