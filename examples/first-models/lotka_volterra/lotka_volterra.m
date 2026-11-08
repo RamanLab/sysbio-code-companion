@@ -11,7 +11,7 @@ b = 1.0; p = 0.1; r = 0.02; d = 0.5;  % per year (p, r per animal per year)
 D_star = d / r; L_star = b / p;       % steady state: 25 deer, 10 lions
 opts = odeset('RelTol', 1e-10, 'AbsTol', 1e-10);
 
-lotka_volterra = @(t, y) [b * y(1) - p * y(2) * y(1);
+rhs = @(t, y) [b * y(1) - p * y(2) * y(1);
                           r * y(1) * y(2) - d * y(2)];
 V = @(D, L) r * D - d * log(D) + p * L - b * log(L);
 
@@ -19,13 +19,13 @@ t = linspace(0, 30, 301);
 starts = [40 9; 60 9; 80 9];
 Y = cell(1, 3);
 for k = 1:3
-    [~, Y{k}] = ode45(lotka_volterra, t, starts(k, :), opts);
+    [~, Y{k}] = ode45(rhs, t, starts(k, :), opts);
 end
 
 % Period of the first orbit: times at which the deer population passes
 % upwards through D*, found by the solver as 'events'
-crossing = @(t, y) deal(y(1) - D_star, 0, 1);  % value, terminal, direction
-[~, ~, te] = ode45(lotka_volterra, [0 30], starts(1, :), ...
+crossing = @(t, y) upward(y(1) - D_star);
+[~, ~, te] = ode45(rhs, [0 30], starts(1, :), ...
     odeset(opts, 'Events', crossing));
 period = mean(diff(te));
 
@@ -70,3 +70,10 @@ results.V_drift = drift;
 results.D_every_5_years = D(1:50:end)';
 results.L_every_5_years = L(1:50:end)';
 sbp.save_results(mfilename('fullpath'), results);
+
+%% Local function
+function [value, isterminal, direction] = upward(value)
+% Event function for ode45: report (do not stop at) upward zero crossings.
+isterminal = 0;
+direction = 1;
+end

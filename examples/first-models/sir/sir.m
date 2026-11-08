@@ -12,7 +12,7 @@ gamma = 0.1;                       % recovery rate: 10 days to recover
 I0 = 1e-4;                         % one person in 10,000 infected at first
 S0 = 1 - I0;
 opts = odeset('RelTol', 1e-8, 'AbsTol', 1e-10);
-sir = @(t, y, beta) [-beta * y(1) * y(2);
+sir_rhs = @(t, y, beta) [-beta * y(1) * y(2);
                      beta * y(1) * y(2) - gamma * y(2);
                      gamma * y(2)];
 % Final size: the one root between 0 and 1 of R_inf = 1 - S0*exp(-R0*R_inf)
@@ -21,7 +21,7 @@ final_size = @(R0) fzero(@(x) x - (1 - S0 * exp(-R0 * x)), [0 1]);
 %% One epidemic, R0 = 3
 beta = 0.3;
 t = linspace(0, 200, 201);         % days
-[~, Y] = ode45(@(t, y) sir(t, y, beta), t, [S0 I0 0], opts);
+[~, Y] = ode45(@(t, y) sir_rhs(t, y, beta), t, [S0 I0 0], opts);
 S = Y(:, 1); I = Y(:, 2); R = Y(:, 3);
 [~, peak] = max(I);
 fprintf(['R0 = %g: peak of %.4f infected on day %g; after 200 days ' ...
@@ -33,7 +33,7 @@ R0s = linspace(0.5, 4, 36);
 simulated = zeros(size(R0s));
 theory = zeros(size(R0s));
 for k = 1:numel(R0s)
-    [~, Yk] = ode45(@(t, y) sir(t, y, R0s(k) * gamma), [0 5000], ...
+    [~, Yk] = ode45(@(t, y) sir_rhs(t, y, R0s(k) * gamma), [0 5000], ...
         [S0 I0 0], opts);
     simulated(k) = Yk(end, 3);
     theory(k) = final_size(R0s(k));

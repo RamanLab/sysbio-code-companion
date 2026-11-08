@@ -24,7 +24,7 @@ fprintf(['Steady state m = p = %.4f; largest real part of an ' ...
 % successive upward crossings of p1 through its steady value
 rhs = @(t, y) [-y(1:3) + alpha ./ (1 + y(3 + repressor).^n) + alpha0;
                -beta * (y(4:6) - y(1:3))];
-crossing = @(t, y) deal(y(4) - s, 0, 1);   % value, terminal, direction
+crossing = @(t, y) upward(y(4) - s);
 opts = odeset('RelTol', 1e-8, 'AbsTol', 1e-10, 'Events', crossing);
 y0 = [1 0 0 2 1 3];
 sol = ode45(rhs, [0 300], y0, opts);
@@ -83,6 +83,12 @@ results.unstable = double(unstable);
 sbp.save_results(mfilename('fullpath'), results);
 
 %% Local functions
+function [value, isterminal, direction] = upward(value)
+% Event function for ode45: report (do not stop at) upward zero crossings.
+isterminal = 0;
+direction = 1;
+end
+
 function s = steady_state(alpha, alpha0, n)
 % By symmetry m_i = p_i = s, with s = alpha/(1 + s^n) + alpha0.
 s = fzero(@(s) alpha / (1 + s^n) + alpha0 - s, [0 alpha + alpha0]);
