@@ -61,10 +61,12 @@ legend({'p1', 'p2', 'p3'}, 'Location', 'north', 'Orientation', ...
     'horizontal', 'Box', 'off');
 box off
 subplot(1, 2, 2)
-contourf(alphas, betas, double(unstable), [0.5 0.5], 'k');
+% Fill the band 0.5-1 (unstable) in light blue, the band 0-0.5 in white
+contourf(alphas, betas, double(unstable), [0 0.5 1], 'LineStyle', 'none');
 colormap(gca, [1 1 1; 0.776 0.859 0.937]);
 clim([0 1]);
 hold on
+contour(alphas, betas, double(unstable), [0.5 0.5], 'k');
 plot(alpha, beta, 'p', 'Color', [0.839 0.153 0.157], ...
     'MarkerFaceColor', [0.839 0.153 0.157], 'MarkerSize', 12);
 set(gca, 'XScale', 'log', 'YScale', 'log');
