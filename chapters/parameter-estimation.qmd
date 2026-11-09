@@ -134,6 +134,42 @@ MATLAB and Python draw different random numbers, so the two versions follow diff
 
 The trade-off is clear from this small problem. The evolutionary algorithm needed no starting guess and no derivatives, but it used about 2450 evaluations to reach an approximate answer, whereas the least-squares solver reached the exact optimum in a few dozen evaluations, counting those used to estimate derivatives. For larger models, a common strategy is to combine the two: a global method to find the right basin, followed by a local method to finish the job.
 
+## Fitting an ODE model to a time course
+
+So far the model was a single algebraic rate law. Fitting a system of ODEs to time-course data works in exactly the same way: the residual function calls the ODE solver of @sec-odes for the trial parameters, and compares the solution with the data at the measured time points.
+
+Our example follows a gene after it is switched on at $t = 0$. Its mRNA $m$ is made at rate $k_m$ and degraded at rate $g_m$ per molecule; each mRNA is translated at rate $k_p$, and the protein $p$ is degraded at rate $g_p$:
+
+$$
+\frac{dm}{dt} = k_m - g_m m, \qquad \frac{dp}{dt} = k_p m - g_p p, \qquad m(0) = p(0) = 0 .
+$$
+
+The data, measured every half hour for 12 hours with 10% error, are synthetic, made with known parameters ($k_m = 10$ molecules/h, $g_m = 1$/h, $k_p = 5$/h, $g_p = 0.2$/h) by `tools/make_expression_data.py`. We fit the four parameters, first to both mRNA and protein, then to the protein alone, which is often all that can be measured, for instance with a fluorescent reporter. Each fit starts from the same eight guesses.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs the Optimization Toolbox.*
+
+```{.matlab include="/examples/parameter-estimation/fit_timecourse/fit_timecourse.m"}
+```
+
+![](/examples/parameter-estimation/fit_timecourse/out/matlab/fig-fit-timecourse.png)
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/parameter-estimation/fit_timecourse/fit_timecourse.py"}
+```
+
+![](/examples/parameter-estimation/fit_timecourse/out/python/fig-fit-timecourse.png)
+:::
+
+With both species measured, all eight fits find the same estimates, close to the true values: $k_m = 9.50$, $g_m = 0.963$, $k_p = 5.23$ and $g_p = 0.205$. With the protein alone, all eight fits are equally good, but they disagree completely about $k_m$ and $k_p$, which range over a factor of 30 (right). Only their product is determined, $k_m k_p \approx 55.6$. The reason is clear from the equations: doubling $k_m$ doubles the mRNA, and halving $k_p$ then restores the protein exactly. The two degradation rates are identifiable as a pair, 0.156 and 1.27 per hour, but the protein data cannot say which belongs to the mRNA and which to the protein: the solution for $p(t)$ is unchanged when $g_m$ and $g_p$ are swapped, and the fits come out either way round. Note, too, that these estimates lie further from the true values than those from both species: with less information, the same noise moves the estimates more.
+
+This is the time-course version of the lesson of the inhibition example: a model can fit the data perfectly while some of its parameters remain undetermined. Measuring a second species, or knowing one parameter from a separate experiment (an mRNA half-life, say), restores identifiability.
+
 ## Exercises
 
 1. Fit D2 alone from the eight starting points. Which combination of $K_M$ and $K_I$ do all the fits agree on?
@@ -141,7 +177,9 @@ The trade-off is clear from this small problem. The evolutionary algorithm neede
 3. Estimate the uncertainty of the parameters fitted to D1 and D2 together. Both least-squares solvers return the Jacobian $J$ of the residuals at the solution; the covariance of the estimates is approximately $(J^\top J)^{-1}$. Compute the correlation between $K_M$ and $K_I$ (book, Eq. 6.11). Is it close to $\pm 1$? Repeat for D1 alone: what happens to $J^\top J$?
 4. Book Exercise 6.1: evaluate the SSE of the parameter sets $\theta_1$, $\theta_2$ and $\theta_3$ given there. Which is best, and can the data tell them apart?
 5. Run the evolutionary algorithm with ten different random seeds. How much do the final estimates vary? Then halve the number of generations, or start with a smaller mutation size, and repeat.
+6. In the time-course example, fix $g_m = 1$/h, as if the mRNA half-life had been measured separately, and fit the other three parameters to the protein data alone. Are they now identifiable?
+7. Regenerate the data with `tools/make_expression_data.py` using different random seeds, and refit to both species each time. How much do the estimates vary from one data set to the next? Compare with the uncertainty estimated from $(J^\top J)^{-1}$ (Exercise 3).
 
 ## Going further
 
-Here the model was a single algebraic rate law. Fitting a system of ODEs to time-course data works in exactly the same way, with the ODE solver of @sec-odes called inside the residual function; the questions of identifiability and of local versus global search only become more pressing.
+For larger ODE models, with tens of parameters, each fit needs many simulations, and the questions of identifiability and of local versus global search become pressing. Profile likelihoods, which follow the best SSE as one parameter is varied and the others are refitted, are a practical way to see which parameters the data determine (book, §6.5).

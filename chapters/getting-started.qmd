@@ -13,7 +13,7 @@ cd sysbio-primer
 
 ## Python
 
-Python 3.10 or newer is needed. From the repository folder, create a virtual environment and install the packages the examples use (NumPy, SciPy, Matplotlib, NetworkX and COBRApy), plus a tiny helper package, `sbp`, that the examples use to save their results and figures:
+Python 3.10 or newer is needed. From the repository folder, create a virtual environment and install the packages the examples use (NumPy, SciPy, Matplotlib, NetworkX, COBRApy and the quadratic-programming solver Clarabel), plus a tiny helper package, `sbp`, that the examples use to save their results and figures:
 
 ```bash
 python -m venv .venv
@@ -46,3 +46,36 @@ Each script prints its main results and writes two kinds of output next to itsel
 
 * figures (`fig-*.png`), which are the figures shown in this primer;
 * `results.json`, with the key numbers. These files are what the automated checks compare between the two languages.
+
+## MATLAB and Python side by side
+
+If you know one language and want to read the other, this table collects the commands the examples use most. A few differences cause most of the surprises:
+
+* **Indexing.** MATLAB counts from 1 and includes both ends of a range; Python counts from 0 and excludes the end. `x(1:3)` in MATLAB is `x[0:3]` in Python.
+* **Arrays.** MATLAB's `*` is matrix multiplication and `.*` is element-wise; in NumPy, `*` is element-wise and `@` is matrix multiplication. MATLAB vectors are rows or columns; NumPy has true one-dimensional arrays.
+* **Copies.** Assigning an array in MATLAB copies it; in Python, `b = a` makes another name for the same array, and `b = a.copy()` makes a copy.
+* **Random numbers.** The two languages draw different random numbers even from the same seed, so the stochastic examples agree only on average.
+
+| Task | MATLAB | Python |
+|---|---|---|
+| Vector of evenly spaced points | `linspace(0, 10, 101)` | `np.linspace(0, 10, 101)` |
+| Range with a step | `0:0.5:10` | `np.arange(0, 10.5, 0.5)` |
+| Matrix and vector | `A = [1 2; 3 4]; x = [1; 2];` | `A = np.array([[1, 2], [3, 4]]); x = np.array([1, 2])` |
+| Matrix product, element-wise product | `A * x`, `x .* x` | `A @ x`, `x * x` |
+| Solve $A\mathbf{x} = \mathbf{b}$ | `A \ b` | `np.linalg.solve(A, b)` |
+| Eigenvalues | `eig(J)` | `np.linalg.eigvals(J)` |
+| Solve ODEs | `[t, y] = ode45(f, tspan, y0)` (`ode15s` if stiff) | `solve_ivp(f, tspan, y0)` (`method="LSODA"` or `"Radau"` if stiff) |
+| Right-hand side of an ODE | `f = @(t, y) -k * y;` | `def f(t, y): return -k * y` |
+| Events (zero crossings) | `odeset('Events', fn)` | `solve_ivp(..., events=fn)` |
+| Root of a function in an interval | `fzero(g, [a b])` | `brentq(g, a, b)` |
+| Nonlinear least squares | `lsqnonlin(res, p0, lb, ub)` | `least_squares(res, p0, bounds=(lb, ub))` |
+| Linear programme | `linprog(c, A, b, Aeq, beq, lb, ub)` | `linprog(c, A_ub, b_ub, A_eq, b_eq, bounds)` |
+| Quadratic programme | `quadprog(H, f, A, b, Aeq, beq, lb, ub)` | `clarabel.DefaultSolver(...)` (see @sec-extending-cbm) |
+| Read a CSV file | `readtable('data.csv')` | `np.loadtxt('data.csv', delimiter=",", skiprows=1)` |
+| Graph and degrees | `G = graph(s, t); degree(G)` | `G = nx.Graph(edges); dict(G.degree())` |
+| Centrality, components | `centrality(G, 'closeness')`, `conncomp(G)` | `nx.closeness_centrality(G)`, `nx.connected_components(G)` |
+| Random numbers with a seed | `rng(1); rand(3, 1); randi(10)` | `rng = np.random.default_rng(1); rng.random(3); rng.integers(1, 11)` |
+| Constraint-based model | `readCbModel(file)`, `optimizeCbModel(model)` | `cobra.io.read_sbml_model(file)`, `model.optimize()` |
+| Plot | `plot(t, y); xlabel('t')` | `plt.plot(t, y); plt.xlabel("t")` |
+| Save a figure | `exportgraphics(gcf, 'fig.png')` | `plt.savefig("fig.png")` |
+

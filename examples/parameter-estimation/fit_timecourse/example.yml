@@ -1,0 +1,8 @@
+title: Fitting an ODE model to a time course
+book: "Ch. 6, §6.5 (identifiability)"
+needs:
+  matlab: [Optimization Toolbox]
+  python: [scipy]
+compare: [best_both, sse_both, sse_protein, product_protein, rates_protein]
+# Least squares around an ODE solver, with finite-difference gradients
+tolerance: {rtol: 1.0e-4, atol: 1.0e-6}
