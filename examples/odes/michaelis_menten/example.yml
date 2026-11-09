@@ -1,5 +1,5 @@
 title: Mass action vs Michaelis-Menten
-book: "Ch. 5, §5.3 (Modelling enzyme kinetics)"
+book: "Ch. 5, §5.3.1 (Eqs. 5.4, 5.6 and 5.13)"
 needs:
   matlab: []
   python: [scipy]

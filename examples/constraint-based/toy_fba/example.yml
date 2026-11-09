@@ -1,5 +1,5 @@
 title: FBA of the toy network
-book: "Ch. 8, §8.6 (Eq. 8.8)"
+book: "Ch. 8, §8.6 (Table 8.2, Eqs. 8.3, 8.9 and 8.10)"
 needs:
   matlab: [Optimization Toolbox]
   python: [scipy]

@@ -1,5 +1,5 @@
 title: An evolutionary algorithm
-book: "Ch. 6, §6.3.4 (Evolutionary algorithms)"
+book: "Ch. 6, §6.3.4 (evolutionary algorithms; evolution strategies, §6.3.4.3)"
 needs:
   matlab: []
   python: [numpy]

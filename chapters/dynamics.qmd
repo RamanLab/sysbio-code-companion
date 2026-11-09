@@ -4,7 +4,7 @@ Simulating a model, as in @sec-odes, shows what it does from one starting point 
 
 ::: {.callout-note appearance="simple"}
 ## In the book
-Chapter 5, *Introduction to Dynamic Modelling*, sets up ODE models and their steady states; Chapter 12, *Designing Biological Circuits*, discusses the toggle switch and the repressilator as early synthetic circuits. The tools here, nullclines, Jacobian matrices and eigenvalues, are covered in any text on nonlinear dynamics.
+Chapter 5, *Introduction to Dynamic Modelling*, sets up ODE models; Chapter 12, *Designing Biological Circuits*, presents the repressilator (§12.2.1, Eq. 12.1) and the toggle switch (§12.2.2, Eqs. 12.2 and 12.3) as the first model-driven synthetic circuits. The tools used here to analyse them, nullclines, Jacobian matrices and eigenvalues, are covered in any text on nonlinear dynamics.
 :::
 
 ## Steady states and their stability
@@ -120,7 +120,8 @@ The map on the right shows where in the $(\alpha, \beta)$ plane the steady state
 2. Repeat the hysteresis example with $n = 3$. How do the bistable range and the jumps change?
 3. In the toggle switch, add noise with the methods of @sec-stochastic, treating $u$ and $v$ as numbers of molecules with $a_1 = a_2 = 50$. How long does the switch stay in one state before noise flips it, and how does that depend on $a_1$ and $a_2$?
 4. Compute the period and amplitude of the repressilator for $\alpha$ from 10 to 1000 at $\beta = 5$. What happens to the oscillations as $\alpha$ approaches the edge of the shaded region?
-5. Make the ring four repressors long. Does it still oscillate? Find the steady states and their eigenvalues, and explain the result.
+5. Make the ring four, and then five, repressors long (book Exercise 12.5). Which rings oscillate? Find the steady states and their eigenvalues, and explain the result.
+6. Book Exercise 12.4: vary $\alpha$ and $\alpha_0$ in the repressilator. How large can the leak $\alpha_0$ be before the oscillations stop?
 
 ## Going further
 

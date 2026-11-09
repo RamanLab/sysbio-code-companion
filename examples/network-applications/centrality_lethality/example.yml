@@ -1,5 +1,5 @@
 title: Centrality and essentiality
-book: "Ch. 4, §4.2 (centrality and lethality)"
+book: "Ch. 4, §4.1 (centrality–lethality hypothesis) and §4.1.1"
 needs:
   matlab: []
   python: [networkx]

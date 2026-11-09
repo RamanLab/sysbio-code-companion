@@ -11,7 +11,7 @@ Chapter 8, *Introduction to Constraint-Based Modelling*: the stoichiometric matr
 
 ## The toy network
 
-We use the small network of the book's Fig. 8.1: eight metabolites, seven internal reactions, two exchange reactions that connect the cell to its surroundings, and a "biomass" reaction that drains the building blocks the cell needs to grow.
+We use the small network of the book's Figure 8.1 and Table 8.2: eight metabolites, seven internal reactions, two exchange reactions that connect the cell to its surroundings, and a "biomass" reaction that drains the building blocks the cell needs to grow.
 
 | Reaction | Equation | Flux | Bounds |
 |---|---|---|---|
@@ -69,11 +69,11 @@ where $\mathbf{c}$ picks out the objective; it has a 1 in the position of $v_\te
 ![](/examples/constraint-based/toy_fba/out/python/fig-toy-fba.png){width=75%}
 :::
 
-The maximum biomass flux is $v_\text{bio} = 50$, the same as in the book (Eq. 8.8). What limits it? Follow the stoichiometry: every unit of biomass needs 2 G, and so 2 units of flux through R7, and 10 ATP. Balancing ATP, B and D in turn shows that $v_4 = 11\,v_\text{bio}$ and $v_6 = 20\,v_\text{bio}$, so the upper bound of 1000 on $v_6$ (and on $b_2$, which must equal $v_6$) caps growth at 50.
+The maximum biomass flux is $v_\text{bio} = 50$, the same as in the book (Eq. 8.9). What limits it? Follow the stoichiometry: every unit of biomass needs 2 G, and so 2 units of flux through R7, and 10 ATP. Balancing ATP, B and D in turn shows that $v_4 = 11\,v_\text{bio}$ and $v_6 = 20\,v_\text{bio}$, so the upper bound of 1000 on $v_6$ (and on $b_2$, which must equal $v_6$) caps growth at 50.
 
 ::: {.callout-note}
 ## The optimal growth rate is unique; the flux distribution is not
-R1 and the route R2 → R3 both turn A into ATP + B, so the cell can split the 600 units of A between them in any proportion and grow equally well. The book shows two such solutions (Eqs. 8.8 and 8.9). Which one you get depends on the solver, and the MATLAB and Python versions above may print different values of $v_1$, $v_2$ and $v_3$. Both are correct. This is why our automated checks compare only the growth rate for this example, and why the next section matters.
+R1 and the route R2 → R3 both turn A into ATP + B, so the cell can split the 600 units of A between them in any proportion and grow equally well. The book shows two such solutions (Eqs. 8.9 and 8.10). Which one you get depends on the solver, and the MATLAB and Python versions above may print different values of $v_1$, $v_2$ and $v_3$. Both are correct. This is why our automated checks compare only the growth rate for this example, and why the next section matters.
 :::
 
 ## Flux variability analysis
@@ -110,7 +110,7 @@ That is two LPs per reaction. The code below runs FVA at $\alpha = 1$ (exactly o
 ![](/examples/constraint-based/toy_fva/out/python/fig-toy-fva.png){width=75%}
 :::
 
-At optimal growth, $v_1$, $v_2$ and $v_3$ can each take any value between 0 and 600, while every other flux is fixed. These are exactly the ranges in the book (Eq. 8.12). Relaxing growth to 90% of the optimum widens the other ranges too, because the reactions that limit growth no longer have to run at their maximum.
+At optimal growth, $v_1$, $v_2$ and $v_3$ can each take any value between 0 and 600, while every other flux is fixed. These are exactly the ranges in the book (Eq. 8.12), found by solving the problem of Eq. 8.11 for each flux. Relaxing growth to 90% of the optimum widens the other ranges too, because the reactions that limit growth no longer have to run at their maximum.
 
 ## A genome-scale example: *E. coli* core
 
@@ -153,6 +153,8 @@ With glucose uptake capped at 10 mmol/gDW/h, the predicted growth rate is 0.874 
 2. Remove the reaction R2 from the toy network (set both its bounds to 0) and rerun FVA. What happens to the ranges of $v_1$ and $v_3$, and why?
 3. Run FVA on the *E. coli* core model under aerobic conditions (`flux_variability_analysis` in COBRApy, `fluxVariability` in the COBRA Toolbox). Which reactions can carry no flux at all? (Book, §8.8.1.)
 4. At glucose uptake 10 and oxygen uptake at most 10 mmol/gDW/h, which by-products does the model secrete? Are they unique? Use FVA on the exchange reactions to find out.
+5. Book Exercises 8.4 and 8.5: find the ATP maintenance reaction and its lower bound; plot growth against glucose uptake from 10 to 25 mmol/gDW/h with oxygen uptake fixed at 16; find the flux range of fumarate reductase (FRD7); and predict growth on acetate and on succinate (10 mmol/gDW/h each) in place of glucose.
+6. Book Exercise 8.3: set up the small network given there and solve it as an LP in both languages. Do your answers agree with a hand calculation?
 
 ## Going further
 

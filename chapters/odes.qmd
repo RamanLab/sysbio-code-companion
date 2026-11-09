@@ -10,7 +10,7 @@ where $x_i$ is the concentration of species $i$, $f_i$ is its rate law, and $\Th
 
 ::: {.callout-note appearance="simple"}
 ## In the book
-Chapter 5, *Introduction to Dynamic Modelling*: mass-action kinetics (§5.2), enzyme kinetics and the Michaelis–Menten model (§5.3), solving ODEs (§5.5) and stiff equations (§5.6.1). Appendix E covers ODE solvers in MATLAB.
+Chapter 5, *Introduction to Dynamic Modelling*: mass-action kinetics (§5.2), enzyme kinetics, the Michaelis–Menten model and Hill kinetics (§5.3), solving ODEs with Euler's methods (§5.5) and stiff equations (§5.6.1). The online-only Appendix E covers ODE solvers in MATLAB.
 :::
 
 ## Solving an ODE: Euler's method
@@ -21,7 +21,7 @@ $$
 x(t + \Delta t) \approx x(t) + f\big(x(t)\big)\,\Delta t .
 $$
 
-Starting from the initial value $x_0$, we step forward in time, one $\Delta t$ at a time. This is the **forward** (or explicit) Euler method. The **backward** (or implicit) Euler method evaluates $f$ at the *end* of the step instead, $x(t + \Delta t) = x(t) + f\big(x(t + \Delta t)\big)\,\Delta t$, which must be solved for $x(t + \Delta t)$ at every step.
+Starting from the initial value $x_0$, we step forward in time, one $\Delta t$ at a time. This is the **forward** (or explicit) Euler method (book, Eqs. 5.23 and 5.24). The **backward** (or implicit) Euler method evaluates $f$ at the *end* of the step instead, $x(t + \Delta t) = x(t) + f\big(x(t + \Delta t)\big)\,\Delta t$, which must be solved for $x(t + \Delta t)$ at every step (book, Eqs. 5.25 and 5.26).
 
 We try both on an ODE with a known answer,
 
@@ -79,7 +79,7 @@ $$
 E + S \underset{k_{-1}}{\overset{k_1}{\rightleftharpoons}} ES \xrightarrow{k_2} E + P ,
 $$
 
-mass-action kinetics gives one ODE per species, with $[E] = E_0 - [ES]$ because the total amount of enzyme is fixed (book, Eqs. 5.4 and 5.6). Assuming in addition that $[ES]$ changes slowly compared to $[S]$ (the quasi-steady-state approximation of Briggs and Haldane) collapses all of this into the familiar Michaelis–Menten rate law
+mass-action kinetics gives one ODE per species, with $[E] = E_0 - [ES]$ because the total amount of enzyme is fixed (book, Eqs. 5.4 and 5.6). Assuming in addition that $[ES]$ changes slowly compared to $[S]$ (the quasi-steady-state approximation of Briggs and Haldane) collapses all of this into the familiar Michaelis–Menten rate law (book, Eqs. 5.12 and 5.13)
 
 $$
 v = \frac{v_\text{max}[S]}{K_M + [S]}, \qquad v_\text{max} = k_2 E_0, \qquad K_M = \frac{k_{-1} + k_2}{k_1}.
@@ -145,7 +145,9 @@ The exact counts differ between MATLAB and Python, because the solvers differ in
 2. For the Michaelis–Menten example, vary $E_0$ from 0.01 to 10 mM and plot the largest difference between the two models against $E_0 / (S_0 + K_M)$.
 3. Make the product step reversible ($E + P \to ES$ with rate constant $k_{-2}$; book Eq. 5.3). Does the Michaelis–Menten rate law still describe the time course? What happens at long times?
 4. Solve the stiff example with $k_1 = k_{-1} = 1000$ using `ode45` and `ode15s` (or `RK45` and `BDF`), timing each with `tic`/`toc` (or `time.perf_counter`).
-5. Replace the Michaelis–Menten rate law with a Hill rate law, $v = v_\text{max}[S]^n / (K^n + [S]^n)$, and compare the time courses for $n = 1, 2, 4$.
+5. Replace the Michaelis–Menten rate law with a Hill rate law, $v = v_\text{max}[S]^n / (K^n + [S]^n)$, and compare the time courses for $n = 1, 2, 4$. (Book Eq. 5.14 writes the denominator as $k' + [S]^n$, with $k' = K^n$; Eq. 5.15.)
+6. Book Exercises 5.3–5.5: solve $dx/dt = -x^3$, $x(0) = 1$, with forward Euler for several step sizes and plot the error in $x(2)$ against the step size; then solve $dx/dt = -30x$ up to $t = 1.5$ with $\Delta t = 0.001$, 0.01 and 0.05. Which step sizes are stable, and why?
+7. Simulate the three-node phosphorylation oscillator of book §5.3.3 (Eqs. 5.17–5.19). Choose parameter values and explore: can the three proteins oscillate, and what does it take? (Compare the repressilator in @sec-dynamics.)
 
 ## Going further
 

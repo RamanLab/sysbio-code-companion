@@ -1,5 +1,5 @@
 title: Epidemics on networks
-book: "Ch. 4, §4.3 (spread of diseases on networks)"
+book: "Ch. 4, §4.4 (disease spreading on networks) and §4.4.1 (percolation)"
 needs:
   matlab: []
   python: [numpy]

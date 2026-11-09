@@ -1,5 +1,5 @@
 title: Synthetic lethal reaction pairs
-book: "Ch. 10, §10.2 (Synthetic lethals) and Fast-SL"
+book: "Ch. 10, §10.2.1 (exhaustive enumeration) and §10.2.3 (Fast-SL, Eq. 10.5)"
 needs:
   matlab: [COBRA Toolbox]
   python: [cobra]

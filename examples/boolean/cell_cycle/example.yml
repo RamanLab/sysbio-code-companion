@@ -1,5 +1,5 @@
 title: Boolean model of the mammalian cell cycle
-book: "Ch. 7, Eqs. 7.4 and §7.2.2 (Synchronous vs. asynchronous updates)"
+book: "Ch. 7, Eq. 7.4 and §7.2.2 (Synchronous vs. asynchronous updates)"
 needs:
   matlab: []
   python: [networkx]

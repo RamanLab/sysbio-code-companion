@@ -1,5 +1,5 @@
 title: Cross-feeding between two E. coli mutants
-book: "Ch. 11, community metabolic models"
+book: "Ch. 11, §11.1.3 (cFBA §11.1.3.2; SteadyCom §11.1.3.6, Eq. 11.3)"
 needs:
   matlab: [Optimization Toolbox]
   python: [cobra]

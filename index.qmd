@@ -14,7 +14,7 @@ Each example is a pair of standalone scripts, one `.m` and one `.py`, in the [`e
 
 | Primer chapter | Book chapter |
 |---|---|
-| @sec-getting-started | — |
+| @sec-getting-started | Appendix E (online), MATLAB for systems biology |
 | @sec-first-models | 1. Introduction to modelling |
 | @sec-networks | 2–3. Graph theory; structure of networks |
 | @sec-network-applications | 4. Applications of network biology |

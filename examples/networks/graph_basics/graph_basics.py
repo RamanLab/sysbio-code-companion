@@ -34,7 +34,7 @@ diameter = D.max()                                         # Eq. 3.11
 char_path_length = D[np.triu_indices(n, k=1)].mean()      # Eq. 3.12
 closeness = (n - 1) / D.sum(axis=1)                        # Eq. 3.14
 
-# Betweenness centrality (Eq. 3.17), counting each pair of nodes once
+# Betweenness centrality (Eq. 3.18), counting each pair of nodes once
 bc = nx.betweenness_centrality(G, normalized=False)
 betweenness = np.array([bc[v] for v in nodes])
 

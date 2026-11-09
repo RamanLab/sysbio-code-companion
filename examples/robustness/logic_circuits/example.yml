@@ -1,5 +1,5 @@
 title: Robustness and evolvability of logic circuits
-book: "Ch. 13 (robustness, genotype networks, evolvability)"
+book: "Ch. 13, §13.2 (genotype networks) and §13.3 (quantifying robustness and evolvability)"
 needs:
   matlab: []
   python: [scipy]

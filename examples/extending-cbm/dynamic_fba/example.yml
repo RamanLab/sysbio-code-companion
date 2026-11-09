@@ -1,5 +1,5 @@
 title: Dynamic FBA of a batch culture
-book: "Ch. 9, dynamic FBA"
+book: "Ch. 9, §9.6 (dFBA, static optimisation; Eqs. 9.8 and 9.9)"
 needs:
   matlab: [Optimization Toolbox]
   python: [cobra]

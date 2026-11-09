@@ -1,5 +1,5 @@
 title: FVA of the toy network
-book: "Ch. 8, §8.7 (Eq. 8.12)"
+book: "Ch. 8, §8.7 (Eqs. 8.11 and 8.12)"
 needs:
   matlab: [Optimization Toolbox]
   python: [scipy]

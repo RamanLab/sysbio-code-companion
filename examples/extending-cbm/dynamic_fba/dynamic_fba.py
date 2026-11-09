@@ -4,7 +4,8 @@ FBA predicts steady-state rates. Dynamic FBA follows a culture through
 time by solving an FBA problem at each short time step: the current
 concentrations set the maximum uptake rates, FBA gives the growth rate
 and the exchange fluxes, and these update biomass and concentrations
-(Mahadevan, Edwards and Doyle, 2002). Oxygen uptake is limited, as in a
+(the static optimisation approach of Mahadevan, Edwards and Doyle,
+2002; book §9.6). Oxygen uptake is limited, as in a
 dense culture, so cells growing fast on glucose overflow acetate, which
 they consume once the glucose runs out.
 """
@@ -49,10 +50,13 @@ for k, t in enumerate(times):
     else:                              # cannot even meet maintenance
         mu, v = 0.0, np.zeros(n)
     traj[k] = X, G, A, mu
-    # Euler step: dX/dt = mu X, dC/dt = v_exchange X
-    G = max(0.0, G + v[glc] * X * dt)
-    A = max(0.0, A + v[ac] * X * dt)
-    X = X + mu * X * dt
+    # Integrate over the step with the fluxes held constant (book Eqs.
+    # 9.8 and 9.9): X grows as exp(mu t), and dC/dt = v_exchange X
+    growth = np.exp(mu * dt)
+    produced = X * (growth - 1) / mu if mu > 0 else X * dt
+    G = max(0.0, G + v[glc] * produced)
+    A = max(0.0, A + v[ac] * produced)
+    X = X * growth
 
 X_t, G_t, A_t, mu_t = traj.T
 t_glc = times[np.argmax(G_t < 1e-9)]          # glucose used up

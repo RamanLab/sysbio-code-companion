@@ -95,11 +95,12 @@ The final-size curve (right) shows the **threshold** at $R_0 = 1$. Below it, the
 
 ## Exercises
 
-1. Add a carrying capacity for the deer, replacing $bD$ by $bD(1 - D/K)$ with $K = 100$. What happens to the oscillations, and where do the trajectories end up?
+1. Add a carrying capacity for the deer (book Exercise 1.4), replacing $bD$ by $bD(1 - D/K)$ with $K = 100$. What happens to the oscillations, and where do the trajectories end up?
 2. Vary the initial number of lions in the Lotka–Volterra model, keeping 40 deer. Plot the period of the cycle against the amplitude of the deer oscillation.
 3. In the SIR model with $R_0 = 3$, vaccinate a fraction $v$ of the population at the start (move it from $S$ to $R$). Plot the peak and the final size of the epidemic against $v$. At what value of $v$ does the epidemic no longer grow?
 4. Add a loss of immunity, $R \to S$ at rate $\omega$ (the SIRS model). Simulate for 1000 days with $\omega = 0.01$ per day. What happens in the long run?
+5. Simulate the zombie outbreak model of Munz and colleagues (book Exercise 1.8), and reproduce their main results.
 
 ## Going further
 
-Both models assume well-mixed populations, in which everyone meets everyone else equally often. Real contacts follow networks, which changes how epidemics spread; @sec-networks introduces the tools for studying such networks, and @sec-network-applications simulates epidemics on them.
+Both models assume well-mixed populations, in which everyone meets everyone else equally often. Real contacts follow networks, which changes how epidemics spread (book, §4.4); @sec-networks introduces the tools for studying such networks, and @sec-network-applications simulates epidemics on them. A generalised Lotka–Volterra model of interacting microbial species appears in book §11.1.2.

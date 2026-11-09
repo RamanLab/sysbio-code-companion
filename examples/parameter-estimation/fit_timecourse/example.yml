@@ -1,5 +1,5 @@
 title: Fitting an ODE model to a time course
-book: "Ch. 6, §6.5 (identifiability)"
+book: "Ch. 6, §6.2.2 (least squares) and §6.1.2 (structural identifiability)"
 needs:
   matlab: [Optimization Toolbox]
   python: [scipy]

@@ -53,7 +53,7 @@ Following each state forward until it repeats, as the code does, finds every att
 
 ## The mammalian cell cycle
 
-The second example is a model of the mammalian cell cycle by Fauré and colleagues [@faure2006], with ten variables: the cyclins CycD, CycE, CycA and CycB, the retinoblastoma protein Rb, the transcription factor E2F, the inhibitor p27, and the regulators Cdc20, Cdh1 and UbcH10 (Ubc). Its transfer functions are the book's Eqs. 7.4. CycD stands for the growth signal: it has no regulators in the model, so it simply keeps its initial value.
+The second example is a model of the mammalian cell cycle by Fauré and colleagues [@faure2006], with ten variables: the cyclins CycD, CycE, CycA and CycB, the retinoblastoma protein Rb, the transcription factor E2F, the inhibitor p27, and the regulators Cdc20, Cdh1 and UbcH10 (Ubc). Its transfer functions are the book's Eq. 7.4. CycD stands for the growth signal: it has no regulators in the model, so it simply keeps its initial value.
 
 With ten variables there are 1024 states, still few enough to examine every one. We do so twice. The first time with synchronous updating. The second time with **asynchronous** updating, which drops the assumption that every process takes exactly one time step: at each step, any one of the variables whose transfer function calls for a change may change, in any order. A state can then have several possible successors, so the states and their possible transitions form a directed graph, the **state transition graph**. An attractor is now a set of states that, once entered, can never be left: a strongly connected component of that graph with no transitions leading out of it, which graph libraries find directly.
 
@@ -84,9 +84,11 @@ Asynchronous updating keeps the quiescent steady state, but the seven-state cycl
 ## Exercises
 
 1. In the three-gene network, change the rule for $g_3$ to $g_3^* = (\text{NOT } g_3) \text{ AND } g_2$. Find the new attractors and their basins.
-2. Simulate a **knock-out** in the cell-cycle model: fix one variable at 0 (for example, Cdh1) and find the attractors again, with both kinds of updating. Which knock-outs abolish the cycle?
+2. Simulate a **knock-out** in the cell-cycle model: fix one variable at 0 (for example, Cdh1) and find the attractors again, with both kinds of updating. Which knock-outs abolish the cycle? (This is book Exercise 7.6, done here without BooleSim or BooleanNet.)
 3. Start the cell-cycle model in its quiescent steady state, switch CycD on, and update synchronously. Through which states does the network pass before it joins the seven-state cycle, and how many steps does that take?
 4. Write a function that generates a random Boolean network (Kauffman's "NK" network): $n$ genes, each with $K$ randomly chosen regulators and a random truth table. For $n = 12$ and $K = 1, 2, 3, 4$, find the number of attractors and their periods, averaged over many networks. How does the behaviour change with $K$?
+5. Book Exercise 7.3: write Boolean transfer functions for the repressilator (LacI represses TetR, TetR represses λcI, λcI represses LacI) and simulate them with synchronous and asynchronous updates. Compare the result with the ODE model of @sec-dynamics.
+6. Book Exercise 7.1: build the four-gene network described there, compute all its state transitions and identify the attractors.
 
 ## Going further
 

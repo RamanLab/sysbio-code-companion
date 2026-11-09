@@ -1,5 +1,5 @@
 title: FBA and MoMA for single deletions
-book: "Ch. 9, MoMA; Ch. 10, knock-outs"
+book: "Ch. 9, §9.1 (MoMA, Eqs. 9.1–9.3); Ch. 10, §10.1 (knock-outs)"
 needs:
   matlab: [Optimization Toolbox]
   python: [cobra, clarabel]

@@ -1,5 +1,5 @@
 %% A Boolean model of the mammalian cell cycle (Fauré et al., 2006)
-% Ten genes and proteins; the update rules are the book's Eqs. 7.4. With
+% Ten genes and proteins; the update rules are the book's Eq. 7.4. With
 % 2^10 = 1024 possible states, we can examine every one of them:
 %   1. synchronous updating, as in the previous example;
 %   2. asynchronous updating, where one variable changes at a time, in

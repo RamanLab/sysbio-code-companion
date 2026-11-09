@@ -4,7 +4,7 @@ Every dynamic model carries parameters, such as rate constants, Michaelis consta
 
 ::: {.callout-note appearance="simple"}
 ## In the book
-Chapter 6, *Parameter Estimation*: least squares and its weighted forms (§6.2.2), maximum likelihood (§6.2.3), algorithms for optimisation, from direct search to evolutionary algorithms (§6.3), post-regression diagnostics (§6.4) and troubleshooting, including identifiability and the curse of dimensionality (§6.5). Exercise 6.1 uses the same model.
+Chapter 6, *Parameter Estimation*: least squares and its weighted forms (§6.2.2), maximum likelihood (§6.2.3), algorithms for optimisation, from direct search to evolutionary algorithms (§6.3), post-regression diagnostics (§6.4) and troubleshooting, including sloppiness and the curse of dimensionality (§6.5). Structural identifiability is introduced in §6.1.2. Exercise 6.1 uses the same model and the same data.
 :::
 
 ## The model and the data
@@ -70,7 +70,7 @@ $$
 
 the apparent Michaelis constant. Every pair $(K_M, K_I)$ on the grey curve gives the same $K_M^\text{app}$, and hence identical predictions for every data point. The data determine $v_\text{max}$ and $K_M^\text{app}$, and nothing more: $K_M$ and $K_I$ are **structurally non-identifiable** from D1. More data of the same kind would not help. A second inhibitor concentration does, because $K_M^\text{app}$ changes with $I$ in a way that depends on $K_I$ (red star).
 
-Two lessons follow. First, a solver that reports success has found *a* minimum; it says nothing about whether the minimum is unique. Fitting from several starting points is a simple and effective check. Second, identifiability is a property of the model *and* the experiment together, and it is best examined before the experiments are done (book, §6.5.3).
+Two lessons follow. First, a solver that reports success has found *a* minimum; it says nothing about whether the minimum is unique. Fitting from several starting points is a simple and effective check. Second, identifiability is a property of the model *and* the experiment together, and it is best examined before the experiments are done (book, §6.1.2).
 
 ## The error landscape, and grid search
 
@@ -104,7 +104,7 @@ Grid search becomes hopeless quickly as parameters are added. Sixty values for e
 
 ## Evolutionary algorithms
 
-Between local methods, which are fast but need a good starting guess, and grid search, which is thorough but expensive, lie stochastic global methods such as simulated annealing and evolutionary algorithms (book, §6.3.4). Evolutionary algorithms borrow the logic of natural selection: a *population* of parameter sets is varied at random, and the better ones are more likely to survive into the next generation.
+Between local methods, which are fast but need a good starting guess, and grid search, which is thorough but expensive, lie stochastic global methods such as simulated annealing (book, §6.3.3.3) and evolutionary algorithms (§6.3.4). Evolutionary algorithms borrow the logic of natural selection: a *population* of parameter sets is varied at random, and the better ones are more likely to survive into the next generation.
 
 The algorithm below is one of the simplest of them, a (10 + 40) evolution strategy. It keeps 10 parent parameter sets. In each generation it makes 40 children by adding small random changes ("mutations") to copies of randomly chosen parents, and the best 10 of all 50 become the next parents. The mutations shrink slowly from one generation to the next, so the search moves from exploring widely to refining locally. The parameters are searched on a logarithmic scale, which suits parameters whose plausible values span orders of magnitude.
 
@@ -175,11 +175,11 @@ This is the time-course version of the lesson of the inhibition example: a model
 1. Fit D2 alone from the eight starting points. Which combination of $K_M$ and $K_I$ do all the fits agree on?
 2. Fit D1 and D2 together using the *unweighted* SSE (book, Eq. 6.2). How do the estimates change, and which data points now dominate the fit?
 3. Estimate the uncertainty of the parameters fitted to D1 and D2 together. Both least-squares solvers return the Jacobian $J$ of the residuals at the solution; the covariance of the estimates is approximately $(J^\top J)^{-1}$. Compute the correlation between $K_M$ and $K_I$ (book, Eq. 6.11). Is it close to $\pm 1$? Repeat for D1 alone: what happens to $J^\top J$?
-4. Book Exercise 6.1: evaluate the SSE of the parameter sets $\theta_1$, $\theta_2$ and $\theta_3$ given there. Which is best, and can the data tell them apart?
+4. Book Exercise 6.1: evaluate the SSE of the parameter sets $\theta_1$, $\theta_2$ and $\theta_3$ given there. (The four data points are from the same experiment as D1; read the first column of the table as $S$ and the second as $v$.) Compute $K_M(1 + I/K_I)$ for each set: what do you notice, and can any data at a single inhibitor concentration tell them apart?
 5. Run the evolutionary algorithm with ten different random seeds. How much do the final estimates vary? Then halve the number of generations, or start with a smaller mutation size, and repeat.
 6. In the time-course example, fix $g_m = 1$/h, as if the mRNA half-life had been measured separately, and fit the other three parameters to the protein data alone. Are they now identifiable?
 7. Regenerate the data with `tools/make_expression_data.py` using different random seeds, and refit to both species each time. How much do the estimates vary from one data set to the next? Compare with the uncertainty estimated from $(J^\top J)^{-1}$ (Exercise 3).
 
 ## Going further
 
-For larger ODE models, with tens of parameters, each fit needs many simulations, and the questions of identifiability and of local versus global search become pressing. Profile likelihoods, which follow the best SSE as one parameter is varied and the others are refitted, are a practical way to see which parameters the data determine (book, §6.5).
+For larger ODE models, with tens of parameters, each fit needs many simulations, and the questions of identifiability and of local versus global search become pressing. Profile likelihoods, which follow the best SSE as one parameter is varied and the others are refitted, are a practical way to see which parameters the data determine. Book §6.5.2 discusses a related idea, sloppiness: in many models, some combinations of parameters barely affect the fit.

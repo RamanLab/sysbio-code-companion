@@ -18,7 +18,7 @@ tol = dict(rtol=1e-8, atol=1e-10)  # tight tolerances for both solvers
 
 
 def full_model(t, y, E0):
-    """Mass-action ODEs for S, ES and P (book Eqs. 5.4)."""
+    """Mass-action ODEs for S, ES and P (book Eqs. 5.4a–d)."""
     S, ES, P = y
     E = E0 - ES                    # enzyme conservation (Eq. 5.6)
     return [-k1 * E * S + k_1 * ES,

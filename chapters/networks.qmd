@@ -4,17 +4,17 @@ Many biological systems are naturally described as networks: proteins that bind 
 
 ::: {.callout-note appearance="simple"}
 ## In the book
-Chapter 2, *Introduction to Graph Theory*: graphs, their representation as adjacency matrices and edge lists, and paths. Chapter 3, *Structure of Networks*: network parameters such as degree, clustering, path length and centrality (§3.1), and the canonical network models of Erdős and Rényi, Watts and Strogatz, and Barabási and Albert (§3.2). Communities, motifs and perturbations (§3.3–3.5) are left as exercises here.
+Chapter 2, *Introduction to Graph Theory*: types of graphs (§2.3), their computational representations as adjacency matrices and lists (§2.4), and graph representations of biological networks (§2.5). Chapter 3, *Structure of Networks*: network parameters such as degree, clustering and path length (§3.1.1), and measures of centrality (§3.1.2); the canonical network models of Erdős and Rényi, Watts and Strogatz, and Barabási and Albert (§3.2). Communities, motifs and perturbations (§3.3–3.5) are left as exercises here.
 :::
 
 ## Network parameters
 
 A network, or graph, is a set of nodes joined by edges. For an undirected network of $n$ nodes, the **adjacency matrix** $\mathbf{A}$ has $a_{ij} = 1$ if nodes $i$ and $j$ are joined, and 0 otherwise. Most network parameters follow directly from it:
 
-* the **degree** $k_i = \sum_j a_{ij}$, the number of neighbours of node $i$;
-* the **clustering coefficient** $C_i$, the fraction of pairs of neighbours of $i$ that are themselves joined. Because $(\mathbf{A}^3)_{ii}$ counts the closed walks of length three from $i$, which is twice the number of triangles through $i$, $C_i = (\mathbf{A}^3)_{ii} / k_i(k_i - 1)$;
-* the **shortest-path length** $d_{ij}$ between every pair of nodes, from which follow the **diameter** (the largest $d_{ij}$) and the **characteristic path length** (the mean $d_{ij}$ over all pairs);
-* two measures of how central a node is: **closeness**, $(n-1)/\sum_j d_{ij}$, the reciprocal of the mean distance to all other nodes, and **betweenness**, the number of shortest paths between other pairs of nodes that pass through the node (a path shared by several equally short alternatives counts fractionally).
+* the **degree** $k_i = \sum_j a_{ij}$, the number of neighbours of node $i$ (book, Eq. 3.1);
+* the **clustering coefficient** $C_i$, the fraction of pairs of neighbours of $i$ that are themselves joined. Because $(\mathbf{A}^3)_{ii}$ counts the closed walks of length three from $i$, which is twice the number of triangles through $i$, $C_i = (\mathbf{A}^3)_{ii} / k_i(k_i - 1)$ (book, Eqs. 3.6 and 3.7);
+* the **shortest-path length** $d_{ij}$ between every pair of nodes, from which follow the **diameter** (the largest $d_{ij}$) and the **characteristic path length** (the mean $d_{ij}$ over all pairs) (book, Eqs. 3.11 and 3.12);
+* two measures of how central a node is: **closeness**, $(n-1)/\sum_j d_{ij}$, the reciprocal of the mean distance to all other nodes (Eq. 3.14), and **betweenness** (Eq. 3.18), the number of shortest paths between other pairs of nodes that pass through the node (a path shared by several equally short alternatives counts fractionally).
 
 In MATLAB, networks are `graph` objects (or `digraph` for directed networks), part of core MATLAB. In Python, the standard package is NetworkX. Both provide shortest paths and centrality measures; we compute the clustering coefficient and closeness from their definitions, so that both languages use exactly the same formulas as the book.
 
@@ -50,7 +50,7 @@ Our example is a small network of ten proteins, two tightly knit groups joined t
 ![](/examples/networks/graph_basics/out/python/fig-graph-basics.png)
 :::
 
-The different measures pick out different nodes. D has the largest degree, but E and F, with only two and three neighbours, carry the most shortest paths: every path between the two groups passes through both of them, so removing either would split the network in two. A, B and C, inside a complete group of four, have the highest clustering coefficient and no betweenness at all. Which measure matters depends on the question being asked; for example, betweenness, more than degree, often marks nodes whose removal disrupts communication across a network (book, §3.1.3 and §3.5).
+The different measures pick out different nodes. D has the largest degree, but E and F, with only two and three neighbours, carry the most shortest paths: every path between the two groups passes through both of them, so removing either would split the network in two. A, B and C, inside a complete group of four, have the highest clustering coefficient and no betweenness at all. Which measure matters depends on the question being asked; for example, betweenness, more than degree, often marks nodes whose removal disrupts communication across a network (book, §3.1.2 and §3.5).
 
 ## Random and small-world networks
 
@@ -118,9 +118,11 @@ Plotting the fraction of nodes with degree *at least* $k$ (right panel), in plac
 
 1. Remove node E from the example network. Recompute all the parameters. What happens to the diameter, and why do the shortest-path functions report infinite distances?
 2. Generate Erdős–Rényi networks with $n = 1000$ and mean degree from 0.2 to 3. Plot the size of the largest connected component (`conncomp` in MATLAB, `nx.connected_components` in Python) against the mean degree. What happens at a mean degree of 1?
-3. For the scale-free network, remove nodes one at a time, either at random or in order of decreasing degree, and track the size of the largest connected component. Repeat for the Erdős–Rényi network. Which network is more robust to random failures, and which to targeted attack (book, §3.5.2)?
+3. For the scale-free network, remove nodes one at a time, either at random or in order of decreasing degree, and track the size of the largest connected component. Repeat for the Erdős–Rényi network. Which network is more robust to random failures, and which to targeted attack (book, §3.5.2 and Exercise 3.13)?
 4. Download a biological network, for example a protein interaction network from <https://networkrepository.com/>, and compute its degree distribution, mean clustering coefficient and characteristic path length. Compare them with an Erdős–Rényi network with the same numbers of nodes and edges. (This is the second problem of the BT5240 network assignment.)
-5. The book's code repository has a function `barabasi_albert.m` for $m = 1$. What kind of network does it always produce, and what is its clustering coefficient?
+5. The book's code repository has a function `barabasi_albert.m` for $m = 1$. What kind of network does it always produce, and why is its clustering coefficient zero (book Exercise 3.10)?
+6. Book Exercise 3.11: is the clustering coefficient of the *E. coli* STRING network used in @sec-network-applications (`data/ecoli_string_ppi.csv`) high? Compare it with Erdős–Rényi networks of the same size, and with randomised networks that keep every node's degree (book, §3.4.1).
+7. Check the code of the first example against the worked values in the book: build the networks of book Figure 3.1 and compare their clustering coefficients (Eq. 3.9), diameters and characteristic path lengths with those given in §3.1.1.
 
 ## Going further
 

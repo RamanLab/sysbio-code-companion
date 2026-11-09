@@ -1,5 +1,5 @@
 title: Grid search and the SSE landscape
-book: "Ch. 6, §6.3.3 (Direct search methods) and §6.5.3 (Identifiability)"
+book: "Ch. 6, §6.3.3 (direct search), §6.1.2 (identifiability) and §6.5.5 (curse of dimensionality)"
 needs:
   matlab: []
   python: [numpy]

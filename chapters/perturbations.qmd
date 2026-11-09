@@ -4,7 +4,7 @@ One of the most common uses of a metabolic model is to predict what happens when
 
 ::: {.callout-note appearance="simple"}
 ## In the book
-Chapter 10, *Perturbations to Metabolic Networks*: knock-outs (§10.1), gene versus reaction deletions and gene–protein–reaction rules (§10.1.1), synthetic lethals and algorithms to find them, including Fast-SL (§10.2), and applications such as drug target identification (§10.6). Chapter 9 covers methods that predict the flux distribution after a perturbation, such as MoMA (§9.2).
+Chapter 10, *Perturbations to Metabolic Networks*: knock-outs (§10.1), gene versus reaction deletions and gene–protein–reaction rules (§10.1.1), synthetic lethals and algorithms to find them, by exhaustive enumeration (§10.2.1), bi-level optimisation (§10.2.2) and Fast-SL (§10.2.3), and applications such as metabolic engineering and drug target identification (§10.6). Chapter 9 covers methods that predict the flux distribution after a perturbation, such as MoMA (§9.1) and ROOM (§9.2); see @sec-extending-cbm.
 :::
 
 ## Single deletions
@@ -43,12 +43,12 @@ Only seven genes are essential, although thirteen reactions are. The difference 
 
 Two reactions form a **synthetic lethal** pair if deleting either one alone leaves the cell viable, but deleting both is lethal (book, §10.2). Such pairs reveal how a network backs itself up, and they are attractive targets for combination drugs.
 
-The obvious way to find them is to test every pair of non-essential reactions. For the core model that is $\binom{61}{2} = 1830$ double deletions, which is easy; for a genome-scale model with 2000 reactions it is about two million, and for triplets more than a billion. The Fast-SL algorithm, developed in our group, cuts down the search with a simple argument [@pratapa2015]. If some flux distribution that supports growth uses neither reaction of a pair, deleting both leaves that distribution intact, so the pair cannot be lethal. Hence:
+The obvious way to find them is to test every pair of non-essential reactions (book, §10.2.1). For the core model that is $\binom{61}{2} = 1830$ double deletions, which is easy; for a genome-scale model with 2000 reactions it is about two million, and for triplets more than a billion. The Fast-SL algorithm, developed in our group, cuts down the search with a simple argument [@pratapa2015]. If some flux distribution that supports growth uses neither reaction of a pair, deleting both leaves that distribution intact, so the pair cannot be lethal. Hence:
 
 * at least one reaction of a lethal pair, call it $i$, must carry flux in a wild-type solution; and
 * the other reaction, $j$, must carry flux in a solution that remains once $i$ is deleted.
 
-The sparser these solutions, the fewer pairs need to be tested, so Fast-SL uses solutions that achieve the maximum growth with the minimum total flux, $\sum_j |v_j|$ (parsimonious FBA; book, §8.8.5). The code below finds all synthetic lethal pairs both ways, and checks that the answers agree.
+The sparser these solutions, the fewer pairs need to be tested, so Fast-SL uses solutions that achieve the maximum growth with the minimum total flux, $\sum_j |v_j|$: the minimal-norm solution of book Eq. 10.5 (§10.2.3.2), closely related to parsimonious FBA (§8.8.5). The code below finds all synthetic lethal pairs both ways, and checks that the answers agree.
 
 ::: {.panel-tabset group="language"}
 ## MATLAB
@@ -82,7 +82,8 @@ The exact number of double deletions that Fast-SL needs depends on which of seve
 2. Use the gene-deletion functions (`single_gene_deletion` in COBRApy, `singleGeneDeletion` in the COBRA Toolbox) to find essential genes, and the GPR rules to explain every case where a reaction is essential but none of its genes is.
 3. Change the lethality cut-off from 1% to 5% and to 50% of wild-type growth. How do the lists of essential reactions and synthetic lethal pairs change?
 4. Extend the Fast-SL code to find synthetic lethal *triplets*: three reactions whose joint deletion is lethal, when no pair among them is. How many triple deletions does it test, compared with the $\binom{n}{3}$ of an exhaustive search? (For genome-scale models, use the full implementations at <https://github.com/RamanLab/FastSL> and <https://github.com/RamanLab/FastSL-py>.)
-5. A **minimal reactome** is a set of reactions that supports growth, from which no reaction can be removed without killing the cell. Starting from all reactions, remove reactions one at a time, in random order, keeping each removal only if the cell still grows. How large is the result, and does it change with the order? (This is the second problem of the BT5240 constraint-based assignment.)
+5. A **minimal reactome** is a set of reactions that supports growth, from which no reaction can be removed without killing the cell. Starting from all reactions, remove reactions one at a time, in random order, keeping each removal only if the cell still grows. How large is the result, and does it change with the order? (This is the second problem of the BT5240 constraint-based assignment, and book Exercise 10.8 asks the same of the genome-scale model iML1515.)
+6. Book Exercises 10.3 and 10.4: delete the two transketolases, TKT1 and TKT2, singly and together. What do you infer? Compare the flux distributions when only one of them is active, using FBA with the minimal-norm solution so that the comparison does not depend on the solver.
 
 ## Going further
 

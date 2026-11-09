@@ -1,5 +1,5 @@
 title: The repressilator
-book: "Ch. 12 (synthetic circuits); stability of steady states"
+book: "Ch. 12, §12.2.1 (the repressilator, Eq. 12.1)"
 needs:
   matlab: []
   python: [scipy]

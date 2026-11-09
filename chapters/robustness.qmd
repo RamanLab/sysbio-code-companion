@@ -4,7 +4,7 @@ Living systems keep working in the face of constant change: concentrations of th
 
 ::: {.callout-note appearance="simple"}
 ## In the book
-Chapter 13, *Robustness and Evolvability of Biological Systems*: what robustness means, mechanisms that confer it, such as feedback and redundancy, genotype networks, and the relationship between robustness and evolvability.
+Chapter 13, *Robustness and Evolvability of Biological Systems*: mechanisms of robustness, such as redundancy and feedback control (§13.1.1), genotype spaces and genotype networks (§13.2), and the definitions of genotype and phenotype robustness and evolvability, with the relationship between them (§13.3). The search for circuits that adapt perfectly is described in §12.3.1.
 :::
 
 ## Robust adaptation by integral feedback
@@ -42,7 +42,7 @@ When the enzyme is saturated, $K \ll x$, the second equation becomes $dx/dt \app
 
 With $K = 0.01$, the output jumps by about half when the signal doubles, and returns within a few time units to within 0.5% of its earlier level. With $K = 1$, it settles 18% higher. Across the 81 parameter sets, the circuit with the saturated enzyme always adapts to within about 6%, and in four cases out of five to within 1%, while the other changes its output by 3% to 34%, depending on the parameters.
 
-Notice what is robust and what is not. The level to which the output returns, $b/a$, varies sixteen-fold across the parameter sets, and the size and duration of the response vary too. What the structure of the circuit guarantees is the *return* to that level. Robustness is always robustness of a particular feature to particular perturbations, and a circuit can be robust in one respect and sensitive in another.
+Notice what is robust and what is not. The level to which the output returns, $b/a$, varies sixteen-fold across the parameter sets, and the size and duration of the response vary too. What the structure of the circuit guarantees is the *return* to that level. Robustness is always robustness of a particular feature to particular perturbations, and a circuit can be robust in one respect and sensitive in another. Searching all 16,038 connected three-node enzyme circuits, Ma and colleagues found that only two families of topologies adapt well: negative feedback loops with a buffering node, such as this one, and incoherent feed-forward loops [@ma2009] (book, §12.3.1).
 
 ## Robustness and evolvability
 
@@ -50,7 +50,7 @@ Robustness to mutations seems to work against evolvability. If most mutations le
 
 Testing these ideas needs a system small enough that every genotype can be examined. Digital logic circuits are such a system [@raman2011]. Our circuits are chains of four NAND gates. Each input of each gate is wired to one of the two circuit inputs, A and B, or to the output of an earlier gate, and the last gate gives the output. The wiring is the genotype, and the logic function the circuit computes, one of the 16 possible functions of two inputs, is its phenotype. A mutation rewires one input of one gate, and each circuit has 20 such neighbours. We enumerate all 14,400 circuits, and measure:
 
-* the **robustness** of a circuit, the fraction of its 20 neighbours that compute the same function, and of a function, the average over all circuits that compute it;
+* the **robustness** of a circuit, the fraction of its 20 neighbours that compute the same function, and of a function, the average over all circuits that compute it (book §13.3 counts neighbours rather than taking the fraction; with 20 neighbours for every circuit, the two differ only by that factor);
 * the **evolvability** of a circuit, the number of other functions among its neighbours, and of a function, the number of other functions found among the neighbours of all its circuits.
 
 Treating truth tables as 4-bit numbers lets both languages evaluate all the circuits at once with bitwise operations.
@@ -86,7 +86,9 @@ The right panel resolves the paradox. For single circuits, robustness and evolva
 3. Replace the saturated degradation of $x$ by first-order degradation, $dx/dt = ay - bx$. Show that the steady-state output now rises by a factor $\sqrt{2}$ whenever the signal doubles, whatever the parameters.
 4. Allow each gate in the logic circuits to be either NAND or NOR, so that a mutation can also change the type of a gate. How does this change the number of circuits for each function, their robustness, and the connectivity of their genotype networks? Can XOR circuits now reach one another?
 5. Starting from a random NAND circuit, perform random walks of 100 mutations that never change the function. How many different functions are found among the neighbours visited, and how does this grow with the length of the walk?
+6. Book Exercises 13.3 and 13.4: write code that builds the ODEs of the Goodwin oscillator for any of the $3^6 = 729$ two-gene topologies studied by Wagner, and measure the genotype robustness of one topology that oscillates. Why does every topology have 12 neighbours?
+7. Book Exercise 12.6: for an incoherent feed-forward loop of three enzymes, sample parameter sets at random and measure the fraction that give near-perfect adaptation, as Ma and colleagues did.
 
 ## Going further
 
-Robustness has many sources besides feedback: redundant genes and pathways (@sec-perturbations), distributed control in networks, and modular organisation. The genotype-network view of evolution is developed at length by @wagner2008 and in book Chapter 13, along with the trade-offs between robustness, fragility and performance in engineered and living systems.
+Robustness has many sources besides feedback: redundant genes and pathways (@sec-perturbations), modularity and decoupling, and organising principles such as bow-tie structures (book, §13.1). The genotype-network view of evolution is developed by @wagner2008 and in book §13.2–13.3, which also describes how these relationships hold for gene regulatory, metabolic and signalling networks, and when mutations are not all equally likely.

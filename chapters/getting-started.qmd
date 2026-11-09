@@ -38,7 +38,7 @@ Start MATLAB in the repository folder and run, once per session:
 setup_primer      % adds the small +sbp helper package to the path
 ```
 
-Then run any example, for instance `run examples/constraint-based/toy_fba/toy_fba.m`.
+Then run any example, for instance `run examples/constraint-based/toy_fba/toy_fba.m`. If you are new to MATLAB, the book's online Appendix E, *MATLAB for systems biology*, is a short introduction.
 
 ## What the examples write
 

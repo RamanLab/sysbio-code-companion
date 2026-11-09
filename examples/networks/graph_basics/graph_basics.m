@@ -28,7 +28,7 @@ diameter = max(D(:));                                  % Eq. 3.11
 char_path_length = mean(D(triu(true(n), 1)));          % Eq. 3.12
 closeness = (n - 1) ./ sum(D, 2);                      % Eq. 3.14
 
-% Betweenness centrality (Eq. 3.17), counting each pair of nodes once
+% Betweenness centrality (Eq. 3.18), counting each pair of nodes once
 betweenness = centrality(G, 'betweenness');
 
 fprintf('%d nodes, %d edges, mean degree %.2f\n', n, numedges(G), ...

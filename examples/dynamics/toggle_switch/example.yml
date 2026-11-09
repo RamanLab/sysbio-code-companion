@@ -1,5 +1,5 @@
 title: The toggle switch in the phase plane
-book: "Ch. 12 (synthetic circuits); stability of steady states"
+book: "Ch. 12, §12.2.2 (toggle switch, Eqs. 12.2 and 12.3)"
 needs:
   matlab: []
   python: [scipy]

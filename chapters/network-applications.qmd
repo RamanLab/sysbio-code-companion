@@ -4,14 +4,14 @@
 
 ::: {.callout-note appearance="simple"}
 ## In the book
-Chapter 4, *Applications of Network Biology*: the centrality–lethality hypothesis, the prediction of essential genes from network features, and disease networks. Epidemics on networks go beyond the book; the papers cited below are good starting points.
+Chapter 4, *Applications of Network Biology*: the centrality–lethality hypothesis and the prediction of essential genes from network measures (§4.1), disease networks and modules (§4.2), and disease spreading on networks, through percolation-based models and agent-based simulations (§4.4).
 :::
 
 ## Centrality and essentiality
 
-When Jeong and colleagues mapped the protein interaction network of yeast, they found that a protein's chance of being essential rose with its degree: proteins with more than 15 partners were about three times as likely to be essential as those with five or fewer [@jeong2001]. This **centrality–lethality hypothesis** has been tested and debated many times since, with different networks and different measures of centrality [@raman2014].
+When Jeong and colleagues mapped the protein interaction network of yeast, they found that a protein's chance of being essential rose with its degree: proteins with more than 15 partners were about three times as likely to be essential as those with five or fewer [@jeong2001]. This **centrality–lethality hypothesis** has been tested and debated many times since, with different networks and different measures of centrality; across 20 organisms, essential genes have higher degree and betweenness than the network average [@raman2014] (book, §4.1).
 
-Here we look at the *E. coli* K-12 protein network from the STRING database [@szklarczyk2023], keeping only the 32,244 high-confidence links (combined score of at least 700). For essentiality, we use NetGenes, which predicts essential genes in over 2700 bacteria with a machine-learning model trained on features of their STRING networks [@azhagesan2018]; it lists 790 *E. coli* genes as essential. For each protein in the largest connected component, we compute three centralities from @sec-networks: degree, closeness and eigenvector centrality.
+Here we look at the *E. coli* K-12 protein network from the STRING database [@szklarczyk2023], keeping only the 32,244 high-confidence links (combined score of at least 700). For essentiality, we use NetGenes, which predicts essential genes in over 2700 bacteria with a machine-learning model trained on features of their STRING networks [@azhagesan2018] (book, §4.1.1); it lists 790 *E. coli* genes as essential. For each protein in the largest connected component, we compute three centralities from @sec-networks: degree, closeness and eigenvector centrality.
 
 To measure how well a single centrality separates essential genes from the rest, we use the **receiver operating characteristic (ROC) curve**. Ranking the proteins by centrality and moving a threshold down the list, it plots the fraction of essential genes above the threshold against the fraction of other genes above it. The area under the curve (AUC) is the probability that a randomly chosen essential gene is more central than a randomly chosen non-essential one: 0.5 for a centrality that tells us nothing, 1 for one that separates the two groups perfectly.
 
@@ -47,7 +47,7 @@ $$
 T > T_c = \frac{\langle k \rangle}{\langle k^2 \rangle - \langle k \rangle},
 $$
 
-where $\langle k \rangle$ and $\langle k^2 \rangle$ are the mean degree and the mean squared degree [@newman2002]. For an Erdős–Rényi network, $\langle k^2 \rangle - \langle k \rangle = \langle k \rangle^2$, so $T_c = 1/\langle k \rangle$. In a scale-free network, the hubs make $\langle k^2 \rangle$ large, and so the threshold small; in an infinitely large scale-free network, it disappears altogether [@pastorsatorras2001].
+where $\langle k \rangle$ and $\langle k^2 \rangle$ are the mean degree and the mean squared degree [@newman2002]. This result comes from viewing the epidemic as a percolation process: keep each link of the network with probability $T$, and an outbreak reaches everyone in the connected cluster of its first case (book, §4.4.1). For an Erdős–Rényi network, $\langle k^2 \rangle - \langle k \rangle = \langle k \rangle^2$, so $T_c = 1/\langle k \rangle$. In a scale-free network, the hubs make $\langle k^2 \rangle$ large, and so the threshold small; in an infinitely large scale-free network, it disappears altogether [@pastorsatorras2001].
 
 The code simulates epidemics on Erdős–Rényi and scale-free networks of 2000 people, each with four contacts on average, starting each from one randomly chosen person. It then vaccinates 10% of the scale-free network, either at random or by choosing the people with the most contacts, and repeats the epidemic.
 
@@ -73,7 +73,7 @@ The code simulates epidemics on Erdős–Rényi and scale-free networks of 2000 
 
 The threshold for the Erdős–Rényi network is 0.25, as expected, but for the scale-free network it is only about 0.09. Between the two, an infection that would die out among people with similar numbers of contacts spreads on the scale-free network, reaching hubs, which pass it on widely: at $T = 0.3$, it infects on average 19% of the scale-free network against 9% of the Erdős–Rényi one. Well above both thresholds, the two networks fare much alike.
 
-Vaccination shows the other side of the hubs. Vaccinating a random 10% of people reduces the average epidemic only from about 62% to 43% of the population, but vaccinating the 10% with the most contacts stops it almost completely. Removing the hubs breaks the network into pieces too small to sustain an epidemic, just as targeted attacks on hubs fragment scale-free networks far faster than random failures do (Exercise 3 of @sec-networks). Finding the hubs of a real contact network is hard, but there is a clever shortcut: vaccinate a random *contact* of a randomly chosen person, who is more likely to be a hub than the person is (Exercise 4).
+Vaccination shows the other side of the hubs. Vaccinating a random 10% of people reduces the average epidemic only from about 62% to 43% of the population, but vaccinating the 10% with the most contacts stops it almost completely. Removing the hubs breaks the network into pieces too small to sustain an epidemic, just as targeted attacks on hubs fragment scale-free networks far faster than random failures do (book §3.5.2; Exercise 3 of @sec-networks). Finding the hubs of a real contact network is hard, but there is a clever shortcut: vaccinate a random *contact* of a randomly chosen person, who is more likely to be a hub than the person is (Exercise 5).
 
 The two examples are related. In each, a few highly connected nodes matter far more than their numbers suggest, whether for the survival of the cell or for the spread of an infection.
 
@@ -82,9 +82,10 @@ The two examples are related. In each, a few highly connected nodes matter far m
 1. Download the list of genes found to be essential in the Keio collection [@baba2006], map them to STRING identifiers, and repeat the centrality–lethality analysis. Is the AUC of degree higher or lower than for the NetGenes predictions? Which hubs are essential?
 2. Add betweenness centrality to the comparison (`centrality(G, 'betweenness')` in MATLAB, `nx.betweenness_centrality` in NetworkX; the latter takes a minute or two for this network). Do proteins with high betweenness but low degree, the bottlenecks of the network, tend to be essential?
 3. Repeat the centrality–lethality analysis for another organism from NetGenes, using its STRING network. Does the relationship hold?
-4. In the epidemic example, vaccinate 10% of people by choosing a person at random and vaccinating one of their contacts, chosen at random. Compare this *acquaintance immunisation* with random and hub vaccination. Why does it work?
-5. Compute $T_c$ for scale-free networks of 500, 2000 and 8000 nodes with $m = 2$. How does it change with the size of the network?
+4. Book Exercise 4.3: plot the degree distributions of essential and other proteins, and see how they change when the STRING score cut-off is raised from 700 to 900 (`tools/fetch_string.py` makes the network; change its cut-off).
+5. In the epidemic example, vaccinate 10% of people by choosing a person at random and vaccinating one of their contacts, chosen at random. Compare this *acquaintance immunisation* with random and hub vaccination. Why does it work?
+6. Compute $T_c$ for scale-free networks of 500, 2000 and 8000 nodes with $m = 2$. How does it change with the size of the network?
 
 ## Going further
 
-Network ideas reach well beyond these two examples, to disease modules in human interaction networks, the mapping of mutations to the interactions they disrupt, and the reconstruction of networks from data (book, Chapter 4). For epidemics, models that add time, for instance the order in which contacts happen, and mixed populations of many kinds of contact, are active areas of research.
+Network ideas reach well beyond these two examples, to disease modules in human interaction networks (§4.2), differential network analysis (§4.3), molecular graphs and retrosynthesis (§4.5), protein folding networks (§4.6) and link prediction (§4.7) in book Chapter 4. For epidemics, agent-based simulations on realistic contact networks, such as EpiSims, add time and the movement of people (book, §4.4.2).
