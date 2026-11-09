@@ -1,0 +1,11 @@
+title: FBA and MoMA for single deletions
+book: "Ch. 9, MoMA; Ch. 10, knock-outs"
+needs:
+  matlab: [Optimization Toolbox]
+  python: [cobra, clarabel]
+compare: [growth_wild_type, reactions, growth_fba, growth_moma,
+          pfk_reactions, pfk_fluxes]
+# Two different QP solvers (Clarabel and quadprog), each to about 1e-6
+tolerance: {rtol: 1.0e-4, atol: 1.0e-4}
+expected:
+  growth_wild_type: 0.8739215

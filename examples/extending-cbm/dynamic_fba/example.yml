@@ -1,0 +1,12 @@
+title: Dynamic FBA of a batch culture
+book: "Ch. 9, dynamic FBA"
+needs:
+  matlab: [Optimization Toolbox]
+  python: [cobra]
+compare: [t_glucose_exhausted, acetate_peak, t_acetate_peak,
+          t_growth_stops, growth_on_glucose, final_biomass, hours,
+          biomass_hourly, glucose_hourly, acetate_hourly]
+# 1200 FBA problems in sequence; LP solutions agree to about 1e-7
+tolerance: {rtol: 1.0e-4, atol: 1.0e-5}
+expected:
+  growth_on_glucose: 0.7174932

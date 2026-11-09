@@ -1,0 +1,91 @@
+# Extending constraint-based models {#sec-extending-cbm}
+
+Flux balance analysis, as in @sec-cbm, makes two strong assumptions: that the cell has had time to optimise its metabolism for growth, and that the environment does not change. This chapter relaxes each of them. MoMA predicts how a mutant behaves *before* it has adapted to the loss of a gene, and dynamic FBA follows a culture as it uses up its nutrients and changes its own environment.
+
+Both examples write the optimisation problems out explicitly, with the stoichiometric matrix $\mathbf{S}$ and the bounds of the *E. coli* core model, and solve them with general-purpose solvers: `linprog` and `quadprog` in MATLAB (Optimization Toolbox), and SciPy's `linprog` and the interior-point solver Clarabel in Python. The COBRA Toolbox and COBRApy provide the same methods ready-made; writing them out once shows exactly what they compute.
+
+::: {.callout-note appearance="simple"}
+## In the book
+Chapter 9, *Extending Constraint-Based Approaches*: minimisation of metabolic adjustment (MoMA, §9.2) and other methods that predict the fluxes of perturbed networks, and dynamic FBA, along with other extensions such as regulatory constraints and integration of omics data.
+:::
+
+## Minimisation of metabolic adjustment
+
+When a gene is deleted, FBA predicts the fastest growth the remaining network allows. Laboratory evolution experiments show that mutants often do reach this rate, but only after many generations. Right after the deletion, the cell's regulation is still tuned to the wild type. Segrè, Vitkup and Church proposed that a fresh mutant instead keeps its fluxes as close as possible to those of the wild type [@segre2002]. If $\mathbf{w}$ is the wild-type flux distribution, MoMA solves
+
+$$
+\min_{\mathbf{v}} \ \lVert \mathbf{v} - \mathbf{w} \rVert^2
+\quad \text{subject to} \quad
+\mathbf{S}\mathbf{v} = \mathbf{0}, \quad
+\mathbf{lb} \le \mathbf{v} \le \mathbf{ub},
+$$
+
+with the bounds of the deleted reaction set to zero. Its objective is quadratic, so this is a **quadratic programme** (QP), and since the squared distance is strictly convex, its solution is unique. MoMA needs a reference $\mathbf{w}$, but FBA has many optimal solutions (@sec-cbm). We take the one of smallest Euclidean norm, which is also unique and is found by the same QP with $\mathbf{w} = \mathbf{0}$ and growth held at its maximum. The code compares FBA and MoMA for each of the 74 internal reactions of the model, and then looks at the fluxes after deleting phosphofructokinase (PFK).
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs the Optimization Toolbox.*
+
+```{.matlab include="/examples/extending-cbm/moma/moma.m"}
+```
+
+![](/examples/extending-cbm/moma/out/matlab/fig-moma.png)
+
+## Python
+
+*Needs COBRApy (to read the model) and Clarabel.*
+
+```{.python include="/examples/extending-cbm/moma/moma.py"}
+```
+
+![](/examples/extending-cbm/moma/out/python/fig-moma.png)
+:::
+
+MoMA never predicts faster growth than FBA, since FBA gives the maximum; for 27 of the 74 deletions it predicts noticeably slower growth. The differences are largest in glycolysis. Without PFK, FBA predicts that the cell grows at 81% of the wild-type rate, by running phosphoglucose isomerase (PGI) backwards and sending more than five times the wild-type flux through the pentose phosphate pathway (G6PDH2r, GND). That is a drastic rerouting, which a cell could reach only after adapting. MoMA predicts a much smaller rearrangement, and growth at only 24% of the wild type. Segrè and colleagues found that MoMA predicted the fluxes measured in a pyruvate kinase mutant better than FBA did [@segre2002]. Which of the two predictions applies depends on the history of the mutant: MoMA for a freshly made strain, FBA for one that has evolved.
+
+## Dynamic FBA
+
+In a batch culture, the cells change their environment as they grow. Dynamic FBA follows this by alternating FBA with the integration of simple ODEs for biomass $X$ and the concentrations $C_i$ of the substrates and products in the medium [@mahadevan2002]. At each short time step $\Delta t$:
+
+1. the concentrations set the maximum uptake rates, here with Michaelis–Menten kinetics, $v_i^{\max} C_i/(K_i + C_i)$, and never more than is left in the medium, $C_i/(X\,\Delta t)$;
+2. FBA gives the growth rate $\mu$ and the exchange fluxes $v_i$;
+3. the culture is updated: $X \leftarrow X + \mu X \Delta t$ and $C_i \leftarrow C_i + v_i X \Delta t$.
+
+We start with 0.01 g/L of cells in 20 mM glucose and limit oxygen uptake to 15 mmol/gDW/h, as happens in dense cultures.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs the Optimization Toolbox.*
+
+```{.matlab include="/examples/extending-cbm/dynamic_fba/dynamic_fba.m"}
+```
+
+![](/examples/extending-cbm/dynamic_fba/out/matlab/fig-dynamic-fba.png)
+
+## Python
+
+*Needs COBRApy (to read the model).*
+
+```{.python include="/examples/extending-cbm/dynamic_fba/dynamic_fba.py"}
+```
+
+![](/examples/extending-cbm/dynamic_fba/out/python/fig-dynamic-fba.png)
+:::
+
+The culture grows exponentially on glucose at 0.72 per hour. With oxygen limited, the fastest way to grow is to oxidise only part of the glucose, and to secrete the rest of its carbon as acetate. This **overflow metabolism** is well known in *E. coli*, and FBA predicts it quantitatively [@varma1994]. By the time the glucose is used up, about 7 hours in, acetate has accumulated to 13.5 mM. The cells then switch to acetate, growing about ten times more slowly, until they have used up nearly all of it. This two-phase growth, or **diauxie**, emerges here from optimisation alone, without any model of the regulation that controls it in real cells.
+
+The step size matters: each FBA problem assumes fluxes stay constant for $\Delta t$, so the step must be short compared with the time over which concentrations change. At $\Delta t = 0.01$ h, the simulation solves 1200 linear programmes, which takes a few seconds.
+
+## Exercises
+
+1. Use the linear version of MoMA, which minimises $\sum_j |v_j - w_j|$, and compare its predictions with the quadratic version. (Write $|v_j - w_j|$ with auxiliary variables, as in parsimonious FBA.) Why can its solution be non-unique?
+2. MoMA's predictions depend on the reference $\mathbf{w}$. Repeat the comparison with the parsimonious FBA solution (@sec-perturbations) as reference. Which predictions change?
+3. In dynamic FBA, raise the oxygen limit to 20 and then to 25 mmol/gDW/h. How do the acetate peak and the total biomass change? At what limit does acetate disappear altogether?
+4. Repeat the dynamic FBA simulation with step sizes of 0.1 and 0.5 h. How large can the step be before the results change noticeably?
+5. Simulate a fed-batch culture by adding glucose at a constant rate after the first 6 hours. Can you choose a feeding rate that avoids acetate production?
+
+## Going further
+
+Many other methods predict how fluxes respond to perturbations: ROOM minimises the number of significant flux changes, and others integrate gene expression data or regulatory rules with the constraints (book, Chapter 9). Dynamic FBA has also been extended to communities of several species growing together.
