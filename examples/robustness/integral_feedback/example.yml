@@ -1,0 +1,8 @@
+title: Robust adaptation by integral feedback
+book: "Ch. 13 (robustness); Ch. 12 (designing circuits)"
+needs:
+  matlab: []
+  python: [scipy]
+compare: [peak, ratio_K001, ratio_K1, level_K001, level_K1]
+# The peaks come from simulations with different stiff solvers
+tolerance: {rtol: 1.0e-4, atol: 1.0e-8}

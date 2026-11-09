@@ -25,6 +25,7 @@ book:
     - chapters/stochastic.qmd
     - chapters/constraint-based.qmd
     - chapters/perturbations.qmd
+    - chapters/robustness.qmd
     - references.qmd
 
 bibliography: references.bib
