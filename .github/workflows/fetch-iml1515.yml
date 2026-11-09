@@ -1,0 +1,36 @@
+# One-off: fetch the iML1515 model from BiGG, and write the compressed SBML
+# and a .mat copy for the MATLAB examples. Removed once the data is on main.
+name: fetch-iml1515
+on:
+  push:
+    branches: [data-fetch-iml1515]
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - run: pip install cobra==0.32.1
+      - name: Download and convert
+        run: |
+          curl -fsSL -o data/iML1515.xml http://bigg.ucsd.edu/static/models/iML1515.xml
+          sha256sum data/iML1515.xml > data/iML1515.sha256
+          python - <<'PY'
+          import cobra
+          m = cobra.io.read_sbml_model("data/iML1515.xml")
+          print(len(m.reactions), len(m.metabolites), len(m.genes), m.slim_optimize())
+          cobra.io.save_matlab_model(m, "data/iML1515.mat")
+          PY
+          gzip -9 data/iML1515.xml
+          ls -la data/iML1515*
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/iML1515.xml.gz data/iML1515.mat data/iML1515.sha256
+          git commit -m "Add iML1515 from BiGG"
+          git push
