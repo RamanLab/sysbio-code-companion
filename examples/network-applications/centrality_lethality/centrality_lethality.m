@@ -27,15 +27,15 @@ fprintf(['Largest connected component: %d proteins, %d interactions, ' ...
 
 names = {'degree', 'closeness', 'eigenvector'};
 for c = 1:3
-    centrality.(names{c}) = centrality(G, names{c});
+    cent.(names{c}) = centrality(G, names{c});
 end
 for c = 1:3
-    aucs.(names{c}) = auc(centrality.(names{c}), is_ess);
+    aucs.(names{c}) = auc(cent.(names{c}), is_ess);
     fprintf('AUC of %s: %.4f\n', names{c}, aucs.(names{c}));
 end
 
 % Fraction essential in ten equal groups, from least to most connected
-deg = centrality.degree;
+deg = cent.degree;
 [~, order] = sort(deg);
 n = numel(deg);
 group_size = floor(n / 10) + ((1:10) <= mod(n, 10));
@@ -75,7 +75,7 @@ subplot(1, 2, 2)
 colours = [0.122 0.467 0.706; 1.000 0.498 0.055; 0.173 0.627 0.173];
 hold on
 for c = 1:3
-    x = centrality.(names{c});
+    x = cent.(names{c});
     thresholds = sort(unique(x), 'descend');
     tpr = arrayfun(@(t) mean(x(is_ess) >= t), thresholds);
     fpr = arrayfun(@(t) mean(x(~is_ess) >= t), thresholds);
