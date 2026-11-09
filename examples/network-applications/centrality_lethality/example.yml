@@ -1,0 +1,13 @@
+title: Centrality and essentiality
+book: "Ch. 4, §4.2 (centrality and lethality)"
+needs:
+  matlab: []
+  python: [networkx]
+# Ties among centrality values computed in floating point can be broken
+# differently in the two languages, so the AUCs are compared to 0.1%.
+compare: [n_nodes, n_edges, n_essential, auc,
+          fraction_essential_by_degree, top_degree]
+tolerance: {rtol: 1.0e-3, atol: 1.0e-6}
+expected:
+  n_nodes: 3982
+  n_essential: 790

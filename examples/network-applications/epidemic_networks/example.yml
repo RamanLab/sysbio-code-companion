@@ -1,0 +1,13 @@
+title: Epidemics on networks
+book: "Ch. 4, §4.3 (spread of diseases on networks)"
+needs:
+  matlab: []
+  python: [numpy]
+# Random networks and random outbreaks: only averages are compared, and
+# only well above the threshold, where they are least noisy. Over six
+# random seeds in Python, these varied by at most about 12%.
+compare: [threshold, size_er_high_T, size_ba_high_T, vaccination]
+tolerance: {rtol: 0.15, atol: 0.01}
+expected:
+  # Mean degree 4: T_c = <k>/(<k^2> - <k>) = 1/<k> for Erdős–Rényi
+  threshold: {er: 0.25}

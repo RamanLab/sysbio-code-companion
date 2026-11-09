@@ -17,6 +17,7 @@ book:
     - chapters/getting-started.qmd
     - chapters/first-models.qmd
     - chapters/networks.qmd
+    - chapters/network-applications.qmd
     - chapters/odes.qmd
     - chapters/dynamics.qmd
     - chapters/parameter-estimation.qmd

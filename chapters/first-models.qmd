@@ -102,4 +102,4 @@ The final-size curve (right) shows the **threshold** at $R_0 = 1$. Below it, the
 
 ## Going further
 
-Both models assume well-mixed populations, in which everyone meets everyone else equally often. Real contacts follow networks, which changes how epidemics spread (book, §4.3); @sec-networks introduces the tools for studying such networks.
+Both models assume well-mixed populations, in which everyone meets everyone else equally often. Real contacts follow networks, which changes how epidemics spread; @sec-networks introduces the tools for studying such networks, and @sec-network-applications simulates epidemics on them.

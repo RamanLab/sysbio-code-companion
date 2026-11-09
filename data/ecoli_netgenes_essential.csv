@@ -1,0 +1,791 @@
+string_id,gene,annotation,score
+511145.b2198,ccmD,Heme exporter protein D,98.9
+511145.b2210,mqo,Malate:quinone oxidoreductase,98.8
+511145.b0093,ftsQ,Cell division protein FtsQ,98.8
+511145.b0829,gsiA,Glutathione import ATP-binding protein GsiA,98.8
+511145.b0694,kdpE,KDP operon transcriptional regulatory protein KdpE,98.7
+511145.b2479,gcvR,Glycine cleavage system transcriptional repressor,98.7
+511145.b3138,agaB,N-acetylgalactosamine-specific phosphotransferase enzyme IIB component 1,98.7
+511145.b3035,tolC,Outer membrane protein TolC,98.6
+511145.b0171,pyrH,Uridylate kinase,98.5
+511145.b0023,rpsT,30S ribosomal protein S20,98.5
+511145.b2219,atoS,Signal transduction histidine-protein kinase AtoS,98.4
+511145.b1071,flgM,Negative regulator of flagellin synthesis,98.4
+511145.b1849,purT,Formate-dependent phosphoribosylglycinamide formyltransferase,98.4
+511145.b3804,hemD,Uroporphyrinogen-III synthase,98.4
+511145.b1465,narV,Respiratory nitrate reductase 2 gamma chain,98.4
+511145.b2523,pepB,Peptidase B,98.3
+511145.b3582,sgbU,Putative L-ribulose-5-phosphate 3-epimerase SgbU,98.3
+511145.b2836,aas,Bifunctional protein Aas,98.3
+511145.b2730,hypE,Hydrogenase isoenzymes formation protein HypE,98.2
+511145.b2539,hcaF,3-phenylpropionate/cinnamic acid dioxygenase subunit beta,98.1
+511145.b0002,thrA,Bifunctional: aspartokinase I (N-terminal),98.1
+511145.b4201,priB,Primosomal replication protein N,98.1
+511145.b0980,appA,Periplasmic AppA protein,98.1
+511145.b3857,mobA,Molybdenum cofactor guanylyltransferase,98.1
+511145.b0521,ybcF,Putative carbamate kinase,98.1
+511145.b0620,citB,Transcriptional regulatory protein DpiA,98.0
+511145.b0972,hyaA,Hydrogenase-1 small chain,98.0
+511145.b1857,znuA,High-affinity zinc uptake system protein ZnuA,97.8
+511145.b2797,sdaB,L-serine dehydratase 2,97.7
+511145.b1378,pfo,Probable pyruvate-flavodoxin oxidoreductase,97.6
+511145.b1264,trpE,Anthranilate synthase component 1,97.6
+511145.b2417,crr,PTS system glucose-specific EIIA component,97.6
+511145.b3061,ttdA,"L-tartrate dehydratase, subunit A",97.4
+511145.b0892,rarA,Replication-associated recombination protein A,97.4
+511145.b0273,argF,Ornithine carbamoyltransferase subunit F,97.3
+511145.b3454,livF,High-affinity branched-chain amino acid transport ATP-binding protein LivF,97.3
+511145.b2425,cysP,Thiosulfate-binding protein,97.3
+511145.b1860,ruvB,Holliday junction ATP-dependent DNA helicase RuvB,97.3
+511145.b0720,gltA,Citrate synthase,97.2
+511145.b4346,mcrB,5-methylcytosine-specific restriction enzyme B,97.2
+511145.b2595,bamD,Outer membrane protein assembly factor BamD,97.2
+511145.b0830,gsiB,Glutathione-binding protein GsiB,97.2
+511145.b0741,pal,Peptidoglycan-associated lipoprotein,97.1
+511145.b1201,dhaR,PTS-dependent dihydroxyacetone kinase operon regulatory protein,97.1
+511145.b4154,frdA,Fumarate reductase flavoprotein subunit,97.1
+511145.b0887,cydD,ATP-binding/permease protein CydD,97.0
+511145.b4355,tsr,Methyl-accepting chemotaxis protein I,97.0
+511145.b4052,dnaB,Replicative DNA helicase,96.9
+511145.b0733,cydA,Cytochrome bd-I ubiquinol oxidase subunit 1,96.8
+511145.b0411,tsx,Nucleoside-specific channel-forming protein Tsx,96.8
+511145.b0615,citF,Citrate lyase alpha chain,96.7
+511145.b2979,glcD,Glycolate oxidase subunit D,96.7
+511145.b3932,hslV,ATP-dependent protease subunit HslV,96.6
+511145.b1800,dmlA,D-malate dehydrogenase [decarboxylating],96.6
+511145.b0432,cyoA,Cytochrome bo(3) ubiquinol oxidase subunit 2,96.6
+511145.b3544,dppA,Periplasmic dipeptide transport protein,96.4
+511145.b2529,iscU,Iron-sulfur cluster assembly scaffold protein IscU,96.4
+511145.b3724,phoU,Phosphate-specific transport system accessory protein PhoU,96.3
+511145.b1767,ansA,L-asparaginase 1,96.1
+511145.b0356,frmA,S-(hydroxymethyl)glutathione dehydrogenase,96.1
+511145.b2500,purN,Phosphoribosylglycinamide formyltransferase,96.0
+511145.b3433,asd,Aspartate-semialdehyde dehydrogenase,96.0
+511145.b3125,garR,2-hydroxy-3-oxopropionate reductase,96.0
+511145.b3992,thiF,Sulfur carrier protein ThiS adenylyltransferase,96.0
+511145.b0809,glnQ,Glutamine transport ATP-binding protein GlnQ,95.9
+511145.b1638,pdxH,Pyridoxine/pyridoxamine 5'-phosphate oxidase,95.9
+511145.b2733,mutS,DNA mismatch repair protein MutS,95.9
+511145.b0485,glsA,Putative glutaminase,95.8
+511145.b1252,tonB,Protein TonB,95.8
+511145.b0737,tolQ,Protein TolQ,95.7
+511145.b0605,ahpC,Alkyl hydroperoxide reductase C,95.7
+511145.b0572,cusC,Cation efflux system protein CusC,95.7
+511145.b3366,nirD,Nitrite reductase (NADH) small subunit,95.6
+511145.b1563,relE,mRNA interferase toxin RelE,95.6
+511145.b3476,nikA,Nickel-binding periplasmic protein,95.6
+511145.b1466,narW,Probable nitrate reductase molybdenum cofactor assembly chaperone NarW,95.6
+511145.b1091,fabH,3-oxoacyl-[acyl-carrier-protein] synthase 3,95.5
+511145.b1084,rne,Ribonuclease E,95.5
+511145.b2551,glyA,Serine hydroxymethyltransferase,95.5
+511145.b3636,rpmG,50S ribosomal protein L33,95.5
+511145.b3822,recQ,ATP-dependent DNA helicase RecQ,95.4
+511145.b1516,lsrB,Autoinducer 2-binding protein LsrB,95.4
+511145.b1917,yecC,L-cystine transport system ATP-binding protein YecC,95.4
+511145.b3066,dnaG,DNA primase,95.3
+511145.b2874,yqeA,Carbamate kinase-like protein YqeA,95.3
+511145.b2154,yeiG,S-formylglutathione hydrolase YeiG,95.3
+511145.b3081,fadH,"2,4-dienoyl-CoA reductase",95.3
+511145.b3845,fadA,3-ketoacyl-CoA thiolase FadA,95.3
+511145.b3933,ftsN,Cell division protein FtsN,95.3
+511145.b4096,phnL,Alpha-D-ribose 1-methylphosphonate 5-triphosphate synthase subunit PhnL,95.3
+511145.b2935,tktA,Transketolase 1,95.3
+511145.b4000,hupA,DNA-binding protein HU-alpha,95.3
+511145.b0439,lon,Lon protease,95.3
+511145.b3702,dnaA,Chromosomal replication initiator protein DnaA,95.2
+511145.b0962,helD,DNA helicase IV,95.2
+511145.b3271,yhdZ,Uncharacterized amino-acid ABC transporter ATP-binding protein YhdZ,95.2
+511145.b3726,pstA,Phosphate transport system permease protein PstA,95.1
+511145.b1243,oppA,Periplasmic oligopeptide-binding protein,95.1
+511145.b4099,phnI,Alpha-D-ribose 1-methylphosphonate 5-triphosphate synthase subunit PhnI,95.0
+511145.b3736,atpF,ATP synthase subunit b,95.0
+511145.b0832,gsiD,Glutathione transport system permease protein GsiD,95.0
+511145.b4372,holD,DNA polymerase III subunit psi,94.9
+511145.b4293,fecI,Probable RNA polymerase sigma factor FecI,94.9
+511145.b0861,artM,Arginine ABC transporter permease protein ArtM,94.8
+511145.b4214,cysQ,"3'(2'),5'-bisphosphate nucleotidase CysQ",94.8
+511145.b2910,zapA,Cell division protein ZapA,94.7
+511145.b3132,kbaZ,"D-tagatose-1,6-bisphosphate aldolase subunit KbaZ",94.7
+511145.b2277,nuoM,NADH-quinone oxidoreductase subunit M,94.7
+511145.b4136,dsbD,Thiol:disulfide interchange protein DsbD,94.7
+511145.b4287,fecE,Fe(3+) dicitrate transport ATP-binding protein FecE,94.7
+511145.b1525,sad,Succinate semialdehyde dehydrogenase [NAD(P)+] Sad,94.6
+511145.b2367,emrY,Probable multidrug resistance protein EmrY,94.6
+511145.b0724,sdhB,Succinate dehydrogenase iron-sulfur subunit,94.6
+511145.b3453,ugpB,Sn-glycerol-3-phosphate-binding periplasmic protein UgpB,94.4
+511145.b1329,mppA,Periplasmic murein peptide-binding protein,94.4
+511145.b3966,btuB,Vitamin B12 transporter BtuB,94.3
+511145.b1888,cheA,Chemotaxis protein CheA,94.2
+511145.b1397,paaJ,"3-oxoadipyl-CoA/3-oxo-5,6-dehydrosuberyl-CoA thiolase",94.2
+511145.b2207,napD,Protein NapD,94.2
+511145.b2507,guaA,GMP synthase [glutamine-hydrolyzing],94.2
+511145.b1575,dicB,Division inhibition protein DicB,94.1
+511145.b3722,bglF,PTS system beta-glucoside-specific EIIBCA component,94.1
+511145.b3460,livJ,Leu/Ile/Val-binding protein,94.1
+511145.b3541,dppD,Dipeptide transport ATP-binding protein DppD,94.1
+511145.b2519,pbpC,Penicillin-binding protein 1C,94.0
+511145.b0922,mukF,Chromosome partition protein MukF,94.0
+511145.b2369,evgA,DNA-binding transcriptional activator EvgA,94.0
+511145.b2407,xapA,Purine nucleoside phosphorylase 2,94.0
+511145.b1891,flhC,Flagellar transcriptional regulator FlhC,94.0
+511145.b4398,creB,Transcriptional regulatory protein CreB,93.9
+511145.b2441,eutB,"Ethanolamine ammonia-lyase, heavy chain",93.9
+511145.b0068,thiB,Thiamine-binding periplasmic protein,93.9
+511145.b2297,pta,Phosphate acetyltransferase,93.9
+511145.b4172,hfq,RNA-binding protein Hfq,93.8
+511145.b1285,gmr,Cyclic di-GMP phosphodiesterase Gmr,93.8
+511145.b3571,malS,Periplasmic alpha-amylase,93.7
+511145.b0595,entB,Enterobactin synthase component B,93.7
+511145.b3307,rpsN,30S ribosomal protein S14,93.7
+511145.b0890,ftsK,DNA translocase FtsK,93.6
+511145.b3936,rpmE,50S ribosomal protein L31,93.3
+511145.b1176,minC,Septum site-determining protein MinC,93.1
+511145.b1474,fdnG,"Formate dehydrogenase, nitrate-inducible, major subunit",93.1
+511145.b1513,lsrA,Autoinducer 2 import ATP-binding protein LsrA,93.1
+511145.b3577,yiaM,"2,3-diketo-L-gulonate TRAP transporter small permease protein YiaM",93.1
+511145.b2947,gshB,Protein involved in glutathione biosynthetic process,93.0
+511145.b3783,rho,Transcription termination factor Rho,93.0
+511145.b0170,tsf,Elongation factor Ts,93.0
+511145.b0286,paoA,Putative xanthine dehydrogenase YagT iron-sulfur-binding subunit,92.9
+511145.b1126,potA,Spermidine/putrescine import ATP-binding protein PotA,92.9
+511145.b1480,sra,Stationary-phase-induced ribosome-associated protein,92.9
+511145.b4345,mcrC,Protein McrC,92.6
+511145.b1956,yedQ,Probable diguanylate cyclase YedQ,92.6
+511145.b2096,gatY,"D-tagatose-1,6-bisphosphate aldolase subunit GatY",92.5
+511145.b2065,dcd,dCTP deaminase,92.3
+511145.b1883,cheB,Chemotaxis response regulator protein-glutamate methylesterase,92.2
+511145.b4117,adiA,Biodegradative arginine decarboxylase,92.2
+511145.b1679,sufE,Cysteine desulfuration protein SufE,92.2
+511145.b2316,accD,Acetyl-coenzyme A carboxylase carboxyl transferase subunit beta,92.2
+511145.b3831,udp,Uridine phosphorylase,92.2
+511145.b4230,ytfT,Inner membrane ABC transporter permease protein YtfT,92.1
+511145.b1600,mdtJ,Spermidine export protein MdtJ,92.1
+511145.b1590,ynfH,Anaerobic dimethyl sulfoxide reductase chain YnfH,92.1
+511145.b3705,yidC,Membrane protein insertase YidC,92.0
+511145.b2067,yegE,Probable diguanylate cyclase YegE,92.0
+511145.b1694,ydiF,Acetate CoA-transferase YdiF,91.9
+511145.b0911,rpsA,30S ribosomal protein S1,91.9
+511145.b1692,ydiB,Quinate/shikimate dehydrogenase,91.9
+511145.b0180,fabZ,3-hydroxyacyl-[acyl-carrier-protein] dehydratase FabZ,91.8
+511145.b4032,malG,Maltose transport system permease protein MalG,91.8
+511145.b0404,acpH,Acyl carrier protein phosphodiesterase,91.7
+511145.b1918,yecS,L-cystine transport system permease protein YecS,91.7
+511145.b2542,hcaD,3-phenylpropionate/cinnamic acid dioxygenase ferredoxin--NAD(+) reductase component,91.6
+511145.b0923,mukE,Chromosome partition protein MukE,91.5
+511145.b0640,holA,DNA polymerase III subunit delta,91.5
+511145.b3935,priA,Primosomal protein N',91.4
+511145.b3583,sgbE,L-ribulose-5-phosphate 4-epimerase SgbE,91.4
+511145.b2560,pgpC,Phosphatidylglycerophosphatase C,91.3
+511145.b0881,clpS,ATP-dependent Clp protease adapter protein ClpS,91.3
+511145.b2573,rpoE,ECF RNA polymerase sigma-E factor,91.3
+511145.b2844,yqeF,Probable acetyl-CoA acetyltransferase,91.3
+511145.b0655,gltI,Glutamate/aspartate import solute-binding protein,91.3
+511145.b3811,xerC,Tyrosine recombinase XerC,91.2
+511145.b3305,rplF,50S ribosomal protein L6,91.2
+511145.b0158,btuF,Vitamin B12-binding protein,91.2
+511145.b3732,atpD,ATP synthase subunit beta,91.2
+511145.b4390,nadR,Trifunctional NAD biosynthesis/regulator protein NadR,91.2
+511145.b0344,lacZ,Beta-galactosidase,91.1
+511145.b2053,gmd,"GDP-mannose 4,6-dehydratase",91.1
+511145.b4244,pyrI,Aspartate carbamoyltransferase regulatory chain,91.1
+511145.b4200,rpsF,30S ribosomal protein S6,91.1
+511145.b0078,ilvH,"Acetolactate synthase III, valine sensitive, small subunit",91.1
+511145.b4298,yjhH,Probable 2-dehydro-3-deoxy-D-pentonate aldolase YjhH,91.0
+511145.b3567,xylG,Xylose import ATP-binding protein XylG,91.0
+511145.b1982,amn,AMP nucleosidase,90.9
+511145.b1938,fliF,Flagellar M-ring protein,90.9
+511145.b0693,speF,Inducible ornithine decarboxylase,90.8
+511145.b0679,nagE,PTS system N-acetylglucosamine-specific EIICBA component,90.8
+511145.b4592,cbdX,Putative cytochrome bd-II ubiquinol oxidase subunit AppX,90.8
+511145.b3365,nirB,Nitrite reductase (NAD(P)H) subunit,90.8
+511145.b4262,lptG,Lipopolysaccharide export system permease protein LptG,90.7
+511145.b3942,katG,Catalase-peroxidase,90.6
+511145.b1901,araF,L-arabinose-binding periplasmic protein,90.6
+511145.b0431,cyoB,Cytochrome bo(3) ubiquinol oxidase subunit 1,90.6
+511145.b0154,hemL,"Glutamate-1-semialdehyde 2,1-aminomutase",90.5
+511145.b0241,phoE,Outer membrane pore protein E,90.5
+511145.b1224,narG,Respiratory nitrate reductase 1 alpha chain,90.5
+511145.b2867,xdhB,Putative xanthine dehydrogenase FAD-binding subunit XdhB,90.4
+511145.b1478,adhP,"Alcohol dehydrogenase, propanol-preferring",90.4
+511145.b3568,xylH,Xylose transport system permease protein XylH,90.3
+511145.b3428,glgP,Glycogen phosphorylase,90.3
+511145.b3311,rpsQ,30S ribosomal protein S17,90.2
+511145.b3296,rpsD,30S ribosomal protein S4,90.2
+511145.b1392,paaE,"1,2-phenylacetyl-CoA epoxidase, subunit E",90.1
+511145.b1921,fliZ,Regulator of sigma S factor FliZ,90.1
+511145.b3287,def,Peptide deformylase,90.1
+511145.b1736,chbA,"PTS system N,N'-diacetylchitobiose-specific EIIA component",90.1
+511145.b4014,aceB,Malate synthase A,90.0
+511145.b1718,infC,Translation initiation factor IF-3,89.9
+511145.b0215,dnaQ,DNA polymerase III subunit epsilon,89.9
+511145.b2808,gcvA,Glycine cleavage system transcriptional activator,89.9
+511145.b3869,glnL,Sensory histidine kinase/phosphatase NtrB,89.8
+511145.b3290,trkA,Trk system potassium uptake protein TrkA,89.8
+511145.b0863,artI,Putative ABC transporter arginine-binding protein 2,89.7
+511145.b0514,glxK,Glycerate 3-kinase,89.7
+511145.b0469,apt,Adenine phosphoribosyltransferase,89.6
+511145.b3897,frvR,Putative frv operon regulatory protein,89.6
+511145.b3172,argG,Argininosuccinate synthase,89.6
+511145.b2282,nuoH,NADH-quinone oxidoreductase subunit H,89.5
+511145.b2893,dsbC,Thiol:disulfide interchange protein DsbC,89.5
+511145.b4062,soxS,Regulatory protein SoxS,89.5
+511145.b2307,hisM,Histidine transport system permease protein HisM,89.4
+511145.b0437,clpP,ATP-dependent Clp protease proteolytic subunit,89.4
+511145.b0851,nfsA,Oxygen-insensitive NADPH nitroreductase,89.4
+511145.b2323,fabB,3-oxoacyl-[acyl-carrier-protein] synthase 1,89.4
+511145.b4240,treB,PTS system trehalose-specific EIIBC component,89.3
+511145.b1591,dmsD,Tat proofreading chaperone DmsD,89.2
+511145.b0192,nlpE,Lipoprotein NlpE,89.2
+511145.b1539,ydfG,NADP-dependent 3-hydroxy acid dehydrogenase YdfG,89.2
+511145.b4153,frdB,Fumarate reductase iron-sulfur subunit,89.2
+511145.b1913,uvrC,UvrABC system protein C,89.1
+511145.b1508,hipB,Antitoxin HipB,89.1
+511145.b3025,qseB,Transcriptional regulatory protein QseB,89.1
+511145.b4113,basR,Transcriptional regulatory protein BasR,89.1
+511145.b1406,ydbC,Pyridoxine 4-dehydrogenase,89.0
+511145.b1095,fabF,3-oxoacyl-[acyl-carrier-protein] synthase 2,89.0
+511145.b3780,rhlB,ATP-dependent RNA helicase RhlB,88.9
+511145.b3281,aroE,Shikimate dehydrogenase (NADP(+)),88.9
+511145.b1002,agp,Glucose-1-phosphatase,88.9
+511145.b3249,mreD,Rod shape-determining protein MreD,88.8
+511145.b1288,fabI,Enoyl-[acyl-carrier-protein] reductase [NADH] FabI,88.7
+511145.b0695,kdpD,Sensor protein KdpD,88.7
+511145.b2205,napG,Ferredoxin-type protein NapG,88.6
+511145.b1274,topA,DNA topoisomerase 1,88.6
+511145.b4195,ulaC,Ascorbate-specific PTS system EIIA component,88.6
+511145.b1476,fdnI,"Formate dehydrogenase, nitrate-inducible, cytochrome b556(Fdn) subunit",88.6
+511145.b1711,btuC,Vitamin B12 import system permease protein BtuC,88.5
+511145.b3341,rpsG,30S ribosomal protein S7,88.5
+511145.b3292,zntR,HTH-type transcriptional regulator ZntR,88.5
+511145.b0186,ldcC,Constitutive lysine decarboxylase,88.4
+511145.b0810,glnP,Glutamine transport system permease protein GlnP,88.4
+511145.b2795,ygdH,Pyrimidine/purine nucleotide 5'-monophosphate nucleosidase,88.4
+511145.b1636,pdxY,Pyridoxal kinase PdxY,88.4
+511145.b0973,hyaB,Hydrogenase-1 large chain,88.3
+511145.b2617,bamE,Outer membrane protein assembly factor BamE,88.3
+511145.b2754,ygbF,CRISPR-associated endoribonuclease Cas2,88.2
+511145.b3836,tatA,Sec-independent protein translocase protein TatA,88.2
+511145.b3297,rpsK,30S ribosomal protein S11,88.2
+511145.b2755,ygbT,CRISPR-associated endonuclease Cas1,88.1
+511145.b1713,pheT,"Phenylalanine tRNA synthetase, beta-subunit",88.1
+511145.b3647,ligB,DNA ligase B,88.0
+511145.b3605,lldD,L-lactate dehydrogenase,87.9
+511145.b1609,rstB,Sensor protein RstB,87.8
+511145.b0451,amtB,Ammonia channel,87.8
+511145.b3409,feoB,Fe(2+) transporter FeoB,87.8
+511145.b3566,xylF,D-xylose-binding periplasmic protein,87.8
+511145.b0574,cusB,Cation efflux system protein CusB,87.7
+511145.b2686,emrB,Multidrug export protein EmrB,87.7
+511145.b2553,glnB,Nitrogen regulatory protein P-II 1,87.6
+511145.b2201,ccmA,Cytochrome c biogenesis ATP-binding export protein CcmA,87.6
+511145.b1629,rsxC,Electron transport complex subunit RsxC,87.6
+511145.b1960,vsr,Very short patch repair protein,87.6
+511145.b0118,acnB,Aconitate hydratase B,87.5
+511145.b2049,cpsB,Mannose-1-phosphate guanylyltransferase,87.5
+511145.b3807,cyaY,Protein CyaY,87.4
+511145.b2688,gshA,Glutamate--cysteine ligase,87.4
+511145.b1338,abgA,P-aminobenzoyl-glutamate hydrolase subunit A,87.4
+511145.b3893,fdoH,Formate dehydrogenase-O iron-sulfur subunit,87.4
+511145.b2025,hisF,Imidazole glycerol phosphate synthase subunit HisF,87.4
+511145.b3444,insA1,Insertion element IS1 1 protein InsA,87.3
+511145.b4019,metH,Methionine synthase,87.3
+511145.b2131,osmF,Glycine betaine-binding protein YehZ,87.3
+511145.b4291,fecA,Fe(3+) dicitrate transport protein FecA,87.3
+511145.b1817,manX,PTS system mannose-specific EIIAB component,87.3
+511145.b0025,ribF,Riboflavin biosynthesis protein RibF,87.2
+511145.b0639,nadD,Nicotinate-nucleotide adenylyltransferase,87.2
+511145.b2881,xdhD,Probable hypoxanthine oxidase XdhD,87.2
+511145.b2259,pmrD,Signal transduction protein PmrD,87.2
+511145.b4268,idnK,Thermosensitive gluconokinase,87.2
+511145.b0048,folA,Dihydrofolate reductase,87.2
+511145.b1581,rspA,Starvation-sensing protein RspA,87.2
+511145.b4297,yjhG,D-xylonate dehydratase YjhG,87.0
+511145.b1863,ruvC,Crossover junction endodeoxyribonuclease RuvC,87.0
+511145.b3124,garK,Glycerate 2-kinase,87.0
+511145.b3077,ebgC,Evolved beta-galactosidase subunit beta,87.0
+511145.b4079,fdhF,Formate dehydrogenase H,86.9
+511145.b2763,cysI,Sulfite reductase [NADPH] hemoprotein beta-component,86.9
+511145.b3806,cyaA,Adenylate cyclase,86.7
+511145.b1302,puuE,4-aminobutyrate aminotransferase PuuE,86.7
+511145.b1270,btuR,"Cob(I)yrinic acid a,c-diamide adenosyltransferase",86.6
+511145.b2319,usg,USG-1 protein,86.5
+511145.b2076,mdtC,Multidrug resistance protein MdtC,86.5
+511145.b2147,preA,NAD-dependent dihydropyrimidine dehydrogenase subunit PreA,86.4
+511145.b1130,phoP,Transcriptional regulatory protein PhoP,86.4
+511145.b2917,scpA,Methylmalonyl-CoA mutase,86.4
+511145.b2222,atoA,acetyl-CoA:acetoacetyl-CoA transferase beta subunit,86.3
+511145.b0838,gstB,Glutathione S-transferase GstB,86.3
+511145.b3751,rbsB,Ribose import binding protein RbsB,86.3
+511145.b0616,citE,Citrate lyase subunit beta,86.3
+511145.b1702,ppsA,Phosphoenolpyruvate synthase,86.3
+511145.b3846,fadB,Fatty acid oxidation complex subunit alpha,86.2
+511145.b3057,bacA,Undecaprenyl-diphosphatase,86.2
+511145.b2968,yghD,Putative type II secretion system M-type protein YghD,86.1
+511145.b0032,carA,Carbamoyl-phosphate synthase small chain,86.1
+511145.b2038,rfbC,"dTDP-4-dehydrorhamnose 3,5-epimerase",86.0
+511145.b2301,yfcF,Glutathione S-transferase YfcF,85.9
+511145.b2412,zipA,Cell division protein ZipA,85.9
+511145.b1184,umuC,Protein UmuC,85.9
+511145.b4086,alsC,D-allose transport system permease protein AlsC,85.8
+511145.b1564,relB,Antitoxin RelB,85.8
+511145.b2817,amiC,N-acetylmuramoyl-L-alanine amidase AmiC,85.8
+511145.b2074,mdtA,Multidrug resistance protein MdtA,85.8
+511145.b1124,potC,Spermidine/putrescine transport system permease protein PotC,85.8
+511145.b0428,cyoE,Protoheme IX farnesyltransferase,85.8
+511145.b3803,hemX,Putative uroporphyrinogen-III C-methyltransferase,85.8
+511145.b3513,mdtE,Multidrug resistance protein MdtE,85.8
+511145.b2938,speA,Biosynthetic arginine decarboxylase,85.8
+511145.b3457,livH,High-affinity branched-chain amino acid transport system permease protein LivH,85.7
+511145.b3995,rsd,Regulator of sigma D,85.7
+511145.b1680,sufS,Cysteine desulfurase,85.7
+511145.b4202,rpsR,30S ribosomal protein S18,85.6
+511145.b4203,rplI,50S ribosomal protein L9,85.6
+511145.b1818,manY,PTS system mannose-specific EIIC component,85.6
+511145.b0397,sbcC,Nuclease SbcCD subunit C,85.4
+511145.b2994,hybC,Hydrogenase-2 large chain,85.3
+511145.b3589,yiaY,Probable alcohol dehydrogenase,85.2
+511145.b4105,phnD,Phosphonates-binding periplasmic protein,85.2
+511145.b3891,fdhE,Protein FdhE,85.1
+511145.b2615,nadK,NAD kinase,85.1
+511145.b3302,rpmD,50S ribosomal protein L30,85.1
+511145.b2178,yejB,Inner membrane ABC transporter permease protein YejB,85.1
+511145.b0185,accA,Acetyl-coenzyme A carboxylase carboxyl transferase subunit alpha,85.1
+511145.b0641,lptE,LPS-assembly lipoprotein LptE,85.0
+511145.b1441,ydcT,Uncharacterized ABC transporter ATP-binding protein YdcT,84.9
+511145.b2436,hemF,Oxygen-dependent coproporphyrinogen-III oxidase,84.9
+511145.b4151,frdD,Fumarate reductase subunit D,84.9
+511145.b2866,xdhA,Putative xanthine dehydrogenase molybdenum-binding subunit XdhA,84.9
+511145.b1683,sufB,FeS cluster assembly protein SufB,84.9
+511145.b0914,msbA,Lipid A export ATP-binding/permease protein MsbA,84.9
+511145.b2196,ccmF,Cytochrome c-type biogenesis protein CcmF,84.9
+511145.b0365,tauA,Taurine-binding periplasmic protein,84.8
+511145.b2698,recX,Regulatory protein RecX,84.8
+511145.b2224,atoB,Acetyl-CoA acetyltransferase,84.7
+511145.b2914,rpiA,Ribose-5-phosphate isomerase A,84.7
+511145.b1467,narY,Respiratory nitrate reductase 2 beta chain,84.7
+511145.b2455,eutE,Ethanolamine utilization protein EutE,84.6
+511145.b3866,yihI,Der GTPase-activating protein YihI,84.6
+511145.b1300,puuC,NADP/NAD-dependent aldehyde dehydrogenase PuuC,84.6
+511145.b2095,gatZ,"D-tagatose-1,6-bisphosphate aldolase subunit GatZ",84.6
+511145.b3868,glnG,DNA-binding transcriptional regulator NtrC,84.6
+511145.b1174,minE,Cell division topological specificity factor,84.6
+511145.b4170,mutL,DNA mismatch repair protein MutL,84.6
+511145.b2429,murP,PTS system N-acetylmuramic acid-specific EIIBC component,84.5
+511145.b1244,oppB,Oligopeptide transport system permease protein OppB,84.5
+511145.b0462,acrB,Multidrug efflux pump subunit AcrB,84.5
+511145.b1281,pyrF,Orotidine 5'-phosphate decarboxylase,84.4
+511145.b0573,cusF,Cation efflux system protein CusF,84.4
+511145.b3137,kbaY,"D-tagatose-1,6-bisphosphate aldolase subunit KbaY",84.4
+511145.b0856,potH,Putrescine transport system permease protein PotH,84.3
+511145.b4088,alsB,D-allose-binding periplasmic protein,84.3
+511145.b3579,yiaO,"2,3-diketo-L-gulonate-binding periplasmic protein YiaO",84.3
+511145.b2075,mdtB,Multidrug resistance protein MdtB,84.2
+511145.b1608,rstA,Transcriptional regulatory protein RstA,84.1
+511145.b0104,guaC,GMP reductase,84.1
+511145.b2342,fadI,3-ketoacyl-CoA thiolase FadI,84.1
+511145.b1712,ihfA,Integration host factor subunit alpha,84.0
+511145.b3725,pstB,Phosphate import ATP-binding protein PstB,83.9
+511145.b1885,tap,Methyl-accepting chemotaxis protein IV,83.9
+511145.b1587,ynfE,Putative dimethyl sulfoxide reductase chain YnfE,83.9
+511145.b2453,eutG,Ethanolamine utilization protein EutG,83.8
+511145.b3607,cysE,Serine acetyltransferase,83.8
+511145.b4245,pyrB,Aspartate carbamoyltransferase catalytic subunit,83.8
+511145.b0321,yahG,annotation not available,83.6
+511145.b0187,yaeR,annotation not available,83.6
+511145.b1612,fumA,"Fumarate hydratase class I, aerobic",83.6
+511145.b2280,nuoJ,NADH-quinone oxidoreductase subunit J,83.5
+511145.b1236,galU,UTP--glucose-1-phosphate uridylyltransferase,83.5
+511145.b0839,dacC,D-alanyl-D-alanine carboxypeptidase DacC,83.4
+511145.b0184,dnaE,DNA polymerase III subunit alpha,83.3
+511145.b0855,potG,Putrescine transport ATP-binding protein PotG,83.3
+511145.b0480,ushA,Protein UshA,83.3
+511145.b0352,mhpE,4-hydroxy-2-oxovalerate aldolase,83.2
+511145.b3668,uhpB,Signal transduction histidine-protein kinase/phosphatase UhpB,83.2
+511145.b0416,nusB,Transcription antitermination protein NusB,83.1
+511145.b1380,ldhA,D-lactate dehydrogenase,83.1
+511145.b4572,ylbE,annotation not available,83.1
+511145.b2421,cysM,Cysteine synthase B,83.0
+511145.b3452,ugpA,Sn-glycerol-3-phosphate transport system permease protein UgpA,82.8
+511145.b2508,guaB,Inosine-5'-monophosphate dehydrogenase,82.8
+511145.b0590,fepD,Ferric enterobactin transport system permease protein FepD,82.8
+511145.b2177,yejA,Uncharacterized protein YejA,82.7
+511145.b3405,ompR,Transcriptional regulatory protein OmpR,82.7
+511145.b4395,ytjC,Probable phosphoglycerate mutase GpmB,82.6
+511145.b3301,rplO,50S ribosomal protein L15,82.6
+511145.b0606,ahpF,Alkyl hydroperoxide reductase subunit F,82.5
+511145.b2926,pgk,Phosphoglycerate kinase,82.5
+511145.b3925,glpX,"Fructose-1,6-bisphosphatase 1 class 2",82.5
+511145.b0969,tusE,Sulfurtransferase TusE,82.5
+511145.b0153,fhuB,Iron(3+)-hydroxamate import system permease protein FhuB,82.5
+511145.b0175,cdsA,Phosphatidate cytidylyltransferase,82.5
+511145.b1916,sdiA,Regulatory protein SdiA,82.4
+511145.b0852,rimK,Ribosomal protein S6--L-glutamate ligase,82.4
+511145.b3879,yihR,Uncharacterized protein YihR,82.4
+511145.b2728,hypC,Hydrogenase isoenzymes formation protein HypC,82.4
+511145.b0160,dgt,Deoxyguanosinetriphosphate triphosphohydrolase,82.4
+511145.b2133,dld,Quinone-dependent D-lactate dehydrogenase,82.4
+511145.b4036,lamB,Maltoporin,82.3
+511145.b4322,uxuA,Mannonate dehydratase,82.3
+511145.b1886,tar,Methyl-accepting chemotaxis protein II,82.2
+511145.b1093,fabG,3-oxoacyl-[acyl-carrier-protein] reductase FabG,82.2
+511145.b0583,entD,Enterobactin synthase component D,82.1
+511145.b1389,paaB,"1,2-phenylacetyl-CoA epoxidase, subunit B",82.1
+511145.b3195,mlaF,Probable phospholipid import ATP-binding protein MlaF,82.1
+511145.b2820,recB,RecBCD enzyme subunit RecB,82.1
+511145.b1125,potB,Spermidine/putrescine transport system permease protein PotB,82.0
+511145.b0383,phoA,Alkaline phosphatase,82.0
+511145.b3581,sgbH,3-keto-L-gulonate-6-phosphate decarboxylase SgbH,82.0
+511145.b2093,gatB,PTS system galactitol-specific EIIB component,81.9
+511145.b0886,cydC,ATP-binding/permease protein CydC,81.8
+511145.b0912,ihfB,Integration host factor subunit beta,81.8
+511145.b2699,recA,Protein RecA,81.8
+511145.b0761,modE,Transcriptional regulator ModE,81.8
+511145.b0114,aceE,Pyruvate dehydrogenase E1 component,81.7
+511145.b2411,ligA,DNA ligase,81.7
+511145.b1814,sdaA,L-serine dehydratase 1,81.7
+511145.b0734,cydB,Cytochrome bd-I ubiquinol oxidase subunit 2,81.6
+511145.b0755,gpmA,"2,3-bisphosphoglycerate-dependent phosphoglycerate mutase",81.6
+511145.b0632,dacA,D-alanyl-D-alanine carboxypeptidase DacA,81.6
+511145.b2511,der,GTPase Der,81.5
+511145.b1304,pspA,Phage shock protein A,81.5
+511145.b0654,gltJ,Glutamate/aspartate import permease protein GltJ,81.5
+511145.b2309,hisJ,Histidine-binding periplasmic protein,81.5
+511145.b0095,ftsZ,Cell division protein FtsZ,81.5
+511145.b0571,cusR,Transcriptional regulatory protein CusR,81.4
+511145.b2215,ompC,Outer membrane protein C,81.4
+511145.b4544,arnE,Probable 4-amino-4-deoxy-L-arabinose-phosphoundecaprenol flippase subunit ArnE,81.3
+511145.b0978,cbdA,Cytochrome bd-II ubiquinol oxidase subunit 1,81.3
+511145.b2464,talA,Transaldolase A,81.3
+511145.b3951,pflD,Formate acetyltransferase 2,81.3
+511145.b1802,yeaW,Carnitine monooxygenase oxygenase subunit,81.2
+511145.b2290,alaA,Glutamate-pyruvate aminotransferase AlaA,81.2
+511145.b3637,rpmB,50S ribosomal protein L28,81.1
+511145.b3982,nusG,Transcription termination/antitermination protein NusG,81.1
+511145.b1859,znuB,High-affinity zinc uptake system membrane protein ZnuB,81.1
+511145.b2477,bamC,Outer membrane protein assembly factor BamC,81.0
+511145.b0696,kdpC,Potassium-transporting ATPase KdpC subunit,81.0
+511145.b2711,norW,Nitric oxide reductase FlRd-NAD(+) reductase,81.0
+511145.b2489,hyfI,Hydrogenase-4 component I,81.0
+511145.b0827,moeA,Molybdopterin molybdenumtransferase,81.0
+511145.b0979,cbdB,Cytochrome bd-II ubiquinol oxidase subunit 2,81.0
+511145.b2128,yehW,Glycine betaine uptake system permease protein YehW,80.9
+511145.b3609,secB,Protein-export protein SecB,80.8
+511145.b4237,nrdG,Anaerobic ribonucleoside-triphosphate reductase-activating protein,80.8
+511145.b1393,paaF,"2,3-dehydroadipyl-CoA hydratase",80.8
+511145.b3940,metL,Bifunctional aspartokinase/homoserine dehydrogenase 2,80.8
+511145.b4025,pgi,Glucose-6-phosphate isomerase,80.8
+511145.b0125,hpt,Hypoxanthine phosphoribosyltransferase,80.7
+511145.b2723,hycC,Formate hydrogenlyase subunit 3,80.7
+511145.b2287,nuoB,NADH-quinone oxidoreductase subunit B,80.7
+511145.b3212,gltB,Glutamate synthase [NADPH] large chain,80.7
+511145.b2719,hycG,Formate hydrogenlyase subunit 7,80.6
+511145.b3919,tpiA,Triosephosphate isomerase,80.6
+511145.b2486,hyfF,Hydrogenase-4 component F,80.6
+511145.b4399,creC,Sensor protein CreC,80.5
+511145.b2704,srlB,PTS system glucitol/sorbitol-specific EIIA component,80.5
+511145.b0284,paoC,Putative xanthine dehydrogenase YagR molybdenum-binding subunit,80.5
+511145.b1611,fumC,Fumarate hydratase class II,80.5
+511145.b0472,recR,Recombination protein RecR,80.5
+511145.b0882,clpA,ATP-dependent Clp protease ATP-binding subunit ClpA,80.5
+511145.b0588,fepC,Ferric enterobactin transport ATP-binding protein FepC,80.5
+511145.b4260,pepA,Cytosol aminopeptidase,80.4
+511145.b0073,leuB,3-isopropylmalate dehydrogenase,80.4
+511145.b2288,nuoA,NADH-quinone oxidoreductase subunit A,80.4
+511145.b0116,lpd,Dihydrolipoyl dehydrogenase,80.3
+511145.b2509,xseA,Exodeoxyribonuclease 7 large subunit,80.3
+511145.b2720,hycF,Formate hydrogenlyase subunit 6,80.3
+511145.b3947,frwA,Multiphosphoryl transfer protein 2,80.2
+511145.b3519,treF,Cytoplasmic trehalase,80.2
+511145.b4506,ykgO,annotation not available,80.1
+511145.b3733,atpG,ATP synthase gamma chain,80.1
+511145.b3418,malT,HTH-type transcriptional regulator MalT,80.1
+511145.b3477,nikB,Nickel transport system permease protein NikB,80.1
+511145.b1599,mdtI,Spermidine export protein MdtI,80.1
+511145.b2662,gabT,4-aminobutyrate aminotransferase GabT,80.0
+511145.b2009,sbmC,DNA gyrase inhibitor,80.0
+511145.b4080,mdtP,Multidrug resistance outer membrane protein MdtP,80.0
+511145.b2220,atoC,Regulatory protein AtoC,80.0
+511145.b3026,qseC,Sensor protein QseC,80.0
+511145.b1900,araG,Arabinose import ATP-binding protein AraG,80.0
+511145.b4073,nrfD,Protein NrfD,80.0
+511145.b0811,glnH,Glutamine-binding periplasmic protein,80.0
+511145.b3140,agaD,N-acetylgalactosamine permease IID component,79.9
+511145.b3779,gpp,"Guanosine-5'-triphosphate,3'-diphosphate pyrophosphatase",79.9
+511145.b3980,tufB,Elongation factor Tu 2,79.9
+511145.b4071,nrfB,Cytochrome c-type protein NrfB,79.9
+511145.b2283,nuoG,NADH-quinone oxidoreductase subunit G,79.8
+511145.b1000,cbpA,Curved DNA-binding protein,79.8
+511145.b2195,dsbE,Thiol:disulfide interchange protein DsbE,79.8
+511145.b3067,rpoD,RNA polymerase sigma factor RpoD,79.8
+511145.b3844,fre,NAD(P)H-flavin reductase,79.6
+511145.b0083,ftsL,Cell division protein FtsL,79.6
+511145.b4087,alsA,D-allose import ATP-binding protein AlsA,79.6
+511145.b2487,hyfG,Hydrogenase-4 component G,79.6
+511145.b2239,glpQ,"Glycerophosphodiester phosphodiesterase, periplasmic",79.5
+511145.b0937,ssuE,FMN reductase (NADPH),79.5
+511145.b3194,mlaE,Probable phospholipid ABC transporter permease protein MlaE,79.5
+511145.b0149,mrcB,Penicillin-binding protein 1B,79.4
+511145.b4302,sgcA,Putative phosphotransferase IIA component SgcA,79.4
+511145.b0652,gltL,Glutamate/aspartate import ATP-binding protein GltL,79.4
+511145.b3017,ftsP,Cell division protein FtsP,79.3
+511145.b0131,panD,Aspartate 1-decarboxylase,79.3
+511145.b0084,ftsI,"Peptidoglycan D,D-transpeptidase FtsI",79.3
+511145.b2203,napB,"Periplasmic nitrate reductase, electron transfer subunit",79.3
+511145.b1861,ruvA,Holliday junction ATP-dependent DNA helicase RuvA,79.2
+511145.b1621,malX,PTS system maltose-specific EIICB component,79.2
+511145.b2218,rcsC,Sensor histidine kinase RcsC,79.2
+511145.b1021,pgaD,Biofilm PGA synthesis protein PgaD,79.1
+511145.b1260,trpA,Tryptophan synthase alpha chain,79.1
+511145.b4053,alr,"Alanine racemase, biosynthetic",79.1
+511145.b2599,pheA,P-protein,79.1
+511145.b3892,fdoI,"Formate dehydrogenase, cytochrome b556(fdo) subunit",79.1
+511145.b3417,malP,Maltodextrin phosphorylase,79.1
+511145.b2677,proV,Glycine betaine/proline betaine transport system ATP-binding protein ProV,78.9
+511145.b0323,yahI,Carbamate kinase-like protein YahI,78.9
+511145.b3671,ilvB,"Acetolactate synthase I,valine-sensitive, large subunit",78.9
+511145.b3916,pfkA,ATP-dependent 6-phosphofructokinase isozyme 1,78.8
+511145.b0333,prpC,2-methylcitrate synthase,78.8
+511145.b0033,carB,Carbamoyl-phosphate synthase large chain,78.8
+511145.b4152,frdC,Fumarate reductase subunit C,78.8
+511145.b1732,katE,Catalase HPII,78.7
+511145.b4131,cadA,Inducible lysine decarboxylase,78.7
+511145.b3553,ghrB,Glyoxylate/hydroxypyruvate reductase B,78.7
+511145.b0167,glnD,Bifunctional uridylyltransferase/uridylyl-removing enzyme,78.6
+511145.b3738,atpB,ATP synthase subunit a,78.5
+511145.b0739,tolA,Protein TolA,78.5
+511145.b2996,hybA,Hydrogenase-2 operon protein HybA,78.5
+511145.b3480,nikE,Nickel import ATP-binding protein NikE,78.4
+511145.b0584,fepA,Ferrienterobactin receptor,78.4
+511145.b3735,atpH,ATP synthase subunit delta,78.3
+511145.b0933,ssuB,Aliphatic sulfonates import ATP-binding protein SsuB,78.3
+511145.b0449,mdlB,annotation not available,78.3
+511145.b3314,rpsC,30S ribosomal protein S3,78.3
+511145.b4161,rsgA,Small ribosomal subunit biogenesis GTPase RsgA,78.3
+511145.b2609,rpsP,30S ribosomal protein S16,78.2
+511145.b1635,gstA,Glutathione S-transferase GstA,78.2
+511145.b0934,ssuC,Putative aliphatic sulfonates transport permease protein SsuC,78.1
+511145.b1812,pabB,Aminodeoxychorismate synthase component 1,78.1
+511145.b1109,ndh,NADH dehydrogenase,78.1
+511145.b3731,atpC,ATP synthase epsilon chain,78.0
+511145.b1854,pykA,"Pyruvate kinase II, glucose stimulated",78.0
+511145.b2584,pka,Protein lysine acetyltransferase Pka,78.0
+511145.b1884,cheR,Chemotaxis protein methyltransferase,78.0
+511145.b0697,kdpB,Potassium-transporting ATPase ATP-binding subunit,78.0
+511145.b0698,kdpA,Potassium-transporting ATPase potassium-binding subunit,77.9
+511145.b3781,trxA,Thioredoxin 1,77.9
+511145.b2810,csdA,Cysteine desulfurase CsdA,77.9
+511145.b4513,kdpF,Potassium-transporting ATPase KdpF subunit,77.9
+511145.b1341,ydaM,Probable diguanylate cyclase YdaM,77.9
+511145.b0196,rcsF,Outer membrane lipoprotein RcsF,77.8
+511145.b3540,dppF,Dipeptide transport ATP-binding protein DppF,77.7
+511145.b0414,ribD,Riboflavin biosynthesis protein RibD,77.7
+511145.b4098,phnJ,Alpha-D-ribose 1-methylphosphonate 5-phosphate C-P lyase,77.6
+511145.b2285,nuoE,NADH-quinone oxidoreductase subunit E,77.6
+511145.b0862,artQ,Arginine ABC transporter permease protein ArtQ,77.5
+511145.b1042,csgA,Major curlin subunit,77.5
+511145.b1650,nemA,N-ethylmaleimide reductase,77.5
+511145.b2729,hypD,Hydrogenase isoenzymes formation protein HypD,77.4
+511145.b4090,rpiB,Ribose-5-phosphate isomerase B,77.4
+511145.b1927,amyA,Cytoplasmic alpha-amylase,77.3
+511145.b0789,clsB,Cardiolipin synthase B,77.3
+511145.b1198,dhaM,Protein-lysine deacetylase,77.3
+511145.b2997,hybO,Hydrogenase-2 small chain,77.3
+511145.b2206,napA,Periplasmic nitrate reductase,77.3
+511145.b2502,ppx,Exopolyphosphatase,77.3
+511145.b3478,nikC,Nickel transport system permease protein NikC,77.2
+511145.b0983,gfcE,Putative polysaccharide export protein GfcE,77.2
+511145.b4122,fumB,"Fumarate hydratase class I, anaerobic",77.2
+511145.b1625,cnu,OriC-binding nucleoid-associated protein,77.2
+511145.b0152,fhuD,Iron(3+)-hydroxamate-binding protein FhuD,77.0
+511145.b2306,hisP,Histidine transport ATP-binding protein HisP,77.0
+511145.b1485,ddpC,"Probable D,D-dipeptide transport system permease protein DdpC",77.0
+511145.b2465,tktB,Transketolase 2,77.0
+511145.b3812,yigB,5-amino-6-(5-phospho-D-ribitylamino)uracil phosphatase YigB,77.0
+511145.b1118,lolE,Lipoprotein-releasing system transmembrane protein LolE,76.9
+511145.b0285,paoB,Putative xanthine dehydrogenase YagS FAD-binding subunit,76.8
+511145.b2281,nuoI,NADH-quinone oxidoreductase subunit I,76.7
+511145.b0995,torR,TorCAD operon transcriptional regulatory protein TorR,76.6
+511145.b4003,zraS,Sensor protein ZraS,76.6
+511145.b1946,fliN,Flagellar motor switch protein FliN,76.6
+511145.b4147,efp,Elongation factor P,76.5
+511145.b1278,pgpB,Phosphatidylglycerophosphatase B,76.5
+511145.b3395,hofM,DNA utilization protein HofM,76.5
+511145.b1507,hipA,Serine/threonine-protein kinase toxin HipA,76.5
+511145.b3652,recG,ATP-dependent DNA helicase RecG,76.5
+511145.b2243,glpC,Anaerobic glycerol-3-phosphate dehydrogenase subunit C,76.5
+511145.b3182,dacB,D-alanyl-D-alanine carboxypeptidase DacB,76.5
+511145.b4142,groS,10 kDa chaperonin,76.5
+511145.b3020,ygiS,Probable deoxycholate-binding periplasmic protein YgiS,76.5
+511145.b4129,lysU,"Lysine--tRNA ligase, heat inducible",76.3
+511145.b1738,chbB,"PTS system N,N'-diacetylchitobiose-specific EIIB component",76.2
+511145.b3856,mobB,Molybdopterin-guanine dinucleotide biosynthesis adapter protein,76.2
+511145.b1819,manZ,PTS system mannose-specific EIID component,76.2
+511145.b2727,hypB,Hydrogenase isoenzymes nickel incorporation protein HypB,76.2
+511145.b4460,araH,L-arabinose transport system permease protein AraH,76.2
+511145.b1515,lsrD,Autoinducer 2 import system permease protein LsrD,76.2
+511145.b2418,pdxK,Pyridoxine/pyridoxal/pyridoxamine kinase,76.2
+511145.b1489,dosP,Oxygen sensor protein DosP,76.1
+511145.b2600,tyrA,T-protein,76.1
+511145.b3199,lptC,Lipopolysaccharide export system protein LptC,76.1
+511145.b1709,btuD,Vitamin B12 import ATP-binding protein BtuD,76.0
+511145.b3345,tusD,Sulfurtransferase TusD,76.0
+511145.b2601,aroF,"Phospho-2-dehydro-3-deoxyheptonate aldolase, Tyr-sensitive",76.0
+511145.b0581,ybdK,Putative glutamate--cysteine ligase 2,75.9
+511145.b1737,chbC,"PTS system N,N'-diacetylchitobiose-specific EIIC component",75.9
+511145.b0727,sucB,Dihydrolipoyllysine-residue succinyltransferase component of 2-oxoglutarate dehydrogenase complex,75.9
+511145.b0098,secA,Protein translocase subunit SecA,75.9
+511145.b2286,nuoC,NADH-quinone oxidoreductase subunit C/D,75.8
+511145.b2829,ptsP,Phosphoenolpyruvate-dependent phosphotransferase system,75.8
+511145.b0509,glxR,2-hydroxy-3-oxopropionate reductase,75.8
+511145.b4193,ulaA,Ascorbate-specific PTS system EIIC component,75.7
+511145.b1807,tsaB,tRNA threonylcarbamoyladenosine biosynthesis protein TsaB,75.7
+511145.b1222,narX,Nitrate/nitrite sensor protein NarX,75.7
+511145.b3193,mlaD,Probable phospholipid ABC transporter-binding protein MlaD,75.7
+511145.b3560,glyQ,Glycine--tRNA ligase alpha subunit,75.6
+511145.b4227,ytfQ,ABC transporter periplasmic-binding protein YtfQ,75.6
+511145.b3931,hslU,ATP-dependent protease ATPase subunit HslU,75.6
+511145.b3981,secE,Protein translocase subunit SecE,75.5
+511145.b4289,fecC,Fe(3+) dicitrate transport system permease protein FecC,75.5
+511145.b2023,hisH,Imidazole glycerol phosphate synthase subunit HisH,75.4
+511145.b3899,frvB,Fructose-like PTS system EIIBC component,75.4
+511145.b2782,mazF,Endoribonuclease toxin MazF,75.4
+511145.b1723,pfkB,ATP-dependent 6-phosphofructokinase isozyme 2,75.3
+511145.b2021,hisC,Histidinol-phosphate aminotransferase,75.3
+511145.b0399,phoB,Phosphate regulon transcriptional regulatory protein PhoB,75.2
+511145.b0470,dnaX,DNA polymerase III subunit tau,75.2
+511145.b3706,mnmE,tRNA modification GTPase MnmE,75.2
+511145.b3542,dppC,Dipeptide transport system permease protein DppC,75.2
+511145.b0729,sucD,Succinate--CoA ligase [ADP-forming] subunit alpha,75.2
+511145.b0151,fhuC,Iron(3+)-hydroxamate import ATP-binding protein FhuC,75.1
+511145.b2308,hisQ,Histidine transport system permease protein HisQ,75.1
+511145.b2150,mglB,D-galactose-binding periplasmic protein,75.1
+511145.b0864,artP,Arginine transport ATP-binding protein ArtP,75.0
+511145.b3917,sbp,Sulfate-binding protein,75.0
+511145.b2458,eutD,Ethanolamine utilization,74.9
+511145.b3578,yiaN,"2,3-diketo-L-gulonate TRAP transporter large permease protein YiaN",74.9
+511145.b2965,speC,Ornithine decarboxylase isozyme,74.9
+511145.b2934,cmtB,Mannitol-specific cryptic phosphotransferase enzyme IIA component,74.8
+511145.b3309,rplX,50S ribosomal protein L24,74.8
+511145.b0932,pepN,Aminopeptidase N,74.8
+511145.b1306,pspC,Phage shock protein C,74.7
+511145.b4106,phnC,Phosphonates import ATP-binding protein PhnC,74.7
+511145.b4197,ulaE,L-ribulose-5-phosphate 3-epimerase UlaE,74.6
+511145.b0320,yahF,Uncharacterized protein YahF,74.6
+511145.b3191,mlaB,Probable phospholipid ABC transporter-binding protein MlaB,74.5
+511145.b0335,prpE,Propionate--CoA ligase,74.5
+511145.b4221,tamB,Translocation and assembly module subunit TamB,74.5
+511145.b1089,rpmF,50S ribosomal protein L32,74.5
+511145.b1377,ompN,Outer membrane protein N,74.4
+511145.b0388,aroL,Shikimate kinase 2,74.3
+511145.b4382,deoA,Thymidine phosphorylase,74.3
+511145.b3894,fdoG,Formate dehydrogenase-O major subunit,74.2
+511145.b0997,torA,Trimethylamine-N-oxide reductase 1,74.2
+511145.b1440,ydcS,Putative ABC transporter periplasmic-binding protein YdcS,74.2
+511145.b1245,oppC,Oligopeptide transport system permease protein OppC,74.2
+511145.b1687,ydiJ,Uncharacterized protein YdiJ,74.1
+511145.b1479,maeA,NAD-linked malate dehydrogenase (malic enzyme),74.0
+511145.b0575,cusA,Cation efflux system protein CusA,74.0
+511145.b0409,secF,Protein translocase subunit SecF,73.9
+511145.b3739,atpI,ATP synthase protein I,73.9
+511145.b4565,sgcB,Putative phosphotransferase enzyme IIB component SgcB,73.9
+511145.b2484,hyfD,Hydrogenase-4 component D,73.8
+511145.b3334,gspM,Putative type II secretion system protein M,73.8
+511145.b4198,ulaF,L-ribulose-5-phosphate 4-epimerase UlaF,73.8
+511145.b3304,rplR,50S ribosomal protein L18,73.7
+511145.b1237,hns,DNA-binding protein H-NS,73.7
+511145.b0422,xseB,Exodeoxyribonuclease 7 small subunit,73.7
+511145.b0894,dmsA,Dimethyl sulfoxide reductase DmsA,73.7
+511145.b3701,dnaN,Beta sliding clamp,73.7
+511145.b1226,narJ,Nitrate reductase molybdenum cofactor assembly chaperone NarJ,73.6
+511145.b2341,fadJ,Fatty acid oxidation complex subunit alpha,73.6
+511145.b4082,mdtN,Multidrug resistance protein MdtN,73.6
+511145.b3642,pyrE,Orotate phosphoribosyltransferase,73.5
+511145.b4072,nrfC,Protein NrfC,73.5
+511145.b2127,mlrA,HTH-type transcriptional regulator MlrA,73.4
+511145.b3475,acpT,4'-phosphopantetheinyl transferase AcpT,73.4
+511145.b1102,fhuE,FhuE receptor,73.4
+511145.b0778,bioD,ATP-dependent dethiobiotin synthetase BioD 1,73.4
+511145.b2179,yejE,Inner membrane ABC transporter permease protein YejE,73.3
+511145.b2683,ygaH,annotation not available,73.2
+511145.b2169,fruB,Multiphosphoryl transfer protein,73.1
+511145.b4261,lptF,Lipopolysaccharide export system permease protein LptF,73.1
+511145.b0067,thiP,Thiamine transport system permease protein ThiP,73.1
+511145.b4024,lysC,Lysine-sensitive aspartokinase 3,73.1
+511145.b1197,treA,Periplasmic trehalase,73.0
+511145.b0015,dnaJ,Chaperone protein DnaJ,73.0
+511145.b0594,entE,Enterobactin synthase component E,73.0
+511145.b2094,gatA,PTS system galactitol-specific EIIA component,73.0
+511145.b2905,gcvT,Aminomethyltransferase,72.9
+511145.b2311,ubiX,Flavin prenyltransferase UbiX,72.9
+511145.b3649,rpoZ,DNA-directed RNA polymerase subunit omega,72.9
+511145.b2957,ansB,L-asparaginase 2,72.8
+511145.b2194,ccmH,Cytochrome c-type biogenesis protein CcmH,72.8
+511145.b3072,aer,Aerotaxis receptor,72.8
+511145.b3168,infB,Translation initiation factor IF-2,72.8
+511145.b3667,uhpC,Membrane sensor protein UhpC,72.6
+511145.b0929,ompF,Outer membrane protein F,72.5
+511145.b3699,gyrB,DNA gyrase subunit B,72.5
+511145.b3175,secG,Protein-export membrane protein SecG,72.5
+511145.b3985,rplJ,50S ribosomal protein L10,72.4
+511145.b0728,sucC,Succinate--CoA ligase [ADP-forming] subunit beta,72.4
+511145.b3006,exbB,Biopolymer transport protein ExbB,72.4
+511145.b3315,rplV,50S ribosomal protein L22,72.4
+511145.b1277,ribA,GTP cyclohydrolase-2,72.3
+511145.b2606,rplS,50S ribosomal protein L19,72.3
+511145.b0238,gpt,Xanthine phosphoribosyltransferase,72.3
+511145.b0996,torC,Cytochrome c-type protein TorC,72.2
+511145.b1033,ghrA,Glyoxylate/hydroxypyruvate reductase A,72.1
+511145.b0653,gltK,Glutamate/aspartate import permease protein GltK,72.1
+511145.b4124,dcuR,Transcriptional regulatory protein DcuR,72.1
+511145.b2459,eutT,Ethanolamine utilization cobalamin adenosyltransferase,72.0
+511145.b3956,ppc,Phosphoenolpyruvate carboxylase,72.0
+511145.b2217,rcsB,Transcriptional regulatory protein RcsB,72.0
+511145.b1276,acnA,Aconitate hydratase A,71.9
+511145.b2276,nuoN,NADH-quinone oxidoreductase subunit N,71.9
+511145.b3317,rplB,50S ribosomal protein L2,71.8
+511145.b3396,mrcA,Penicillin-binding protein 1A,71.7
+511145.b3404,envZ,Osmolarity sensor protein EnvZ,71.7
+511145.b2231,gyrA,DNA gyrase subunit A,71.7
+511145.b3451,ugpE,Sn-glycerol-3-phosphate transport system permease protein UgpE,71.6
+511145.b1190,dadX,"Alanine racemase, catabolic",71.6
+511145.b0635,mrdA,"Peptidoglycan D,D-transpeptidase MrdA",71.5
+511145.b3727,pstC,Phosphate transport system permease protein PstC,71.5
+511145.b2199,ccmC,Heme exporter protein C,71.5
+511145.b0417,thiL,Thiamine-monophosphate kinase,71.5
+511145.b0198,metI,D-methionine transport system permease protein MetI,71.4
+511145.b3458,livK,Leucine-specific-binding protein,71.3
+511145.b1761,gdhA,NADP-specific glutamate dehydrogenase,71.3
+511145.b3076,ebgA,Evolved beta-galactosidase subunit alpha,71.3
+511145.b2011,sbcB,Exodeoxyribonuclease I,71.3
+511145.b1524,glsB,Putative glutaminase,71.2
+511145.b2764,cysJ,Sulfite reductase [NADPH] flavoprotein alpha-component,71.2
+511145.b3206,npr,Phosphocarrier protein NPr,71.2
+511145.b2470,acrD,Probable aminoglycoside efflux pump,71.0
+511145.b0771,ybhJ,Uncharacterized protein YbhJ,71.0
+511145.b4143,groL,60 kDa chaperonin,71.0
+511145.b3030,parE,DNA topoisomerase 4 subunit B,70.9
+511145.b0878,macA,Macrolide export protein MacA,70.9
+511145.b1468,narZ,Respiratory nitrate reductase 2 alpha chain,70.9
+511145.b1012,rutA,Pyrimidine monooxygenase RutA,70.8
+511145.b0857,potI,Putrescine transport system permease protein PotI,70.8
+511145.b4100,phnH,Alpha-D-ribose 1-methylphosphonate 5-triphosphate synthase subunit PhnH,70.8
+511145.b4194,ulaB,Ascorbate-specific PTS system EIIB component,70.8
+511145.b1099,holB,DNA polymerase III subunit delta,70.8
+511145.b4231,yjfF,Inner membrane ABC transporter permease protein YjfF,70.7
+511145.b3599,mtlA,PTS system mannitol-specific EIICBA component,70.7
+511145.b4220,tamA,Translocation and assembly module subunit TamA,70.7
+511145.b3339,tufA,Elongation factor Tu 1,70.7
+511145.b3176,glmM,Phosphoglucosamine mutase,70.6
+511145.b2572,rseA,Anti-sigma-E factor RseA,70.5
+511145.b3769,ilvM,"Pseudogene, acetolactate synthase 2 large subunit, valine-insensitive",70.4
+511145.b1395,paaH,3-hydroxyadipyl-CoA dehydrogenase,70.4
+511145.b1297,puuA,Gamma-glutamylputrescine synthetase PuuA,70.3
+511145.b2750,cysC,Adenylyl-sulfate kinase,70.3
+511145.b2585,pssA,CDP-diacylglycerol--serine O-phosphatidyltransferase,70.2
+511145.b1483,ddpF,"Probable D,D-dipeptide transport ATP-binding protein DdpF",70.2
+511145.b1094,acpP,Acyl carrier protein,70.2
+511145.b2242,glpB,Anaerobic glycerol-3-phosphate dehydrogenase subunit B,70.2
+511145.b1681,sufD,FeS cluster assembly protein SufD,70.1
+511145.b1475,fdnH,"Formate dehydrogenase, nitrate-inducible, iron-sulfur subunit",70.1
+511145.b0722,sdhD,Succinate dehydrogenase hydrophobic membrane anchor subunit,70.1
+511145.b0888,trxB,Thioredoxin reductase,70.1
