@@ -88,4 +88,4 @@ The step size matters: each FBA problem assumes fluxes stay constant for $\Delta
 
 ## Going further
 
-Many other methods predict how fluxes respond to perturbations: ROOM minimises the number of significant flux changes, and others integrate gene expression data or regulatory rules with the constraints (book, Chapter 9). Dynamic FBA has also been extended to communities of several species growing together.
+Many other methods predict how fluxes respond to perturbations: ROOM minimises the number of significant flux changes, and others integrate gene expression data or regulatory rules with the constraints (book, Chapter 9). Dynamic FBA has also been extended to communities of several species growing together; @sec-communities builds a community model.

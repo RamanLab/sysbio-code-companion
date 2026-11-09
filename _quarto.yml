@@ -26,6 +26,7 @@ book:
     - chapters/constraint-based.qmd
     - chapters/extending-cbm.qmd
     - chapters/perturbations.qmd
+    - chapters/communities.qmd
     - chapters/robustness.qmd
     - references.qmd
 

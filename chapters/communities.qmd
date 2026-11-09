@@ -1,0 +1,63 @@
+# Microbial communities {#sec-communities}
+
+Microbes rarely live alone. In the gut, the soil and the ocean, they live in communities, where one organism's waste is another's food, and many species cannot be grown in the laboratory at all without their partners. Constraint-based models extend naturally to such communities: each organism keeps its own metabolic network, and the networks are coupled through the metabolites they take up from and release into a shared environment. This chapter builds a community model of two *E. coli* mutants that can grow only together.
+
+::: {.callout-note appearance="simple"}
+## In the book
+Chapter 11, *Modelling Cellular Interactions*: interactions between microbes and with their hosts, and constraint-based models of microbial communities. The methods of @sec-cbm and @sec-extending-cbm are the starting point.
+:::
+
+## A community of two auxotrophs
+
+Strain A lacks both routes to glutamate (glutamate dehydrogenase, GLUDy, and glutamate synthase, GLUSy). Strain B lacks both anaplerotic routes that replenish the TCA cycle (PEP carboxylase, PPC, and the glyoxylate shunt, through isocitrate lyase, ICL), so it cannot make the oxaloacetate and 2-oxoglutarate it needs for biosynthesis. On glucose alone, FBA predicts that neither grows. Such pairs of auxotrophs, which rescue each other by cross-feeding, are a standard way to build synthetic communities in the laboratory [@mee2014].
+
+Community models must decide how the organisms' growth is coupled. Here we follow the idea behind SteadyCom [@chan2017]: in a community that persists, every member must grow at the same rate $\mu$, or the faster one would take over. Fix the fraction $x$ of strain A in the community, and express all fluxes per gram of the whole community. Strain A then makes biomass at rate $x\mu$ and strain B at $(1-x)\mu$, and each strain's flux bounds scale with its abundance. For fixed $x$, maximising $\mu$ is a single linear programme over the fluxes $\mathbf{u}_A$ and $\mathbf{u}_B$ of both strains:
+
+$$
+\begin{aligned}
+\max_{\mathbf{u}_A,\, \mathbf{u}_B,\, \mu} \quad & \mu \\
+\text{subject to} \quad & \mathbf{S}\mathbf{u}_A = \mathbf{0}, \quad \mathbf{S}\mathbf{u}_B = \mathbf{0}, \\
+& u_{A,\text{biomass}} = x\mu, \quad u_{B,\text{biomass}} = (1-x)\mu, \\
+& x\,\mathbf{lb}_A \le \mathbf{u}_A \le x\,\mathbf{ub}_A, \quad (1-x)\,\mathbf{lb}_B \le \mathbf{u}_B \le (1-x)\,\mathbf{ub}_B, \\
+& u_{A,j} + u_{B,j} \ge 0 \quad \text{for every metabolite } j \text{ the medium does not supply.}
+\end{aligned}
+$$
+
+The last constraint couples the strains: a metabolite that the medium does not supply can be taken up by one strain only if the other secretes it. Each strain can exchange at most 10 mmol/gDW/h of each organic metabolite, which keeps the exchanges realistic. We scan $x$ from 0.01 to 0.99, and then, for a 1:1 community, find the smallest total exchange between the strains that still allows the maximum growth rate, to see which metabolites must change hands.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs the Optimization Toolbox.*
+
+```{.matlab include="/examples/communities/cross_feeding/cross_feeding.m"}
+```
+
+![](/examples/communities/cross_feeding/out/matlab/fig-cross-feeding.png)
+
+## Python
+
+*Needs COBRApy (to read the model).*
+
+```{.python include="/examples/communities/cross_feeding/cross_feeding.py"}
+```
+
+![](/examples/communities/cross_feeding/out/python/fig-cross-feeding.png)
+:::
+
+Together, the two strains grow, and over a wide range of compositions almost as fast as the wild type: at exactly the wild-type rate, 0.874 per hour, for fractions of strain A from 0.43 to 0.62, and within 2% of it from about 0.14 to 0.69. Outside this range, growth falls steeply, because the rarer strain cannot supply enough of what its partner needs. The model thus predicts which compositions a stable community can have, and that it tolerates a fair imbalance between its members.
+
+The least cross-feeding needed at a 1:1 ratio is simple to interpret. Strain A, which has a complete TCA cycle and anaplerosis, secretes 2-oxoglutarate; strain B takes it up, converts some of it to glutamate with the glutamate dehydrogenase it still has, and passes glutamate back to strain A. Strain B also passes D-lactate to strain A, sharing carbon and energy. Other, equally good, exchanges exist, which is why the automated checks compare only the total. The 2-oxoglutarate–glutamate exchange is the heart of the mutualism: allowing only these two metabolites to pass between the strains still gives 88% of the maximum growth rate.
+
+That the pair can grow as fast as the wild type is a reminder of what the model leaves out. Exchanging metabolites costs nothing here, whereas real cells pay to export and import them, and they release only some of what their partners could use. Real cross-feeding communities usually grow more slowly than a prototrophic strain, and how fast depends on which metabolites are exchanged [@mee2014]. Adding such costs, or limits on secretion measured in experiments, is the way to make the model quantitative.
+
+## Exercises
+
+1. Remove the limit of 10 mmol/gDW/h on the exchange of each organic metabolite. How does the range of compositions that support near-maximal growth change, and why? Look at the exchange fluxes for extreme compositions.
+2. Instead of fixing $x$, find the largest $\mu$ for which *some* composition is feasible, by bisection on $\mu$: for each trial value, solve a linear feasibility problem with $x$ (in the form of the abundance-scaled bounds) as a variable. This is the SteadyCom algorithm [@chan2017].
+3. Replace strain B by a strain that cannot take up glucose (GLCpts deleted). Can the community grow? What does the glucose consumer feed its partner, and does oxygen limitation (@sec-extending-cbm) change the answer?
+4. Combine this model with dynamic FBA: start from equal amounts of the two strains in 20 mM glucose and follow the biomass of each, allowing them to grow at different rates. Does the community approach a stable composition?
+
+## Going further
+
+The first constraint-based model of a community, of a sulphate-reducing bacterium and a methanogen, was built by @stolyar2007. Since then, many methods have been developed, which differ in how they couple the members: by a common growth rate, as here, by optimising the community and its members at different levels, or dynamically, by extending dynamic FBA. Models of hundreds of gut microbes, and of microbes interacting with their hosts, are now used to study the microbiome (book, Chapter 11).

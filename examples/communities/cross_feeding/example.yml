@@ -1,0 +1,13 @@
+title: Cross-feeding between two E. coli mutants
+book: "Ch. 11, community metabolic models"
+needs:
+  matlab: [Optimization Toolbox]
+  python: [cobra]
+# The exchanged metabolites in the least-exchange solution can differ
+# between solvers (there are alternative optima); their total cannot.
+compare: [growth_alone, fractions, growth, best_growth, plateau,
+          least_exchange_total]
+tolerance: {rtol: 1.0e-5, atol: 1.0e-6}
+expected:
+  growth_alone: [0.0, 0.0]
+  best_growth: 0.8739215
