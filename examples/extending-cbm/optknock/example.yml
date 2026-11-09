@@ -1,0 +1,13 @@
+title: "OptKnock: knock-outs for lactate over-production"
+book: "Ch. 9, §9.3.1 (OptKnock, Eq. 9.6); Exercise 9.6"
+needs:
+  matlab: [Optimization Toolbox]
+  python: [cobra]
+# Several designs can tie (e.g. ACALD and ALCD2x act in one linear
+# pathway), and solvers may return any of them, so we compare the optimal
+# values, and the best designs from the exhaustive search, where ties are
+# broken alphabetically.
+compare: [growth_wild_type, K1, K2, K3]
+tolerance: {rtol: 1.0e-5, atol: 1.0e-5}
+expected:
+  growth_wild_type: 0.4553356

@@ -77,7 +77,33 @@ For the deletion of pyruvate kinase (PYK), the example in the book, ROOM needs o
 
 ### OptKnock
 
-*There is no code for this section; see the book.*
+OptKnock [@burgard2003] nests two optimisation problems (book, Eq. 9.6). The outer problem chooses which reactions to knock out, so as to maximise the production of a metabolite; the inner problem is the cell, which, given those knock-outs, maximises its growth. A bi-level problem of this kind cannot be handed directly to a solver. However, the inner problem is a linear programme, and a linear programme is solved exactly when its primal and dual are both feasible and their objectives are equal. Writing these conditions as constraints turns OptKnock into a single MILP, with one binary variable $y_j$ for every reaction that may be knocked out.
+
+Here, we take up Exercise 9.6 of the book: the *E. coli* core model grows anaerobically, with glucose uptake of up to 18 mmol/gDW/h, and we seek up to three knock-outs that increase lactate secretion, while growth stays above 10% of the wild type. Note that OptKnock can be extremely slow for large models, and the choice of reactions that form its search space matters a great deal. We let it choose from 14 reactions of central metabolism and fermentation. With so few candidates, we can also evaluate every possible design directly, which gives us an independent check on the MILP.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs the Optimization Toolbox (for `linprog` and `intlinprog`); reads the model from `data/e_coli_core.mat`, so the COBRA Toolbox is not required.*
+
+```{.matlab include="/examples/extending-cbm/optknock/optknock.m"}
+```
+
+![](/examples/extending-cbm/optknock/out/matlab/fig-optknock.png)
+
+## Python
+
+*Needs COBRApy (to read the model) and SciPy (for `linprog` and `milp`).*
+
+```{.python include="/examples/extending-cbm/optknock/optknock.py"}
+```
+
+![](/examples/extending-cbm/optknock/out/python/fig-optknock.png)
+:::
+
+The wild type secretes no lactate at all at its optimal growth rate, 0.455 h^−1^. With three knock-outs, OptKnock finds a design (ACKr, PDH and PYK) that can secrete 33.9 mmol/gDW/h of lactate. Look closely at the production envelope of this design (left, in red), though. At its maximal growth rate, lactate secretion can be anything from 33.9 down to zero! OptKnock is optimistic: it assumes that, among the many flux distributions with optimal growth, the cell will pick the one that suits us best. A design such as ACALD, FRD7 and PYK (blue) is far more useful: it gives up a little lactate, 33.7 instead of 33.9, but secretes it at every flux distribution with optimal growth. Lactate production is then *coupled* to growth, and adaptive evolution in the laboratory, which selects for faster growth, also selects for more lactate. Later methods, such as RobustKnock [@tepper2010], address exactly this weakness, by maximising the *guaranteed* production.
+
+The exercise also asks whether a subset of the knock-outs does nearly as well, at a higher growth rate. Indeed, knocking out ACALD alone (right) forces 30.7 mmol/gDW/h of lactate, at a growth rate of 0.328 h^−1^, more than twice that of the three-knock-out designs. Removing acetaldehyde dehydrogenase blocks the route to ethanol, and lactate becomes the main way for the cell to re-oxidise its NADH.
 
 ## Integrating regulatory information
 
@@ -137,13 +163,35 @@ The step size matters: each FBA problem assumes fluxes stay constant for $\Delta
 
 ## Elementary Flux Modes and Extreme Pathways
 
+The network of Figure 9.2 in the book is small enough that we can find its EFMs straight from the definition. Remember, an EFM must operate at steady state, run every irreversible reaction in its feasible direction, and be non-decomposable: no smaller set of its reactions can carry a steady flux. So, for every possible set of reactions, we ask whether the stoichiometric matrix restricted to that set admits exactly one steady-state flux distribution (up to scaling) that uses all of its reactions. The extreme pathways are then the EFMs that cannot be written as a non-negative combination of the other EFMs (systemic independence), which a linear programme with no objective can check.
+
 ### Computing EFMs and EPs
 
-*There is no code for this section; see the book.*
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs the Optimization Toolbox (for `linprog`).*
+
+```{.matlab include="/examples/extending-cbm/efms/efms.m"}
+```
+
+![](/examples/extending-cbm/efms/out/matlab/fig-efms.png){width=85%}
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/extending-cbm/efms/efms.py"}
+```
+
+![](/examples/extending-cbm/efms/out/python/fig-efms.png){width=85%}
+:::
+
+The code finds the seven EFMs of Figure 9.2, numbered as in the book, and confirms that four of them ($EFM1^*$ to $EFM4^*$) are extreme pathways. $EFM5$, $EFM6$ and $EFM7$ are each the sum of $EFM1^*$ and one of the others; in $EFM6$ and $EFM7$, the flux through $v_{3r}$ cancels in the sum. Note that this approach tests all $2^{11} = 2048$ sets of reactions. The number of sets doubles with every reaction added, so even the *E. coli* core model, with 95 reactions, is far out of reach. Practical tools, such as efmtool [@terzer2008], use the double description method instead, and can enumerate the very large numbers of EFMs of networks of that size.
 
 ### Applications
 
-*There is no code for this section; see the book.*
+A very interesting application of EFMs is the calculation of maximal molar yields. The yield of G on C is simply the ratio of $v_{11}$ to the uptake of C through $v_{4r}$, for each EFM that takes up C. $EFM3^*$, which runs D to G through $v_8$, gives two moles of G per mole of C, twice the yield of $EFM2^*$ and $EFM4^*$. When C is the only substrate ($v_1 = 0$), every steady state of the network is a non-negative combination of $EFM2^*$, $EFM3^*$ and $EFM4^*$, so no flux distribution can do better than the best of them: two moles of G per mole of C is the maximal yield of this network on C. (With A also available, $EFM5$ to $EFM7$ make G with no C at all, and the yield on C is no longer a meaningful measure.)
 
 ## Exercises {.unnumbered}
 

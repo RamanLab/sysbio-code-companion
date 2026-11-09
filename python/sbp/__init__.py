@@ -32,6 +32,8 @@ def _clean(x):
     if isinstance(x, (np.floating, float)):
         x = float(x)
         return x if math.isfinite(x) else None
+    if isinstance(x, np.bool_):
+        return bool(x)
     if isinstance(x, np.integer):
         return int(x)
     return x

@@ -1,0 +1,10 @@
+title: Elementary flux modes and extreme pathways
+book: "Ch. 9, §9.8 (Figure 9.2) and §9.8.1 (Computing EFMs and EPs)"
+needs:
+  matlab: [Optimization Toolbox]
+  python: []
+compare: [reactions, efms, extreme, yield_G_on_C]
+tolerance: {rtol: 1.0e-9, atol: 1.0e-9}
+expected:
+  extreme: [true, true, true, true, false, false, false]
+  yield_G_on_C: [null, 1.0, 2.0, 1.0, null, null, null]
