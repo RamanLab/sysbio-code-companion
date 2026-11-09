@@ -82,7 +82,11 @@ for r in rxns:
         growth_moma.append(0.0)
         continue
     growth_fba.append(mu / mu_wt)
-    growth_moma.append(nearest(w, lb_d, ub_d)[bio] / mu_wt)
+    if abs(w[ids.index(r)]) < 1e-9:   # w already meets the new constraints,
+        v = w                         # so it is its own nearest point
+    else:
+        v = nearest(w, lb_d, ub_d)
+    growth_moma.append(v[bio] / mu_wt)
 growth_fba, growth_moma = np.array(growth_fba), np.array(growth_moma)
 lower = growth_moma < growth_fba - 0.01
 print(f"{len(rxns)} deletions; MoMA predicts slower growth than FBA for "

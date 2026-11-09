@@ -37,7 +37,11 @@ for k = 1:numel(rxns)
         continue            % e.g. the ATP maintenance demand: growth 0
     end
     growth_fba(k) = mu / mu_wt;
-    v = nearest(S, w, lb_d, ub_d);
+    if abs(w(j)) < 1e-9       % w already meets the new constraints, so
+        v = w;                % it is its own nearest point
+    else
+        v = nearest(S, w, lb_d, ub_d);
+    end
     growth_moma(k) = v(bio) / mu_wt;
 end
 fprintf(['%d deletions; MoMA predicts slower growth than FBA for %d ' ...
@@ -104,7 +108,8 @@ function v = nearest(S, target, lb, ub)
 % is v'v/2 - target'v, subject to S v = 0 and lb <= v <= ub.
 n = numel(lb);
 opts = optimoptions('quadprog', 'Display', 'none', ...
-    'OptimalityTolerance', 1e-9, 'ConstraintTolerance', 1e-9);
+    'OptimalityTolerance', 1e-9, 'ConstraintTolerance', 1e-9, ...
+    'MaxIterations', 1000);
 [v, ~, exitflag, output] = quadprog(speye(n), -target, [], [], S, ...
     zeros(size(S, 1), 1), lb, ub, [], opts);
 assert(exitflag > 0, 'quadprog stopped (exit flag %d): %s', exitflag, ...
