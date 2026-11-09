@@ -27,7 +27,7 @@ S = [
      0  0  0   0   0  0  1  2  1  0  -1];  % G
 n = numel(reactions);
 
-efms = zeros(0, n);
+modes = zeros(0, n);
 for mask = 1:2^n - 1
     support = logical(bitget(mask, 1:n));
     K = null(S(:, support));
@@ -38,37 +38,37 @@ for mask = 1:2^n - 1
     for sign = [1, -1]                  % a mode and its reverse
         w = sign * v;
         if all(w(~reversible) >= -1e-9)
-            efms(end + 1, :) = w / min(abs(w(support))); %#ok<SAGROW>
+            modes(end + 1, :) = w / min(abs(w(support))); %#ok<SAGROW>
         end
     end
 end
-efms = round(efms, 9) + 0;              % + 0 turns -0 into 0
+modes = round(modes, 9) + 0;              % + 0 turns -0 into 0
 
 % Systemic independence: is a mode a non-negative combination of the others?
-extreme = false(size(efms, 1), 1);
+extreme = false(size(modes, 1), 1);
 opts = optimoptions('linprog', 'Display', 'none');
-for i = 1:size(efms, 1)
-    others = efms([1:i - 1, i + 1:end], :)';
+for i = 1:size(modes, 1)
+    others = modes([1:i - 1, i + 1:end], :)';
     [~, ~, exitflag] = linprog(zeros(size(others, 2), 1), [], [], others, ...
-        efms(i, :)', zeros(size(others, 2), 1), [], opts);
+        modes(i, :)', zeros(size(others, 2), 1), [], opts);
     extreme(i) = exitflag ~= 1;         % infeasible: not a combination
 end
 
 % Number the modes as the book does: extreme pathways first, the mode
 % that only converts A to C first in each group, then by the last
 % reaction used before v11 (v10, then v8, then v7)
-keys = [~extreme, efms(:, 11) ~= 0, -abs(efms(:, 10:-1:5))];
+keys = [~extreme, modes(:, 11) ~= 0, -abs(modes(:, 10:-1:5))];
 [~, order] = sortrows(keys);
-efms = efms(order, :); extreme = extreme(order);
+modes = modes(order, :); extreme = extreme(order);
 
 % Yield of G on C, for the modes that take up C (v4r < 0)
 fprintf('%d elementary flux modes, %d of them extreme pathways (marked *):\n', ...
-    size(efms, 1), sum(extreme));
+    size(modes, 1), sum(extreme));
 fprintf('      %s   G/C\n', sprintf('%5s', reactions{:}));
-yields = nan(1, size(efms, 1));     % NaN: the mode takes up no C
+yields = nan(1, size(modes, 1));     % NaN: the mode takes up no C
 marks = {' ', '*'};
-for k = 1:size(efms, 1)
-    e = efms(k, :);
+for k = 1:size(modes, 1)
+    e = modes(k, :);
     line = sprintf('%2d%s   %s', k, marks{extreme(k) + 1}, sprintf('%5.0f', e));
     if e(4) < 0
         yields(k) = e(11) / -e(4);
@@ -79,22 +79,22 @@ end
 
 %% Plot: the modes as a matrix
 fig = figure('Position', [100 100 700 360]);
-imagesc(efms, [-2 2]);
+imagesc(modes, [-2 2]);
 colormap(red_blue());
-[rows, cols] = find(efms ~= 0);
+[rows, cols] = find(modes ~= 0);
 for k = 1:numel(rows)
-    text(cols(k), rows(k), sprintf('%.0f', efms(rows(k), cols(k))), ...
+    text(cols(k), rows(k), sprintf('%.0f', modes(rows(k), cols(k))), ...
         'HorizontalAlignment', 'center', 'FontSize', 9);
 end
 labels = arrayfun(@(k) sprintf('EFM %d%s', k, marks{extreme(k) + 1}), ...
-    1:size(efms, 1), 'UniformOutput', false);
+    1:size(modes, 1), 'UniformOutput', false);
 set(gca, 'XTick', 1:n, 'XTickLabel', reactions, ...
-    'YTick', 1:size(efms, 1), 'YTickLabel', strtrim(labels));
+    'YTick', 1:size(modes, 1), 'YTickLabel', strtrim(labels));
 title('Elementary flux modes (* extreme pathways)');
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-efms');
 
 results.reactions = reactions;
-results.efms = efms;
+results.efms = modes;
 results.extreme = extreme';
 results.yield_G_on_C = yields;
 sbp.save_results(mfilename('fullpath'), results);

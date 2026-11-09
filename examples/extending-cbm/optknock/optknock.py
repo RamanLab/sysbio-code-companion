@@ -79,7 +79,7 @@ def envelope(reactions, points=21):
     return mus, np.array(low), np.array(high)
 
 
-def optknock(K, M=1000.0):
+def solve_optknock(K, M=1000.0):
     """OptKnock as one MILP. Variables, in order: fluxes v (n), dual
     variables of S v = 0 (m), of the upper and lower bounds (n each),
     slacks that free the dual constraint of a knocked-out reaction (nc),
@@ -160,7 +160,7 @@ def best(K, column):
 
 results = {"growth_wild_type": mu_wt}
 for K in (1, 2, 3):
-    value, design = optknock(K)
+    value, design = solve_optknock(K)
     _, _, mu, low, high = best(K, 4)
     assert abs(value - high) < 1e-5            # OptKnock finds the true optimum
     g = best(K, 3)

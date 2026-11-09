@@ -36,7 +36,7 @@ S = np.array([
 ], dtype=float)
 n = len(reactions)
 
-efms = []
+modes = []
 for mask in product([False, True], repeat=n):
     support = np.array(mask)
     if not support.any():
@@ -51,13 +51,13 @@ for mask in product([False, True], repeat=n):
     for sign in (1, -1):             # a mode and its reverse
         w = sign * v
         if np.all(w[~reversible] >= -1e-9):
-            efms.append(w / np.min(np.abs(w[support])))
-efms = np.round(np.array(efms), 9) + 0.0          # + 0.0 turns -0 into 0
+            modes.append(w / np.min(np.abs(w[support])))
+modes = np.round(np.array(modes), 9) + 0.0          # + 0.0 turns -0 into 0
 
 # Systemic independence: is a mode a non-negative combination of the others?
 extreme = []
-for i, e in enumerate(efms):
-    others = np.delete(efms, i, axis=0).T
+for i, e in enumerate(modes):
+    others = np.delete(modes, i, axis=0).T
     res = linprog(np.zeros(others.shape[1]), A_eq=others, b_eq=e,
                   bounds=(0, None), method="highs")
     extreme.append(res.status != 0)  # infeasible: not a combination
@@ -66,16 +66,16 @@ extreme = np.array(extreme)
 # Number the modes as the book does: extreme pathways first, the mode
 # that only converts A to C first in each group, then by the last
 # reaction used before v11 (v10, then v8, then v7)
-keys = [-np.abs(efms[:, j]) for j in range(4, 10)] + [efms[:, 10] != 0, ~extreme]
+keys = [-np.abs(modes[:, j]) for j in range(4, 10)] + [modes[:, 10] != 0, ~extreme]
 order = np.lexsort(keys)          # the last key sorts first
-efms, extreme = efms[order], extreme[order]
+modes, extreme = modes[order], extreme[order]
 
 # Yield of G on C, for the modes that take up C (v4r < 0)
-print(f"{len(efms)} elementary flux modes, {extreme.sum()} of them extreme "
+print(f"{len(modes)} elementary flux modes, {extreme.sum()} of them extreme "
       "pathways (marked *):")
 print("      " + " ".join(f"{r:>4s}" for r in reactions) + "   G/C")
 yields = []
-for k, (e, x) in enumerate(zip(efms, extreme), start=1):
+for k, (e, x) in enumerate(zip(modes, extreme), start=1):
     y = e[10] / -e[3] if e[3] < 0 else None
     yields.append(y)
     print(f"{k:2d}{'*' if x else ' '}   " + " ".join(f"{z:4.0f}" for z in e)
@@ -84,18 +84,18 @@ for k, (e, x) in enumerate(zip(efms, extreme), start=1):
 # --- Plot: the modes as a matrix
 sbp.style()
 fig, ax = plt.subplots(figsize=(7, 3.6))
-ax.imshow(efms, cmap="RdBu_r", vmin=-2, vmax=2, aspect="auto")
-for (i, j), z in np.ndenumerate(efms):
+ax.imshow(modes, cmap="RdBu_r", vmin=-2, vmax=2, aspect="auto")
+for (i, j), z in np.ndenumerate(modes):
     if z != 0:
         ax.text(j, i, f"{z:.0f}", ha="center", va="center", fontsize=9)
 ax.set_xticks(range(n), reactions)
-ax.set_yticks(range(len(efms)),
+ax.set_yticks(range(len(modes)),
               [f"EFM {k + 1}{'*' if x else ''}" for k, x in enumerate(extreme)])
 ax.set_title("Elementary flux modes (* extreme pathways)")
 sbp.save_figure(fig, __file__, "fig-efms")
 
 sbp.save_results(__file__, {
-    "reactions": reactions, "efms": efms, "extreme": extreme,
+    "reactions": reactions, "efms": modes, "extreme": extreme,
     "yield_G_on_C": yields,
 })
 sbp.show()

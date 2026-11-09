@@ -49,7 +49,7 @@ end
 
 results.growth_wild_type = mu_wt;
 for K = 1:3
-    [value, design] = optknock(net, candidates, K);
+    [value, design] = solve_optknock(net, candidates, K);
     b = best(designs, K, 'high');
     assert(abs(value - b.high) < 1e-5);        % OptKnock finds the true optimum
     g = best(designs, K, 'low');
@@ -142,7 +142,7 @@ values = [pool.(field)];
 d = pool(find(values > max(values) - 1e-6, 1));
 end
 
-function [value, design] = optknock(net, candidates, K)
+function [value, design] = solve_optknock(net, candidates, K)
 % OptKnock as one MILP. Variables, in order: fluxes v (n), dual variables
 % of S v = 0 (m), of the upper and lower bounds (n each), slacks that free
 % the dual constraint of a knocked-out reaction (nc), and y (nc), with

@@ -17,6 +17,8 @@ jobs:
           python-version: "3.13"
           cache: pip
       - run: pip install -r requirements.txt -e .
+      - name: Check MATLAB scripts for name clashes
+        run: python tests/lint_matlab.py
       - name: Run the Python examples
         run: python tools/run_examples.py
       - name: Check Python results against the book

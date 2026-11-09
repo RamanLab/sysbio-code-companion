@@ -27,7 +27,9 @@
    ```bash
    python tools/run_examples.py examples/<topic>/<example_name>
    python tests/compare.py examples/<topic>/<example_name>
+   python tests/lint_matlab.py
    ```
+   The last check catches a MATLAB rule that Python does not have: a script may not use its own name for a variable or a local function (`efms.m` cannot assign to `efms`).
    Run the MATLAB script too if you have MATLAB; otherwise the CI run will (and `tools/fetch_ci_outputs.sh matlab` brings its outputs into your working copy for previewing).
 
 5. **Add it to the chapter, under the book section it illustrates.** The chapters follow the book's numbering exactly, with every numbered section and subsection of the book present, so never add or remove a numbered heading; extra headings inside a section must be level 4 (`####`) or marked `{.unnumbered}`. Material that goes beyond the book, rather than illustrating one of its sections, goes at the end of the chapter (before Exercises) in a section labelled with a letter, written into the heading by hand: `## 5.A Stochastic simulation {.unnumbered #sec-stochastic}`, with subsections `### 5.A.1 …`. The next one in that chapter is 5.B. Replace the section's "There is no code for this section" line with a short introduction and a tab set:
