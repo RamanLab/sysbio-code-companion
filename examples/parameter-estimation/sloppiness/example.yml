@@ -1,0 +1,9 @@
+title: Sloppiness and the eigenvalues of J'J
+book: "Ch. 6, §6.5.2 (Sloppiness)"
+needs:
+  matlab: []
+  python: [scipy]
+# With protein data alone, one eigenvalue is zero up to rounding error
+# (about 1e-13), so absolute tolerances matter there.
+compare: [mrna_and_protein, protein_only]
+tolerance: {rtol: 1.0e-4, atol: 1.0e-6}

@@ -1,0 +1,10 @@
+title: Linear regression on transformed Michaelis-Menten data
+book: "Ch. 6, §6.2.1 (Linear regression) and Exercise 6.5"
+needs:
+  matlab: [Optimization Toolbox]
+  python: [scipy]
+compare: [methods, exercise, median, median_error, estimates]
+tolerance: {rtol: 1.0e-6, atol: 1.0e-8}
+# Values obtained with this companion (not given in the book).
+expected:
+  exercise: [[2.791590, 1.036300], [2.592855, 0.867153], [2.562324, 0.847108], [2.573936, 0.820896]]

@@ -1,0 +1,7 @@
+title: Local sensitivity analysis
+book: "Ch. 6, §6.4.2.1 (Local sensitivity, Eq. 6.12)"
+needs:
+  matlab: []
+  python: [scipy]
+compare: [t, mrna, protein]
+tolerance: {rtol: 1.0e-5, atol: 1.0e-6}

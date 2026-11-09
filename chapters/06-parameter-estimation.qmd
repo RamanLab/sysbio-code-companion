@@ -16,7 +16,29 @@ Both least-squares examples in §6.2.2 show what structural identifiability mean
 
 ### Linear regression
 
-*There is no code for this section; see the book.*
+Each of the three classical linearisations of the Michaelis–Menten equation turns the estimation of $v_{max}$ and $K_M$ into fitting a straight line. As the book points out, the catch is that the transformation also transforms the errors. Let us see how much this matters, first for the data of Exercise 6.5 (note that the column headers in the book are swapped: the first row lists $[S]$, and the second, $v$), and then for 200 simulated datasets, where we know the true parameters. The simulated rates carry Gaussian noise of a fixed standard deviation, 0.1 mM/s, and are stored in `data/mm_replicates.csv`, so that both languages analyse exactly the same numbers.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs the Optimization Toolbox (for `lsqnonlin`).*
+
+```{.matlab include="/examples/parameter-estimation/linear_regression/linear_regression.m"}
+```
+
+![](/examples/parameter-estimation/linear_regression/out/matlab/fig-linear-regression.png)
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/parameter-estimation/linear_regression/linear_regression.py"}
+```
+
+![](/examples/parameter-estimation/linear_regression/out/python/fig-linear-regression.png)
+:::
+
+For the exercise data, the Lineweaver–Burk plot gives $K_M = 1.04$ mM, whereas non-linear regression gives 0.82 mM; the other two plots fall in between. The simulations show that this is no accident. A reciprocal blows up the noise in the slowest rates, at the lowest substrate concentrations, and these points then dominate the fit (see the leftmost point in the double reciprocal plot). Across the 200 datasets, the median error in $K_M$ is 28% for Lineweaver–Burk, against 9% for non-linear regression, and the spread of its estimates is far wider. Hanes–Woolf comes surprisingly close to non-linear regression here; even so, with non-linear regression a few lines of code away, there is little reason to use any of the transformations.
 
 ### Least squares
 
@@ -197,11 +219,55 @@ The trade-off is clear from this small problem. The evolutionary algorithm neede
 
 ### Model selection
 
-*There is no code for this section; see the book.*
+The inhibition data of §6.2.2 were collected for an enzyme with a *competitive* inhibitor. But do the data themselves tell us that? We fit four rate laws to both datasets together, competitive, uncompetitive and non-competitive inhibition (three parameters each), and mixed inhibition (four parameters), and compare them using the Akaike Information Criterion. For weighted least squares with known measurement errors, $\text{AIC} = \chi^2 + 2k$, where $\chi^2$ is the weighted SSE and $k$ the number of parameters; the second term is the price of every additional parameter, much in the spirit of Occam's razor. With only 40 data points, we use the corrected form, AICc. Akaike weights then express the relative support for each model. Finally, from the covariance matrix of the estimates, $\hat{V} = (J^TJ)^{-1}$, we compute the cross-correlations of Eq. 6.11.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs the Optimization Toolbox (for `lsqnonlin`).*
+
+```{.matlab include="/examples/parameter-estimation/model_selection/model_selection.m"}
+```
+
+![](/examples/parameter-estimation/model_selection/out/matlab/fig-model-selection.png)
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/parameter-estimation/model_selection/model_selection.py"}
+```
+
+![](/examples/parameter-estimation/model_selection/out/python/fig-model-selection.png)
+:::
+
+The results are instructive. Uncompetitive inhibition is clearly worse, and its parameters are strongly correlated ($|\kappa| = 0.99$). Mixed inhibition fits the data no better than the simpler models, despite its extra parameter, and its parameters are weakly determinable ($|\kappa| > 0.95$; note the uncertainty in $K_{I2}$). However, competitive and non-competitive inhibition fit the data *equally* well: their AICc values differ by less than 0.4, and the Akaike weights are 0.36 and 0.42. These data simply cannot distinguish between the two mechanisms. This is exactly the question posed in Exercise 6.1(b): to discriminate, we need more informative experiments, for instance rates at higher substrate concentrations, where a competitive inhibitor is overcome and a non-competitive one is not, or rates without any inhibitor at all.
 
 ### Sensitivity and robustness of biological models
 
-*There is no code for this section; see the book.*
+We compute the local sensitivities of Eq. 6.12 for the gene expression model of §6.2.2, at the parameters fitted there to mRNA and protein. Each derivative $\partial x_i/\partial \theta_j$ is obtained by central differences, by solving the ODEs with $\theta_j$ raised and lowered by 0.01%. It is convenient to normalise the sensitivities, as $(\theta_j/x_i)\,\partial x_i/\partial \theta_j$: this is the percentage change in $x_i$ for a 1% change in $\theta_j$, and it can be compared across parameters with different units.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs only base MATLAB.*
+
+```{.matlab include="/examples/parameter-estimation/sensitivity/sensitivity.m"}
+```
+
+![](/examples/parameter-estimation/sensitivity/out/matlab/fig-sensitivity.png)
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/parameter-estimation/sensitivity/sensitivity.py"}
+```
+
+![](/examples/parameter-estimation/sensitivity/out/python/fig-sensitivity.png)
+:::
+
+The two synthesis rates, $k_m$ and $k_p$, enter the model linearly, so the protein level is always exactly proportional to each (sensitivity 1). The degradation rates matter little early on, and increasingly so as the system approaches steady state, where $p^* = k_mk_p/(g_mg_p)$ and the sensitivities tend to $+1, -1, +1, -1$, a useful check on the code. Note also that the protein responds to $g_m$ much sooner than to $g_p$: mRNA turns over in about an hour, but protein takes several. Global sensitivity analyses (§6.4.2.2) repeat such calculations across many parameter sets, sampled from the whole parameter space.
 
 ## Troubleshooting
 
@@ -211,7 +277,29 @@ The trade-off is clear from this small problem. The evolutionary algorithm neede
 
 ### Sloppiness
 
-*There is no code for this section; see the book.*
+Near the optimum, the cost function is approximately a quadratic form, with Hessian $\approx J^TJ$, the Fisher Information Matrix, where $J$ is the Jacobian of the weighted residuals. Following Gutenkunst et al., we differentiate with respect to $\log\theta$, so that the eigenvalues measure *relative* changes in the parameters. Large eigenvalues correspond to stiff directions in parameter space, and small ones to sloppy directions. We compare two experiments on the gene expression model of §6.2.2: measuring both mRNA and protein, or protein alone.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs only base MATLAB.*
+
+```{.matlab include="/examples/parameter-estimation/sloppiness/sloppiness.m"}
+```
+
+![](/examples/parameter-estimation/sloppiness/out/matlab/fig-sloppiness.png){width=55%}
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/parameter-estimation/sloppiness/sloppiness.py"}
+```
+
+![](/examples/parameter-estimation/sloppiness/out/python/fig-sloppiness.png){width=55%}
+:::
+
+With both mRNA and protein, the eigenvalues span two and a half orders of magnitude ($\lambda_{min}/\lambda_{max} = 0.0034$). The model is not quite sloppy by the criterion of the book, but the sloppiest direction (all four parameters changing together, synthesis and degradation of protein against those of mRNA) is far less constrained than the stiffest. With protein data alone, one eigenvalue is zero, up to rounding error. Its eigenvector, $\log k_m$ up and $\log k_p$ down by the same amount, is a direction in which the cost does not change at all: the protein data fix only the product $k_mk_p$, exactly as we found by fitting in §6.2.2. Here, sloppiness has become non-identifiability, and no amount of protein data can cure it; only a different measurement, of mRNA, can.
 
 ### Choosing a search algorithm
 

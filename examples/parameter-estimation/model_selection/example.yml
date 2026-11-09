@@ -1,0 +1,13 @@
+title: "Model selection: AIC and parameter cross-correlation"
+book: "Ch. 6, §6.4.1 (Model selection, Eq. 6.11) and Exercise 6.1"
+needs:
+  matlab: [Optimization Toolbox]
+  python: [scipy]
+# The mixed model has a nearly flat direction (KI2 is poorly determined),
+# so its estimates can differ slightly between solvers: hence rtol 1e-4.
+compare: [competitive, uncompetitive, noncompetitive, mixed]
+tolerance: {rtol: 1.0e-4, atol: 1.0e-6}
+# Values obtained with this companion (not given in the book).
+expected:
+  competitive: {chi2: 63.77654}
+  noncompetitive: {chi2: 63.42807}
