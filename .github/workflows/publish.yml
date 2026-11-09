@@ -44,8 +44,15 @@ jobs:
             tar xzf "artifacts/out-$lang.tgz"
           done
       - uses: quarto-dev/quarto-actions/setup@v2
-        with:
-          tinytex: true
+      # TinyTeX for the PDF. Its download occasionally fails; retry once,
+      # then fall back to Ubuntu's TeX Live packages.
+      - name: Install TeX
+        run: |
+          quarto install tinytex --no-prompt \
+            || { sleep 30; quarto install tinytex --no-prompt; } \
+            || { sudo apt-get update -q && sudo apt-get install -y -q \
+                   texlive-xetex texlive-latex-extra texlive-fonts-recommended \
+                   lmodern fonts-dejavu; }
       - name: Render website and PDF
         run: quarto render
       - uses: actions/upload-pages-artifact@v5
