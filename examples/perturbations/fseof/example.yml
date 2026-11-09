@@ -1,0 +1,10 @@
+title: FSEOF and the production envelope
+book: "Ch. 10, §10.3.1 (FSEOF) and §10.6.1 (metabolic engineering)"
+needs:
+  matlab: [Optimization Toolbox]
+  python: [cobra, clarabel]
+compare: [growth_max, succinate_max, fseof_growth, up, down,
+          envelope_growth, envelope_max, envelope_min]
+tolerance: {rtol: 1.0e-5, atol: 1.0e-5}
+expected:
+  growth_max: 0.8739215

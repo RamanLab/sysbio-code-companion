@@ -1,0 +1,11 @@
+title: Blocked reactions and dead-end metabolites
+book: "Ch. 8, §8.8.1 (Figure 8.3, Eqs. 8.13 and 8.14) and §8.8.2"
+needs:
+  matlab: [Optimization Toolbox]
+  python: [cobra, sympy]
+compare: [rref, blocked_rref, blocked_fva, dead_ends, dead_ends_glucose,
+          blocked_core, no_flux_glucose]
+tolerance: {rtol: 1.0e-9, atol: 1.0e-9}
+expected:
+  blocked_rref: [v3, b3]
+  blocked_fva: [v3, b3]

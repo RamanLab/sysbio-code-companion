@@ -1,0 +1,11 @@
+title: Loops, pFBA and the pFBA classes of reactions
+book: "Ch. 8, §8.8.4 (Figure 8.4) and §8.8.5 (Eq. 8.15)"
+needs:
+  matlab: [Optimization Toolbox]
+  python: [cobra]
+compare: [toy_max_b2, toy_fva, toy_pfba, toy_min_total, growth,
+          min_total_flux, classes]
+tolerance: {rtol: 1.0e-6, atol: 1.0e-5}
+expected:
+  toy_max_b2: 10
+  growth: 0.8739215

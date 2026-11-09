@@ -89,7 +89,29 @@ The exact number of double deletions that Fast-SL needs depends on which of seve
 
 ### Flux Scanning based on Enforced Objective Flux (FSEOF)
 
-*There is no code for this section; see the book.*
+FSEOF asks which fluxes rise as the cell is forced to make more of a product. Here the product is succinate, secreted by the *E. coli* core model on glucose. Succinate secretion is fixed at increasing fractions of its maximum (16.4 mmol/gDW/h), and growth is maximised each time. Each of these problems has many optimal flux distributions, so the code takes the one of smallest Euclidean norm, which is unique, as for MoMA (§9.1).
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs the Optimization Toolbox (for `linprog` and `quadprog`); reads the model from `data/e_coli_core.mat`, so the COBRA Toolbox is not required.*
+
+```{.matlab include="/examples/perturbations/fseof/fseof.m"}
+```
+
+![](/examples/perturbations/fseof/out/matlab/fig-fseof.png){width=75%}
+
+## Python
+
+*Needs COBRApy (to read the model), SciPy and Clarabel (for the quadratic programmes).*
+
+```{.python include="/examples/perturbations/fseof/fseof.py"}
+```
+
+![](/examples/perturbations/fseof/out/python/fig-fseof.png){width=75%}
+:::
+
+As enforced succinate rises to 90% of its maximum, growth falls from 0.874 to 0.090 h^−1^. Ten reactions rise steadily with it: the glycolytic reactions from `PGI` to `ENO`, phosphoenolpyruvate carboxylase (`PPC`), which feeds oxaloacetate towards succinate, and the succinate exporter `SUCCt3`. These are the candidates for over-expression. Fourteen fall, mostly respiration (`NADH16`, `CYTBD`, `ATPS4r`) and the pentose phosphate pathway, which serve growth. The left panel is the production envelope (§10.6.1).
 
 ## Other perturbations
 
@@ -103,7 +125,7 @@ The exact number of double deletions that Fast-SL needs depends on which of seve
 
 ### Metabolic engineering
 
-*There is no code for this section; see the book.*
+The production envelope, the largest and smallest product secretion possible at each growth rate, is drawn in the FSEOF example of §10.3.1. For succinate in the *E. coli* core model the smallest secretion is zero at every growth rate: nothing couples production to growth, and strain designs such as OptKnock (§9.3.1) aim to change that.
 
 ### Drug target identification
 

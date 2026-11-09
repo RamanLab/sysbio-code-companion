@@ -174,11 +174,30 @@ At optimal growth, $v_1$, $v_2$ and $v_3$ can each take any value between 0 and 
 
 ### Blocked reactions and dead-end metabolites
 
-*There is no code for this section; see the book.*
+A reaction is *blocked* if it cannot carry flux at steady state, whatever the bounds allow. For the small network of Figure 8.3, the reduced row echelon form of $\mathbf{S}$ (Eq. 8.14) shows this directly: a row with a single non-zero entry forces that flux to zero. The code finds $v_3$ and $b_3$ this way, and confirms them by FVA with no objective. It then looks for dead-end metabolites in the *E. coli* core model, metabolites that are only produced or only consumed.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs the Optimization Toolbox (for `linprog`; `rref` is built in); reads the model from `data/e_coli_core.mat`, so the COBRA Toolbox is not required.*
+
+```{.matlab include="/examples/constraint-based/blocked_reactions/blocked_reactions.m"}
+```
+
+## Python
+
+*Needs COBRApy, SymPy (for the exact RREF) and SciPy.*
+
+```{.python include="/examples/constraint-based/blocked_reactions/blocked_reactions.py"}
+```
+
+:::
+
+With every exchange reaction open, the core model has no dead-end metabolites and no blocked reactions. On glucose minimal medium, with the other carbon sources closed, four extracellular metabolites (fructose, fumarate, glutamine and malate) become dead ends, and their exchange and transport reactions, eight in all, can no longer carry flux. Whether a reaction is blocked depends on the medium as much as on the network.
 
 ### Gaps in metabolic networks
 
-*There is no code for this section; see the book.*
+Dead-end metabolites (§8.8.1) are where gap-filling starts: each one marks a reaction that may be missing from the network. Finding the missing reactions needs a database of candidate reactions, which is beyond the scope of these examples.
 
 ### Multiple solutions
 
@@ -186,11 +205,40 @@ The toy example of §8.6 has many optimal flux distributions; FVA (§8.7) shows 
 
 ### Loops
 
-*There is no code for this section; see the book.*
+The network of Figure 8.4 contains a cycle, $v_3$ and $v_4$, that is balanced on its own and exchanges nothing with the outside. FVA shows that, at optimal $b_2$, the cycle can carry anything from 0 to 990, and $v_1$ anything from 10 to 1000. Such fluxes are not physiological. Minimising the total flux $\sum_j |v_j|$ at optimal growth removes the cycle and fixes every flux. The code below does this for the toy network, then for the *E. coli* core model (§8.8.5).
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs the Optimization Toolbox (for `linprog`); reads the model from `data/e_coli_core.mat`, so the COBRA Toolbox is not required.*
+
+```{.matlab include="/examples/constraint-based/pfba/pfba.m"}
+```
+
+![](/examples/constraint-based/pfba/out/matlab/fig-pfba.png){width=75%}
+
+## Python
+
+*Needs COBRApy (to read the model) and SciPy.*
+
+```{.python include="/examples/constraint-based/pfba/pfba.py"}
+```
+
+![](/examples/constraint-based/pfba/out/python/fig-pfba.png){width=75%}
+
+:::
 
 ### Parsimonious FBA (pFBA)
 
-Fast-SL (§10.2.3) and the MoMA reference in §9.1 use flux distributions of minimal norm, closely related to pFBA.
+pFBA (Eq. 8.15) picks, among all flux distributions with optimal growth, one with the least total flux, on the argument that the cell avoids making enzymes it does not need. The code above, for the *E. coli* core model on glucose, finds a growth rate of 0.874 h^−1^ and a minimal total flux of 518.4 mmol/gDW/h. It then classifies every internal reaction as in the book:
+
+* **essential** (13): without it, growth falls below 1% of the optimum;
+* **pFBA optima** (27): it can carry flux in a pFBA solution;
+* **enzymatically less efficient, ELE** (1): it can carry flux at optimal growth, but not at minimal total flux;
+* **metabolically less efficient, MLE** (29): it can carry flux on glucose, but not at optimal growth;
+* **no flux** (4) in this medium, and **blocked** (0).
+
+The one ELE reaction is fumarate reductase, `FRD7`, which runs the reverse of succinate dehydrogenase (`SUCDi`). Together they form a loop like the one in Figure 8.4, and at optimal growth `FRD7` can carry almost 1000 mmol/gDW/h. Minimising total flux switches it off. MoMA (§9.1) and Fast-SL (§10.2.3) also use flux distributions of minimal norm.
 
 ### ATP maintenance fluxes
 
