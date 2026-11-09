@@ -1,0 +1,26 @@
+# One-off: fetch supplementary files that hold experimental gene essentiality
+# data for E. coli (Keio), to choose a source. Not merged into main.
+name: fetch-keio
+on: push
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download supplementary files from Europe PMC
+        run: |
+          mkdir -p keio-raw
+          for id in PMC5821084 PMC1698209 PMC1681482; do
+            curl -fsSL -o keio-raw/$id.zip \
+              "https://www.ebi.ac.uk/europepmc/webservices/rest/$id/supplementaryFiles" || echo "failed $id"
+            (cd keio-raw && unzip -o -q $id.zip -d $id && rm $id.zip) || true
+          done
+          find keio-raw -type f -exec ls -la {} \;
+      - name: Commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add keio-raw
+          git commit -m "Fetch Keio supplementary files" && git push || true
