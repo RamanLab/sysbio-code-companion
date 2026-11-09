@@ -10,6 +10,25 @@ The text is deliberately short. For the theory behind each method, every chapter
 
 Each example is a pair of standalone scripts, one `.m` and one `.py`, in the [`examples/`](https://github.com/RamanLab/sysbio-primer/tree/main/examples) folder of the repository. Every time the primer changes, both versions are run automatically and their key results are compared with each other, and with the values reported in the book where there are any. So the code you see on these pages is the code that was run to produce the figures beside it.
 
+## Chapters and the book
+
+| Primer chapter | Book chapter |
+|---|---|
+| @sec-getting-started | — |
+| @sec-first-models | 1. Introduction to modelling |
+| @sec-networks | 2–3. Graph theory; structure of networks |
+| @sec-network-applications | 4. Applications of network biology |
+| @sec-odes, @sec-dynamics | 5. Introduction to dynamic modelling |
+| @sec-pestim | 6. Parameter estimation |
+| @sec-boolean | 7. Boolean networks |
+| @sec-stochastic | (goes beyond the book) |
+| @sec-cbm | 8. Introduction to constraint-based modelling |
+| @sec-extending-cbm | 9. Extending constraint-based approaches |
+| @sec-perturbations | 10. Perturbations to metabolic networks |
+| @sec-communities | 11. Modelling cellular interactions |
+| @sec-dynamics (circuits) | 12. Designing biological circuits |
+| @sec-robustness | 13. Robustness and evolvability |
+
 ## Licence
 
 The text is available under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) and the code under the [MIT licence](https://opensource.org/licenses/MIT).

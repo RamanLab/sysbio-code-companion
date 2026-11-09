@@ -57,4 +57,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for how to add an example.
 
 ## Licence
 
-Text: [CC BY 4.0](LICENSE-TEXT.md). Code: [MIT](LICENSE). The *E. coli* core model in `data/` is from BiGG Models; see [data/README.md](data/README.md).
+Text: [CC BY 4.0](LICENSE-TEXT.md). Code: [MIT](LICENSE). The data in `data/` come from BiGG Models, STRING and NetGenes, each under its own terms; see [data/README.md](data/README.md).
