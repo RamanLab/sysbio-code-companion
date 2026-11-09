@@ -113,7 +113,31 @@ The exercise also asks whether a subset of the knock-outs does nearly as well, a
 
 ### Informing metabolic models with omic data
 
-*There is no code for this section; see the book.*
+E-Flux [@colijn2009] is perhaps the simplest way to bring expression data into a constraint-based model. The level of mRNA is taken as an approximate upper bound on the amount of enzyme, and hence on the flux. The expression of a reaction follows its GPR association: for a complex (genes joined by **and**), we take the minimum of the expression values; for isozymes (genes joined by **or**), their sum. Every bound is then divided by the largest, so that all of them lie in $[-1, 1]$.
+
+To try E-Flux on real data, we use RNA-seq profiles from the PRECISE compendium [@sastry2019]: wild-type *E. coli* MG1655, grown aerobically in minimal medium on glucose, xylose, glycerol, fructose or acetate, with the growth rate measured in each experiment. For every sample, we constrain iML1515 with E-Flux bounds, allow uptake of that sample's carbon source alone, and maximise growth. Note that the uptake rate itself is left open; only expression limits the fluxes. We also set the non-growth-associated ATP maintenance to zero, since a requirement of 6.86 mmol/gDW/h makes little sense once all fluxes are in arbitrary units below 1. Finally, the GPR rules are evaluated by a small parser, written out in full in both languages, so that you can see exactly how **and** and **or** are handled.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs the Optimization Toolbox (for `linprog`); reads iML1515 from `data/iML1515.mat`, so the COBRA Toolbox is not required.*
+
+```{.matlab include="/examples/extending-cbm/eflux/eflux.m"}
+```
+
+![](/examples/extending-cbm/eflux/out/matlab/fig-eflux.png)
+
+## Python
+
+*Needs COBRApy and pandas.*
+
+```{.python include="/examples/extending-cbm/eflux/eflux.py"}
+```
+
+![](/examples/extending-cbm/eflux/out/python/fig-eflux.png)
+:::
+
+At first sight, E-Flux does well: its predicted growth rates correlate with the measured ones, with $r = 0.78$ when expression is used as TPM, as in the original method, and $r = 0.84$ with log-transformed values. Look closely at the plots, though. Both correlations come almost entirely from acetate: E-Flux correctly predicts that *E. coli* grows far more slowly on acetate than on any of the sugars, but it does not order the sugars themselves. With log-transformed values, glucose, the fastest in the experiments, is predicted to be the slowest of the sugars; with TPM, xylose falls well below the other sugars, although it is measured to grow faster than glycerol. Six samples are far too few to choose between the two transformations, and the choice clearly changes the predictions. This is typical of methods that integrate omic data: they capture large differences between conditions quite well, but the finer predictions depend on choices (normalisation, thresholds, how missing genes are treated) that are not dictated by the biology.
 
 ### Tissue-specific models
 

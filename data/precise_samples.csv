@@ -1,0 +1,7 @@
+sample,carbon_source,growth_rate,study,doi
+ssw__wt_glc__1,glucose(4),0.73,Substrate-switching Evolution,doi.org/10.1128/AEM.00410-17
+ssw__wt_xyl__1,xylose(4),0.55,Substrate-switching Evolution,doi.org/10.1128/AEM.00410-17
+ssw__wt_glyc__1,glycerol(2.5),0.45,Substrate-switching Evolution,doi.org/10.1128/AEM.00410-17
+ssw__wt_ac__1,acetate(4),0.27,Substrate-switching Evolution,doi.org/10.1128/AEM.00410-17
+cra_crp__wt_fru__1,fructose(2),0.53,Cra/Crp,doi.org/10.1093/nar/gky069
+cra_crp__wt_ac__1,acetate(2),0.25,Cra/Crp,doi.org/10.1093/nar/gky069

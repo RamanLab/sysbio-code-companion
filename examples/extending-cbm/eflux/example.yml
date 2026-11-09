@@ -1,0 +1,11 @@
+title: "E-Flux: integrating gene expression with iML1515"
+book: "Ch. 9, §9.4.2 (Informing metabolic models with omic data: E-Flux)"
+needs:
+  matlab: [Optimization Toolbox]
+  python: [cobra]
+# E-Flux bounds are small (at most 1), so growth rates are small too, and
+# solver tolerances matter more than usual: hence the looser rtol.
+compare: [carbon_source, measured, eflux_tpm, eflux_log_tpm, r_tpm, r_log_tpm]
+tolerance: {rtol: 1.0e-3, atol: 1.0e-7}
+expected:
+  measured: [0.73, 0.55, 0.45, 0.27, 0.53, 0.25]
