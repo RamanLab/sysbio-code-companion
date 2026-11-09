@@ -2,12 +2,7 @@
 
 One of the most common uses of a metabolic model is to predict what happens when something is taken away: a gene knocked out, an enzyme inhibited by a drug. Which reactions can the cell not do without? Which pairs of reactions back each other up, so that either can be lost but not both? Constraint-based models answer such questions quickly, at the scale of whole genomes, and these predictions are used to find drug targets in pathogens and to design strains for metabolic engineering. This chapter builds on @sec-cbm and uses the same *E. coli* core model.
 
-::: {.callout-note appearance="simple"}
-## In the book
-Chapter 10, *Perturbations to Metabolic Networks*: knock-outs (§10.1), gene versus reaction deletions and gene–protein–reaction rules (§10.1.1), synthetic lethals and algorithms to find them, by exhaustive enumeration (§10.2.1), bi-level optimisation (§10.2.2) and Fast-SL (§10.2.3), and applications such as metabolic engineering and drug target identification (§10.6). Chapter 9 covers methods that predict the flux distribution after a perturbation, such as MoMA (§9.1) and ROOM (§9.2); see @sec-extending-cbm.
-:::
-
-## Single deletions
+## Knock-outs
 
 To delete a reaction from a constraint-based model, we fix its flux to zero by setting both its lower and upper bounds to zero (book, Eq. 10.2), and solve the FBA problem again. If the maximum growth rate falls below some small fraction of the wild type, 1% here, the deletion is called **lethal**, and the reaction **essential**.
 
@@ -39,9 +34,23 @@ Thirteen reactions are essential (red), among them the glucose uptake system (GL
 
 Only seven genes are essential, although thirteen reactions are. The difference comes from the GPR rules. Aconitase (ACONTa and ACONTb), for example, is encoded by two genes, *acnA* and *acnB*, either of which suffices, so neither gene is essential although the reaction is. In the other direction, *ptsH* and *ptsI* are each essential because the glucose transport system needs both. Predictions about genes, which are what experiments test, can therefore differ substantially from predictions about reactions.
 
+### Gene deletions vs. reaction deletions
+
+The example in §10.1 deletes genes as well as reactions, and compares the two.
+
 ## Synthetic lethals
 
 Two reactions form a **synthetic lethal** pair if deleting either one alone leaves the cell viable, but deleting both is lethal (book, §10.2). Such pairs reveal how a network backs itself up, and they are attractive targets for combination drugs.
+
+### Exhaustive enumeration
+
+The example in §10.2.3 runs the exhaustive search alongside Fast-SL.
+
+### Bi-level optimisation
+
+*There is no code for this section; see the book.*
+
+### Fast-SL: massively pruning the search space
 
 The obvious way to find them is to test every pair of non-essential reactions (book, §10.2.1). For the core model that is $\binom{61}{2} = 1830$ double deletions, which is easy; for a genome-scale model with 2000 reactions it is about two million, and for triplets more than a billion. The Fast-SL algorithm, developed in our group, cuts down the search with a simple argument [@pratapa2015]. If some flux distribution that supports growth uses neither reaction of a pair, deleting both leaves that distribution intact, so the pair cannot be lethal. Hence:
 
@@ -76,7 +85,47 @@ Many of the pairs make biological sense. The reactions of upper glycolysis (PGI,
 
 The exact number of double deletions that Fast-SL needs depends on which of several equally sparse solutions the solver returns, so it can differ slightly between MATLAB and Python; the set of lethal pairs cannot, and the automated checks require it to be identical.
 
-## Exercises
+## Over-expression
+
+### Flux Scanning based on Enforced Objective Flux (FSEOF)
+
+*There is no code for this section; see the book.*
+
+## Other perturbations
+
+*There is no code for this section; see the book.*
+
+## Evaluating and ranking perturbations
+
+*There is no code for this section; see the book.*
+
+## Applications of constraint-based models
+
+### Metabolic engineering
+
+*There is no code for this section; see the book.*
+
+### Drug target identification
+
+*There is no code for this section; see the book.*
+
+## Limitations of constraint-based approaches
+
+### Incorrect predictions
+
+*There is no code for this section; see the book.*
+
+## Troubleshooting
+
+### Interpreting gene deletion simulations
+
+*There is no code for this section; see the book.*
+
+## Software tools
+
+*There is no code for this section; see the book.*
+
+## Exercises {.unnumbered}
 
 1. Repeat the single deletions for anaerobic growth (oxygen uptake set to zero). Which reactions become essential, and why?
 2. Use the gene-deletion functions (`single_gene_deletion` in COBRApy, `singleGeneDeletion` in the COBRA Toolbox) to find essential genes, and the GPR rules to explain every case where a reaction is essential but none of its genes is.
@@ -85,6 +134,6 @@ The exact number of double deletions that Fast-SL needs depends on which of seve
 5. A **minimal reactome** is a set of reactions that supports growth, from which no reaction can be removed without killing the cell. Starting from all reactions, remove reactions one at a time, in random order, keeping each removal only if the cell still grows. How large is the result, and does it change with the order? (This is the second problem of the BT5240 constraint-based assignment, and book Exercise 10.8 asks the same of the genome-scale model iML1515.)
 6. Book Exercises 10.3 and 10.4: delete the two transketolases, TKT1 and TKT2, singly and together. What do you infer? Compare the flux distributions when only one of them is active, using FBA with the minimal-norm solution so that the comparison does not depend on the solver.
 
-## Going further
+## Going further {.unnumbered}
 
 Deletions are the simplest perturbations. Over-expression, enzyme inhibition and changes of medium can be modelled in the same framework, and methods such as MoMA and ROOM predict how fluxes redistribute after a perturbation, instead of assuming that the mutant immediately grows optimally (book, Chapters 9 and 10).

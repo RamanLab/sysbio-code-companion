@@ -4,7 +4,7 @@ project:
 
 book:
   title: "Computational Systems Biology in MATLAB and Python"
-  subtitle: "An open primer"
+  subtitle: "A code companion to the book"
   author: "Karthik Raman"
   date: last-modified
   site-url: https://ramanlab.github.io/sysbio-primer
@@ -15,19 +15,27 @@ book:
   chapters:
     - index.qmd
     - chapters/getting-started.qmd
-    - chapters/first-models.qmd
-    - chapters/networks.qmd
-    - chapters/network-applications.qmd
-    - chapters/odes.qmd
-    - chapters/dynamics.qmd
-    - chapters/parameter-estimation.qmd
-    - chapters/boolean.qmd
-    - chapters/stochastic.qmd
-    - chapters/constraint-based.qmd
-    - chapters/extending-cbm.qmd
-    - chapters/perturbations.qmd
-    - chapters/communities.qmd
-    - chapters/robustness.qmd
+    - chapters/01-introduction-to-modelling.qmd
+    - part: "Static Modelling"
+      chapters:
+        - chapters/02-introduction-to-graph-theory.qmd
+        - chapters/03-structure-of-networks.qmd
+        - chapters/04-applications-of-network-biology.qmd
+    - part: "Dynamic Modelling"
+      chapters:
+        - chapters/05-introduction-to-dynamic-modelling.qmd
+        - chapters/06-parameter-estimation.qmd
+        - chapters/07-boolean-networks.qmd
+    - part: "Constraint-based Modelling"
+      chapters:
+        - chapters/08-constraint-based-modelling.qmd
+        - chapters/09-extending-constraint-based-approaches.qmd
+        - chapters/10-perturbations-to-metabolic-networks.qmd
+    - part: "Advanced Topics"
+      chapters:
+        - chapters/11-modelling-cellular-interactions.qmd
+        - chapters/12-designing-biological-circuits.qmd
+        - chapters/13-robustness-and-evolvability.qmd
     - references.qmd
 
 bibliography: references.bib
@@ -45,11 +53,13 @@ format:
     code-copy: true
     code-overflow: scroll
     toc-depth: 3
+    number-depth: 3
   pdf:
     documentclass: scrreprt
     pdf-engine: xelatex
     papersize: a4
     toc-depth: 2
+    number-depth: 3
     code-block-font-size: \footnotesize
     include-in-header:
       text: |

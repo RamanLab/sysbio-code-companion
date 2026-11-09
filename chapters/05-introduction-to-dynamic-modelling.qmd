@@ -1,0 +1,282 @@
+# Introduction to dynamic modelling {#sec-odes}
+
+A dynamic model describes how the levels of molecules, such as metabolites, mRNAs or proteins, change over time. Most such models are systems of ordinary differential equations (ODEs),
+
+$$
+\frac{dx_i}{dt} = f_i(x_1, x_2, \ldots, x_n;\ \Theta), \qquad i = 1, 2, \ldots, n,
+$$
+
+where $x_i$ is the concentration of species $i$, $f_i$ is its rate law, and $\Theta$ is the set of parameters, such as rate constants. This chapter covers the two halves of working with such models: writing the equations down, and solving them numerically, including what can go wrong.
+
+## Constructing dynamic models
+
+### Modelling a generic biochemical system
+
+*There is no code for this section; see the book.*
+
+## Mass-action kinetic models
+
+*There is no code for this section; see the book.*
+
+## Modelling enzyme kinetics
+
+### The Michaelis–Menten model
+
+For an enzyme $E$ converting a substrate $S$ into a product $P$ through a complex $ES$,
+
+$$
+E + S \underset{k_{-1}}{\overset{k_1}{\rightleftharpoons}} ES \xrightarrow{k_2} E + P ,
+$$
+
+mass-action kinetics gives one ODE per species, with $[E] = E_0 - [ES]$ because the total amount of enzyme is fixed (book, Eqs. 5.4 and 5.6). Assuming in addition that $[ES]$ changes slowly compared to $[S]$ (the quasi-steady-state approximation of Briggs and Haldane) collapses all of this into the familiar Michaelis–Menten rate law (book, Eqs. 5.12 and 5.13)
+
+$$
+v = \frac{v_\text{max}[S]}{K_M + [S]}, \qquad v_\text{max} = k_2 E_0, \qquad K_M = \frac{k_{-1} + k_2}{k_1}.
+$$
+
+The rate law is so widely used that it is easy to forget it is an approximation. The code below solves both models, for a small and a large amount of enzyme, with $K_M = 2$ mM and $S_0 = 10$ mM.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/odes/michaelis_menten/michaelis_menten.m"}
+```
+
+![](/examples/odes/michaelis_menten/out/matlab/fig-michaelis-menten.png)
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/odes/michaelis_menten/michaelis_menten.py"}
+```
+
+![](/examples/odes/michaelis_menten/out/python/fig-michaelis-menten.png)
+:::
+
+With little enzyme, the two models are indistinguishable: they never differ by more than 0.3% of $S_0$. With a lot of enzyme, the Michaelis–Menten model runs ahead of the full model by up to 14% of $S_0$. The reason is that a substantial share of the substrate is held in the complex $ES$, which the rate law ignores. A useful rule of thumb is that the approximation is good when $E_0 / (S_0 + K_M) \ll 1$ [@segel1989]; here that ratio is 0.008 in the first case and 0.42 in the second. Know thy assumptions!
+
+### Co-operativity: Hill kinetics
+
+Exercise 5 replaces the Michaelis–Menten rate law of the example above with Hill kinetics.
+
+### An illustrative example: a three-node oscillator
+
+Exercise 7 asks you to simulate this oscillator.
+
+## Generalised rate equations
+
+### Biochemical systems theory
+
+*There is no code for this section; see the book.*
+
+## Solving ODEs
+
+Few ODE models can be solved on paper, so we solve them numerically. The simplest method, due to Euler, replaces the derivative by a finite difference over a small time step $\Delta t$:
+
+$$
+x(t + \Delta t) \approx x(t) + f\big(x(t)\big)\,\Delta t .
+$$
+
+Starting from the initial value $x_0$, we step forward in time, one $\Delta t$ at a time. This is the **forward** (or explicit) Euler method (book, Eqs. 5.23 and 5.24). The **backward** (or implicit) Euler method evaluates $f$ at the *end* of the step instead, $x(t + \Delta t) = x(t) + f\big(x(t + \Delta t)\big)\,\Delta t$, which must be solved for $x(t + \Delta t)$ at every step (book, Eqs. 5.25 and 5.26).
+
+We try both on an ODE with a known answer,
+
+$$
+\frac{dx}{dt} = a - bx, \qquad x(0) = c, \qquad
+x(t) = \frac{a}{b} - \left(\frac{a}{b} - c\right) e^{-bt},
+$$
+
+with $a = 20$, $b = 2$ and $c = 5$, so $x$ rises from 5 towards its steady state $a/b = 10$.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/odes/euler_method/euler_method.m"}
+```
+
+![](/examples/odes/euler_method/out/matlab/fig-euler.png)
+
+## Python
+
+*Needs NumPy and Matplotlib.*
+
+```{.python include="/examples/odes/euler_method/euler_method.py"}
+```
+
+![](/examples/odes/euler_method/out/python/fig-euler.png)
+:::
+
+Small steps track the exact solution well, and the error shrinks roughly in proportion to $\Delta t$. Large steps are a different matter. For this ODE, each forward Euler step multiplies the distance from the steady state by $(1 - b\,\Delta t)$. If $\Delta t$ is between $1/b$ and $2/b$, this factor is negative but smaller than 1 in size, so the solution overshoots and oscillates, but still settles ($\Delta t = 0.9$). Beyond $2/b = 1$ it is larger than 1 in size, and the solution oscillates with growing amplitude ($\Delta t = 1.1$): the method is **unstable**. Backward Euler multiplies the distance by $1/(1 + b\,\Delta t)$ instead, which is less than 1 for any step size, so it stays stable even at $\Delta t = 1.1$; it is merely inaccurate.
+
+#### In practice: use a library solver {.unnumbered}
+
+You will rarely write your own solver. MATLAB and SciPy provide well-tested solvers that choose the step size automatically to keep the estimated error within a tolerance you set. The main ones correspond closely:
+
+| | MATLAB | Python (SciPy) |
+|---|---|---|
+| Call | `[t, y] = ode45(f, tspan, y0, opts)` | `sol = solve_ivp(f, t_span, y0, ...)` |
+| Right-hand side | `f(t, y)`, returns a column vector | `f(t, y)`, returns a list or array |
+| General-purpose (non-stiff) | `ode45` | `method="RK45"` (the default) |
+| Lower accuracy, cheaper | `ode23` | `method="RK23"` |
+| Stiff problems | `ode15s`, `ode23s` | `method="BDF"`, `"Radau"`, or `"LSODA"` (switches automatically) |
+| Tolerances | `odeset('RelTol', 1e-6, 'AbsTol', 1e-9)` | `rtol=1e-6, atol=1e-9` |
+| Output at chosen times | pass a vector as `tspan` | pass `t_eval=...` |
+| Shape of the solution | `y` is time × species | `sol.y` is species × time |
+
+: Common ODE solvers in MATLAB and SciPy. Both use the same default tolerances (relative $10^{-3}$, absolute $10^{-6}$), which are often too loose for careful work. {#tbl-solvers}
+
+## Troubleshooting
+
+### Handling stiff equations
+
+The quasi-steady-state approximation works because binding is fast and catalysis is slow. That same separation of time scales causes trouble for numerical solvers. Below, the enzyme model is solved again with $E_0 \ll S_0$, while binding and unbinding ($k_1 = k_{-1}$) are made faster and faster.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/odes/stiff_enzyme/stiff_enzyme.m"}
+```
+
+![](/examples/odes/stiff_enzyme/out/matlab/fig-stiff.png)
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/odes/stiff_enzyme/stiff_enzyme.py"}
+```
+
+![](/examples/odes/stiff_enzyme/out/python/fig-stiff.png)
+:::
+
+The left panel shows the two time scales: the complex $ES$ forms within a few milliseconds, while the product takes tens of seconds to accumulate. After the first few milliseconds, nothing fast is happening, yet a non-stiff solver such as `ode45` or `RK45` must keep its steps small enough to remain stable with respect to the fast process, just as forward Euler had to keep $\Delta t < 2/b$. Its cost therefore grows in proportion to the binding rate constants (right panel), reaching close to a million function evaluations. A stiff solver such as `ode15s` or `BDF` is implicit, like backward Euler, and can take large steps once the fast transient is over; its cost hardly changes. Both reach the same answer.
+
+Such ODEs are called **stiff**: stability, rather than accuracy, limits the step size. Stiffness is common in biology, where binding, phosphorylation and transport often run much faster than gene expression or growth. A practical rule: start with `ode45` or `RK45`, and if it is unexpectedly slow, switch to `ode15s` or `BDF` (or `LSODA`).
+
+The exact counts differ between MATLAB and Python, because the solvers differ in their internals, but the pattern is the same; our automated checks compare only the solutions.
+
+### Handling uncertainty
+
+*There is no code for this section; see the book.*
+
+## Software tools
+
+*There is no code for this section; see the book.*
+
+## Beyond the book: stochastic simulation {.unnumbered #sec-stochastic}
+
+The ODE models of this chapter treat concentrations as smooth, continuous quantities. Inside a single cell, however, many molecules are present in tiny numbers: a gene has one or two copies, and a given mRNA may be present as a handful of molecules. Each reaction is then a discrete, random event, and two genetically identical cells in the same environment can hold quite different numbers of a protein. This section simulates such systems with Gillespie's algorithm, and shows how the random fluctuations, or **noise**, depend on the reactions that produce them. For a fuller treatment, see the reviews by @gillespie2007 and @raj2008.
+
+### Gillespie's algorithm {.unnumbered}
+
+Consider a set of reactions, each with a **propensity** $a_j(\mathbf{x})$: the probability per unit time that reaction $j$ occurs, given the current numbers of molecules $\mathbf{x}$. For a reaction $\text{M} \to \emptyset$ with rate constant $\gamma$, for instance, the propensity is $\gamma M$, since each of the $M$ molecules can be degraded. Gillespie's **stochastic simulation algorithm** (SSA) generates exact sample paths of such a system [@gillespie1977]:
+
+1. Compute all propensities and their sum, $a_0 = \sum_j a_j(\mathbf{x})$.
+2. Draw the time to the next reaction from an exponential distribution with mean $1/a_0$: $\tau = -\ln(r_1)/a_0$, with $r_1$ uniform on $(0, 1)$.
+3. Choose which reaction occurs: reaction $j$ with probability $a_j/a_0$.
+4. Advance time by $\tau$, update $\mathbf{x}$ for that reaction, and repeat.
+
+Both languages have a short implementation of these four steps in the companion's helper package (`sbp.gillespie`), which returns the state at a chosen set of times. Here is the Python version; the MATLAB one, in `matlab/+sbp/gillespie.m`, follows it line by line.
+
+```{.python include="/python/sbp/ssa.py"}
+```
+
+### Production and degradation of an mRNA {.unnumbered}
+
+The simplest example is an mRNA made at a constant rate $k$ and degraded at rate $\gamma$ per molecule:
+
+$$
+\emptyset \xrightarrow{k} \text{M}, \qquad \text{M} \xrightarrow{\gamma M} \emptyset .
+$$
+
+The ODE model, $dM/dt = k - \gamma M$, rises smoothly to $M = k/\gamma$. The stochastic model has a steady state too, but it is a steady *distribution*: the number of molecules keeps fluctuating, and for this model it follows a Poisson distribution with mean $k/\gamma$, whose variance is equal to its mean. We take $k = 10$ per minute and $\gamma = 1$ per minute, and run the SSA 2000 times.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/stochastic/birth_death/birth_death.m"}
+```
+
+![](/examples/stochastic/birth_death/out/matlab/fig-birth-death.png)
+
+## Python
+
+*Needs SciPy (for the Poisson distribution).*
+
+```{.python include="/examples/stochastic/birth_death/birth_death.py"}
+```
+
+![](/examples/stochastic/birth_death/out/python/fig-birth-death.png)
+:::
+
+Individual runs (left) are jagged and differ from one another; at steady state, any one of them may hold anywhere from about 3 to 18 molecules. Their *average*, on the other hand, follows the ODE closely. For reactions such as these, where every propensity is at most linear in the numbers of molecules, the ODE gives the mean behaviour exactly; for nonlinear reactions, such as dimerisation, it is only an approximation. The distribution across runs (right) matches the Poisson distribution.
+
+A useful way to describe the size of fluctuations is the **Fano factor**, the variance divided by the mean. It is 1 for a Poisson distribution, whatever the mean. Relative fluctuations, measured by the coefficient of variation $\sigma/\mu = 1/\sqrt{\mu}$, shrink as numbers grow: with 10 molecules they are about 32%, with 10,000 about 1%. That is why ODEs work well for abundant molecules and stochastic models matter for scarce ones.
+
+### Noise in gene expression {.unnumbered}
+
+Proteins are made from mRNAs, and each mRNA is translated many times before it is degraded. Adding these two steps,
+
+$$
+\emptyset \xrightarrow{k_m} \text{M}, \qquad
+\text{M} \xrightarrow{\gamma_m M} \emptyset, \qquad
+\text{M} \xrightarrow{k_p M} \text{M} + \text{P}, \qquad
+\text{P} \xrightarrow{\gamma_p P} \emptyset ,
+$$
+
+the mean number of proteins at steady state is $k_m k_p / \gamma_m \gamma_p$, and the Fano factor of the protein is approximately $1 + k_p/(\gamma_m + \gamma_p)$ [@thattai2001]. The ratio $k_p/\gamma_m$ is the mean number of proteins made from one mRNA, the **burst size**. So two genes can make the same average amount of protein with very different noise: gene A is transcribed often, with small bursts of 2.5 proteins per mRNA, while gene B is transcribed ten times less often, with bursts of 25. Here we simulate each gene for 40,000 minutes and sample the protein number once a minute.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/stochastic/gene_expression/gene_expression.m"}
+```
+
+![](/examples/stochastic/gene_expression/out/matlab/fig-gene-expression.png)
+
+## Python
+
+*Needs NumPy and Matplotlib.*
+
+```{.python include="/examples/stochastic/gene_expression/gene_expression.py"}
+```
+
+![](/examples/stochastic/gene_expression/out/python/fig-gene-expression.png)
+:::
+
+Both genes average about 50 proteins, but gene B jumps up in bursts, each time one of its rare mRNAs is translated many times over, and then decays; its Fano factor is about 24, against about 3 for gene A, and its distribution is wide and skewed. Ozbudak and colleagues found exactly this in *Bacillus subtilis*: increasing translation increased noise far more than increasing transcription did [@ozbudak2002]. Cells can therefore tune their noise, and not just their mean expression, through the balance of transcription and translation.
+
+Since MATLAB and Python draw different random numbers, the two versions give slightly different estimates. The automated checks require both to be within 10% of theory for the mRNA example, and within 15% for the noisier protein estimates.
+
+Noise is not always a nuisance. In circuits with two stable states, such as the toggle switch, noise can flip cells between states, letting a population hedge its bets. Exploring such circuits needs both the ODE tools of this chapter and the stochastic tools of this section.
+
+## Exercises {.unnumbered}
+
+1. Run forward Euler with $\Delta t = 1/b = 0.5$ and $\Delta t = 2/b = 1$. Explain both results using the factor $(1 - b\,\Delta t)$.
+2. For the Michaelis–Menten example, vary $E_0$ from 0.01 to 10 mM and plot the largest difference between the two models against $E_0 / (S_0 + K_M)$.
+3. Make the product step reversible ($E + P \to ES$ with rate constant $k_{-2}$; book Eq. 5.3). Does the Michaelis–Menten rate law still describe the time course? What happens at long times?
+4. Solve the stiff example with $k_1 = k_{-1} = 1000$ using `ode45` and `ode15s` (or `RK45` and `BDF`), timing each with `tic`/`toc` (or `time.perf_counter`).
+5. Replace the Michaelis–Menten rate law with a Hill rate law, $v = v_\text{max}[S]^n / (K^n + [S]^n)$, and compare the time courses for $n = 1, 2, 4$. (Book Eq. 5.14 writes the denominator as $k' + [S]^n$, with $k' = K^n$; Eq. 5.15.)
+6. Book Exercises 5.3–5.5: solve $dx/dt = -x^3$, $x(0) = 1$, with forward Euler for several step sizes and plot the error in $x(2)$ against the step size; then solve $dx/dt = -30x$ up to $t = 1.5$ with $\Delta t = 0.001$, 0.01 and 0.05. Which step sizes are stable, and why?
+7. Simulate the three-node phosphorylation oscillator of book §5.3.3 (Eqs. 5.17–5.19). Choose parameter values and explore: can the three proteins oscillate, and what does it take? (Compare the repressilator in @sec-circuits.)
+8. In the mRNA example, start each run with 50 molecules in place of none. How does the mean approach the steady state? Compare with the solution of the ODE.
+9. Add a dimerisation reaction, $2\text{P} \to \text{D}$, with propensity $k_d P(P-1)/2$, to the birth–death model for a protein P. Compare the mean of many SSA runs with the solution of the corresponding ODE for small and large numbers of molecules. When do they differ?
+10. For the gene-expression model, vary $k_p$ from 1 to 50 while adjusting $k_m$ to keep the mean at 50 proteins. Plot the Fano factor against the burst size $k_p/\gamma_m$ and compare with the theory.
+11. Simulating every reaction becomes slow when molecules are abundant. Look up the **tau-leaping** method, which fires many reactions in each time step, and implement it for the mRNA example. How large can the time step be before the distribution is visibly wrong?
+
+Exercises 8–11 refer to the section on stochastic simulation.
+
+## Going further {.unnumbered}
+
+The parameters here were simply chosen. In practice, they must be estimated from data, which is the subject of @sec-pestim.

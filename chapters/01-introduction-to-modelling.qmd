@@ -1,13 +1,58 @@
-# First models {#sec-first-models}
+# Introduction to modelling {#sec-modelling}
 
 Before turning to cells and molecules, two classic models show what a dynamic model is and what it can tell us. Both are systems of two or three ODEs, simple enough to understand completely, and yet each makes a prediction that is far from obvious from its equations: predator and prey populations rise and fall in endless cycles, and an epidemic either fizzles out or sweeps through most of a population, depending on a single number.
 
-::: {.callout-note appearance="simple"}
-## In the book
-Chapter 1, *Introduction to Modelling*: why we model, the modelling process (§1.4), and the two models of this chapter (§1.5). Solving ODEs is the subject of @sec-odes and book Chapter 5; here we simply use the standard solvers, `ode45` in MATLAB and `solve_ivp` in Python.
-:::
+## What is modelling?
 
-## Predators and prey
+### What are models?
+
+*There is no code for this section; see the book.*
+
+## Why build models?
+
+### Why model biological systems?
+
+*There is no code for this section; see the book.*
+
+### Why systems biology?
+
+*There is no code for this section; see the book.*
+
+## Challenges in modelling biological systems
+
+*There is no code for this section; see the book.*
+
+## The practice of modelling
+
+### Scope of the model
+
+*There is no code for this section; see the book.*
+
+### Making assumptions
+
+*There is no code for this section; see the book.*
+
+### Modelling paradigms
+
+The book deals with deterministic models, and notes that stochastic models, simulated with Gillespie's algorithm, matter when molecule numbers are small. This companion adds a section on stochastic simulation at the end of @sec-odes.
+
+### Building the model
+
+*There is no code for this section; see the book.*
+
+### Model analysis, debugging and (in)validation
+
+*There is no code for this section; see the book.*
+
+### Simulating the model
+
+Every example in this companion is a simulation, in both MATLAB and Python; [Getting started](getting-started.qmd) explains how to run them.
+
+## Examples of models
+
+Two classic models show what a dynamic model is and what it can tell us. Both are solved with the standard ODE solvers, `ode45` in MATLAB and `solve_ivp` in Python; @sec-odes looks at how such solvers work.
+
+### Lotka–Volterra predator–prey model
 
 The Lotka–Volterra model follows two populations, deer $D$ (the prey) and lions $L$ (the predators):
 
@@ -41,9 +86,9 @@ The populations oscillate, with the lions lagging behind the deer: plenty of dee
 
 The code also shows a useful feature of both solvers: **events**. Asked to watch for the moments at which $D - D^*$ crosses zero upwards, the solver reports them precisely, which gives the period of the cycle. For small oscillations around the steady state, the period is $2\pi/\sqrt{bd} \approx 8.9$ years; our larger cycle is a little slower.
 
-Closed loops that depend on the starting point are a sign that this model is fragile: almost any change to its equations, such as a limit on the number of deer the land can support, turns the loops into spirals. We return to such questions in @sec-dynamics.
+Closed loops that depend on the starting point are a sign that this model is fragile: almost any change to its equations, such as a limit on the number of deer the land can support, turns the loops into spirals. We return to such questions in @sec-circuits.
 
-## An epidemic
+### SIR model: a classic example
 
 The SIR model divides a population into those susceptible to an infection ($S$), those infected ($I$) and those recovered and immune ($R$), as fractions of the whole:
 
@@ -93,7 +138,25 @@ With $R_0 = 3$, the epidemic peaks after about 50 days, with 30% of the populati
 
 The final-size curve (right) shows the **threshold** at $R_0 = 1$. Below it, the outbreak stays tiny. Above it, the final size rises steeply, and for $R_0$ around 2 to 3, typical of many respiratory infections, most of the population is eventually infected. The simulations agree with the final-size equation throughout.
 
-## Exercises
+## Troubleshooting
+
+### Clarity of scope and objectives
+
+*There is no code for this section; see the book.*
+
+### The breakdown of assumptions
+
+*There is no code for this section; see the book.*
+
+### Is my model fit for purpose?
+
+*There is no code for this section; see the book.*
+
+### Handling uncertainties
+
+*There is no code for this section; see the book.*
+
+## Exercises {.unnumbered}
 
 1. Add a carrying capacity for the deer (book Exercise 1.4), replacing $bD$ by $bD(1 - D/K)$ with $K = 100$. What happens to the oscillations, and where do the trajectories end up?
 2. Vary the initial number of lions in the Lotka–Volterra model, keeping 40 deer. Plot the period of the cycle against the amplitude of the deer oscillation.
@@ -101,6 +164,6 @@ The final-size curve (right) shows the **threshold** at $R_0 = 1$. Below it, the
 4. Add a loss of immunity, $R \to S$ at rate $\omega$ (the SIRS model). Simulate for 1000 days with $\omega = 0.01$ per day. What happens in the long run?
 5. Simulate the zombie outbreak model of Munz and colleagues (book Exercise 1.8), and reproduce their main results.
 
-## Going further
+## Going further {.unnumbered}
 
 Both models assume well-mixed populations, in which everyone meets everyone else equally often. Real contacts follow networks, which changes how epidemics spread (book, §4.4); @sec-networks introduces the tools for studying such networks, and @sec-network-applications simulates epidemics on them. A generalised Lotka–Volterra model of interacting microbial species appears in book §11.1.2.

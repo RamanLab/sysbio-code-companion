@@ -1,33 +1,14 @@
 # Preface {.unnumbered}
 
-This primer is a hands-on companion to *An Introduction to Computational Systems Biology: Systems-Level Modelling of Cellular Networks* (Raman, 2021, CRC Press) and to the course BT5240 at IIT Madras. It can also be read on its own.
+This is a hands-on code companion to *An Introduction to Computational Systems Biology: Systems-Level Modelling of Cellular Networks* (Raman, 2021, CRC Press), and to the course BT5240 at IIT Madras.
 
-Each chapter takes one family of methods, explains the idea in a few paragraphs, and then works through examples. **Every example is given in both MATLAB and Python**, and the two versions produce the same numbers and the same figures. Pick your language in any code tab; the choice carries over to every other tab on the page.
+**Its chapters and sections follow the book exactly**: §5.3.1 here is §5.3.1 in the book, with the same title. Where a section has worked examples, they are given **in both MATLAB and Python**, and the two versions produce the same numbers and the same figures; pick your language in any code tab, and the choice carries over to every other tab on the page. Sections without code say so, and point back to the book. A few topics that the book mentions but does not develop, such as stochastic simulation, appear in unnumbered sections marked *Beyond the book*.
 
-The text is deliberately short. For the theory behind each method, every chapter points to the relevant chapter and section of the book.
+The text is deliberately short: the theory is in the book, and this companion is about putting it to work.
 
 ## How the examples are checked
 
-Each example is a pair of standalone scripts, one `.m` and one `.py`, in the [`examples/`](https://github.com/RamanLab/sysbio-primer/tree/main/examples) folder of the repository. Every time the primer changes, both versions are run automatically and their key results are compared with each other, and with the values reported in the book where there are any. So the code you see on these pages is the code that was run to produce the figures beside it.
-
-## Chapters and the book
-
-| Primer chapter | Book chapter |
-|---|---|
-| @sec-getting-started | Appendix E (online), MATLAB for systems biology |
-| @sec-first-models | 1. Introduction to modelling |
-| @sec-networks | 2–3. Graph theory; structure of networks |
-| @sec-network-applications | 4. Applications of network biology |
-| @sec-odes, @sec-dynamics | 5. Introduction to dynamic modelling |
-| @sec-pestim | 6. Parameter estimation |
-| @sec-boolean | 7. Boolean networks |
-| @sec-stochastic | (goes beyond the book) |
-| @sec-cbm | 8. Introduction to constraint-based modelling |
-| @sec-extending-cbm | 9. Extending constraint-based approaches |
-| @sec-perturbations | 10. Perturbations to metabolic networks |
-| @sec-communities | 11. Modelling cellular interactions |
-| @sec-dynamics (circuits) | 12. Designing biological circuits |
-| @sec-robustness | 13. Robustness and evolvability |
+Each example is a pair of standalone scripts, one `.m` and one `.py`, in the [`examples/`](https://github.com/RamanLab/sysbio-primer/tree/main/examples) folder of the repository. Every time the companion changes, both versions are run automatically and their key results are compared with each other, and with the values reported in the book where there are any. So the code you see on these pages is the code that was run to produce the figures beside it.
 
 ## Licence
 

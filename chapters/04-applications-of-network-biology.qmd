@@ -2,12 +2,7 @@
 
 @sec-networks built networks and measured their structure. This chapter puts those measures to work on two questions. Are the most connected proteins in a cell the ones it cannot live without? And how does the shape of a contact network decide whether an infection spreads, and whom to vaccinate to stop it?
 
-::: {.callout-note appearance="simple"}
-## In the book
-Chapter 4, *Applications of Network Biology*: the centrality–lethality hypothesis and the prediction of essential genes from network measures (§4.1), disease networks and modules (§4.2), and disease spreading on networks, through percolation-based models and agent-based simulations (§4.4).
-:::
-
-## Centrality and essentiality
+## The centrality–lethality hypothesis
 
 When Jeong and colleagues mapped the protein interaction network of yeast, they found that a protein's chance of being essential rose with its degree: proteins with more than 15 partners were about three times as likely to be essential as those with five or fewer [@jeong2001]. This **centrality–lethality hypothesis** has been tested and debated many times since, with different networks and different measures of centrality; across 20 organisms, essential genes have higher degree and betweenness than the network average [@raman2014] (book, §4.1).
 
@@ -39,9 +34,35 @@ The relationship is striking. In the tenth of proteins with the fewest links, fe
 
 Two cautions are in order. First, the essential genes here are *predictions*, made from network features of this very network, degree among them, so some of the association is built in. The fair test uses essentiality measured in experiments, such as the Keio collection of single-gene knock-outs [@baba2006] (Exercise 1). Second, the most connected proteins are almost all ribosomal proteins and subunits of RNA polymerase, which interact densely with one another. They are among the best-known essential genes of *E. coli*, yet NetGenes predicts only three of the top ten to be essential: whatever the model learnt, it is more than "hubs are essential", and, like every prediction, it can be wrong.
 
-## Epidemics on networks
+### Predicting essential genes using network measures
 
-The SIR model of @sec-first-models assumes that everyone meets everyone else equally often. On a network, an infected person can infect only their contacts. A simple version of the SIR model on a network gives each infected person one chance to infect each of their contacts, with probability $T$, the **transmissibility**, before recovering. For a network in which the degrees of neighbours are uncorrelated, a large outbreak is possible only if
+The example above uses the essential genes that NetGenes predicts from network features; see the cautions in the last two paragraphs, and Exercise 1 for a test against experiments.
+
+## Networks and modules in disease
+
+### Disease networks
+
+*There is no code for this section; see the book.*
+
+### Identification of disease modules
+
+*There is no code for this section; see the book.*
+
+### Edgetic perturbation models
+
+*There is no code for this section; see the book.*
+
+## Differential network analysis
+
+*There is no code for this section; see the book.*
+
+## Disease spreading on networks
+
+The SIR model of @sec-modelling assumes that everyone meets everyone else equally often. On a network, an infected person can infect only their contacts.
+
+### Percolation-based models
+
+A simple version of the SIR model on a network gives each infected person one chance to infect each of their contacts, with probability $T$, the **transmissibility**, before recovering. For a network in which the degrees of neighbours are uncorrelated, a large outbreak is possible only if
 
 $$
 T > T_c = \frac{\langle k \rangle}{\langle k^2 \rangle - \langle k \rangle},
@@ -77,7 +98,27 @@ Vaccination shows the other side of the hubs. Vaccinating a random 10% of people
 
 The two examples are related. In each, a few highly connected nodes matter far more than their numbers suggest, whether for the survival of the cell or for the spread of an infection.
 
-## Exercises
+### Agent-based simulations
+
+*There is no code for this section; see the book.*
+
+## Molecular graphs and their applications
+
+### Retrosynthesis
+
+*There is no code for this section; see the book.*
+
+## Protein structure and conformational networks
+
+### Protein folding pathways
+
+*There is no code for this section; see the book.*
+
+## Link prediction
+
+*There is no code for this section; see the book.*
+
+## Exercises {.unnumbered}
 
 1. Download the list of genes found to be essential in the Keio collection [@baba2006], map them to STRING identifiers, and repeat the centrality–lethality analysis. Is the AUC of degree higher or lower than for the NetGenes predictions? Which hubs are essential?
 2. Add betweenness centrality to the comparison (`centrality(G, 'betweenness')` in MATLAB, `nx.betweenness_centrality` in NetworkX; the latter takes a minute or two for this network). Do proteins with high betweenness but low degree, the bottlenecks of the network, tend to be essential?
@@ -86,6 +127,6 @@ The two examples are related. In each, a few highly connected nodes matter far m
 5. In the epidemic example, vaccinate 10% of people by choosing a person at random and vaccinating one of their contacts, chosen at random. Compare this *acquaintance immunisation* with random and hub vaccination. Why does it work?
 6. Compute $T_c$ for scale-free networks of 500, 2000 and 8000 nodes with $m = 2$. How does it change with the size of the network?
 
-## Going further
+## Going further {.unnumbered}
 
 Network ideas reach well beyond these two examples, to disease modules in human interaction networks (§4.2), differential network analysis (§4.3), molecular graphs and retrosynthesis (§4.5), protein folding networks (§4.6) and link prediction (§4.7) in book Chapter 4. For epidemics, agent-based simulations on realistic contact networks, such as EpiSims, add time and the movement of people (book, §4.4.2).

@@ -1,13 +1,13 @@
 # Computational Systems Biology in MATLAB and Python
 
-An open primer on computational systems biology, with every worked example in both MATLAB and Python. It accompanies the book *An Introduction to Computational Systems Biology: Systems-Level Modelling of Cellular Networks* (Karthik Raman, CRC Press, 2021) and the course BT5240 at IIT Madras.
+An open code companion to the book *An Introduction to Computational Systems Biology: Systems-Level Modelling of Cellular Networks* (Karthik Raman, CRC Press, 2021), also used in the course BT5240 at IIT Madras. Its chapters and sections follow the book's exactly, and every worked example is in both MATLAB and Python.
 
 **Read it online:** <https://ramanlab.github.io/sysbio-primer> (a PDF version is linked from the site).
 
 ## Layout
 
 ```
-chapters/            the text, one Quarto (.qmd) file per chapter
+chapters/            the text, one Quarto (.qmd) file per book chapter, with the book's sections
 examples/<topic>/<example>/
     <name>.m         MATLAB version
     <name>.py        Python version

@@ -30,7 +30,7 @@
    ```
    Run the MATLAB script too if you have MATLAB; otherwise the CI run will (and `tools/fetch_ci_outputs.sh matlab` brings its outputs into your working copy for previewing).
 
-5. **Add it to the chapter** with a tab set:
+5. **Add it to the chapter, under the book section it illustrates.** The chapters follow the book's numbering exactly, with every numbered section and subsection of the book present, so never add or remove a numbered heading; extra headings inside a section must be level 4 (`####`) or marked `{.unnumbered}`. Replace the section's "There is no code for this section" line with a short introduction and a tab set:
    ````markdown
    ::: {.panel-tabset group="language"}
    ## MATLAB

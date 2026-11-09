@@ -1,0 +1,222 @@
+# Designing biological circuits {#sec-circuits}
+
+Synthetic biology designs gene circuits with a function in mind, much as an engineer designs an electronic circuit, and modelling has been part of it from the start. This chapter simulates the first two model-driven circuits, a clock and a switch, both built in *E. coli* in 2000, and then looks at circuits that adapt.
+
+## What is synthetic biology?
+
+### From LEGO bricks to biobricks
+
+*There is no code for this section; see the book.*
+
+## Classic circuit design experiments
+
+#### Beyond the book: steady states and their stability {.unnumbered}
+
+A **steady state** of $d\mathbf{x}/dt = \mathbf{f}(\mathbf{x})$ is a point $\mathbf{x}^*$ where $\mathbf{f}(\mathbf{x}^*) = \mathbf{0}$. Whether the system returns to it after a small push depends on the **Jacobian matrix**, $J_{ij} = \partial f_i / \partial x_j$, evaluated at $\mathbf{x}^*$. Near the steady state, a small deviation $\boldsymbol{\delta}$ obeys $d\boldsymbol{\delta}/dt \approx J \boldsymbol{\delta}$, and so it grows or shrinks according to the eigenvalues of $J$:
+
+* if every eigenvalue has a negative real part, all small deviations die away, and the steady state is **stable**;
+* if any eigenvalue has a positive real part, some deviation grows, and the steady state is **unstable**. If the other eigenvalues are negative, it is a **saddle**: the system approaches it along some directions and leaves along others.
+
+Eigenvalues with an imaginary part make the deviations spiral.
+
+### Designing an oscillator: the repressilator
+
+Three repressors in a ring, each repressing the next, make a clock [@elowitz2000]. With $m_i$ and $p_i$ the mRNA and protein of gene $i$,
+
+$$
+\frac{dm_i}{dt} = -m_i + \frac{\alpha}{1 + p_j^n} + \alpha_0, \qquad
+\frac{dp_i}{dt} = -\beta\,(p_i - m_i),
+$$
+
+where $p_j$ is the protein repressing gene $i$, $\alpha$ the rate of transcription from a free promoter, $\alpha_0$ the leak from a repressed one, and $\beta$ the ratio of the protein and mRNA decay rates. Time is measured in units of the mRNA lifetime. By symmetry, the only steady state has $m_i = p_i = s$ for all $i$, with $s$ the root of $s = \alpha/(1 + s^n) + \alpha_0$.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/dynamics/repressilator/repressilator.m"}
+```
+
+![](/examples/dynamics/repressilator/out/matlab/fig-repressilator.png)
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/dynamics/repressilator/repressilator.py"}
+```
+
+![](/examples/dynamics/repressilator/out/python/fig-repressilator.png)
+:::
+
+With the parameters of the original paper, the steady state, at $s \approx 6.02$, is unstable: a pair of complex eigenvalues has a positive real part, 0.21, so small deviations spiral outwards. With nowhere stable to settle, the system approaches a **limit cycle**, in which the three proteins peak in turn and the pattern repeats every 8.7 time units. Unlike the closed loops of the Lotka–Volterra model (@sec-modelling), the limit cycle is the same from every starting point, and the system returns to it after a disturbance.
+
+The map on the right shows where in the $(\alpha, \beta)$ plane the steady state is unstable, and the circuit oscillates. Oscillation needs strong transcription, $\alpha$ above about 8 here, and protein and mRNA lifetimes that are not too different. Elowitz and Leibler used this analysis to design their circuit: they added tags that made the repressor proteins degrade quickly, bringing $\beta$ into the oscillating region.
+
+### Toggle switch
+
+Gardner, Cantor and Collins built a switch from two genes that repress each other [@gardner2000]. In dimensionless form,
+
+$$
+\frac{du}{dt} = \frac{a_1}{1 + v^n} - u, \qquad
+\frac{dv}{dt} = \frac{a_2}{1 + u^n} - v ,
+$$
+
+where $u$ and $v$ are the two repressors, $a_1$ and $a_2$ the strengths of their promoters, and $n$ the cooperativity of repression. The **nullclines** are the curves on which one of the derivatives is zero; steady states lie where they cross. On the $v$-nullcline, $v = a_2/(1 + u^n)$, so the steady values of $u$ are the roots of a single equation in $u$, which the code finds by scanning for sign changes and refining each with `fzero` or `brentq`.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/dynamics/toggle_switch/toggle_switch.m"}
+```
+
+![](/examples/dynamics/toggle_switch/out/matlab/fig-toggle-switch.png)
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/dynamics/toggle_switch/toggle_switch.py"}
+```
+
+![](/examples/dynamics/toggle_switch/out/python/fig-toggle-switch.png)
+:::
+
+With $a_1 = a_2 = 10$ and $n = 2$, the nullclines cross three times. Two of the steady states are stable, one with $u$ high and $v$ low, the other the reverse. Between them lies a saddle at $u = v = 2$, with one positive eigenvalue. Every trajectory ends at one of the two stable states, and the line through the saddle along which trajectories approach it, here the diagonal $u = v$, divides the plane into their two **basins of attraction**. The cell carrying the circuit thus has two distinct states, and stays in whichever it is put.
+
+Bistability needs cooperativity: with $n = 1$, the nullclines cross only once, whatever the promoter strengths (Exercise 1).
+
+#### Bistability and hysteresis {.unnumbered}
+
+In the experiments, the switch was flipped by an inducer that weakens one of the repressors, which in the model amounts to changing a promoter strength. We fix $a_2 = 5$, vary $a_1$ from 1 to 12, and find all the steady states for each value. Then we simulate the circuit while raising $a_1$ in small steps, letting it settle at each step, and lowering it again.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/dynamics/hysteresis/hysteresis.m"}
+```
+
+![](/examples/dynamics/hysteresis/out/matlab/fig-hysteresis.png)
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/dynamics/hysteresis/hysteresis.py"}
+```
+
+![](/examples/dynamics/hysteresis/out/python/fig-hysteresis.png)
+:::
+
+The steady states form an S-shaped curve, a **bifurcation diagram**. For $a_1$ between about 3.7 and 8.7 (shaded), there are three steady states, two stable and one unstable; outside this range, only one. At each end of the range, a stable state and the unstable one meet and vanish, in what is called a saddle-node bifurcation.
+
+As $a_1$ rises, the circuit stays on the lower branch, with $u$ low, until that branch disappears, and only then jumps up, at $a_1 = 8.75$ in our steps. Lowered again, it stays on the upper branch down to $a_1 = 3.75$. Between these values, the state of the circuit depends on its history as well as on the current value of $a_1$: this is **hysteresis**, a form of memory. A brief pulse of inducer flips the switch, and it stays flipped after the inducer is gone.
+
+## Designing modules
+
+### Exploring the design space
+
+Many sensory systems **adapt**: after a change in their input, the output responds and then returns to its original level, ready to detect the next change. Bacterial chemotaxis is the classic example. When the concentration of an attractant rises, *E. coli* tumbles less often, but within minutes its tumbling frequency returns to where it was. Barkai and Leibler showed in a model that this adaptation could be exact for any values of the rate constants of the circuit [@barkai1997], and experiments confirmed that the precision of adaptation stayed nearly the same when the levels of the chemotaxis proteins were changed many-fold, while the time taken to adapt varied widely [@alon1999]. The underlying principle is **integral feedback** [@yi2000].
+
+A minimal circuit shows how it works. A signal $u$ makes an output $y$, which is removed by a controller $x$; $y$ makes $x$, and $x$ is degraded by an enzyme with Michaelis constant $K$:
+
+$$
+\frac{dy}{dt} = cu - exy, \qquad
+\frac{dx}{dt} = ay - \frac{bx}{K + x}.
+$$
+
+When the enzyme is saturated, $K \ll x$, the second equation becomes $dx/dt \approx a(y - b/a)$: the controller accumulates the time integral of the deviation of $y$ from $b/a$. It can therefore come to rest only when $y = b/a$, whatever the signal and whatever the values of $c$ and $e$. The code compares $K = 0.01$, close to this limit, with $K = 1$, first by simulating a doubling of the signal, then by computing the steady states for 81 combinations of the four rate constants, each at half, once and twice its nominal value.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/robustness/integral_feedback/integral_feedback.m"}
+```
+
+![](/examples/robustness/integral_feedback/out/matlab/fig-integral-feedback.png)
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/robustness/integral_feedback/integral_feedback.py"}
+```
+
+![](/examples/robustness/integral_feedback/out/python/fig-integral-feedback.png)
+:::
+
+With $K = 0.01$, the output jumps by about half when the signal doubles, and returns within a few time units to within 0.5% of its earlier level. With $K = 1$, it settles 18% higher. Across the 81 parameter sets, the circuit with the saturated enzyme always adapts to within about 6%, and in four cases out of five to within 1%, while the other changes its output by 3% to 34%, depending on the parameters.
+
+Notice what is robust and what is not. The level to which the output returns, $b/a$, varies sixteen-fold across the parameter sets, and the size and duration of the response vary too. What the structure of the circuit guarantees is the *return* to that level. Robustness is always robustness of a particular feature to particular perturbations, and a circuit can be robust in one respect and sensitive in another. Searching all 16,038 connected three-node enzyme circuits, Ma and colleagues found that only two families of topologies adapt well: negative feedback loops with a buffering node, such as this one, and incoherent feed-forward loops [@ma2009] (book, §12.3.1).
+
+### Systems-theoretic approaches
+
+*There is no code for this section; see the book.*
+
+### Automating circuit design
+
+*There is no code for this section; see the book.*
+
+## Design principles of biological networks
+
+### Redundancy
+
+*There is no code for this section; see the book.*
+
+### Modularity
+
+*There is no code for this section; see the book.*
+
+### Exaptation
+
+*There is no code for this section; see the book.*
+
+### Robustness
+
+*There is no code for this section; see the book.*
+
+## Computing with cells
+
+### Adleman's classic experiment
+
+*There is no code for this section; see the book.*
+
+### Examples of circuits that can compute
+
+*There is no code for this section; see the book.*
+
+### DNA data storage
+
+*There is no code for this section; see the book.*
+
+## Challenges
+
+*There is no code for this section; see the book.*
+
+## Software tools
+
+*There is no code for this section; see the book.*
+
+## Exercises {.unnumbered}
+
+1. Set $n = 1$ in the toggle switch, and show that there is only one steady state for any $a_1$ and $a_2$. (Hint: write the steady-state condition as $u = h(u)$, and show that $h$ is increasing and concave.)
+2. Repeat the hysteresis example with $n = 3$. How do the bistable range and the jumps change?
+3. In the toggle switch, add noise with the stochastic simulation methods of @sec-odes, treating $u$ and $v$ as numbers of molecules with $a_1 = a_2 = 50$. How long does the switch stay in one state before noise flips it, and how does that depend on $a_1$ and $a_2$?
+4. Compute the period and amplitude of the repressilator for $\alpha$ from 10 to 1000 at $\beta = 5$. What happens to the oscillations as $\alpha$ approaches the edge of the shaded region?
+5. Make the ring four, and then five, repressors long (book Exercise 12.5). Which rings oscillate? Find the steady states and their eigenvalues, and explain the result.
+6. Book Exercise 12.4: vary $\alpha$ and $\alpha_0$ in the repressilator. How large can the leak $\alpha_0$ be before the oscillations stop?
+7. In the integral feedback circuit, plot the adaptation precision $y(u=2)/y(u=1)$ against $K$ from 0.001 to 10, for the nominal parameters. How small must $K$ be for adaptation to within 1%?
+8. Measure the adaptation time, the time after the step at which $y$ first comes within 5% of its new steady state, for the 81 parameter sets with $K = 0.01$. Is it robust?
+9. Replace the saturated degradation of $x$ by first-order degradation, $dx/dt = ay - bx$. Show that the steady-state output now rises by a factor $\sqrt{2}$ whenever the signal doubles, whatever the parameters.
+10. Book Exercise 12.6: for an incoherent feed-forward loop of three enzymes, sample parameter sets at random and measure the fraction that give near-perfect adaptation, as Ma and colleagues did.
+
+## Going further {.unnumbered}
+
+Bifurcation diagrams such as the one for hysteresis are usually computed by continuation, which follows a branch of steady states as a parameter changes, without scanning for roots. Tools such as AUTO, MatCont (MATLAB) and PyDSTool (Python) do this, and also follow limit cycles. @sec-robustness takes up the related question of how robust a circuit's behaviour is to changes in its parameters and in its wiring.

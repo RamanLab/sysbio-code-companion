@@ -1,6 +1,6 @@
-# Getting started {#sec-getting-started}
+# Getting started {.unnumbered #sec-getting-started}
 
-You need only one of the two languages to follow this primer. The examples are self-contained scripts that you can run as they are, and then modify.
+You need only one of the two languages to follow this companion. The examples are self-contained scripts that you can run as they are, and then modify.
 
 ## Getting the code
 
@@ -44,7 +44,7 @@ Then run any example, for instance `run examples/constraint-based/toy_fba/toy_fb
 
 Each script prints its main results and writes two kinds of output next to itself, under `out/matlab/` or `out/python/`:
 
-* figures (`fig-*.png`), which are the figures shown in this primer;
+* figures (`fig-*.png`), which are the figures shown in this companion;
 * `results.json`, with the key numbers. These files are what the automated checks compare between the two languages.
 
 ## MATLAB and Python side by side

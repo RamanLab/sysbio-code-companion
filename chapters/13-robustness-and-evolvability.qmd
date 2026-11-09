@@ -1,0 +1,76 @@
+# Robustness and evolvability of biological systems {#sec-robustness}
+
+Living systems keep working in the face of constant change: concentrations of their proteins vary from cell to cell, temperatures and nutrients fluctuate, and mutations alter their genes. This ability to keep a function despite perturbations is **robustness**. Yet living systems also change, and acquire new functions over evolutionary time; this ability is **evolvability**. This chapter looks at how robustness to mutations and evolvability, which seem to pull in opposite directions, can coexist; one mechanism that makes a function robust to changes in parameters, integral feedback, is simulated in @sec-circuits.
+
+## Robustness in biological systems
+
+### Key mechanisms
+
+Integral feedback, one mechanism of robust adaptation, is simulated in §12.3.1.
+
+### Hierarchies and protocols
+
+*There is no code for this section; see the book.*
+
+### Organising principles
+
+*There is no code for this section; see the book.*
+
+## Genotype spaces and genotype networks
+
+Robustness to mutations seems to work against evolvability. If most mutations leave a function unchanged, how can new functions arise? Andreas Wagner resolved this paradox by distinguishing the robustness of a genotype from that of a phenotype [@wagner2008]. Many genotypes usually share a phenotype, and they are often connected by single mutations into a **genotype network** that extends far through the space of all genotypes. A robust phenotype has a large genotype network, and a population can drift along it without losing the phenotype, encountering, in different parts of the network, many different new phenotypes.
+
+### Genotype spaces
+
+*There is no code for this section; see the book.*
+
+### Genotype–phenotype mapping
+
+*There is no code for this section; see the book.*
+
+## Quantifying robustness and evolvability
+
+Testing these ideas needs a system small enough that every genotype can be examined. Digital logic circuits are such a system [@raman2011]. Our circuits are chains of four NAND gates. Each input of each gate is wired to one of the two circuit inputs, A and B, or to the output of an earlier gate, and the last gate gives the output. The wiring is the genotype, and the logic function the circuit computes, one of the 16 possible functions of two inputs, is its phenotype. A mutation rewires one input of one gate, and each circuit has 20 such neighbours. We enumerate all 14,400 circuits, and measure:
+
+* the **robustness** of a circuit, the fraction of its 20 neighbours that compute the same function, and of a function, the average over all circuits that compute it (book §13.3 counts neighbours rather than taking the fraction; with 20 neighbours for every circuit, the two differ only by that factor);
+* the **evolvability** of a circuit, the number of other functions among its neighbours, and of a function, the number of other functions found among the neighbours of all its circuits.
+
+Treating truth tables as 4-bit numbers lets both languages evaluate all the circuits at once with bitwise operations.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/robustness/logic_circuits/logic_circuits.m"}
+```
+
+![](/examples/robustness/logic_circuits/out/matlab/fig-logic-circuits.png)
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/robustness/logic_circuits/logic_circuits.py"}
+```
+
+![](/examples/robustness/logic_circuits/out/python/fig-logic-circuits.png)
+:::
+
+The 14,400 circuits compute 15 of the 16 functions; XNOR needs at least five NAND gates. The functions are very unequally represented: 2458 circuits compute NAND, but only 32 compute XOR and 12 compute NOR. Common functions are robust (left): about 56% of mutations to a NAND circuit preserve its function, whereas every mutation to an XOR circuit destroys it, so that each of the 32 XOR circuits is isolated. Most functions have a single, connected genotype network, which can be traversed one mutation at a time.
+
+The right panel resolves the paradox. For single circuits, robustness and evolvability are opposed (correlation −0.60): the more neighbours share a circuit's function, the fewer are left for new functions. For functions, they go together (correlation +0.68): a robust function has a large genotype network, whose many circuits together lie next to almost every other function. Raman and Wagner found the same in much larger circuits, with 16 gates of five types and four inputs and outputs, too many to enumerate, by sampling with random walks [@raman2011]; similar results hold for RNA secondary structures, proteins, regulatory circuits and metabolic networks.
+
+## Software tools
+
+*There is no code for this section; see the book.*
+
+## Exercises {.unnumbered}
+
+1. Allow each gate in the logic circuits to be either NAND or NOR, so that a mutation can also change the type of a gate. How does this change the number of circuits for each function, their robustness, and the connectivity of their genotype networks? Can XOR circuits now reach one another?
+2. Starting from a random NAND circuit, perform random walks of 100 mutations that never change the function. How many different functions are found among the neighbours visited, and how does this grow with the length of the walk?
+3. Book Exercises 13.3 and 13.4: write code that builds the ODEs of the Goodwin oscillator for any of the $3^6 = 729$ two-gene topologies studied by Wagner, and measure the genotype robustness of one topology that oscillates. Why does every topology have 12 neighbours?
+
+## Going further {.unnumbered}
+
+Robustness has many sources besides feedback: redundant genes and pathways (@sec-perturbations), modularity and decoupling, and organising principles such as bow-tie structures (book, §13.1). The genotype-network view of evolution is developed by @wagner2008 and in book §13.2–13.3, which also describes how these relationships hold for gene regulatory, metabolic and signalling networks, and when mutations are not all equally likely.

@@ -1,0 +1,101 @@
+# Introduction to graph theory {#sec-graphs}
+
+Many biological systems are naturally described as networks: proteins that bind one another, genes that regulate one another, metabolites linked by reactions. Before building detailed dynamic models of such systems, a great deal can be learnt from the structure of the network alone. This chapter sets up the representation of networks in both languages; @sec-networks then measures their structure.
+
+## Basics
+
+### History of graph theory
+
+*There is no code for this section; see the book.*
+
+### Examples of graphs
+
+*There is no code for this section; see the book.*
+
+## Why graphs?
+
+*There is no code for this section; see the book.*
+
+## Types of graphs
+
+### Simple vs. non-simple graphs
+
+*There is no code for this section; see the book.*
+
+### Directed vs. undirected graphs
+
+*There is no code for this section; see the book.*
+
+### Weighted vs. unweighted graphs
+
+*There is no code for this section; see the book.*
+
+### Other graph types
+
+*There is no code for this section; see the book.*
+
+### Hypergraphs
+
+*There is no code for this section; see the book.*
+
+## Computational representations of graphs
+
+### Data structures
+
+*There is no code for this section; see the book.*
+
+### Adjacency matrix
+
+A network, or graph, is a set of nodes joined by edges. For an undirected network of $n$ nodes, the **adjacency matrix** $\mathbf{A}$ has $a_{ij} = 1$ if nodes $i$ and $j$ are joined, and 0 otherwise.
+
+In MATLAB, networks are `graph` objects (or `digraph` for directed networks), part of core MATLAB. In Python, the standard package is NetworkX. Both provide shortest paths and centrality measures; we compute the clustering coefficient and closeness from their definitions, so that both languages use exactly the same formulas as the book.
+
+| | MATLAB | Python (NetworkX) |
+|---|---|---|
+| Build a network | `G = graph(s, t)` | `G = nx.Graph(); G.add_edges_from(edges)` |
+| Adjacency matrix | `adjacency(G)` (sparse) | `nx.to_numpy_array(G)` |
+| Degrees | `degree(G)` | `dict(G.degree())` |
+| Shortest-path lengths | `distances(G)` | `nx.floyd_warshall_numpy(G)` |
+| Betweenness | `centrality(G, 'betweenness')` | `nx.betweenness_centrality(G, normalized=False)` |
+
+: Working with networks in MATLAB and NetworkX. {#tbl-graphs}
+
+### The Laplacian matrix
+
+*There is no code for this section; see the book.*
+
+## Graph representations of biological networks
+
+### Networks of protein interactions and functional associations
+
+*There is no code for this section; see the book.*
+
+### Signalling networks
+
+*There is no code for this section; see the book.*
+
+### Protein structure networks
+
+*There is no code for this section; see the book.*
+
+### Gene regulatory networks
+
+*There is no code for this section; see the book.*
+
+### Metabolic networks
+
+*There is no code for this section; see the book.*
+
+## Common challenges & troubleshooting
+
+### Choosing a representation
+
+*There is no code for this section; see the book.*
+
+### Loading and creating graphs
+
+*There is no code for this section; see the book.*
+
+## Software tools
+
+*There is no code for this section; see the book.*

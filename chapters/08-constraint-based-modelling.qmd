@@ -1,15 +1,24 @@
-# Constraint-based modelling {#sec-cbm}
+# Introduction to constraint-based modelling {#sec-cbm}
 
 Kinetic models need rate laws and parameters that are rarely known for more than a handful of reactions. Constraint-based modelling sidesteps this. It asks only for the **stoichiometry** of a metabolic network, and a few **bounds** on the fluxes, and then asks: of all the flux distributions the network can support at steady state, which ones are possible, and which one is best for a given objective, such as growth?
 
 This chapter works through flux balance analysis (FBA) and flux variability analysis (FVA), first on a small toy network that you can check by hand, and then on a real metabolic model of *E. coli*.
 
-::: {.callout-note appearance="simple"}
-## In the book
-Chapter 8, *Introduction to Constraint-Based Modelling*: the stoichiometric matrix (§8.2), steady-state mass balance (§8.3), objective functions (§8.4), FBA as a linear program (§8.5), the worked toy example (§8.6), FVA (§8.7) and practical issues such as multiple optima and ATP maintenance (§8.8).
-:::
+## What are constraints?
 
-## The toy network
+### Types of constraints
+
+*There is no code for this section; see the book.*
+
+### Mathematical representation of constraints
+
+*There is no code for this section; see the book.*
+
+### Why are constraints useful?
+
+*There is no code for this section; see the book.*
+
+## The stoichiometric matrix
 
 We use the small network of the book's Figure 8.1 and Table 8.2: eight metabolites, seven internal reactions, two exchange reactions that connect the cell to its surroundings, and a "biomass" reaction that drains the building blocks the cell needs to grow.
 
@@ -36,7 +45,21 @@ $$
 
 With eight equations and ten unknowns, this system has infinitely many solutions. FBA picks one by optimising an objective, here the biomass flux.
 
-## Flux balance analysis
+## Steady-state mass balance: Flux Balance Analysis (FBA)
+
+*There is no code for this section; see the book.*
+
+## The objective function
+
+### The biomass objective function
+
+*There is no code for this section; see the book.*
+
+## Optimisation to compute flux distribution
+
+*There is no code for this section; see the book.*
+
+## An illustration
 
 FBA is a **linear program** (LP):
 
@@ -76,7 +99,42 @@ The maximum biomass flux is $v_\text{bio} = 50$, the same as in the book (Eq. 8.
 R1 and the route R2 → R3 both turn A into ATP + B, so the cell can split the 600 units of A between them in any proportion and grow equally well. The book shows two such solutions (Eqs. 8.9 and 8.10). Which one you get depends on the solver, and the MATLAB and Python versions above may print different values of $v_1$, $v_2$ and $v_3$. Both are correct. This is why our automated checks compare only the growth rate for this example, and why the next section matters.
 :::
 
-## Flux variability analysis
+#### A genome-scale example: *E. coli* core {.unnumbered}
+
+The same ideas carry over unchanged to real networks. The *E. coli* core model [@orth2010] has 95 reactions, 72 metabolites and 137 genes, covering glycolysis, the pentose phosphate pathway, the TCA cycle and oxidative phosphorylation. At this scale we no longer write $\mathbf{S}$ by hand. A standard model file (SBML) is read by a modelling package, COBRApy in Python and the COBRA Toolbox in MATLAB, which builds and solves the LP for us.
+
+Two things to know when reading the code:
+
+* **Exchange reactions** such as `EX_glc__D_e` (glucose) and `EX_o2_e` (oxygen) are written as *secretion*, so **uptake is a negative flux**. Allowing up to 10 mmol/gDW/h of glucose uptake therefore means setting the lower bound to −10.
+* The model includes an **ATP maintenance** reaction, `ATPM`, with a lower bound of 8.39 mmol/gDW/h: ATP the cell must spend just to stay alive, whether it grows or not.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs the [COBRA Toolbox](https://opencobra.github.io/cobratoolbox/); run `initCobraToolbox` once per session before this script.*
+
+```{.matlab include="/examples/constraint-based/ecoli_core/ecoli_core.m"}
+```
+
+![](/examples/constraint-based/ecoli_core/out/matlab/fig-ecoli-glucose.png){width=75%}
+
+## Python
+
+*Needs [COBRApy](https://opencobra.github.io/cobrapy/).*
+
+```{.python include="/examples/constraint-based/ecoli_core/ecoli_core.py"}
+```
+
+![](/examples/constraint-based/ecoli_core/out/python/fig-ecoli-glucose.png){width=75%}
+:::
+
+With glucose uptake capped at 10 mmol/gDW/h, the predicted growth rate is 0.874 h^−1^ with oxygen and 0.212 h^−1^ without it: aerobic respiration extracts far more ATP from each glucose than fermentation does. The growth curves show three more things.
+
+* **At zero glucose the problem is infeasible**, not merely zero growth. With no carbon source, nothing can meet the ATP maintenance demand, so no flux vector satisfies all the constraints. The curves start only once glucose uptake covers maintenance, which takes more glucose without oxygen than with it.
+* **When glucose is the only limit, growth rises in a straight line.** This is a general property of linear programs: scaling the one binding constraint scales the solution.
+* **When oxygen is also limited** (the middle curve), the line bends at the point where oxygen runs out, and beyond it each extra unit of glucose buys less growth. A different constraint has become binding.
+
+## Flux Variability Analysis (FVA)
 
 FVA maps out *all* the optimal (or near-optimal) solutions at once. First solve the FBA problem to get the optimal objective $f^*$. Then, for each reaction $j$ in turn, find the smallest and the largest flux it can carry while growth stays at least a fraction $\alpha$ of the optimum:
 
@@ -112,42 +170,47 @@ That is two LPs per reaction. The code below runs FVA at $\alpha = 1$ (exactly o
 
 At optimal growth, $v_1$, $v_2$ and $v_3$ can each take any value between 0 and 600, while every other flux is fixed. These are exactly the ranges in the book (Eq. 8.12), found by solving the problem of Eq. 8.11 for each flux. Relaxing growth to 90% of the optimum widens the other ranges too, because the reactions that limit growth no longer have to run at their maximum.
 
-## A genome-scale example: *E. coli* core
+## Understanding FBA
 
-The same ideas carry over unchanged to real networks. The *E. coli* core model [@orth2010] has 95 reactions, 72 metabolites and 137 genes, covering glycolysis, the pentose phosphate pathway, the TCA cycle and oxidative phosphorylation. At this scale we no longer write $\mathbf{S}$ by hand. A standard model file (SBML) is read by a modelling package, COBRApy in Python and the COBRA Toolbox in MATLAB, which builds and solves the LP for us.
+### Blocked reactions and dead-end metabolites
 
-Two things to know when reading the code:
+*There is no code for this section; see the book.*
 
-* **Exchange reactions** such as `EX_glc__D_e` (glucose) and `EX_o2_e` (oxygen) are written as *secretion*, so **uptake is a negative flux**. Allowing up to 10 mmol/gDW/h of glucose uptake therefore means setting the lower bound to −10.
-* The model includes an **ATP maintenance** reaction, `ATPM`, with a lower bound of 8.39 mmol/gDW/h: ATP the cell must spend just to stay alive, whether it grows or not.
+### Gaps in metabolic networks
 
-::: {.panel-tabset group="language"}
-## MATLAB
+*There is no code for this section; see the book.*
 
-*Needs the [COBRA Toolbox](https://opencobra.github.io/cobratoolbox/); run `initCobraToolbox` once per session before this script.*
+### Multiple solutions
 
-```{.matlab include="/examples/constraint-based/ecoli_core/ecoli_core.m"}
-```
+The toy example of §8.6 has many optimal flux distributions; FVA (§8.7) shows how far each flux can vary.
 
-![](/examples/constraint-based/ecoli_core/out/matlab/fig-ecoli-glucose.png){width=75%}
+### Loops
 
-## Python
+*There is no code for this section; see the book.*
 
-*Needs [COBRApy](https://opencobra.github.io/cobrapy/).*
+### Parsimonious FBA (pFBA)
 
-```{.python include="/examples/constraint-based/ecoli_core/ecoli_core.py"}
-```
+Fast-SL (§10.2.3) and the MoMA reference in §9.1 use flux distributions of minimal norm, closely related to pFBA.
 
-![](/examples/constraint-based/ecoli_core/out/python/fig-ecoli-glucose.png){width=75%}
-:::
+### ATP maintenance fluxes
 
-With glucose uptake capped at 10 mmol/gDW/h, the predicted growth rate is 0.874 h^−1^ with oxygen and 0.212 h^−1^ without it: aerobic respiration extracts far more ATP from each glucose than fermentation does. The growth curves show three more things.
+The *E. coli* core example in §8.6 has an ATP maintenance reaction with a fixed lower bound; Exercise 5 asks you to find it.
 
-* **At zero glucose the problem is infeasible**, not merely zero growth. With no carbon source, nothing can meet the ATP maintenance demand, so no flux vector satisfies all the constraints. The curves start only once glucose uptake covers maintenance, which takes more glucose without oxygen than with it.
-* **When glucose is the only limit, growth rises in a straight line.** This is a general property of linear programs: scaling the one binding constraint scales the solution.
-* **When oxygen is also limited** (the middle curve), the line bends at the point where oxygen runs out, and beyond it each extra unit of glucose buys less growth. A different constraint has become binding.
+## Troubleshooting
 
-## Exercises
+### Zero growth rate
+
+*There is no code for this section; see the book.*
+
+### Objective values vs. flux values
+
+*There is no code for this section; see the book.*
+
+## Software tools
+
+*There is no code for this section; see the book.*
+
+## Exercises {.unnumbered}
 
 1. In the toy network, raise the upper bound of $v_6$ to 2000. Does the optimal growth change? Why not? What happens if you also raise the upper bound of $b_2$?
 2. Remove the reaction R2 from the toy network (set both its bounds to 0) and rerun FVA. What happens to the ranges of $v_1$ and $v_3$, and why?
@@ -156,6 +219,6 @@ With glucose uptake capped at 10 mmol/gDW/h, the predicted growth rate is 0.874 
 5. Book Exercises 8.4 and 8.5: find the ATP maintenance reaction and its lower bound; plot growth against glucose uptake from 10 to 25 mmol/gDW/h with oxygen uptake fixed at 16; find the flux range of fumarate reductase (FRD7); and predict growth on acetate and on succinate (10 mmol/gDW/h each) in place of glucose.
 6. Book Exercise 8.3: set up the small network given there and solve it as an LP in both languages. Do your answers agree with a hand calculation?
 
-## Going further
+## Going further {.unnumbered}
 
-The next chapter builds on these tools to study how networks respond to perturbations: gene and reaction knock-outs, synthetic lethals and over-expression (book, Chapters 9 and 10).
+@sec-extending-cbm and @sec-perturbations build on these tools, to predict how networks respond to perturbations: gene and reaction knock-outs, synthetic lethals and over-expression.

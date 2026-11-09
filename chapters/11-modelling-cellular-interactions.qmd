@@ -1,13 +1,18 @@
-# Microbial communities {#sec-communities}
+# Modelling cellular interactions {#sec-communities}
 
 Microbes rarely live alone. In the gut, the soil and the ocean, they live in communities, where one organism's waste is another's food, and many species cannot be grown in the laboratory at all without their partners. Constraint-based models extend naturally to such communities: each organism keeps its own metabolic network, and the networks are coupled through the metabolites they take up from and release into a shared environment. This chapter builds a community model of two *E. coli* mutants that can grow only together.
 
-::: {.callout-note appearance="simple"}
-## In the book
-Chapter 11, *Modelling Cellular Interactions*: microbial communities (§11.1), studied with networks (§11.1.1), population models such as the generalised Lotka–Volterra model (§11.1.2) and constraint-based models (§11.1.3), from compartmentalised FBA (§11.1.3.1) and community FBA (§11.1.3.2) to SteadyCom (§11.1.3.6); and host–pathogen interactions (§11.2). The methods of @sec-cbm and @sec-extending-cbm are the starting point.
-:::
+## Microbial communities
 
-## A community of two auxotrophs
+### Network-based approaches
+
+*There is no code for this section; see the book.*
+
+### Population-based and agent-based approaches
+
+A generalised Lotka–Volterra model of interacting species extends the predator–prey model of §1.5.1.
+
+### Constraint-based approaches
 
 Strain A lacks both routes to glutamate (glutamate dehydrogenase, GLUDy, and glutamate synthase, GLUSy). Strain B lacks both anaplerotic routes that replenish the TCA cycle (PEP carboxylase, PPC, and the glyoxylate shunt, through isocitrate lyase, ICL), so it cannot make the oxaloacetate and 2-oxoglutarate it needs for biosynthesis. On glucose alone, FBA predicts that neither grows. Such pairs of auxotrophs, which rescue each other by cross-feeding, are a standard way to build synthetic communities in the laboratory [@mee2014].
 
@@ -51,7 +56,29 @@ The least cross-feeding needed at a 1:1 ratio is simple to interpret. Strain A, 
 
 That the pair can grow as fast as the wild type is a reminder of what the model leaves out. Exchanging metabolites costs nothing here, whereas real cells pay to export and import them, and they release only some of what their partners could use. Real cross-feeding communities usually grow more slowly than a prototrophic strain, and how fast depends on which metabolites are exchanged [@mee2014]. Adding such costs, or limits on secretion measured in experiments, is the way to make the model quantitative.
 
-## Exercises
+## Host–pathogen interactions (HPIs)
+
+### Network models
+
+*There is no code for this section; see the book.*
+
+### Dynamic models
+
+*There is no code for this section; see the book.*
+
+### Constraint-based models
+
+*There is no code for this section; see the book.*
+
+## Summary
+
+*There is no code for this section; see the book.*
+
+## Software tools
+
+*There is no code for this section; see the book.*
+
+## Exercises {.unnumbered}
 
 1. Remove the limit of 10 mmol/gDW/h on the exchange of each organic metabolite. How does the range of compositions that support near-maximal growth change, and why? Look at the exchange fluxes for extreme compositions.
 2. Instead of fixing $x$, find the largest $\mu$ for which *some* composition is feasible (book, Eq. 11.3), by bisection on $\mu$: for each trial value, solve a linear feasibility problem with $x$ (in the form of the abundance-scaled bounds) as a variable. This is the SteadyCom algorithm [@chan2017].
@@ -59,6 +86,6 @@ That the pair can grow as fast as the wild type is a reminder of what the model 
 4. Combine this model with dynamic FBA: start from equal amounts of the two strains in 20 mM glucose and follow the biomass of each, allowing them to grow at different rates. Does the community approach a stable composition?
 5. Book Exercise 11.2: two genome-scale models are combined into a compartmentalised community model. Work out how many reactions, metabolites and exchange reactions the community model has. How many does our two-strain model have, counted the same way?
 
-## Going further
+## Going further {.unnumbered}
 
 The first constraint-based model of a community, of a sulphate-reducing bacterium and a methanogen, was built by @stolyar2007; it maximised a weighted sum of the two biomass fluxes (book, §11.1.3.1). Since then, many methods have been developed, which differ in how they couple the members: by a common growth rate, as here, by optimising the community and its members at different levels, or dynamically, by extending dynamic FBA. Models of hundreds of gut microbes, and of microbes interacting with their hosts, are now used to study the microbiome (book, Chapter 11).
