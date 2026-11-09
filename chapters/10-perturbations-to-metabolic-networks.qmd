@@ -34,6 +34,32 @@ Thirteen reactions are essential (red), among them the glucose uptake system (GL
 
 Only seven genes are essential, although thirteen reactions are. The difference comes from the GPR rules. Aconitase (ACONTa and ACONTb), for example, is encoded by two genes, *acnA* and *acnB*, either of which suffices, so neither gene is essential although the reaction is. In the other direction, *ptsH* and *ptsI* are each essential because the glucose transport system needs both. Predictions about genes, which are what experiments test, can therefore differ substantially from predictions about reactions.
 
+#### A genome-scale example: *E. coli* iML1515 {.unnumbered}
+
+The core model leaves out most of metabolism, and with it most of the genes that experiments test. The genome-scale reconstruction iML1515 [@monk2017] has 2712 reactions and 1516 genes. The code is the same as before; only the model changes, and deleting all 1516 genes one at a time takes well under a minute.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs the [COBRA Toolbox](https://opencobra.github.io/cobratoolbox/); run `initCobraToolbox` once per session before this script.*
+
+```{.matlab include="/examples/perturbations/genome_scale_deletions/genome_scale_deletions.m"}
+```
+
+![](/examples/perturbations/genome_scale_deletions/out/matlab/fig-genome-scale-deletions.png){width=50%}
+
+## Python
+
+*Needs COBRApy.*
+
+```{.python include="/examples/perturbations/genome_scale_deletions/genome_scale_deletions.py"}
+```
+
+![](/examples/perturbations/genome_scale_deletions/out/python/fig-genome-scale-deletions.png){width=50%}
+:::
+
+In its default medium (aerobic, glucose), iML1515 grows at 0.877 h^−1^. 196 of its genes (13%) are predicted to be essential, and only 48 more slow growth at all. For 451 genes, almost a third, the deletion removes no reaction, because an isozyme or another subunit covers for it. Most of the network is robust to the loss of any single gene, a theme we return to in @sec-robustness.
+
 ### Gene deletions vs. reaction deletions
 
 The example in §10.1 deletes genes as well as reactions, and compares the two.

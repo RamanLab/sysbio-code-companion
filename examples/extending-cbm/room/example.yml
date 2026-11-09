@@ -1,0 +1,12 @@
+title: Regulatory on-off minimisation (ROOM)
+book: "Ch. 9, §9.2 (ROOM, Eq. 9.5) and §9.2.1 (ROOM vs. MoMA)"
+needs:
+  matlab: [Optimization Toolbox]
+  python: [cobra, clarabel]
+# The fewest changes is an integer, and the fastest growth among ROOM
+# solutions is unique; both MILPs are solved to a zero optimality gap.
+compare: [growth_wild_type, reactions, growth_fba, growth_room, changes]
+tolerance: {rtol: 1.0e-5, atol: 1.0e-5}
+expected:
+  growth_wild_type: 0.8739215
+  changes: [30, 41, 41, 29, 5]

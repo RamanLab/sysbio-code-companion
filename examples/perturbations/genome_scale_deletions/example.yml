@@ -1,0 +1,12 @@
+title: Single gene deletions in the genome-scale model iML1515
+book: "Ch. 10, §10.1 (Knock-outs); Ch. 8, §8.4.1 (iML1515)"
+needs:
+  matlab: [COBRA Toolbox]
+  python: [cobra]
+# FBA growth rates are unique. No deletion leaves growth between 0.1% and
+# 10% of the wild type, so the 1% cut-off is not sensitive to solvers.
+compare: [wild_type_growth, growth_ratio, essential_genes, n_reduced,
+          no_reaction_lost]
+tolerance: {rtol: 1.0e-5, atol: 1.0e-6}
+expected:
+  wild_type_growth: 0.8769972

@@ -1,8 +1,8 @@
 # Extending constraint-based approaches {#sec-extending-cbm}
 
-Flux balance analysis, as in @sec-cbm, makes two strong assumptions: that the cell has had time to optimise its metabolism for growth, and that the environment does not change. This chapter relaxes each of them. MoMA predicts how a mutant behaves *before* it has adapted to the loss of a gene, and dynamic FBA follows a culture as it uses up its nutrients and changes its own environment.
+Flux balance analysis, as in @sec-cbm, makes two strong assumptions: that the cell has had time to optimise its metabolism for growth, and that the environment does not change. This chapter relaxes each of them. MoMA and ROOM predict how a mutant behaves if it changes as little as possible from the wild type after losing a gene, and dynamic FBA follows a culture as it uses up its nutrients and changes its own environment.
 
-Both examples write the optimisation problems out explicitly, with the stoichiometric matrix $\mathbf{S}$ and the bounds of the *E. coli* core model, and solve them with general-purpose solvers: `linprog` and `quadprog` in MATLAB (Optimization Toolbox), and SciPy's `linprog` and the interior-point solver Clarabel in Python. The COBRA Toolbox and COBRApy provide the same methods ready-made; writing them out once shows exactly what they compute.
+The examples write the optimisation problems out explicitly, with the stoichiometric matrix $\mathbf{S}$ and the bounds of the *E. coli* core model, and solve them with general-purpose solvers: `linprog` and `quadprog` in MATLAB (Optimization Toolbox), and SciPy's `linprog` and the interior-point solver Clarabel in Python, with `intlinprog` and SciPy's `milp` for ROOM. The COBRA Toolbox and COBRApy provide the same methods ready-made; writing them out once shows exactly what they compute.
 
 ## Minimisation of Metabolic Adjustment (MoMA)
 
@@ -45,9 +45,33 @@ MoMA never predicts faster growth than FBA, since FBA gives the maximum; for 27 
 
 ## Regulatory On-Off Minimisation (ROOM)
 
+ROOM [@shlomi2005] counts changes instead of measuring distance. A flux has changed *significantly* if it leaves a band around its wild-type value, $[w - \delta|w| - \epsilon,\ w + \delta|w| + \epsilon]$, and ROOM minimises the number of such changes (book, Eq. 9.5). Each flux gets a binary variable $y_i$, which is 1 if it changes, so this is a **mixed-integer linear programme** (MILP): `intlinprog` in MATLAB and SciPy's `milp` in Python. Many flux distributions reach the fewest changes, so the code then reports the fastest growth among them. We use $\delta = 0.03$ and $\epsilon = 0.001$, the values used for flux predictions in the book, and the same wild-type reference as MoMA.
+
+MILPs are much harder than LPs or QPs, and the solution time grows quickly with the number of binary variables. Two choices keep this example fast. We look at only five deletions. And the bounds in Eq. 9.5, which act as "big-M" constants, are replaced by the tightest bounds the network allows, from FVA, rather than ±1000.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs the Optimization Toolbox (for `linprog`, `quadprog` and `intlinprog`).*
+
+```{.matlab include="/examples/extending-cbm/room/room.m"}
+```
+
+![](/examples/extending-cbm/room/out/matlab/fig-room.png)
+
+## Python
+
+*Needs COBRApy (to read the model), SciPy and Clarabel.*
+
+```{.python include="/examples/extending-cbm/room/room.py"}
+```
+
+![](/examples/extending-cbm/room/out/python/fig-room.png)
+:::
+
 ### ROOM vs. MoMA
 
-*There is no code for this section; see the book.*
+For the deletion of pyruvate kinase (PYK), the example in the book, ROOM needs only five significant flux changes and growth barely changes. For PGI and G6PDH2r about 30 fluxes change, but the network still reroutes to almost wild-type growth, as FBA predicts. Without PFK or TPI, upper glycolysis is cut, 41 fluxes must change, and the fastest growth that keeps to 41 changes is only 34% of the wild type. That is well below FBA (81%), and close to MoMA (24% for PFK). ROOM and MoMA thus agree that this mutant cannot simply reroute without many adjustments. Where they differ is in what they minimise: MoMA prefers many small changes, ROOM a few large ones. In the original study, MoMA predicted the growth of mutants just after the deletion better, and ROOM their growth after adaptation (book, §9.2.1).
 
 ## Bi-level optimisation
 
