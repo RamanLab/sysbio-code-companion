@@ -105,13 +105,19 @@ end
 
 function v = nearest(S, target, lb, ub)
 % The flux vector closest to target: minimise ||v - target||^2 / 2, that
-% is v'v/2 - target'v, subject to S v = 0 and lb <= v <= ub.
+% is v'v/2 - target'v, subject to S v = 0 and lb <= v <= ub. Some rows of
+% S are linear combinations of others; dropping them, and using the
+% active-set algorithm, makes quadprog exact and reliable here.
 n = numel(lb);
-opts = optimoptions('quadprog', 'Display', 'none', ...
-    'OptimalityTolerance', 1e-9, 'ConstraintTolerance', 1e-9, ...
-    'MaxIterations', 1000);
-[v, ~, exitflag, output] = quadprog(speye(n), -target, [], [], S, ...
-    zeros(size(S, 1), 1), lb, ub, [], opts);
+S = full(S);
+[~, R, order] = qr(S', 'vector');               % independent rows of S
+independent = order(abs(diag(R)) > 1e-9 * abs(R(1, 1)));
+S = S(sort(independent), :);
+opts = optimoptions('quadprog', 'Algorithm', 'active-set', ...
+    'Display', 'none');
+x0 = min(max(target, lb), ub);                  % a starting point
+[v, ~, exitflag, output] = quadprog(eye(n), -target, [], [], S, ...
+    zeros(size(S, 1), 1), lb, ub, x0, opts);
 assert(exitflag > 0, 'quadprog stopped (exit flag %d): %s', exitflag, ...
     output.message);
 end
