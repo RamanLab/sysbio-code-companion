@@ -170,11 +170,11 @@ The exact counts differ between MATLAB and Python, because the solvers differ in
 
 *There is no code for this section; see the book.*
 
-## Beyond the book: stochastic simulation {.unnumbered #sec-stochastic}
+## 5.A Stochastic simulation {.unnumbered #sec-stochastic}
 
 The ODE models of this chapter treat concentrations as smooth, continuous quantities. Inside a single cell, however, many molecules are present in tiny numbers: a gene has one or two copies, and a given mRNA may be present as a handful of molecules. Each reaction is then a discrete, random event, and two genetically identical cells in the same environment can hold quite different numbers of a protein. This section simulates such systems with Gillespie's algorithm, and shows how the random fluctuations, or **noise**, depend on the reactions that produce them. For a fuller treatment, see the reviews by @gillespie2007 and @raj2008.
 
-### Gillespie's algorithm {.unnumbered}
+### 5.A.1 Gillespie's algorithm {.unnumbered}
 
 Consider a set of reactions, each with a **propensity** $a_j(\mathbf{x})$: the probability per unit time that reaction $j$ occurs, given the current numbers of molecules $\mathbf{x}$. For a reaction $\text{M} \to \emptyset$ with rate constant $\gamma$, for instance, the propensity is $\gamma M$, since each of the $M$ molecules can be degraded. Gillespie's **stochastic simulation algorithm** (SSA) generates exact sample paths of such a system [@gillespie1977]:
 
@@ -188,7 +188,7 @@ Both languages have a short implementation of these four steps in the companion'
 ```{.python include="/python/sbp/ssa.py"}
 ```
 
-### Production and degradation of an mRNA {.unnumbered}
+### 5.A.2 Production and degradation of an mRNA {.unnumbered}
 
 The simplest example is an mRNA made at a constant rate $k$ and degraded at rate $\gamma$ per molecule:
 
@@ -222,7 +222,7 @@ Individual runs (left) are jagged and differ from one another; at steady state, 
 
 A useful way to describe the size of fluctuations is the **Fano factor**, the variance divided by the mean. It is 1 for a Poisson distribution, whatever the mean. Relative fluctuations, measured by the coefficient of variation $\sigma/\mu = 1/\sqrt{\mu}$, shrink as numbers grow: with 10 molecules they are about 32%, with 10,000 about 1%. That is why ODEs work well for abundant molecules and stochastic models matter for scarce ones.
 
-### Noise in gene expression {.unnumbered}
+### 5.A.3 Noise in gene expression {.unnumbered}
 
 Proteins are made from mRNAs, and each mRNA is translated many times before it is degraded. Adding these two steps,
 

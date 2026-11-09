@@ -5,8 +5,8 @@ function ci_matlab()
 %   and runs the examples that do, so that a problem with the COBRA Toolbox
 %   cannot affect the other examples.
 
-primer = fileparts(fileparts(mfilename('fullpath')));
-addpath(fullfile(primer, 'tools'));
+top = fileparts(fileparts(mfilename('fullpath')));
+addpath(fullfile(top, 'tools'));
 fprintf('MATLAB %s\n', version);
 failed = run_examples([], 'nocobra');
 

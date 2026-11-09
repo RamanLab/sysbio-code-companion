@@ -75,7 +75,7 @@ end
 local function transclude(cb)
   if cb.attributes.include then
     local content = ""
-    -- sysbio-primer patch: a path starting with "/" is relative to the project
+    -- sysbio-code-companion patch: a path starting with "/" is relative to the project
     -- root, so that it works for both the HTML and the (single-file) PDF build.
     if cb.attributes.include:sub(1, 1) == "/" and quarto.project.directory then
       cb.attributes.include = pandoc.path.join({ quarto.project.directory, cb.attributes.include:sub(2) })

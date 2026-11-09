@@ -2,7 +2,7 @@
 
 An open code companion to the book *An Introduction to Computational Systems Biology: Systems-Level Modelling of Cellular Networks* (Karthik Raman, CRC Press, 2021), also used in the course BT5240 at IIT Madras. Its chapters and sections follow the book's exactly, and every worked example is in both MATLAB and Python.
 
-**Read it online:** <https://ramanlab.github.io/sysbio-primer> (a PDF version is linked from the site).
+**Read it online:** <https://ramanlab.github.io/sysbio-code-companion> (a PDF version is linked from the site).
 
 ## Layout
 

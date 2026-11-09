@@ -7,10 +7,10 @@ function failed = run_examples(root, which)
 %   Errors are reported at the end; with no output argument, any failure
 %   raises an error (and so a non-zero exit in batch mode).
 
-primer = fileparts(fileparts(mfilename('fullpath')));
-addpath(fullfile(primer, 'matlab'));
+top = fileparts(fileparts(mfilename('fullpath')));
+addpath(fullfile(top, 'matlab'));
 if nargin < 1 || isempty(root)
-    root = fullfile(primer, 'examples');
+    root = fullfile(top, 'examples');
 end
 if nargin < 2
     which = 'all';

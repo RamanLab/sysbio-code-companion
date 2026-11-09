@@ -7,8 +7,8 @@ book:
   subtitle: "A code companion to the book"
   author: "Karthik Raman"
   date: last-modified
-  site-url: https://ramanlab.github.io/sysbio-primer
-  repo-url: https://github.com/RamanLab/sysbio-primer
+  site-url: https://ramanlab.github.io/sysbio-code-companion
+  repo-url: https://github.com/RamanLab/sysbio-code-companion
   repo-actions: [issue, source]
   downloads: [pdf]
   license: "CC BY 4.0"
@@ -49,7 +49,7 @@ filters:
 format:
   html:
     theme: cosmo
-    css: assets/primer.css
+    css: assets/companion.css
     code-copy: true
     code-overflow: scroll
     toc-depth: 3

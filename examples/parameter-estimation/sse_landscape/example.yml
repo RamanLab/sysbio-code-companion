@@ -7,7 +7,7 @@ needs:
 # closely, including which grid point is best.
 compare: [D1, D1_D2]
 tolerance: {rtol: 1.0e-9, atol: 1.0e-9}
-# Values obtained with this primer (not given in the book)
+# Values obtained with this companion (not given in the book)
 expected:
   D1: {KM: 12, KI: 33}
   D1_D2: {KM: 12, KI: 39, SSE: 63.82674394}

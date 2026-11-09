@@ -1,4 +1,4 @@
-"""Small helpers shared by the primer's Python examples.
+"""Small helpers shared by the companion's Python examples.
 
 They only deal with bookkeeping (where outputs go, a common figure style),
 so that each example script can concentrate on the science.
@@ -44,7 +44,7 @@ def save_results(script_file, results):
 
 
 def style():
-    """A common, plain figure style for the whole primer."""
+    """A common, plain figure style for the whole companion."""
     plt.rcParams.update({
         "figure.figsize": (6, 4),
         "font.size": 11,

@@ -1,4 +1,4 @@
-# Python packages used by the primer's examples (pinned for reproducibility).
+# Python packages used by the companion's examples (pinned for reproducibility).
 # Install with:  pip install -r requirements.txt && pip install -e .
 numpy==2.5.3
 scipy==1.18.1

@@ -4,11 +4,11 @@ You need only one of the two languages to follow this companion. The examples ar
 
 ## Getting the code
 
-Download the repository as a zip file from <https://github.com/RamanLab/sysbio-primer>, or clone it with Git:
+Download the repository as a zip file from <https://github.com/RamanLab/sysbio-code-companion>, or clone it with Git:
 
 ```bash
-git clone https://github.com/RamanLab/sysbio-primer.git
-cd sysbio-primer
+git clone https://github.com/RamanLab/sysbio-code-companion.git
+cd sysbio-code-companion
 ```
 
 ## Python
@@ -35,7 +35,7 @@ The examples use core MATLAB (R2021a or newer) and, where noted at the top of a 
 Start MATLAB in the repository folder and run, once per session:
 
 ```matlab
-setup_primer      % adds the small +sbp helper package to the path
+setup_companion     % adds the small +sbp helper package to the path
 ```
 
 Then run any example, for instance `run examples/constraint-based/toy_fba/toy_fba.m`. If you are new to MATLAB, the book's online Appendix E, *MATLAB for systems biology*, is a short introduction.

@@ -2,13 +2,13 @@
 
 This is a hands-on code companion to *An Introduction to Computational Systems Biology: Systems-Level Modelling of Cellular Networks* (Raman, 2021, CRC Press), and to the course BT5240 at IIT Madras.
 
-**Its chapters and sections follow the book exactly**: §5.3.1 here is §5.3.1 in the book, with the same title. Where a section has worked examples, they are given **in both MATLAB and Python**, and the two versions produce the same numbers and the same figures; pick your language in any code tab, and the choice carries over to every other tab on the page. Sections without code say so, and point back to the book. A few topics that the book mentions but does not develop, such as stochastic simulation, appear in unnumbered sections marked *Beyond the book*.
+**Its chapters and sections follow the book exactly**: §5.3.1 here is §5.3.1 in the book, with the same title. Where a section has worked examples, they are given **in both MATLAB and Python**, and the two versions produce the same numbers and the same figures; pick your language in any code tab, and the choice carries over to every other tab on the page. Sections without code say so, and point back to the book. A few topics go beyond the book, such as stochastic simulation. They appear at the end of a chapter, in sections labelled with letters (§5.A, §12.A) so that they cannot be confused with the book's own sections.
 
 The text is deliberately short: the theory is in the book, and this companion is about putting it to work.
 
 ## How the examples are checked
 
-Each example is a pair of standalone scripts, one `.m` and one `.py`, in the [`examples/`](https://github.com/RamanLab/sysbio-primer/tree/main/examples) folder of the repository. Every time the companion changes, both versions are run automatically and their key results are compared with each other, and with the values reported in the book where there are any. So the code you see on these pages is the code that was run to produce the figures beside it.
+Each example is a pair of standalone scripts, one `.m` and one `.py`, in the [`examples/`](https://github.com/RamanLab/sysbio-code-companion/tree/main/examples) folder of the repository. Every time the companion changes, both versions are run automatically and their key results are compared with each other, and with the values reported in the book where there are any. So the code you see on these pages is the code that was run to produce the figures beside it.
 
 ## Licence
 

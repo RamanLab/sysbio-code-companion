@@ -10,14 +10,7 @@ Synthetic biology designs gene circuits with a function in mind, much as an engi
 
 ## Classic circuit design experiments
 
-#### Beyond the book: steady states and their stability {.unnumbered}
-
-A **steady state** of $d\mathbf{x}/dt = \mathbf{f}(\mathbf{x})$ is a point $\mathbf{x}^*$ where $\mathbf{f}(\mathbf{x}^*) = \mathbf{0}$. Whether the system returns to it after a small push depends on the **Jacobian matrix**, $J_{ij} = \partial f_i / \partial x_j$, evaluated at $\mathbf{x}^*$. Near the steady state, a small deviation $\boldsymbol{\delta}$ obeys $d\boldsymbol{\delta}/dt \approx J \boldsymbol{\delta}$, and so it grows or shrinks according to the eigenvalues of $J$:
-
-* if every eigenvalue has a negative real part, all small deviations die away, and the steady state is **stable**;
-* if any eigenvalue has a positive real part, some deviation grows, and the steady state is **unstable**. If the other eigenvalues are negative, it is a **saddle**: the system approaches it along some directions and leaves along others.
-
-Eigenvalues with an imaginary part make the deviations spiral.
+Both circuits below are analysed through their steady states and the stability of those states. §12.A, at the end of this chapter, summarises the ideas needed.
 
 ### Designing an oscillator: the repressilator
 
@@ -87,35 +80,7 @@ where $u$ and $v$ are the two repressors, $a_1$ and $a_2$ the strengths of their
 
 With $a_1 = a_2 = 10$ and $n = 2$, the nullclines cross three times. Two of the steady states are stable, one with $u$ high and $v$ low, the other the reverse. Between them lies a saddle at $u = v = 2$, with one positive eigenvalue. Every trajectory ends at one of the two stable states, and the line through the saddle along which trajectories approach it, here the diagonal $u = v$, divides the plane into their two **basins of attraction**. The cell carrying the circuit thus has two distinct states, and stays in whichever it is put.
 
-Bistability needs cooperativity: with $n = 1$, the nullclines cross only once, whatever the promoter strengths (Exercise 1).
-
-#### Bistability and hysteresis {.unnumbered}
-
-In the experiments, the switch was flipped by an inducer that weakens one of the repressors, which in the model amounts to changing a promoter strength. We fix $a_2 = 5$, vary $a_1$ from 1 to 12, and find all the steady states for each value. Then we simulate the circuit while raising $a_1$ in small steps, letting it settle at each step, and lowering it again.
-
-::: {.panel-tabset group="language"}
-## MATLAB
-
-*Core MATLAB only.*
-
-```{.matlab include="/examples/dynamics/hysteresis/hysteresis.m"}
-```
-
-![](/examples/dynamics/hysteresis/out/matlab/fig-hysteresis.png)
-
-## Python
-
-*Needs SciPy.*
-
-```{.python include="/examples/dynamics/hysteresis/hysteresis.py"}
-```
-
-![](/examples/dynamics/hysteresis/out/python/fig-hysteresis.png)
-:::
-
-The steady states form an S-shaped curve, a **bifurcation diagram**. For $a_1$ between about 3.7 and 8.7 (shaded), there are three steady states, two stable and one unstable; outside this range, only one. At each end of the range, a stable state and the unstable one meet and vanish, in what is called a saddle-node bifurcation.
-
-As $a_1$ rises, the circuit stays on the lower branch, with $u$ low, until that branch disappears, and only then jumps up, at $a_1 = 8.75$ in our steps. Lowered again, it stays on the upper branch down to $a_1 = 3.75$. Between these values, the state of the circuit depends on its history as well as on the current value of $a_1$: this is **hysteresis**, a form of memory. A brief pulse of inducer flips the switch, and it stays flipped after the inducer is gone.
+Bistability needs cooperativity: with $n = 1$, the nullclines cross only once, whatever the promoter strengths (Exercise 1). §12.B follows the switch as it is flipped back and forth.
 
 ## Designing modules
 
@@ -203,6 +168,43 @@ Notice what is robust and what is not. The level to which the output returns, $b
 ## Software tools
 
 *There is no code for this section; see the book.*
+
+## 12.A Steady states and their stability {.unnumbered #sec-stability}
+
+A **steady state** of $d\mathbf{x}/dt = \mathbf{f}(\mathbf{x})$ is a point $\mathbf{x}^*$ where $\mathbf{f}(\mathbf{x}^*) = \mathbf{0}$. Whether the system returns to it after a small push depends on the **Jacobian matrix**, $J_{ij} = \partial f_i / \partial x_j$, evaluated at $\mathbf{x}^*$. Near the steady state, a small deviation $\boldsymbol{\delta}$ obeys $d\boldsymbol{\delta}/dt \approx J \boldsymbol{\delta}$, and so it grows or shrinks according to the eigenvalues of $J$:
+
+* if every eigenvalue has a negative real part, all small deviations die away, and the steady state is **stable**;
+* if any eigenvalue has a positive real part, some deviation grows, and the steady state is **unstable**. If the other eigenvalues are negative, it is a **saddle**: the system approaches it along some directions and leaves along others.
+
+Eigenvalues with an imaginary part make the deviations spiral.
+
+## 12.B Bistability and hysteresis {.unnumbered #sec-hysteresis}
+
+In the experiments, the switch was flipped by an inducer that weakens one of the repressors, which in the model amounts to changing a promoter strength. We fix $a_2 = 5$, vary $a_1$ from 1 to 12, and find all the steady states for each value. Then we simulate the circuit while raising $a_1$ in small steps, letting it settle at each step, and lowering it again.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Core MATLAB only.*
+
+```{.matlab include="/examples/dynamics/hysteresis/hysteresis.m"}
+```
+
+![](/examples/dynamics/hysteresis/out/matlab/fig-hysteresis.png)
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/dynamics/hysteresis/hysteresis.py"}
+```
+
+![](/examples/dynamics/hysteresis/out/python/fig-hysteresis.png)
+:::
+
+The steady states form an S-shaped curve, a **bifurcation diagram**. For $a_1$ between about 3.7 and 8.7 (shaded), there are three steady states, two stable and one unstable; outside this range, only one. At each end of the range, a stable state and the unstable one meet and vanish, in what is called a saddle-node bifurcation.
+
+As $a_1$ rises, the circuit stays on the lower branch, with $u$ low, until that branch disappears, and only then jumps up, at $a_1 = 8.75$ in our steps. Lowered again, it stays on the upper branch down to $a_1 = 3.75$. Between these values, the state of the circuit depends on its history as well as on the current value of $a_1$: this is **hysteresis**, a form of memory. A brief pulse of inducer flips the switch, and it stays flipped after the inducer is gone.
 
 ## Exercises {.unnumbered}
 

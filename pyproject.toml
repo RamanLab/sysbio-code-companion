@@ -1,7 +1,7 @@
 [project]
 name = "sbp"
 version = "0.1.0"
-description = "Helpers for the Systems Biology Primer's Python examples"
+description = "Helpers for the code companion's Python examples"
 requires-python = ">=3.10"
 
 [build-system]
