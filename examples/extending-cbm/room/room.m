@@ -47,7 +47,7 @@ for k = 1:numel(rxns)
     j = strcmp(ids, rxns{k});
     lb_d = lo; ub_d = hi;
     lb_d(j) = 0; ub_d(j) = 0;
-    [changes(k), mu_room] = room(S, w, lb_d, ub_d, bio, delta, epsilon);
+    [changes(k), mu_room] = solve_room(S, w, lb_d, ub_d, bio, delta, epsilon);
     growth_fba(k) = fba(S, lb_d, ub_d, bio) / mu_wt;
     growth_room(k) = mu_room / mu_wt;
     fprintf(['  %-8s %2d significant changes; growth FBA %.3f, ROOM ' ...
@@ -105,7 +105,7 @@ x0 = min(max(zeros(n, 1), lb), ub);
 assert(exitflag > 0, 'quadprog failed');
 end
 
-function [changes, mu] = room(S, w, lb, ub, bio, delta, epsilon)
+function [changes, mu] = solve_room(S, w, lb, ub, bio, delta, epsilon)
 % Fewest significant changes from w, and the fastest growth that keeps
 % to that number. Variables are [v; y], y binary.
 [m, n] = size(S);
