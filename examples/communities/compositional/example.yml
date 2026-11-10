@@ -1,0 +1,7 @@
+title: Spurious associations from compositional data
+book: "Ch. 11, §11.1.1.1 (Microbial association networks)"
+needs:
+  matlab: []
+  python: []
+compare: [absolute, relative, clr]
+tolerance: {rtol: 1.0e-9, atol: 1.0e-12}

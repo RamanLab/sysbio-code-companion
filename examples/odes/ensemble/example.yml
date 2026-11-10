@@ -1,0 +1,7 @@
+title: Handling uncertainty with an ensemble of models
+book: "Ch. 5, §5.6.2 (Handling uncertainty)"
+needs:
+  matlab: []
+  python: [scipy]
+compare: [protein_12h, protein_48h, protein_48h_half_translation, mrna_half_life, protein_half_life]
+tolerance: {rtol: 1.0e-5, atol: 1.0e-7}

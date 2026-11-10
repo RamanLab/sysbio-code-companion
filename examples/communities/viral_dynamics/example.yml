@@ -1,0 +1,7 @@
+title: Within-host viral dynamics and the timing of treatment
+book: "Ch. 11, §11.2.2.2 (Immune system dynamics)"
+needs:
+  matlab: []
+  python: [scipy]
+compare: [R0, untreated, day_1, day_2, day_3]
+tolerance: {rtol: 1.0e-5, atol: 1.0e-9}

@@ -6,11 +6,55 @@ Microbes rarely live alone. In the gut, the soil and the ocean, they live in com
 
 ### Network-based approaches
 
-*There is no code for this section; see the book.*
+Microbial association networks are inferred from the co-occurrence of taxa across many samples. There is a serious pitfall, however: sequencing measures *relative* abundances, which must add up to one. If one taxon blooms, all the others must fall, as fractions of the whole, even if their numbers do not change at all. To see how much this matters, we simulate 10 taxa whose absolute abundances vary entirely independently across 200 samples, one of them dominant, and look for associations in three ways: in the absolute abundances, in the relative abundances, and after the centred log-ratio (CLR) transformation used by methods such as SparCC.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs only base MATLAB.*
+
+```{.matlab include="/examples/communities/compositional/compositional.m"}
+```
+
+![](/examples/communities/compositional/out/matlab/fig-compositional.png)
+
+## Python
+
+*Needs NumPy only.*
+
+```{.python include="/examples/communities/compositional/compositional.py"}
+```
+
+![](/examples/communities/compositional/out/python/fig-compositional.png)
+:::
+
+The absolute abundances show essentially no associations, as they should (one "edge", by chance). The relative abundances show 11, and every taxon appears to be negatively associated with the dominant one ($r = -0.42$, on average), although none of them is. The CLR transformation removes most of this artefact (3 edges), but leaves a small negative bias in every correlation, close to $-1/(D-1) \approx -0.11$ for $D = 10$ taxa. Compositionality is one reason why association networks inferred from relative abundances must be interpreted with great care [@friedman2012].
 
 ### Population-based and agent-based approaches
 
-A generalised Lotka–Volterra model of interacting species extends the predator–prey model of §1.5.1.
+The generalised Lotka–Volterra (gLV) model extends the predator–prey model of §1.5.1 to any number of species, $\dot{x}_i = x_i\left(r_i + \sum_j a_{ij}x_j\right)$. Here, $r_i$ is the growth rate of species $i$ on its own, $a_{ii} < 0$ limits its growth, and $a_{ij}$ captures the effect of species $j$ on species $i$: negative for competition, positive for, say, cross-feeding. We simulate a community of three species, find the steady state at which all three coexist, and check its stability. Then, as one must with real data, we turn the problem around: from noisy time courses of three experiments, we estimate $r$ and $A$ by linear regression, since $\mathrm{d}\ln x_i/\mathrm{d}t$ is linear in the parameters [@stein2013].
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs only base MATLAB.*
+
+```{.matlab include="/examples/communities/glv/glv.m"}
+```
+
+![](/examples/communities/glv/out/matlab/fig-glv.png)
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/communities/glv/glv.py"}
+```
+
+![](/examples/communities/glv/out/python/fig-glv.png)
+:::
+
+All three species coexist at a stable steady state (all eigenvalues of the Jacobian are negative). The regression recovers the growth rates to within 6%, and every interaction with the correct sign, but some interactions are noticeably off: species A is estimated to compete more strongly with B ($-0.59$, against $-0.40$), and to benefit more from C ($+0.52$, against $+0.30$). The finite differences used to estimate $\mathrm{d}\ln x/\mathrm{d}t$ amplify the measurement noise, and with only three experiments, some combinations of parameters are poorly determined. Approaches such as MDSINE address these problems with regularisation and Bayesian inference; the fitted model nevertheless reproduces the data well (figure).
 
 ### Constraint-based approaches
 
@@ -64,7 +108,29 @@ That the pair can grow as fast as the wild type is a reminder of what the model 
 
 ### Dynamic models
 
-*There is no code for this section; see the book.*
+The simplest ODE model of an infection within a host is the target-cell-limited model, described in Perelson's reviews: virus $V$ infects target cells $T$, at a rate $\beta TV$; infected cells $I$ produce virus at a rate $p$ and die at a rate $\delta$; and free virus is cleared at a rate $c$. We use the parameters estimated by Baccam et al. for influenza A infection in people [@baccam2006], and ask how much it matters *when* an antiviral is started.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs only base MATLAB.*
+
+```{.matlab include="/examples/communities/viral_dynamics/viral_dynamics.m"}
+```
+
+![](/examples/communities/viral_dynamics/out/matlab/fig-viral-dynamics.png){width=65%}
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/communities/viral_dynamics/viral_dynamics.py"}
+```
+
+![](/examples/communities/viral_dynamics/out/python/fig-viral-dynamics.png){width=65%}
+:::
+
+The basic reproductive number is $R_0 = \beta pT_0/(c\delta) = 10.8$: early on, each infected cell leads to the infection of about 11 more. Untreated, the virus peaks on day 2.3, by which time almost every target cell has been infected. An antiviral that blocks 98% of virus production, started on day 1, stops the infection in its tracks: 99.8% of the target cells are spared. Started on day 2, it spares only 5%, and started on day 3, after the peak, none at all, although it still shortens the shedding a little. Note also that, in this model, the infection ends because target cells run out, and not because of an immune response; models of the immune system (§11.2.2.2) add exactly that.
 
 ### Constraint-based models
 

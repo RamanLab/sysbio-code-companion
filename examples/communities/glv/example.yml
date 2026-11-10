@@ -1,0 +1,7 @@
+title: Generalised Lotka-Volterra dynamics and parameter estimation
+book: "Ch. 11, §11.1.2 (Population-based approaches)"
+needs:
+  matlab: []
+  python: [scipy]
+compare: [steady_state, eigenvalues_real, eigenvalues_imag, r_hat, A_hat]
+tolerance: {rtol: 1.0e-5, atol: 1.0e-7}

@@ -70,7 +70,29 @@ Exercise 7 asks you to simulate this oscillator.
 
 ### Biochemical systems theory
 
-*There is no code for this section; see the book.*
+Where do the kinetic orders of an S-system come from? One answer is that they are elasticities: around a steady state, any rate law $v(X)$ can be approximated by a power law $\gamma X^f$, with $f = \partial \ln v / \partial \ln X$, a first-order Taylor expansion in logarithms. Let us build the S-system for a small pathway with end-product inhibition, $X_1 \rightarrow X_2 \rightarrow$, in which $X_2$ inhibits the supply of $X_1$, and compare it with the original model when the supply increases.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs only base MATLAB.*
+
+```{.matlab include="/examples/odes/s_system/s_system.m"}
+```
+
+![](/examples/odes/s_system/out/matlab/fig-s-system.png)
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/odes/s_system/s_system.py"}
+```
+
+![](/examples/odes/s_system/out/python/fig-s-system.png)
+:::
+
+Note that the kinetic order of the supply with respect to $X_2$ is negative ($g_{12} = -0.85$), as it must be for an inhibitor. For a 10% increase in supply, the S-system and the original model are practically indistinguishable (they differ by 0.1%); for a 50% increase, by 2%; and when the supply triples, by 14%. The power-law approximation is excellent close to the operating point, and degrades gracefully away from it. A great advantage of the S-system form is that its steady states can be found by linear algebra, since the steady-state equations are linear in $\ln X$; this makes S-systems especially convenient for analysis and design [@savageau1976; @voit2000].
 
 ## Solving ODEs
 
@@ -164,7 +186,29 @@ The exact counts differ between MATLAB and Python, because the solvers differ in
 
 ### Handling uncertainty
 
-*There is no code for this section; see the book.*
+Data never pin down a model completely. One practical way to see what the data do and do not determine is to build an *ensemble* of parameter sets, all consistent with the data, and to compare their predictions. We take the gene expression model fitted to mRNA and protein data in §6.2.2. Near the best fit, the uncertainty in the (logarithms of the) parameters is approximately Gaussian, with covariance $(J^TJ)^{-1}$, as in the sloppiness analysis of §6.5.2. We draw 200 parameter sets from this distribution, using `sbp.uniform` so that both languages draw the same sets.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs only base MATLAB.*
+
+```{.matlab include="/examples/odes/ensemble/ensemble.m"}
+```
+
+![](/examples/odes/ensemble/out/matlab/fig-ensemble.png){width=65%}
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/odes/ensemble/ensemble.py"}
+```
+
+![](/examples/odes/ensemble/out/python/fig-ensemble.png){width=65%}
+:::
+
+The members of the ensemble agree closely on the protein level at 12 h, within the range of the data: the middle 90% of their predictions span 13%. Asked to extrapolate to 48 h, well beyond the data, they agree much less (23%), and they are even less certain about the half-lives of the mRNA (31%) and, especially, of the protein (47%). Predictions can thus be more precise than the parameters behind them: a lesson from sloppy models [@gutenkunst2007]. Note, too, that halving translation simply halves the predicted protein level at 48 h, with the same relative uncertainty; a *relative* prediction of this kind is often much more robust than an absolute one. When even the topology of a model is uncertain, the same idea extends to ensembles of different models (§6.4.1).
 
 ## Software tools
 

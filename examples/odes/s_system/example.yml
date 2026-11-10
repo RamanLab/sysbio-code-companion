@@ -1,0 +1,7 @@
+title: An S-system approximation (biochemical systems theory)
+book: "Ch. 5, §5.4.1 (Biochemical systems theory, Eq. 5.21)"
+needs:
+  matlab: []
+  python: [scipy]
+compare: [steady_state, kinetic_orders, supply_up_10, supply_up_50, supply_up_200]
+tolerance: {rtol: 1.0e-8, atol: 1.0e-10}

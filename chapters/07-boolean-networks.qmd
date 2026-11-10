@@ -88,7 +88,29 @@ Asynchronous updating keeps the quiescent steady state, but the seven-state cycl
 
 ### Probabilistic Boolean networks
 
-*There is no code for this section; see the book.*
+We turn the three-gene network of §7.2 into a probabilistic Boolean network. Gene $g_3$ now follows its usual rule, $g_3^* = \neg g_3 \lor g_2$, with probability 0.8, and an alternative rule, $g_3^* = \neg g_1$, with probability 0.2. Following Shmulevich and colleagues, we also let every gene flip at random with a small probability, $p = 0.01$, as if by noise. A PBN is then a Markov chain on the $2^3 = 8$ states, and for so small a network we need not simulate it at all: we can write down its transition matrix, and solve for its stationary distribution, the long-run probability of each state, exactly.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs only base MATLAB.*
+
+```{.matlab include="/examples/boolean/probabilistic/probabilistic.m"}
+```
+
+![](/examples/boolean/probabilistic/out/matlab/fig-probabilistic.png){width=70%}
+
+## Python
+
+*Needs NumPy only.*
+
+```{.python include="/examples/boolean/probabilistic/probabilistic.py"}
+```
+
+![](/examples/boolean/probabilistic/out/python/fig-probabilistic.png){width=70%}
+:::
+
+With noise alone, the network spends about half its time in the steady state 011, and half cycling through 001, 010 and 111: noise lets it hop between the two basins, roughly equally often in each direction. The alternative rule changes this dramatically. From state 111, $g_3^* = \neg g_1$ switches $g_3$ off, the network passes through 000, and lands in the steady state; nothing leads back out of 011 except noise. In the PBN, therefore, the steady state captures 83% of the long-run probability. A rule that is used only one time in five can thus reshape the long-run behaviour of a network completely.
 
 ### Logical interaction hypergraphs
 

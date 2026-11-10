@@ -1,0 +1,7 @@
+title: A probabilistic Boolean network
+book: "Ch. 7, §7.3.1 (Probabilistic Boolean networks)"
+needs:
+  matlab: []
+  python: []
+compare: [states, transition, stationary_noise, stationary_pbn]
+tolerance: {rtol: 1.0e-9, atol: 1.0e-12}
