@@ -6,7 +6,7 @@ Living systems keep working in the face of constant change: concentrations of th
 
 ### Key mechanisms
 
-Integral feedback, one mechanism of robust adaptation, is simulated in §12.3.1.
+Of the mechanisms discussed in the book, two can be seen directly in the examples of this companion. Integral feedback, one mechanism of robust adaptation, is simulated in §12.3.1, and modularity, in the sense of densely connected communities in a network, is the subject of §3.3.1. Redundancy can also be read off the genome-scale gene deletions of §10.1. Of the 1516 genes in iML1515, deleting any one of 1272 leaves growth on glucose practically unchanged (at least 99% of the wild type). Why are these deletions harmless? For 451 of these genes, an isozyme or another gene in the GPR rule takes over, and no reaction is lost at all: this is redundancy, in the strict sense of the word. For the other 821, one or more reactions *are* lost, but the rest of the network finds another way to make biomass, or did not need those reactions on glucose in the first place. This is what Wagner calls *distributed robustness* [@wagner2005], and in this model, at least, it is almost twice as common as simple redundancy.
 
 ### Hierarchies and protocols
 
@@ -14,7 +14,31 @@ Integral feedback, one mechanism of robust adaptation, is simulated in §12.3.1.
 
 ### Organising principles
 
-*There is no code for this section; see the book.*
+#### The bow-tie structure of metabolism {.unnumbered}
+
+Is the bow-tie of Figure 13.1 visible in a real metabolic network? Following Ma and Zeng [@ma2003], we build a directed graph of iML1515, with an edge from every substrate of a reaction to every product (and back again, for reversible reactions), and leave out the currency metabolites, as in §2.5.5. The largest strongly connected component of this graph, in which every metabolite can be converted into every other, is the knot of the bow-tie. The IN set holds the metabolites from which the knot can be reached, and the OUT set, those that can be reached from it.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs only base MATLAB; reads iML1515 from `data/iML1515.mat`.*
+
+```{.matlab include="/examples/robustness/bow_tie/bow_tie.m"}
+```
+
+![](/examples/robustness/bow_tie/out/matlab/fig-bow-tie.png){width=65%}
+
+## Python
+
+*Needs COBRApy (to read the model) and NetworkX.*
+
+```{.python include="/examples/robustness/bow_tie/bow_tie.py"}
+```
+
+![](/examples/robustness/bow_tie/out/python/fig-bow-tie.png){width=65%}
+:::
+
+More than half of the metabolites (989 of 1793) lie in the knot, and these are mostly cytosolic: central metabolites such as pyruvate and succinate, and most of the amino acids, which can all be interconverted. A few amino acids, such as histidine, leucine and phenylalanine, are end products, in the OUT set. The IN set (446) consists largely of nutrients, in the medium and the periplasm, such as glucose and cobalamin, which the cell can take up and break down but not make. The OUT set (171) holds end products, such as biotin, which the cell makes from the core but cannot convert back. This is the bow-tie of the book in miniature: many inputs, funnelled into a densely connected core of common currencies, and fanned out again to many outputs. Note that the exact numbers depend on the currency metabolites we remove; with none removed, the knot swells to three-quarters of all metabolites (1409 of 1877).
 
 ## Genotype spaces and genotype networks
 
@@ -22,11 +46,11 @@ Robustness to mutations seems to work against evolvability. If most mutations le
 
 ### Genotype spaces
 
-*There is no code for this section; see the book.*
+The space of logic circuits of §13.3 is a genotype space small enough to enumerate in full: 14,400 circuits of four NAND gates, each connected to the 20 circuits that differ from it by the rewiring of a single gate input. As for RNA sequences, every genotype has the same number of neighbours, and the space is connected: any circuit can be turned into any other by a series of single rewirings.
 
 ### Genotype–phenotype mapping
 
-*There is no code for this section; see the book.*
+In the circuit space of §13.3, the genotype–phenotype map is computed exactly: each wiring is evaluated, and its phenotype is the logic function it computes. The 14,400 circuits map onto only 15 phenotypes, very unequally: 2458 circuits compute NAND, but only 12 compute NOR. Most of these phenotypes form a single, connected genotype network (as in Figure 13.2c), whereas the 32 circuits that compute XOR are all isolated from one another (as in Figure 13.2f). The consequences for robustness and evolvability are worked out in §13.3.
 
 ## Quantifying robustness and evolvability
 
