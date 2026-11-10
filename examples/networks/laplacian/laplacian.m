@@ -40,7 +40,7 @@ fprintf(['The Fiedler vector puts %d of %d members on the side they ' ...
 % vector: the network falls apart, and a second zero eigenvalue appears
 cut = side(edges(:, 1)) ~= side(edges(:, 2));
 A_cut = A;
-for e = find(cut)'
+for e = find(cut)
     A_cut(edges(e, 1), edges(e, 2)) = 0;
     A_cut(edges(e, 2), edges(e, 1)) = 0;
 end
