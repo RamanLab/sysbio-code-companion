@@ -1,0 +1,309 @@
+sample,carbon_source,study,strain
+p1k_00001,glucose,Control,MG1655
+p1k_00002,glucose,Control,MG1655
+p1k_00003,glucose,Fur,MG1655
+p1k_00004,glucose,Fur,MG1655
+p1k_00005,glucose,Fur,MG1655
+p1k_00006,glucose,Fur,MG1655
+p1k_00007,glucose,Fur,MG1655
+p1k_00008,glucose,Fur,MG1655
+p1k_00009,glucose,Fur,MG1655
+p1k_00010,glucose,Fur,MG1655
+p1k_00011,glucose,Acid,MG1655
+p1k_00012,glucose,Acid,MG1655
+p1k_00014,glucose,Acid,MG1655
+p1k_00015,glucose,Acid,MG1655
+p1k_00016,glucose,Acid,MG1655
+p1k_00017,glucose,Acid,MG1655
+p1k_00018,glucose,Acid,MG1655
+p1k_00019,glucose,Oxidative,MG1655
+p1k_00020,glucose,Oxidative,MG1655
+p1k_00021,glucose,Oxidative,MG1655
+p1k_00022,glucose,Oxidative,MG1655
+p1k_00023,glucose,Oxidative,MG1655
+p1k_00024,glucose,Oxidative,MG1655
+p1k_00025,glucose,Oxidative,MG1655
+p1k_00026,glucose,Oxidative,MG1655
+p1k_00039,glucose,Nac/NtrC,BW25113
+p1k_00040,glucose,Nac/NtrC,BW25113
+p1k_00041,glucose,Misc,MG1655
+p1k_00042,glucose,Misc,MG1655
+p1k_00043,glucose,Misc,BW25113
+p1k_00044,glucose,Misc,BW25113
+p1k_00045,glucose,Misc,BW25113
+p1k_00046,glucose,Misc,BW25113
+p1k_00047,glucose,Misc,BW25113
+p1k_00048,glucose,Misc,BW25113
+p1k_00050,glucose,Omics,MG1655
+p1k_00051,glucose,Omics,MG1655
+p1k_00052,glucose,Omics,MG1655
+p1k_00053,glucose,Omics,MG1655
+p1k_00054,glucose,Omics,MG1655
+p1k_00055,glucose,Omics,MG1655
+p1k_00060,glucose,Omics,BW25113
+p1k_00061,glucose,Omics,BW25113
+p1k_00064,glucose,OmpR,MG1655
+p1k_00065,glucose,OmpR,MG1655
+p1k_00066,glucose,OmpR,BW25113
+p1k_00067,glucose,OmpR,BW25113
+p1k_00068,glucose,MinSpan,MG1655
+p1k_00070,glucose,MinSpan,MG1655
+p1k_00071,glucose,MinSpan,MG1655
+p1k_00072,glucose,MinSpan,MG1655
+p1k_00073,glucose,MinSpan,MG1655
+p1k_00074,glucose,MinSpan,MG1655
+p1k_00075,glucose,MinSpan,MG1655
+p1k_00077,glucose,MinSpan,BW25113
+p1k_00078,glucose,MinSpan,BW25113
+p1k_00079,glucose,MinSpan,BW25113
+p1k_00080,glucose,MinSpan,BW25113
+p1k_00081,glucose,MinSpan,BW25113
+p1k_00090,glucose,Cra/Crp,MG1655
+p1k_00091,glucose,Cra/Crp,MG1655
+p1k_00100,glucose,RpoB Knock-in,MG1655
+p1k_00101,glucose,RpoB Knock-in,MG1655
+p1k_00102,glucose,RpoB Knock-in,MG1655
+p1k_00119,glucose,Crp ARs,MG1655
+p1k_00120,glucose,Crp ARs,MG1655
+p1k_00121,glucose,Crp ARs,MG1655
+p1k_00143,glucose,Substrate-switching Evolution,MG1655
+p1k_00161,glucose,ICA,MG1655
+p1k_00162,glucose,ICA,MG1655
+p1k_00163,glucose,ICA,MG1655
+p1k_00164,glucose,ICA,MG1655
+p1k_00169,glucose,ICA,MG1655
+p1k_00170,glucose,ICA,MG1655
+p1k_00173,glucose,ICA,MG1655
+p1k_00174,glucose,ICA,MG1655
+p1k_00175,glucose,ICA,MG1655
+p1k_00176,glucose,ICA,MG1655
+p1k_00185,glucose,ICA,MG1655
+p1k_00186,glucose,ICA,MG1655
+p1k_00187,glucose,ICA,BW25113
+p1k_00188,glucose,ICA,BW25113
+p1k_00189,glucose,ICA,MG1655
+p1k_00190,glucose,ICA,MG1655
+p1k_00191,glucose,yTF,MG1655
+p1k_00192,glucose,yTF,MG1655
+p1k_00193,glucose,yTF,MG1655
+p1k_00194,glucose,yTF,MG1655
+p1k_00195,glucose,yTF,MG1655
+p1k_00196,glucose,yTF,MG1655
+p1k_00197,glucose,yTF,MG1655
+p1k_00198,glucose,yTF,MG1655
+p1k_00199,glucose,yTF,MG1655
+p1k_00200,glucose,yTF,MG1655
+p1k_00201,glucose,yTF,MG1655
+p1k_00202,glucose,yTF,MG1655
+p1k_00203,glucose,yTF,MG1655
+p1k_00204,glucose,yTF,MG1655
+p1k_00205,glucose,yTF,MG1655
+p1k_00206,glucose,yTF,MG1655
+p1k_00207,glucose,yTF,MG1655
+p1k_00208,glucose,yTF,MG1655
+p1k_00209,glucose,yTF,MG1655
+p1k_00210,glucose,yTF,MG1655
+p1k_00211,glucose,yTF,MG1655
+p1k_00212,glucose,yTF,MG1655
+p1k_00213,glucose,yTF,MG1655
+p1k_00214,glucose,yTF,MG1655
+p1k_00215,glucose,yTF,MG1655
+p1k_00216,glucose,yTF,MG1655
+p1k_00217,glucose,yTF,MG1655
+p1k_00218,glucose,yTF,MG1655
+p1k_00219,glucose,False Positives,BW25113
+p1k_00220,glucose,False Positives,BW25113
+p1k_00255,glucose,Pseudogene Repair,MG1655
+p1k_00256,glucose,Pseudogene Repair,MG1655
+p1k_00257,glucose,Pseudogene Repair,MG1655
+p1k_00258,glucose,Pseudogene Repair,MG1655
+p1k_00271,glucose,Miscellaneous #2,MG1655
+p1k_00272,glucose,Miscellaneous #2,MG1655
+p1k_00273,glucose,Miscellaneous #2,MG1655
+p1k_00274,glucose,Miscellaneous #2,MG1655
+p1k_00275,glucose,Miscellaneous #2,MG1655
+p1k_00276,glucose,Miscellaneous #2,MG1655
+p1k_00277,glucose,Miscellaneous #2,MG1655
+p1k_00278,glucose,Miscellaneous #2,MG1655
+p1k_00281,glucose,Miscellaneous #2,MG1655
+p1k_00282,glucose,Miscellaneous #2,MG1655
+p1k_00293,glucose,Naphthoquinone,MG1655
+p1k_00294,glucose,Naphthoquinone,MG1655
+p1k_00317,glucose,OxyR ALE,MG1655
+p1k_00318,glucose,OxyR ALE,MG1655
+p1k_00319,glucose,OxyR ALE,MG1655
+p1k_00320,glucose,OxyR ALE,MG1655
+p1k_00357,glucose,AntibiotICA,MG1655
+p1k_00358,glucose,AntibiotICA,MG1655
+p1k_00363,glucose,AntibiotICA,MG1655
+p1k_00364,glucose,AntibiotICA,MG1655
+p1k_00369,glucose,AntibiotICA,MG1655
+p1k_00370,glucose,AntibiotICA,MG1655
+p1k_00375,glucose,AntibiotICA,MG1655
+p1k_00376,glucose,AntibiotICA,MG1655
+p1k_00381,glucose,AntibiotICA,MG1655
+p1k_00382,glucose,AntibiotICA,MG1655
+p1k_00449,glucose,Two Component Systems,MG1655
+p1k_00450,glucose,Two Component Systems,MG1655
+p1k_00451,glucose,Two Component Systems,MG1655
+p1k_00452,glucose,Two Component Systems,MG1655
+p1k_00453,glucose,Two Component Systems,MG1655
+p1k_00454,glucose,Two Component Systems,MG1655
+p1k_00477,glucose,Two Component Systems,MG1655
+p1k_00478,glucose,Two Component Systems,MG1655
+p1k_00501,glucose,Two Component Systems,MG1655
+p1k_00502,glucose,Two Component Systems,MG1655
+p1k_00503,glucose,Two Component Systems,MG1655
+p1k_00504,glucose,Two Component Systems,MG1655
+p1k_00791,glucose,adnB,MG1655
+p1k_00792,glucose,adnB,MG1655
+p1k_00793,glucose,adnB,MG1655
+p1k_00794,glucose,adnB,MG1655
+p1k_00795,glucose,yTF 2,MG1655
+p1k_00796,glucose,yTF 2,MG1655
+p1k_00797,glucose,yTF 2,MG1655
+p1k_00798,glucose,yTF 2,MG1655
+p1k_00799,glucose,yTF 2,MG1655
+p1k_00800,glucose,yTF 2,MG1655
+p1k_00801,glucose,yTF 2,MG1655
+p1k_00802,glucose,yTF 2,MG1655
+p1k_00803,glucose,yTF 2,MG1655
+p1k_00804,glucose,yTF 2,MG1655
+p1k_00805,glucose,yTF 2,MG1655
+p1k_00806,glucose,yTF 2,MG1655
+p1k_00807,glucose,yTF 2,MG1655
+p1k_00808,glucose,yTF 2,MG1655
+p1k_00809,glucose,yTF 3,MG1655
+p1k_00810,glucose,yTF 3,MG1655
+p1k_00811,glucose,yTF 3,MG1655
+p1k_00812,glucose,yTF 3,MG1655
+p1k_00813,glucose,yTF 3,MG1655
+p1k_00814,glucose,yTF 3,MG1655
+p1k_00815,glucose,yTF 3,MG1655
+p1k_00816,glucose,yTF 3,MG1655
+p1k_00817,glucose,yTF 3,MG1655
+p1k_00818,glucose,yTF 3,MG1655
+p1k_00819,glucose,yTF 3,MG1655
+p1k_00820,glucose,yTF 3,MG1655
+p1k_00882,glucose,EEP,MG1655
+p1k_00883,glucose,EEP,MG1655
+p1k_00890,glucose,EEP,MG1655
+p1k_00891,glucose,EEP,MG1655
+p1k_00900,glucose,EEP,MG1655
+p1k_00901,glucose,EEP,MG1655
+p1k_00910,glucose,EEP,MG1655
+p1k_00911,glucose,EEP,MG1655
+p1k_00920,glucose,EEP,MG1655
+p1k_00921,glucose,EEP,MG1655
+p1k_00930,glucose,EEP,MG1655
+p1k_00931,glucose,EEP,MG1655
+p1k_00932,glucose,EEP,MG1655
+p1k_00933,glucose,EEP,MG1655
+p1k_00106,glycerol,Crp ARs,MG1655
+p1k_00107,glycerol,Crp ARs,MG1655
+p1k_00108,glycerol,Crp ARs,MG1655
+p1k_00109,glycerol,Crp ARs,MG1655
+p1k_00110,glycerol,Crp ARs,MG1655
+p1k_00111,glycerol,Crp ARs,MG1655
+p1k_00112,glycerol,Crp ARs,MG1655
+p1k_00113,glycerol,Crp ARs,MG1655
+p1k_00114,glycerol,Crp ARs,MG1655
+p1k_00115,glycerol,Crp ARs,MG1655
+p1k_00122,glycerol,Crp ARs,MG1655
+p1k_00123,glycerol,Crp ARs,MG1655
+p1k_00124,glycerol,Crp ARs,MG1655
+p1k_00144,glycerol,Substrate-switching Evolution,MG1655
+p1k_00616,glycerol,pColi,MG1655
+p1k_00617,glycerol,pColi,MG1655
+p1k_00618,glycerol,pColi,MG1655
+p1k_00619,glycerol,pColi,MG1655
+p1k_00620,glycerol,pColi,MG1655
+p1k_00621,glycerol,pColi,MG1655
+p1k_00622,glycerol,pColi,MG1655
+p1k_00623,glycerol,pColi,MG1655
+p1k_00624,glycerol,pColi,MG1655
+p1k_00625,glycerol,pColi,MG1655
+p1k_00626,glycerol,pColi,MG1655
+p1k_00627,glycerol,pColi,MG1655
+p1k_00628,glycerol,pColi,MG1655
+p1k_00629,glycerol,pColi,MG1655
+p1k_00630,glycerol,pColi,MG1655
+p1k_00631,glycerol,pColi,MG1655
+p1k_00632,glycerol,pColi,MG1655
+p1k_00633,glycerol,pColi,MG1655
+p1k_00634,glycerol,pColi,MG1655
+p1k_00635,glycerol,pColi,MG1655
+p1k_00636,glycerol,pColi,MG1655
+p1k_00637,glycerol,pColi,MG1655
+p1k_00638,glycerol,pColi,MG1655
+p1k_00639,glycerol,pColi,MG1655
+p1k_00640,glycerol,pColi,MG1655
+p1k_00641,glycerol,pColi,MG1655
+p1k_00642,glycerol,pColi,MG1655
+p1k_00643,glycerol,pColi,MG1655
+p1k_00644,glycerol,pColi,MG1655
+p1k_00645,glycerol,pColi,MG1655
+p1k_00646,glycerol,pColi,MG1655
+p1k_00647,glycerol,pColi,MG1655
+p1k_00648,glycerol,pColi,MG1655
+p1k_00649,glycerol,pColi,MG1655
+p1k_00650,glycerol,pColi,MG1655
+p1k_00651,glycerol,pColi,MG1655
+p1k_00652,glycerol,pColi,MG1655
+p1k_00653,glycerol,pColi,MG1655
+p1k_00654,glycerol,pColi,MG1655
+p1k_00655,glycerol,pColi,MG1655
+p1k_00656,glycerol,pColi,MG1655
+p1k_00657,glycerol,pColi,MG1655
+p1k_00658,glycerol,pColi,MG1655
+p1k_00659,glycerol,pColi,MG1655
+p1k_00660,glycerol,pColi,MG1655
+p1k_00661,glycerol,pColi,MG1655
+p1k_00662,glycerol,pColi,MG1655
+p1k_00663,glycerol,pColi,MG1655
+p1k_00664,glycerol,pColi,MG1655
+p1k_00665,glycerol,pColi,MG1655
+p1k_00666,glycerol,pColi,MG1655
+p1k_00667,glycerol,pColi,MG1655
+p1k_00668,glycerol,pColi,MG1655
+p1k_00669,glycerol,pColi,MG1655
+p1k_00670,glycerol,pColi,MG1655
+p1k_00671,glycerol,pColi,MG1655
+p1k_00672,glycerol,pColi,MG1655
+p1k_00673,glycerol,pColi,MG1655
+p1k_00674,glycerol,pColi,MG1655
+p1k_00675,glycerol,pColi,MG1655
+p1k_00676,glycerol,pColi,MG1655
+p1k_00677,glycerol,pColi,MG1655
+p1k_00678,glycerol,pColi,MG1655
+p1k_00679,glycerol,pColi,MG1655
+p1k_00680,glycerol,pColi,MG1655
+p1k_00681,glycerol,pColi,MG1655
+p1k_00682,glycerol,pColi,MG1655
+p1k_00683,glycerol,pColi,MG1655
+p1k_00684,glycerol,pColi,MG1655
+p1k_00685,glycerol,pColi,MG1655
+p1k_00686,glycerol,pColi,MG1655
+p1k_00687,glycerol,pColi,MG1655
+p1k_00688,glycerol,pColi,MG1655
+p1k_00689,glycerol,pColi,MG1655
+p1k_00690,glycerol,pColi,MG1655
+p1k_00691,glycerol,pColi,MG1655
+p1k_00692,glycerol,pColi,MG1655
+p1k_00693,glycerol,pColi,MG1655
+p1k_00694,glycerol,pColi,MG1655
+p1k_00695,glycerol,pColi,MG1655
+p1k_00696,glycerol,pColi,MG1655
+p1k_00697,glycerol,pColi,MG1655
+p1k_00698,glycerol,pColi,MG1655
+p1k_00699,glycerol,pColi,MG1655
+p1k_00700,glycerol,pColi,MG1655
+p1k_00701,glycerol,pColi,MG1655
+p1k_00702,glycerol,pColi,MG1655
+p1k_00703,glycerol,pColi,MG1655
+p1k_00704,glycerol,pColi,MG1655
+p1k_00705,glycerol,pColi,MG1655
+p1k_00706,glycerol,pColi,MG1655
+p1k_00707,glycerol,pColi,MG1655
+p1k_00708,glycerol,pColi,MG1655
+p1k_00709,glycerol,pColi,MG1655

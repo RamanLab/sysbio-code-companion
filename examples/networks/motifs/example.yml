@@ -1,0 +1,9 @@
+title: Network motifs in the E. coli transcriptional network
+book: "Ch. 3, §3.4 (Network motifs) and §3.4.1 (Randomising networks)"
+needs:
+  matlab: []
+  python: [scipy]
+compare: [nodes, edges, autoregulated, ffl, fbl, random, z, coherent, incoherent]
+tolerance: {rtol: 1.0e-10, atol: 1.0e-10}
+expected:
+  ffl: 1996

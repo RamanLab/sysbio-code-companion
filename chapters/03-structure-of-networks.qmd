@@ -183,9 +183,33 @@ The first split already recovers the two factions of the club, misplacing only m
 
 ## Network motifs
 
+The transcriptional regulatory network of *E. coli* is the network in which motifs were first described. We use the version distributed with the PRECISE-1K compendium [@lamoureux2023], which collects the transcription factor–gene interactions of RegulonDB: 201 transcription factors and 1773 nodes in all, joined by 4170 edges. A regulator encoded by several genes, such as the complex FlhDC, is a single node (see `tools/make_trn.py`). We count two three-node patterns: feed-forward loops (FFLs), in which $X$ regulates $Y$, and both regulate $Z$, and feedback loops, $X \rightarrow Y \rightarrow Z \rightarrow X$. Both are easy to count from the adjacency matrix: the number of FFLs is $\sum_{ij} a_{ij}(\mathbf{A}^2)_{ij}$, and the number of feedback loops is $\text{tr}(\mathbf{A}^3)/3$. To decide whether a pattern is a motif, we compare its count with 20 randomised networks, in which every node keeps its in- and out-degree (§3.4.1).
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs only base MATLAB.*
+
+```{.matlab include="/examples/networks/motifs/motifs.m"}
+```
+
+![](/examples/networks/motifs/out/matlab/fig-motifs.png)
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/networks/motifs/motifs.py"}
+```
+
+![](/examples/networks/motifs/out/python/fig-motifs.png)
+:::
+
+The network has 1996 feed-forward loops, against $761 \pm 100$ in the randomised networks: a $Z$-score of 12, and a clear motif, as Shen-Orr et al. first showed. Of the FFLs whose three edges all have known signs, 907 are coherent (the direct path from $X$ to $Z$ has the same sign as the indirect one, through $Y$) and 603 incoherent; recall from the book that the two types have quite different dynamics, a sign-sensitive delay and a pulse generator. Feedback loops, on the other hand, are rare: only 12, although this is still more than in the randomised networks. In *E. coli*, feedback is mostly found elsewhere: 127 regulators regulate their own genes, most of them negatively.
+
 ### Randomising networks
 
-Degree-preserving randomisation by double edge swaps is used in the assortativity example of §3.1.3, with random numbers that are identical in MATLAB and Python. The same randomised networks can serve as the null model for motif counts: count each subgraph in the real network and in many randomised versions, and compute a $Z$-score.
+Each step of the randomisation takes two edges, $a \rightarrow b$ and $c \rightarrow d$, and swaps their targets, to give $a \rightarrow d$ and $c \rightarrow b$, unless this creates a self-loop or an edge that already exists. Every node thus keeps both its in-degree and its out-degree. Ten attempted swaps per edge are usually enough to randomise a network thoroughly. The undirected version, which swaps the ends of two edges in the same way, is used for the assortativity example of §3.1.3. In both, the random numbers come from `sbp.uniform`, so that MATLAB and Python produce exactly the same randomised networks.
 
 ## Perturbations to networks
 

@@ -54,7 +54,29 @@ The example above uses the essential genes that NetGenes predicts from network f
 
 ## Differential network analysis
 
-*There is no code for this section; see the book.*
+Co-expression networks need many samples per condition, and PRECISE-1K [@lamoureux2023] provides them: 200 RNA-seq profiles of wild-type *E. coli* grown on glucose, and 108 grown on glycerol, all in minimal medium at 37 °C. We take 44 genes of central carbon and glycerol metabolism, compute the correlation of every pair of genes in each condition, and test each pair for a difference, using Fisher's $z$-transformation. With 946 pairs, we use a Bonferroni-corrected threshold. The genes with the most differentially co-expressed partners are the most "rewired" between the two conditions.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs only base MATLAB.*
+
+```{.matlab include="/examples/network-applications/differential_network/differential_network.m"}
+```
+
+![](/examples/network-applications/differential_network/out/matlab/fig-differential-network.png)
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/network-applications/differential_network/differential_network.py"}
+```
+
+![](/examples/network-applications/differential_network/out/python/fig-differential-network.png)
+:::
+
+The largest changes make good biological sense. On glycerol, the genes of the GlpR regulon are induced, and they rise and fall together: the correlation between *glpT* and *glpQ*, which share an operon, goes from 0.33 on glucose (where the regulon is repressed and its expression mostly noise) to 0.97. The glyoxylate shunt genes, *aceA*, *aceB* and *aceK*, are among the most rewired. Note, however, that 312 of the 946 pairs differ significantly, a third of all pairs. Part of this reflects biology, but part reflects the samples themselves: the glycerol samples come from only 3 studies, and the glucose samples from 26, with different strains, perturbations and protocols. Differences in correlation can arise from such differences in the experimental design, as much as from the condition being compared, and this is one of the main pitfalls of differential network analysis.
 
 ## Disease spreading on networks
 

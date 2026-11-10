@@ -1,0 +1,7 @@
+title: Differential co-expression between two conditions
+book: "Ch. 4, §4.3 (Differential network analysis)"
+needs:
+  matlab: []
+  python: [scipy]
+compare: [genes, n, threshold, r_glucose, r_glycerol, differential, rewired, most_rewired]
+tolerance: {rtol: 1.0e-8, atol: 1.0e-10}
