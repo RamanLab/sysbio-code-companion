@@ -1,6 +1,6 @@
 # Extending constraint-based approaches {#sec-extending-cbm}
 
-Flux balance analysis, as in @sec-cbm, makes two strong assumptions: that the cell has had time to optimise its metabolism for growth, and that the environment does not change. This chapter relaxes each of them. MoMA and ROOM predict how a mutant behaves if it changes as little as possible from the wild type after losing a gene, and dynamic FBA follows a culture as it uses up its nutrients and changes its own environment.
+Flux balance analysis, as in @sec-cbm, makes two strong assumptions: that the cell has had time to optimise its metabolism for growth, and that the environment does not change. In this chapter, we relax each of them. MoMA and ROOM predict how a mutant behaves if it changes as little as possible from the wild type after losing a gene, and dynamic FBA follows a culture as it uses up its nutrients and changes its own environment. We then design strains with OptKnock, bring gene expression data into a model with E-Flux, and enumerate the elementary flux modes of a small network.
 
 The examples write the optimisation problems out explicitly, with the stoichiometric matrix $\mathbf{S}$ and the bounds of the *E. coli* core model, and solve them with general-purpose solvers: `linprog` and `quadprog` in MATLAB (Optimization Toolbox), and SciPy's `linprog` and the interior-point solver Clarabel in Python, with `intlinprog` and SciPy's `milp` for ROOM. The COBRA Toolbox and COBRApy provide the same methods ready-made; writing them out once shows exactly what they compute.
 

@@ -1,12 +1,12 @@
 # Perturbations to metabolic networks {#sec-perturbations}
 
-One of the most common uses of a metabolic model is to predict what happens when something is taken away: a gene knocked out, an enzyme inhibited by a drug. Which reactions can the cell not do without? Which pairs of reactions back each other up, so that either can be lost but not both? Constraint-based models answer such questions quickly, at the scale of whole genomes, and these predictions are used to find drug targets in pathogens and to design strains for metabolic engineering. This chapter builds on @sec-cbm and uses the same *E. coli* core model.
+One of the most common uses of a metabolic model is to predict what happens when something is taken away: a gene knocked out, an enzyme inhibited by a drug. Which reactions can the cell not do without? Which pairs of reactions back each other up, so that either can be lost but not both? Constraint-based models answer such questions quickly, at the scale of whole genomes, and these predictions are used to find drug targets in pathogens and to design strains for metabolic engineering. This chapter builds on @sec-cbm, and mostly uses the same *E. coli* core model; for single gene deletions, we also move up to the genome-scale model iML1515, to see how the picture changes when the whole of metabolism is included.
 
 ## Knock-outs
 
 To delete a reaction from a constraint-based model, we fix its flux to zero by setting both its lower and upper bounds to zero (book, Eq. 10.2), and solve the FBA problem again. If the maximum growth rate falls below some small fraction of the wild type, 1% here, the deletion is called **lethal**, and the reaction **essential**.
 
-Experiments delete genes, not reactions, and the two do not map one to one. Each reaction in the model carries a **gene–protein–reaction (GPR) rule**, a Boolean expression of the genes needed for it. An enzyme made of several subunits needs all of them (AND); isozymes can stand in for one another (OR). A gene deletion removes exactly those reactions whose rule becomes false. COBRApy and the COBRA Toolbox evaluate these rules for us.
+Experiments delete genes, whereas our models are written in terms of reactions, and the two do not map one to one. Each reaction in the model carries a **gene–protein–reaction (GPR) rule**, a Boolean expression of the genes needed for it. An enzyme made of several subunits needs all of them (AND); isozymes can stand in for one another (OR). A gene deletion removes exactly those reactions whose rule becomes false. COBRApy and the COBRA Toolbox evaluate these rules for us.
 
 We delete each of the 74 internal reactions of the model in turn (leaving out exchange reactions and the biomass reaction), and then each of its 137 genes, in the standard aerobic glucose medium.
 

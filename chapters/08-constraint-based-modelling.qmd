@@ -130,7 +130,7 @@ Two things to know when reading the code:
 
 With glucose uptake capped at 10 mmol/gDW/h, the predicted growth rate is 0.874 h^−1^ with oxygen and 0.212 h^−1^ without it: aerobic respiration extracts far more ATP from each glucose than fermentation does. The growth curves show three more things.
 
-* **At zero glucose the problem is infeasible**, not merely zero growth. With no carbon source, nothing can meet the ATP maintenance demand, so no flux vector satisfies all the constraints. The curves start only once glucose uptake covers maintenance, which takes more glucose without oxygen than with it.
+* **At zero glucose the problem is infeasible.** With no carbon source, nothing can meet the ATP maintenance demand, so no flux vector satisfies all the constraints, and FBA cannot return any growth rate, even zero. The curves start only once glucose uptake covers maintenance, which takes more glucose without oxygen than with it.
 * **When glucose is the only limit, growth rises in a straight line.** This is a general property of linear programs: scaling the one binding constraint scales the solution.
 * **When oxygen is also limited** (the middle curve), the line bends at the point where oxygen runs out, and beyond it each extra unit of glucose buys less growth. A different constraint has become binding.
 

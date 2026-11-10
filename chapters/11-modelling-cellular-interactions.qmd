@@ -1,6 +1,6 @@
 # Modelling cellular interactions {#sec-communities}
 
-Microbes rarely live alone. In the gut, the soil and the ocean, they live in communities, where one organism's waste is another's food, and many species cannot be grown in the laboratory at all without their partners. Constraint-based models extend naturally to such communities: each organism keeps its own metabolic network, and the networks are coupled through the metabolites they take up from and release into a shared environment. This chapter builds a community model of two *E. coli* mutants that can grow only together.
+Microbes rarely live alone. In the gut, the soil and the ocean, they live in communities, where one organism's waste is another's food, and many species cannot be grown in the laboratory at all without their partners. Constraint-based models extend naturally to such communities: each organism keeps its own metabolic network, and the networks are coupled through the metabolites they take up from and release into a shared environment. In this chapter, we build a community model of two *E. coli* mutants that can grow only together. We also look at two other ways of modelling communities: association networks, inferred from the co-occurrence of microbes, and the generalised Lotka–Volterra model of interacting populations. Finally, we turn to infections, with a classic model of viral dynamics within a host.
 
 ## Microbial communities
 

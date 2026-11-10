@@ -1,6 +1,6 @@
 # Parameter estimation {#sec-pestim}
 
-Every dynamic model carries parameters, such as rate constants, Michaelis constants and inhibition constants, and only a few of them can be looked up. The rest must be estimated from experimental data: we look for the parameter values that make the model's predictions agree best with the measurements. This chapter sets up that problem for a small enzyme-kinetic model, solves it in three different ways, and shows what the data can and cannot tell us about the parameters.
+Every dynamic model carries parameters, such as rate constants, Michaelis constants and inhibition constants, and only a few of them can be looked up. The rest must be estimated from experimental data: we look for the parameter values that make the model's predictions agree best with the measurements. In this chapter, we set up that problem for enzyme kinetics and for a small model of gene expression, and solve it in several ways. We also ask the questions that ought to follow every fit. Which of several models do the data actually support? How sensitive are the predictions to each parameter? And which parameters, or combinations of parameters, do the data determine at all?
 
 ## Data-driven mechanistic modelling: an overview
 
@@ -299,7 +299,7 @@ Near the optimum, the cost function is approximately a quadratic form, with Hess
 ![](/examples/parameter-estimation/sloppiness/out/python/fig-sloppiness.png){width=55%}
 :::
 
-With both mRNA and protein, the eigenvalues span two and a half orders of magnitude ($\lambda_{min}/\lambda_{max} = 0.0034$). The model is not quite sloppy by the criterion of the book, but the sloppiest direction (all four parameters changing together, synthesis and degradation of protein against those of mRNA) is far less constrained than the stiffest. With protein data alone, one eigenvalue is zero, up to rounding error. Its eigenvector, $\log k_m$ up and $\log k_p$ down by the same amount, is a direction in which the cost does not change at all: the protein data fix only the product $k_mk_p$, exactly as we found by fitting in §6.2.2. Here, sloppiness has become non-identifiability, and no amount of protein data can cure it; only a different measurement, of mRNA, can.
+With both mRNA and protein, the eigenvalues span two and a half orders of magnitude ($\lambda_{min}/\lambda_{max} = 0.0034$). By the criterion of the book, the model is just short of sloppy; even so, the sloppiest direction (all four parameters changing together, synthesis and degradation of protein against those of mRNA) is far less constrained than the stiffest. With protein data alone, one eigenvalue is zero, up to rounding error. Its eigenvector, $\log k_m$ up and $\log k_p$ down by the same amount, is a direction in which the cost does not change at all: the protein data fix only the product $k_mk_p$, exactly as we found by fitting in §6.2.2. Here, sloppiness has become non-identifiability, and no amount of protein data can cure it; only a different measurement, of mRNA, can.
 
 ### Choosing a search algorithm
 

@@ -6,7 +6,7 @@ $$
 \frac{dx_i}{dt} = f_i(x_1, x_2, \ldots, x_n;\ \Theta), \qquad i = 1, 2, \ldots, n,
 $$
 
-where $x_i$ is the concentration of species $i$, $f_i$ is its rate law, and $\Theta$ is the set of parameters, such as rate constants. This chapter covers the two halves of working with such models: writing the equations down, and solving them numerically, including what can go wrong.
+where $x_i$ is the concentration of species $i$, $f_i$ is its rate law, and $\Theta$ is the set of parameters, such as rate constants. In this chapter, we cover the two halves of working with such models: writing the equations down, and solving them numerically, including what can go wrong. Along the way, we shall see how power laws can stand in for rate laws (biochemical systems theory), and how an ensemble of models helps us judge which predictions to trust. At the end of the chapter, in §5.A, we go beyond the book, to stochastic simulation.
 
 ## Constructing dynamic models
 
@@ -180,7 +180,7 @@ The quasi-steady-state approximation works because binding is fast and catalysis
 
 The left panel shows the two time scales: the complex $ES$ forms within a few milliseconds, while the product takes tens of seconds to accumulate. After the first few milliseconds, nothing fast is happening, yet a non-stiff solver such as `ode45` or `RK45` must keep its steps small enough to remain stable with respect to the fast process, just as forward Euler had to keep $\Delta t < 2/b$. Its cost therefore grows in proportion to the binding rate constants (right panel), reaching close to a million function evaluations. A stiff solver such as `ode15s` or `BDF` is implicit, like backward Euler, and can take large steps once the fast transient is over; its cost hardly changes. Both reach the same answer.
 
-Such ODEs are called **stiff**: stability, rather than accuracy, limits the step size. Stiffness is common in biology, where binding, phosphorylation and transport often run much faster than gene expression or growth. A practical rule: start with `ode45` or `RK45`, and if it is unexpectedly slow, switch to `ode15s` or `BDF` (or `LSODA`).
+Such ODEs are called **stiff**: the step size is limited by the stability of the method, long before accuracy becomes a concern. Stiffness is common in biology, where binding, phosphorylation and transport often run much faster than gene expression or growth. A practical rule: start with `ode45` or `RK45`, and if it is unexpectedly slow, switch to `ode15s` or `BDF` (or `LSODA`).
 
 The exact counts differ between MATLAB and Python, because the solvers differ in their internals, but the pattern is the same; our automated checks compare only the solutions.
 

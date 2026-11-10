@@ -1,6 +1,6 @@
 # Structure of networks {#sec-networks}
 
-This chapter computes the standard network parameters for a small example, and then generates the three classic network models, random, small-world and scale-free, to see how they differ.
+How do we describe the structure of a network, and what does that structure tell us? In this chapter, we compute the standard network parameters for a small example, and then generate the three classic network models, random, small-world and scale-free, to see how they differ. We then look at real networks: the *E. coli* STRING network, to measure assortativity and to see how it falls apart when its nodes are removed, a classic social network, to find communities, and the transcriptional regulatory network of *E. coli*, to find motifs. Throughout, we shall compare real networks with randomised versions of themselves, which is often the only way to tell whether a property is remarkable.
 
 ## Network parameters
 

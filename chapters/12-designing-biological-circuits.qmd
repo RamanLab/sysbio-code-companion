@@ -1,6 +1,6 @@
 # Designing biological circuits {#sec-circuits}
 
-Synthetic biology designs gene circuits with a function in mind, much as an engineer designs an electronic circuit, and modelling has been part of it from the start. This chapter simulates the first two model-driven circuits, a clock and a switch, both built in *E. coli* in 2000, and then looks at circuits that adapt.
+Synthetic biology designs gene circuits with a function in mind, much as an engineer designs an electronic circuit, and modelling has been part of it from the start. In this chapter, we simulate the first two model-driven circuits, a clock and a switch, both built in *E. coli* in 2000, and then look at circuits that adapt. At the end of the chapter, in §12.A and §12.B, we go a little beyond the book, to the stability of steady states and to hysteresis, the ideas on which the design of such circuits rests.
 
 ## What is synthetic biology?
 
