@@ -1,0 +1,9 @@
+title: Modularity and Newman's leading-eigenvector method
+book: "Ch. 3, §3.3.1 (Modularity maximisation)"
+needs:
+  matlab: []
+  python: [networkx]
+compare: [halves, q_halves, communities, q]
+tolerance: {rtol: 1.0e-10, atol: 1.0e-12}
+expected:
+  q: 0.39340894148586

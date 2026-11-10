@@ -21,7 +21,7 @@
    expected:                          # values from the book, if any
      growth: 50
    ```
-   Only list under `compare:` quantities that are *unique*. For example, an FBA flux vector is usually one of many optima, so different solvers may return different ones; compare the objective value instead. For random examples (random networks, stochastic simulation), compare summary statistics with a suitable tolerance, or read the same input from `data/`.
+   Only list under `compare:` quantities that are *unique*. For example, an FBA flux vector is usually one of many optima, so different solvers may return different ones; compare the objective value instead. For random examples (random networks, stochastic simulation), compare summary statistics with a suitable tolerance, or read the same input from `data/`. Where the two languages must make exactly the same random choices (which edges to hide or swap, say), draw them from `sbp.uniform(seed, n)`, which returns identical numbers in MATLAB and Python; turn them into whole numbers with `floor(u * n)` in both, never with `round`, which treats halves differently in the two languages.
 
 4. **Run and check**:
    ```bash

@@ -64,3 +64,20 @@ def show():
     """Show figures when run interactively; do nothing in CI."""
     if not os.environ.get("CI"):
         plt.show()
+
+def uniform(seed, n):
+    """Random numbers that are identical in MATLAB and Python.
+
+    Returns n numbers in (0, 1), from the "minimal standard" generator of
+    Park and Miller (x <- 48271 x mod 2^31 - 1), started at the integer
+    seed (1 to 2^31 - 2). The same numbers come from sbp.uniform in MATLAB.
+    Use it where the two languages must make the same random choices;
+    otherwise, use numpy.random.
+    """
+    m = 2147483647
+    x = seed % m
+    u = np.empty(n)
+    for k in range(n):
+        x = (48271 * x) % m
+        u[k] = x / m
+    return u

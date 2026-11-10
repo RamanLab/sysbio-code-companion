@@ -1,0 +1,7 @@
+title: Link prediction by node similarity
+book: "Ch. 4, §4.7 (Link prediction)"
+needs:
+  matlab: []
+  python: [scipy]
+compare: [hidden, auc, no_common_neighbour]
+tolerance: {rtol: 1.0e-9, atol: 1.0e-12}

@@ -1,0 +1,11 @@
+title: The Laplacian matrix and the Fiedler vector
+book: "Ch. 2, §2.4.3 (The Laplacian matrix)"
+needs:
+  matlab: []
+  python: [networkx]
+# The smallest eigenvalue is zero up to rounding error, hence atol.
+compare: [eigenvalues, fiedler, agree, misplaced, cut_edges, zero_eigenvalues_after_cut]
+tolerance: {rtol: 1.0e-8, atol: 1.0e-10}
+expected:
+  agree: 32
+  misplaced: [3, 9]

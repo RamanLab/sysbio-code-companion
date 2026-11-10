@@ -1,0 +1,9 @@
+title: The substrate graph of a metabolic network
+book: "Ch. 2, §2.5.5 (Metabolic networks)"
+needs:
+  matlab: []
+  python: [cobra, networkx]
+# Shortest paths can tie, so the printed paths may differ between the
+# languages; their lengths are compared.
+compare: [with_currency, without_currency, top_degree, top_degree_values, glc_to_succ]
+tolerance: {rtol: 1.0e-10, atol: 1.0e-12}

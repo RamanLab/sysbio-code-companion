@@ -62,7 +62,29 @@ In MATLAB, networks are `graph` objects (or `digraph` for directed networks), pa
 
 ### The Laplacian matrix
 
-*There is no code for this section; see the book.*
+The Laplacian, $\mathbf{L} = \mathbf{D} - \mathbf{A}$, where $\mathbf{D}$ is the diagonal matrix of degrees, has some remarkable properties. All its eigenvalues are non-negative, and the number of zero eigenvalues equals the number of connected components of the graph. The second-smallest eigenvalue, the *algebraic connectivity*, measures how well connected the graph is, and the signs of the corresponding eigenvector, the *Fiedler vector*, split the graph into two well-separated parts. Let us see this on a classic social network, Zachary's karate club [@zachary1977]: 34 members, and 78 friendships observed outside the club, recorded just before a dispute between the instructor (member 1) and the administrator (member 34) split the club in two.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs only base MATLAB.*
+
+```{.matlab include="/examples/networks/laplacian/laplacian.m"}
+```
+
+![](/examples/networks/laplacian/out/matlab/fig-laplacian.png)
+
+## Python
+
+*Needs NetworkX (for drawing).*
+
+```{.python include="/examples/networks/laplacian/laplacian.py"}
+```
+
+![](/examples/networks/laplacian/out/python/fig-laplacian.png)
+:::
+
+The Fiedler vector, computed from the friendships alone, places 32 of the 34 members on the side they actually joined. The two it misplaces, members 3 and 9, have friends on both sides, and their entries in the Fiedler vector are close to zero (see the bar chart). Cutting the ten friendships between the two halves disconnects the network, and a second zero eigenvalue duly appears. We shall return to this network, and to finding such groups, in §3.3.
 
 ## Graph representations of biological networks
 
@@ -84,7 +106,29 @@ In MATLAB, networks are `graph` objects (or `digraph` for directed networks), pa
 
 ### Metabolic networks
 
-*There is no code for this section; see the book.*
+Metabolic networks can be represented as graphs in several ways, and the choice matters a great deal. Here, we build the *substrate graph* of the *E. coli* core model directly from its stoichiometric matrix: two metabolites are joined if one is a substrate and the other a product of the same reaction. Exchange reactions and the biomass reaction are left out.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs only base MATLAB; reads the model from `data/e_coli_core.mat`.*
+
+```{.matlab include="/examples/networks/metabolic_graphs/metabolic_graphs.m"}
+```
+
+![](/examples/networks/metabolic_graphs/out/matlab/fig-metabolic-graphs.png)
+
+## Python
+
+*Needs COBRApy (to read the model) and NetworkX.*
+
+```{.python include="/examples/networks/metabolic_graphs/metabolic_graphs.py"}
+```
+
+![](/examples/networks/metabolic_graphs/out/python/fig-metabolic-graphs.png)
+:::
+
+The most connected "metabolite" is the cytosolic proton, linked to 40 others, followed by water, protons outside the cell, and phosphate; ATP, ADP, NAD(H) and CO~2~ are not far behind. Such *currency metabolites* take part in so many reactions that they connect almost everything to everything else. With them, the mean shortest path between two metabolites is just 2.4, and glucose 6-phosphate is two steps away from succinate, through a proton! Such a path makes no biochemical sense. Removing 21 currency metabolites makes the paths meaningful: glucose 6-phosphate now reaches succinate through PEP, oxaloacetate, malate and fumarate, and the mean path length almost doubles, to 4.6. Note that the list of currency metabolites is a choice, and other reasonable choices give somewhat different numbers; this is one of the pitfalls discussed in §2.6.1.
 
 ## Common challenges & troubleshooting
 

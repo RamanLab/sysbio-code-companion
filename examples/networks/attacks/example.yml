@@ -1,0 +1,7 @@
+title: Random failures and targeted attacks
+book: "Ch. 3, §3.5.1 (Quantifying effects of perturbation) and §3.5.2 (Network structure and attack strategies)"
+needs:
+  matlab: []
+  python: [networkx]
+compare: [fractions, string, random_graph]
+tolerance: {rtol: 1.0e-12, atol: 1.0e-12}

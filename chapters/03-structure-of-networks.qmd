@@ -45,7 +45,29 @@ The different measures pick out different nodes. D has the largest degree, but E
 
 ### Mixing patterns: assortativity
 
-*There is no code for this section; see the book.*
+Assortativity is the correlation coefficient between the degrees of the nodes at the two ends of each edge. A single number, however, is hard to interpret on its own: does it reflect how the network is wired, or merely the degrees of its nodes? A useful habit is to compare every such measure with randomised networks that preserve the degree of every node (§3.4.1). Each step of the randomisation takes two edges, $a$–$b$ and $c$–$d$, and rewires them as $a$–$d$ and $c$–$b$, unless this creates a self-loop or an edge that already exists. Random choices would normally differ between MATLAB and Python, so here they come from a small random number generator, `sbp.uniform`, written out in both languages, which returns exactly the same numbers in each.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs only base MATLAB.*
+
+```{.matlab include="/examples/networks/assortativity/assortativity.m"}
+```
+
+![](/examples/networks/assortativity/out/matlab/fig-assortativity.png)
+
+## Python
+
+*Needs SciPy.*
+
+```{.python include="/examples/networks/assortativity/assortativity.py"}
+```
+
+![](/examples/networks/assortativity/out/python/fig-assortativity.png)
+:::
+
+The karate club is disassortative ($r = -0.48$): its two leaders, the hubs, are friends with many members who have few other friends. Note, though, that the randomised networks are also disassortative ($r \approx -0.30$): in a small network with a few large hubs, there are simply not enough hubs to link to each other. Only part of the effect, therefore, reflects how the club is wired. The *E. coli* STRING network is strongly *assortative* ($r = +0.64$), whereas its randomised versions are not ($r \approx -0.02$). This is perhaps surprising, since protein interaction networks are often described as disassortative. But STRING records functional associations, and the members of a protein complex are all associated with each other: complexes appear as dense clusters of proteins with similar degrees, which also explains the high clustering coefficient (0.41, against 0.02 after randomisation).
 
 ## Canonical network models
 
@@ -119,7 +141,29 @@ Both networks have 2000 nodes and a mean degree of about four. In the random net
 
 ### Modularity maximisation
 
-*There is no code for this section; see the book.*
+We find communities in the karate club (§2.4.3) by maximising modularity, using the spectral method of Newman [@newman2006]. The leading eigenvector of the modularity matrix $\mathbf{B} = \mathbf{A} - \mathbf{k}\mathbf{k}^T/2m$ splits the network in two, by the signs of its entries; each part is then split again, in the same way, until no further split increases $Q$. Unlike many community detection algorithms, the method involves no random choices, and so gives the same answer every time.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs only base MATLAB.*
+
+```{.matlab include="/examples/networks/modularity/modularity.m"}
+```
+
+![](/examples/networks/modularity/out/matlab/fig-modularity.png){width=70%}
+
+## Python
+
+*Needs NetworkX (to check $Q$, and for drawing).*
+
+```{.python include="/examples/networks/modularity/modularity.py"}
+```
+
+![](/examples/networks/modularity/out/python/fig-modularity.png){width=70%}
+:::
+
+The first split already recovers the two factions of the club, misplacing only member 9 ($Q = 0.372$). Splitting further yields four communities, with $Q = 0.393$: each faction divides into an inner circle and a looser periphery. Newman reports a slightly higher modularity, 0.419, after an additional "fine-tuning" step that moves individual nodes between communities; we leave that as an exercise. Note also that the leading eigenvector of $\mathbf{B}$ and the Fiedler vector of $\mathbf{L}$ (§2.4.3) disagree about member 3: both methods are approximations to an intractable problem.
 
 ### Similarity-based clustering
 
@@ -141,17 +185,39 @@ Both networks have 2000 nodes and a mean degree of about four. In the random net
 
 ### Randomising networks
 
-*There is no code for this section; see the book.*
+Degree-preserving randomisation by double edge swaps is used in the assortativity example of §3.1.3, with random numbers that are identical in MATLAB and Python. The same randomised networks can serve as the null model for motif counts: count each subgraph in the real network and in many randomised versions, and compute a $Z$-score.
 
 ## Perturbations to networks
 
 ### Quantifying effects of perturbation
 
-*There is no code for this section; see the book.*
+The size of the largest connected component is perhaps the simplest measure of the integrity of a network, and the one we follow in the example below (§3.5.2).
 
 ### Network structure and attack strategies
 
-*There is no code for this section; see the book.*
+We remove an increasing fraction of the proteins of the *E. coli* STRING network, either at random (failures), or in decreasing order of their degree (an attack on the hubs), and compare it with an Erdős–Rényi graph with the same numbers of nodes and edges. Once again, `sbp.uniform` makes the random choices identical in both languages.
+
+::: {.panel-tabset group="language"}
+## MATLAB
+
+*Needs only base MATLAB.*
+
+```{.matlab include="/examples/networks/attacks/attacks.m"}
+```
+
+![](/examples/networks/attacks/out/matlab/fig-attacks.png){width=65%}
+
+## Python
+
+*Needs NetworkX.*
+
+```{.python include="/examples/networks/attacks/attacks.py"}
+```
+
+![](/examples/networks/attacks/out/python/fig-attacks.png){width=65%}
+:::
+
+Both networks hold together remarkably well under random failures: the largest component simply shrinks with the number of nodes removed. Under attack, the STRING network survives the loss of a surprising number of hubs, because it is dense (each protein has 16 partners on average), but it collapses once about 60% of its proteins are gone; the random graph lasts until about 80%. The difference is the heterogeneity of the degrees: in the STRING network, the hubs hold together much more of the network than they do in a random graph. In sparser networks, such as the Internet and the World Wide Web studied by Albert, Jeong and Barabási, the collapse under attack comes much earlier.
 
 ## Troubleshooting
 
