@@ -58,7 +58,7 @@ blue = okabe_ito(1, :); red = okabe_ito(4, :);
 colours = repmat(red, n, 1);
 colours(side == "Mr. Hi", :) = repmat(blue, sum(side == "Mr. Hi"), 1);
 h = plot(graph(A), 'Layout', 'force', 'NodeColor', colours, ...
-    'MarkerSize', 7, 'EdgeAlpha', 0.3);
+    'MarkerSize', 7, 'EdgeColor', 'k', 'EdgeAlpha', 0.3);
 hold on
 plot(h.XData(misplaced), h.YData(misplaced), 'ko', 'MarkerSize', 11, ...
     'LineWidth', 1.5);

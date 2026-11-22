@@ -79,7 +79,7 @@ ax1.bar(range(15), [k for _, k in top],
         color=["#D55E00" if m in currency else "#0072B2" for m, _ in top])
 ax1.set_xticks(range(15), [m for m, _ in top], rotation=60, fontsize=8)
 ax1.set_ylabel("Degree")
-ax1.set_title("Most connected metabolites (red: currency)")
+ax1.set_title("Most connected metabolites (vermillion: currency)")
 for key, colour, label in (("with_currency", "#D55E00", "with currency"),
                            ("without_currency", "#0072B2", "without")):
     counts = results[key]["path_counts"]

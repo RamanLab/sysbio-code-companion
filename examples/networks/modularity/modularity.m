@@ -63,7 +63,7 @@ fig = figure('Position', [100 100 600 500]);
 palette = [0.000 0.447 0.698; 0.600 0.780 0.878; 0.835 0.369 0.000; ...
            0.933 0.749 0.600; 0.000 0.620 0.451; 0.600 0.847 0.780];
 plot(graph(A), 'Layout', 'force', 'NodeColor', palette(labels, :), ...
-    'MarkerSize', 8, 'EdgeAlpha', 0.3);
+    'MarkerSize', 8, 'EdgeColor', 'k', 'EdgeAlpha', 0.3);
 title(sprintf('%d communities, Q = %.3f', numel(communities), Q(labels)));
 axis off
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-modularity');

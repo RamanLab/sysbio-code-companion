@@ -64,7 +64,7 @@ b.CData(is_currency, :) = repmat([0.835 0.369 0.000], sum(is_currency), 1);
 set(gca, 'XTick', 1:15, 'XTickLabel', mets(top), ...
     'TickLabelInterpreter', 'none');
 xtickangle(60); ylabel('Degree');
-title('Most connected metabolites (red: currency)'); box off
+title('Most connected metabolites (vermillion: currency)'); box off
 subplot(1, 2, 2); hold on
 colours = {[0.835 0.369 0.000], [0.000 0.447 0.698]};
 for c = 1:2
