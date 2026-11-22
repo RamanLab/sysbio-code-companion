@@ -70,14 +70,17 @@ fprintf(['Growth on glucose at %.4f /h, then on acetate at %.4f /h; ' ...
 fig = figure('Position', [100 100 1000 400]);
 subplot(1, 2, 1)
 semilogy(times, X_t, 'Color', [0.000 0.620 0.451]);
-xline(t_glc, ':', 'Color', [0.6 0.6 0.6]);
+xline(t_glc, ':', 'Color', [0.6 0.6 0.6], 'LineWidth', 1);
+ylim([min(X_t) / 1.3, 1.3 * max(X_t)]);   % room above the plateau
 xlabel('Time (h)'); ylabel('Biomass (gDW/L)'); title('Biomass');
 box off
 subplot(1, 2, 2)
 plot(times, G_t, 'Color', [0.000 0.447 0.698]);
 hold on
 plot(times, A_t, 'Color', [0.902 0.624 0.000]);
-xline(t_glc, ':', 'Color', [0.6 0.6 0.6], 'HandleVisibility', 'off');
+xline(t_glc, ':', 'Color', [0.6 0.6 0.6], 'LineWidth', 1, ...
+    'HandleVisibility', 'off');
+axis padded
 xlabel('Time (h)'); ylabel('Concentration (mM)');
 title('Substrates and by-products');
 legend({'glucose', 'acetate'}, 'Box', 'off');

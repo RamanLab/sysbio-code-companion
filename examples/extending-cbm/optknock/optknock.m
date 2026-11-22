@@ -51,14 +51,14 @@ results.growth_wild_type = mu_wt;
 for K = 1:3
     [value, design] = solve_optknock(net, candidates, K);
     b = best(designs, K, 'high');
-    assert(abs(value - b.high) < 1e-5);        % OptKnock finds the true optimum
+    assert(abs(value - b.high) < 1e-5);  % OptKnock finds the true optimum
     g = best(designs, K, 'low');
     fprintf('K = %d: OptKnock picks %s: up to %.2f lactate\n', K, ...
         strjoin(design, ', '), value);
-    fprintf('       such a design grows at %.3f /h, and secretes %.2f to %.2f lactate\n', ...
-        b.mu, b.low, b.high);
-    fprintf('       most lactate guaranteed: %s: growth %.3f /h, lactate %.2f to %.2f\n', ...
-        strjoin(g.ko, ', '), g.mu, g.low, g.high);
+    fprintf(['       such a design grows at %.3f /h, and secretes ' ...
+        '%.2f to %.2f lactate\n'], b.mu, b.low, b.high);
+    fprintf(['       most lactate guaranteed: %s: growth %.3f /h, ' ...
+        'lactate %.2f to %.2f\n'], strjoin(g.ko, ', '), g.mu, g.low, g.high);
     results.(sprintf('K%d', K)) = struct('optknock_lactate', value, ...
         'growth', b.mu, 'lactate_min', b.low, 'lactate_max', b.high, ...
         'guaranteed_design', {g.ko}, 'guaranteed_growth', g.mu, ...
@@ -84,7 +84,9 @@ for p = 1:2
         fill(x, y, shown{d, 3}, 'FaceAlpha', 0.2, 'EdgeColor', 'none');
         h(d) = plot(x, y, 'Color', shown{d, 3}, 'LineWidth', 1.5);
     end
-    xline(0.1 * mu_wt, ':k');
+    xline(0.1 * mu_wt, ':k', 'LineWidth', 1);
+    axis padded
+    ylim([-2, 45]);   % room for the legend
     xlabel('Growth rate (1/h)'); title(panels{p, 1});
     if p == 1, ylabel('Lactate secretion (mmol/gDW/h)'); end
     legend(h, shown(:, 1), 'Box', 'off', 'Location', 'northeast');
@@ -172,8 +174,8 @@ for k = 1:nc
     A(r + 2, [j, iy + k]) = [-1, lb(j)];          % v_j >= lb_j y_k
     A(r + 3, [iu + j, iy + k]) = [1, -M];         % bound duals vanish
     A(r + 4, [il + j, iy + k]) = [1, -M];         %   when knocked out
-    A(r + 5, [isl + k, iy + k]) = [1, M];  b(r + 5) = M;   % |slack| is 0
-    A(r + 6, [isl + k, iy + k]) = [-1, M]; b(r + 6) = M;   %   unless knocked out
+    A(r + 5, [isl + k, iy + k]) = [1, M];  b(r + 5) = M; % |slack| is 0
+    A(r + 6, [isl + k, iy + k]) = [-1, M]; b(r + 6) = M; %   unless knocked out
 end
 A(end, iy + (1:nc)) = -1; b(end) = K - nc;        % at most K knock-outs
 lower = [lb; -inf(m, 1); zeros(2 * n, 1); -inf(nc, 1); zeros(nc, 1)];

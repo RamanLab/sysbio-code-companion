@@ -15,6 +15,7 @@ find all such pairs twice:
 import itertools
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
 import cobra
 from cobra.flux_analysis import pfba
 import sbp
@@ -82,7 +83,7 @@ for a, b in lethal_fastsl:
 sbp.style()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 5),
                                gridspec_kw={"width_ratios": [2.2, 1]})
-ax1.imshow(M, cmap="Blues", vmin=0, vmax=1.3)
+ax1.imshow(M, cmap=ListedColormap(["#F7FBFF", "#0072B2"]), vmin=0, vmax=1)
 ax1.set_xticks(range(len(involved)), involved, rotation=90, fontsize=7)
 ax1.set_yticks(range(len(involved)), involved, fontsize=7)
 ax1.set_title(f"{len(lethal_fastsl)} synthetic lethal pairs")

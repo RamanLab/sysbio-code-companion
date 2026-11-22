@@ -21,7 +21,8 @@ from scipy.optimize import linprog
 import matplotlib.pyplot as plt
 import sbp
 
-reactions = ["v1", "v2", "v3r", "v4r", "v5", "v6", "v7", "v8", "v9", "v10", "v11"]
+reactions = ["v1", "v2", "v3r", "v4r", "v5", "v6", "v7", "v8", "v9", "v10",
+             "v11"]
 metabolites = ["A", "B", "C", "D", "E", "F", "G"]
 reversible = np.array([r.endswith("r") for r in reactions])
 S = np.array([
@@ -66,7 +67,8 @@ extreme = np.array(extreme)
 # Number the modes as the book does: extreme pathways first, the mode
 # that only converts A to C first in each group, then by the last
 # reaction used before v11 (v10, then v8, then v7)
-keys = [-np.abs(modes[:, j]) for j in range(4, 10)] + [modes[:, 10] != 0, ~extreme]
+keys = ([-np.abs(modes[:, j]) for j in range(4, 10)]
+        + [modes[:, 10] != 0, ~extreme])
 order = np.lexsort(keys)          # the last key sorts first
 modes, extreme = modes[order], extreme[order]
 
@@ -86,11 +88,12 @@ sbp.style()
 fig, ax = plt.subplots(figsize=(7, 3.6))
 ax.imshow(modes, cmap="RdBu_r", vmin=-2, vmax=2, aspect="auto")
 for (i, j), z in np.ndenumerate(modes):
-    if z != 0:
-        ax.text(j, i, f"{z:.0f}", ha="center", va="center", fontsize=9)
+    if z != 0:   # white text on the dark cells
+        ax.text(j, i, f"{z:.0f}", ha="center", va="center", fontsize=9,
+                color="white" if abs(z) > 1.5 else "black")
 ax.set_xticks(range(n), reactions)
-ax.set_yticks(range(len(modes)),
-              [f"EFM {k + 1}{'*' if x else ''}" for k, x in enumerate(extreme)])
+labels = [f"EFM {k + 1}{'*' if x else ''}" for k, x in enumerate(extreme)]
+ax.set_yticks(range(len(modes)), labels)
 ax.set_title("Elementary flux modes (* extreme pathways)")
 sbp.save_figure(fig, __file__, "fig-efms")
 

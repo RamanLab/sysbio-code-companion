@@ -22,7 +22,8 @@ log_tpm = readtable(fullfile(sbp.data_dir(), 'precise_log_tpm.csv'), ...
     'ReadRowNames', true, 'VariableNamingRule', 'preserve');
 samples = readtable(fullfile(sbp.data_dir(), 'precise_samples.csv'), ...
     'TextType', 'string');
-uptake = containers.Map({'glucose', 'xylose', 'glycerol', 'acetate', 'fructose'}, ...
+uptake = containers.Map( ...
+    {'glucose', 'xylose', 'glycerol', 'acetate', 'fructose'}, ...
     {'EX_glc__D_e', 'EX_xyl__D_e', 'EX_glyc_e', 'EX_ac_e', 'EX_fru_e'});
 
 carbon = cellstr(extractBefore(samples.carbon_source, '('))';
@@ -46,7 +47,8 @@ for k = 1:numel(carbon)
         predicted(1, k), predicted(2, k));
 end
 for t = 1:2
-    fprintf('Correlation with measured growth, %s: r = %.2f\n', transforms{t}, r(t));
+    fprintf('Correlation with measured growth, %s: r = %.2f\n', ...
+        transforms{t}, r(t));
 end
 
 %% Plot
@@ -56,7 +58,8 @@ for t = 1:2
     plot(measured, predicted(t, :), 'o', 'Color', [0.000 0.447 0.698], ...
         'MarkerFaceColor', [0.000 0.447 0.698]);
     text(measured, predicted(t, :), strcat({'  '}, carbon), ...
-        'VerticalAlignment', 'bottom', 'FontSize', 9);
+        'VerticalAlignment', 'middle', 'FontSize', 9);
+    xlim([0.2, 0.8]);   % room for the labels
     xlabel('Measured growth rate (1/h)');
     ylabel('E-Flux growth (arbitrary units)');
     title(sprintf('Expression as %s: r = %.2f', transforms{t}, r(t)));

@@ -14,7 +14,8 @@
 % every reaction.
 % Requires: Optimization Toolbox (for linprog).
 
-reactions = {'v1', 'v2', 'v3r', 'v4r', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10', 'v11'};
+reactions = {'v1', 'v2', 'v3r', 'v4r', 'v5', 'v6', 'v7', 'v8', 'v9', 'v10', ...
+             'v11'};
 reversible = endsWith(reactions, 'r');
 S = [
   % v1 v2 v3r v4r v5 v6 v7 v8 v9 v10 v11
@@ -62,14 +63,15 @@ keys = [~extreme, modes(:, 11) ~= 0, -abs(modes(:, 10:-1:5))];
 modes = modes(order, :); extreme = extreme(order);
 
 % Yield of G on C, for the modes that take up C (v4r < 0)
-fprintf('%d elementary flux modes, %d of them extreme pathways (marked *):\n', ...
-    size(modes, 1), sum(extreme));
+fprintf(['%d elementary flux modes, %d of them extreme pathways ' ...
+    '(marked *):\n'], size(modes, 1), sum(extreme));
 fprintf('      %s   G/C\n', sprintf('%5s', reactions{:}));
 yields = nan(1, size(modes, 1));     % NaN: the mode takes up no C
 marks = {' ', '*'};
 for k = 1:size(modes, 1)
     e = modes(k, :);
-    line = sprintf('%2d%s   %s', k, marks{extreme(k) + 1}, sprintf('%5.0f', e));
+    line = sprintf('%2d%s   %s', k, marks{extreme(k) + 1}, ...
+        sprintf('%5.0f', e));
     if e(4) < 0
         yields(k) = e(11) / -e(4);
         line = [line, sprintf('  %4.1f', yields(k))]; %#ok<AGROW>
@@ -80,16 +82,19 @@ end
 %% Plot: the modes as a matrix
 fig = figure('Position', [100 100 700 360]);
 imagesc(modes, [-2 2]);
-colormap(red_blue());
+colormap(sbp.colormap('RdBu_r'));
 [rows, cols] = find(modes ~= 0);
-for k = 1:numel(rows)
-    text(cols(k), rows(k), sprintf('%.0f', modes(rows(k), cols(k))), ...
-        'HorizontalAlignment', 'center', 'FontSize', 9);
+for k = 1:numel(rows)   % white text on the dark cells
+    z = modes(rows(k), cols(k));
+    if abs(z) > 1.5, colour = 'white'; else, colour = 'black'; end
+    text(cols(k), rows(k), sprintf('%.0f', z), ...
+        'HorizontalAlignment', 'center', 'FontSize', 9, 'Color', colour);
 end
 labels = arrayfun(@(k) sprintf('EFM %d%s', k, marks{extreme(k) + 1}), ...
     1:size(modes, 1), 'UniformOutput', false);
 set(gca, 'XTick', 1:n, 'XTickLabel', reactions, ...
-    'YTick', 1:size(modes, 1), 'YTickLabel', strtrim(labels));
+    'YTick', 1:size(modes, 1), 'YTickLabel', strtrim(labels), ...
+    'TickDir', 'out');
 title('Elementary flux modes (* extreme pathways)');
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-efms');
 
@@ -98,9 +103,3 @@ results.efms = modes;
 results.extreme = extreme';
 results.yield_G_on_C = yields;
 sbp.save_results(mfilename('fullpath'), results);
-
-function cmap = red_blue()
-% Blue (negative) to white to red (positive), like Matplotlib's RdBu_r.
-t = linspace(0, 1, 128)';
-cmap = [[t; ones(128, 1)], [t; flipud(t)], [ones(128, 1); flipud(t)]];
-end

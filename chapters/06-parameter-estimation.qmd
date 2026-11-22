@@ -99,7 +99,7 @@ $$
 K_M^\text{app} = K_M\left(1 + \frac{I}{K_I}\right),
 $$
 
-the apparent Michaelis constant. Every pair $(K_M, K_I)$ on the grey curve gives the same $K_M^\text{app}$, and hence identical predictions for every data point. The data determine $v_\text{max}$ and $K_M^\text{app}$, and nothing more: $K_M$ and $K_I$ are **structurally non-identifiable** from D1. More data of the same kind would not help. A second inhibitor concentration does, because $K_M^\text{app}$ changes with $I$ in a way that depends on $K_I$ (red star).
+the apparent Michaelis constant. Every pair $(K_M, K_I)$ on the grey curve gives the same $K_M^\text{app}$, and hence identical predictions for every data point. The data determine $v_\text{max}$ and $K_M^\text{app}$, and nothing more: $K_M$ and $K_I$ are **structurally non-identifiable** from D1. More data of the same kind would not help. A second inhibitor concentration does, because $K_M^\text{app}$ changes with $I$ in a way that depends on $K_I$ (vermillion star).
 
 Two lessons follow. First, a solver that reports success has found *a* minimum; it says nothing about whether the minimum is unique. Fitting from several starting points is a simple and effective check. Second, identifiability is a property of the model *and* the experiment together, and it is best examined before the experiments are done (book, §6.1.2).
 

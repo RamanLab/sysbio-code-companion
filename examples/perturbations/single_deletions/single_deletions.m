@@ -49,17 +49,26 @@ colors(values < 0.99, :) = repmat([0.902 0.624 0.000], ...
 colors(values < 0.01, :) = repmat([0.835 0.369 0.000], ...
     sum(values < 0.01), 1);                                   % lethal
 fig = figure('Position', [100 100 1000 400]);
-b = bar(values, 'FaceColor', 'flat');
+b = bar(values, 'FaceColor', 'flat', 'EdgeColor', 'none');
 b.CData = colors;
 hold on
 lethal = find(values < 0.01);               % zero-height bars: mark them
 plot(lethal, 0.03 * ones(size(lethal)), 'v', 'Color', [0.835 0.369 0.000], ...
     'MarkerFaceColor', [0.835 0.369 0.000], 'MarkerSize', 5);
-set(gca, 'XTick', 1:numel(values), 'XTickLabel', rxns(order), ...
-    'XTickLabelRotation', 90, 'FontSize', 7);
+ax = gca;
+set(ax, 'XTick', 1:numel(values), 'XTickLabel', rxns(order), ...
+    'XTickLabelRotation', 90, 'TickLabelInterpreter', 'none', ...
+    'TickDir', 'out');
+ax.XAxis.FontSize = 7;
 ylabel('Growth relative to wild type');
 title('Single reaction deletions, E. coli core model, aerobic glucose');
-box off
+legend_colours = [0.835 0.369 0.000; 0.902 0.624 0.000; 0.000 0.447 0.698];
+h = gobjects(1, 3);
+for k = 1:3                                 % empty patches for the legend
+    h(k) = patch(NaN, NaN, legend_colours(k, :), 'EdgeColor', 'none');
+end
+legend(h, {'lethal (< 1%)', 'reduced', 'no effect'}, ...
+    'Location', 'northwest', 'Box', 'off');
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-single-deletions');
 
 results.wild_type_growth = wt;

@@ -108,8 +108,9 @@ fig, axes = plt.subplots(1, 2, figsize=(10, 4))
 for ax, t in zip(axes, predicted):
     ax.plot(measured, predicted[t], "o", color="#0072B2")
     for x, y, c in zip(measured, predicted[t], carbon):
-        ax.annotate(c, (x, y), textcoords="offset points", xytext=(5, 3),
-                    fontsize=9)
+        ax.annotate(c, (x, y), textcoords="offset points", xytext=(6, 0),
+                    va="center", fontsize=9)
+    ax.set_xlim(0.2, 0.8)   # room for the labels
     ax.set_xlabel("Measured growth rate (1/h)")
     ax.set_ylabel("E-Flux growth (arbitrary units)")
     ax.set_title(f"Expression as {t}: r = {r[t]:.2f}")

@@ -91,12 +91,13 @@ end
 fig = figure('Position', [100 100 700 350]);
 counts = cellfun(@numel, members);
 barh(categorical(labels, fliplr(labels)), counts, ...
-    'FaceColor', [0.000 0.447 0.698]);
+    'FaceColor', [0.000 0.447 0.698], 'EdgeColor', 'none');
 text(counts + 0.3, categorical(labels, fliplr(labels)), ...
     string(counts), 'VerticalAlignment', 'middle');
 xlabel('Number of internal reactions');
 title('pFBA classes, E. coli core on glucose');
-box off
+set(gca, 'TickDir', 'out', ...
+    'Position', [0.17 0.15 0.76 0.75]);   % room for the labels
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-pfba');
 
 results.toy_max_b2 = best;

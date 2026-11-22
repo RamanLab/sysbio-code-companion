@@ -105,8 +105,10 @@ ax1.set_ylabel("Succinate secretion (mmol/gDW/h)")
 ax1.set_title("Production envelope")
 ax1.legend(frameon=False)
 show = ["PPC", "PFK", "GAPD", "SUCCt3", "CS", "AKGDH"]
-for r in show:
-    ax2.plot(fractions * succ_max, F[:, ids.index(r)], "o-", ms=3, label=r)
+markers = ["o", "s", "^", "v", "<", ">"]
+for r, colour, marker in zip(show, sbp.PALETTE, markers):
+    ax2.plot(fractions * succ_max, F[:, ids.index(r)], "-", marker=marker,
+             color=colour, ms=4, label=r)
 ax2.set_xlabel("Enforced succinate secretion (mmol/gDW/h)")
 ax2.set_ylabel("|flux| (mmol/gDW/h)")
 ax2.set_title("Fluxes as succinate is enforced")

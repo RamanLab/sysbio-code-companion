@@ -69,10 +69,13 @@ legend(h, {'FSEOF steps'}, 'Box', 'off');
 box off
 subplot(1, 2, 2)
 show = {'PPC', 'PFK', 'GAPD', 'SUCCt3', 'CS', 'AKGDH'};
+markers = {'o', 's', '^', 'v', '<', '>'};
+colours = sbp.palette();
 hold on
 for k = 1:numel(show)
-    plot(fractions * succ_max, F(:, strcmp(ids, show{k})), 'o-', ...
-        'MarkerSize', 3);
+    plot(fractions * succ_max, F(:, strcmp(ids, show{k})), '-', ...
+        'Marker', markers{k}, 'Color', colours(k, :), ...
+        'MarkerFaceColor', colours(k, :), 'MarkerSize', 4);
 end
 ylim([0 26]);
 xlabel('Enforced succinate secretion (mmol/gDW/h)');

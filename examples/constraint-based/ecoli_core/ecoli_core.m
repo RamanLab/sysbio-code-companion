@@ -27,11 +27,17 @@ growthO2_10 = growth_curve(model, 10, uptake);  % O2 uptake at most 10
 growthAnaer = growth_curve(model, 0, uptake);   % no O2
 
 %% Plot
+blue = [0.000 0.447 0.698];
+green = [0.000 0.620 0.451];
+orange = [0.902 0.624 0.000];
 fig = figure;
-plot(uptake, growthAer, 'o-', 'Color', [0.000 0.447 0.698], 'MarkerSize', 4);
+plot(uptake, growthAer, 'o-', 'Color', blue, ...
+    'MarkerFaceColor', blue, 'MarkerSize', 4);
 hold on
-plot(uptake, growthO2_10, '^-', 'Color', [0.000 0.620 0.451], 'MarkerSize', 4);
-plot(uptake, growthAnaer, 's-', 'Color', [0.902 0.624 0.000], 'MarkerSize', 4);
+plot(uptake, growthO2_10, '^-', 'Color', green, ...
+    'MarkerFaceColor', green, 'MarkerSize', 4);
+plot(uptake, growthAnaer, 's-', 'Color', orange, ...
+    'MarkerFaceColor', orange, 'MarkerSize', 4);
 xlabel('Maximum glucose uptake (mmol/gDW/h)');
 ylabel('Growth rate (1/h)');
 title('E. coli core: growth vs glucose uptake');

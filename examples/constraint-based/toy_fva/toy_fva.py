@@ -72,7 +72,7 @@ ax.set_yticks(y, rxns)
 ax.invert_yaxis()
 ax.set_xlabel("Flux (mmol/gDW/h)")
 ax.set_title("Flux variability analysis")
-ax.legend(loc="upper right", frameon=False)
+ax.legend(loc="lower center", frameon=False)
 sbp.save_figure(fig, __file__, "fig-toy-fva")
 
 sbp.save_results(__file__, {

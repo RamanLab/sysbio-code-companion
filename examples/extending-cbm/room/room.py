@@ -9,10 +9,11 @@ programme (MILP). Many flux distributions reach that minimum, so we then
 report the fastest growth among them, which is unique. The wild type w is
 the flux distribution of smallest norm at optimal growth, as for MoMA.
 Binary variables make ROOM much slower than FBA or MoMA, so we look at
-five deletions in glycolysis and the pentose phosphate pathway, including pyruvate kinase
-(PYK), the example of the book. To keep the MILP well conditioned, the
-bounds lb and ub in Eq. 9.5 are the tightest the network allows, found
-by flux variability analysis (FVA), rather than the nominal +/-1000.
+five deletions in glycolysis and the pentose phosphate pathway,
+including pyruvate kinase (PYK), the example of the book. To keep the
+MILP well conditioned, the bounds lb and ub in Eq. 9.5 are the tightest
+the network allows, found by flux variability analysis (FVA), rather
+than the nominal +/-1000.
 """
 import numpy as np
 import clarabel
@@ -50,8 +51,9 @@ def min_norm(lb, ub):
     settings = clarabel.DefaultSettings()
     settings.verbose = False
     settings.tol_gap_abs = settings.tol_gap_rel = settings.tol_feas = 1e-10
-    sol = clarabel.DefaultSolver(eye, np.zeros(n), A, np.r_[np.zeros(m), ub, -lb],
-                                 cones, settings).solve()
+    b = np.r_[np.zeros(m), ub, -lb]
+    sol = clarabel.DefaultSolver(eye, np.zeros(n), A, b, cones,
+                                 settings).solve()
     return np.array(sol.x)
 
 
@@ -62,9 +64,12 @@ def room(w, lb, ub):
     wu = w + delta * np.abs(w) + epsilon
     eye = sparse.identity(n, format="csr")
     # S v = 0;  v - y (lb - wl) >= wl;  v - y (ub - wu) <= wu
-    cons = [LinearConstraint(sparse.hstack([S, sparse.csr_matrix((m, n))]), 0, 0),
-            LinearConstraint(sparse.hstack([eye, -sparse.diags(lb - wl)]), wl, np.inf),
-            LinearConstraint(sparse.hstack([eye, -sparse.diags(ub - wu)]), -np.inf, wu)]
+    cons = [LinearConstraint(sparse.hstack([S, sparse.csr_matrix((m, n))]),
+                             0, 0),
+            LinearConstraint(sparse.hstack([eye, -sparse.diags(lb - wl)]),
+                             wl, np.inf),
+            LinearConstraint(sparse.hstack([eye, -sparse.diags(ub - wu)]),
+                             -np.inf, wu)]
     bounds = Bounds(np.r_[lb, np.zeros(n)], np.r_[ub, np.ones(n)])
     integrality = np.r_[np.zeros(n), np.ones(n)]
     opts = {"mip_rel_gap": 0}
@@ -91,7 +96,8 @@ lb_wt, ub_wt = lb.copy(), ub.copy()
 lb_wt[bio], ub_wt[bio] = mu_wt * (1 - 1e-9), mu_wt
 w = min_norm(lb_wt, ub_wt)
 w[np.abs(w) < 1e-9] = 0
-print(f"Wild-type growth {mu_wt:.4f} /h; {np.sum(w != 0)} reactions carry flux")
+print(f"Wild-type growth {mu_wt:.4f} /h; "
+      f"{np.sum(w != 0)} reactions carry flux")
 
 # Tightest bounds the network allows (FVA, at any growth rate)
 lo, hi = np.zeros(n), np.zeros(n)
@@ -126,8 +132,9 @@ ax1.bar(x - 0.2, growth_fba, 0.4, color="#E69F00", label="FBA")
 ax1.bar(x + 0.2, growth_room, 0.4, color="#0072B2", label="ROOM")
 ax1.set_xticks(x, rxns, rotation=45)
 ax1.set_ylabel("Growth (fraction of wild type)")
+ax1.set_ylim(0, 1.25)   # room for the legend
 ax1.set_title("Growth after each deletion")
-ax1.legend(frameon=False, loc="lower left")
+ax1.legend(frameon=False, loc="upper center", ncol=2)
 ax2.bar(x, changes, color="#0072B2")
 ax2.set_xticks(x, rxns, rotation=45)
 ax2.set_ylabel("Significant flux changes")

@@ -30,7 +30,7 @@ We delete each of the 74 internal reactions of the model in turn (leaving out ex
 ![](/examples/perturbations/single_deletions/out/python/fig-single-deletions.png)
 :::
 
-Thirteen reactions are essential (red), among them the glucose uptake system (GLCpts), the lower steps of glycolysis (GAPD, PGK, PGM, ENO), the first steps of the TCA cycle (CS, ACONTa/b, ICDHyr), and the uptake of ammonium and phosphate. Losing another 23 reactions slows growth without stopping it (orange): the network reroutes flux, at a cost. Deleting the ATP maintenance reaction, ATPM, even *increases* growth slightly, since the ATP it consumes is freed for biosynthesis.
+Thirteen reactions are essential (vermillion), among them the glucose uptake system (GLCpts), the lower steps of glycolysis (GAPD, PGK, PGM, ENO), the first steps of the TCA cycle (CS, ACONTa/b, ICDHyr), and the uptake of ammonium and phosphate. Losing another 23 reactions slows growth without stopping it (orange): the network reroutes flux, at a cost. Deleting the ATP maintenance reaction, ATPM, even *increases* growth slightly, since the ATP it consumes is freed for biosynthesis.
 
 Only seven genes are essential, although thirteen reactions are. The difference comes from the GPR rules. Aconitase (ACONTa and ACONTb), for example, is encoded by two genes, *acnA* and *acnB*, either of which suffices, so neither gene is essential although the reaction is. In the other direction, *ptsH* and *ptsI* are each essential because the glucose transport system needs both. Predictions about genes, which are what experiments test, can therefore differ substantially from predictions about reactions.
 

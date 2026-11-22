@@ -43,18 +43,22 @@ fig = figure;
 hold on
 y = 1:n;
 for j = 1:n
-    plot([vmin90(j) vmax90(j)], y(j) + [0.15 0.15], '-|', 'Color', orange, ...
-        'LineWidth', 6, 'MarkerSize', 10);
-    plot([vmin100(j) vmax100(j)], y(j) - [0.15 0.15], '-|', 'Color', blue, ...
-        'LineWidth', 6, 'MarkerSize', 10);
+    plot([vmin90(j) vmax90(j)], y(j) + [0.15 0.15], '-', ...
+        'Color', orange, 'LineWidth', 6);
+    plot([vmin100(j) vmax100(j)], y(j) - [0.15 0.15], '-', ...
+        'Color', blue, 'LineWidth', 6);
 end
+% Fixed fluxes have zero width, so mark both ends
+plot(vmin100, y - 0.15, '|', 'Color', blue, 'MarkerSize', 10);
+plot(vmin90, y + 0.15, '|', 'Color', orange, 'MarkerSize', 10);
 set(gca, 'YTick', y, 'YTickLabel', rxns, 'YDir', 'reverse');
+ylim([0.5, n + 0.5]);
 xlabel('Flux (mmol/gDW/h)');
 title('Flux variability analysis');
 h = [plot(NaN, NaN, '-', 'Color', orange, 'LineWidth', 6), ...
      plot(NaN, NaN, '-', 'Color', blue, 'LineWidth', 6)];
 legend(h, {'90% of optimum', '100% of optimum'}, ...
-    'Location', 'northeast', 'Box', 'off');
+    'Location', 'south', 'Box', 'off');
 box off
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-toy-fva');
 

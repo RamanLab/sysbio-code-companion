@@ -43,7 +43,10 @@ fprintf('Largest mass-balance violation |Sv| = %.1e\n', max(abs(S*v)));
 
 %% Plot the flux distribution
 fig = figure;
-bar(categorical(rxns, rxns), v, 'FaceColor', [0.000 0.447 0.698]);
+bar(categorical(rxns, rxns), v, 'FaceColor', [0.000 0.447 0.698], ...
+    'EdgeColor', 'none');
+ylim([0, 1.05 * max(v)]);   % a little room above the tallest bar
+set(gca, 'TickDir', 'out');
 xlabel('Reaction');
 ylabel('Flux (mmol/gDW/h)');
 title(sprintf('An optimal flux distribution (vbio = %g)', growth));

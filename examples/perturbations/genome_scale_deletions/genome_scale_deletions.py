@@ -29,7 +29,8 @@ reduced = [g for g in genes if 0.01 <= ratio[g] < 0.99]
 no_rxn = [g for g in genes if not lost[g]]
 
 print(f"Wild-type growth {wt:.4f} /h; {len(genes)} genes deleted one by one")
-print(f"{len(essential)} essential genes ({100 * len(essential) / len(genes):.1f}%)")
+print(f"{len(essential)} essential genes "
+      f"({100 * len(essential) / len(genes):.1f}%)")
 print(f"{len(reduced)} genes whose loss reduces growth, but not below 1%")
 print(f"{len(no_rxn)} genes whose loss removes no reaction (isozymes)")
 

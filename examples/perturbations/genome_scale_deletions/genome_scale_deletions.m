@@ -28,13 +28,16 @@ fprintf('%d genes whose loss reduces growth, but not below 1%%\n', n_reduced);
 fprintf('%d genes whose loss removes no reaction (isozymes)\n', numel(no_rxn));
 
 %% Plot
-counts = [numel(essential), n_reduced, numel(genes) - numel(essential) - n_reduced];
+counts = [numel(essential), n_reduced, ...
+          numel(genes) - numel(essential) - n_reduced];
 fig = figure('Position', [100 100 500 450]);
-b = bar(counts, 'FaceColor', 'flat');
+b = bar(counts, 'FaceColor', 'flat', 'EdgeColor', 'none');
 b.CData = [0.835 0.369 0.000; 0.902 0.624 0.000; 0.000 0.447 0.698];
 text(1:3, counts, string(counts), 'HorizontalAlignment', 'center', ...
     'VerticalAlignment', 'bottom');
-set(gca, 'XTickLabel', {'lethal (< 1%)', 'reduced', 'no effect'});
+set(gca, 'XTickLabel', {'lethal (< 1%)', 'reduced', 'no effect'}, ...
+    'TickDir', 'out');
+xlim([0.4, 3.6]);
 ylabel('Genes');
 title('Single gene deletions, iML1515');
 box off

@@ -76,16 +76,22 @@ end
 fig = figure('Position', [100 100 1100 500]);
 subplot(1, 3, [1 2])
 imagesc(M, [0 1]);
-colormap([0.97 0.98 1; 0.00 0.45 0.70]);
+colormap([0.969 0.984 1.000; 0.000 0.447 0.698]);
 axis square
-set(gca, 'XTick', 1:numel(involved), 'XTickLabel', involved, ...
+ax = gca;
+set(ax, 'XTick', 1:numel(involved), 'XTickLabel', involved, ...
     'XTickLabelRotation', 90, 'YTick', 1:numel(involved), ...
-    'YTickLabel', involved, 'FontSize', 7, 'Box', 'off');
+    'YTickLabel', involved, 'TickLabelInterpreter', 'none', ...
+    'TickDir', 'out');
+ax.XAxis.FontSize = 7;
+ax.YAxis.FontSize = 7;
 title(sprintf('%d synthetic lethal pairs', size(lethal_fastsl, 1)));
 subplot(1, 3, 3)
-b = bar([size(pairs, 1), numel(tested)], 'FaceColor', 'flat');
+b = bar([size(pairs, 1), numel(tested)], 'FaceColor', 'flat', ...
+    'EdgeColor', 'none');
 b.CData = [0.6 0.6 0.6; 0.000 0.447 0.698];
-set(gca, 'XTickLabel', {'exhaustive', 'Fast-SL'});
+set(gca, 'XTickLabel', {'exhaustive', 'Fast-SL'}, 'TickDir', 'out');
+xlim([0.4, 2.6]);
 ylabel('Double deletions simulated');
 title('Cost of the search');
 box off
