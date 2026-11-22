@@ -42,7 +42,7 @@ for d = 1:3
         sum(abs(r) > 0.2), sum(upper, 'all'), mean(R(1, 2:end)));
     nexttile
     R(logical(eye(taxa))) = NaN;
-    imagesc(R, [-0.6, 0.6], 'AlphaData', ~isnan(R)); axis square
+    imagesc(R, 'AlphaData', ~isnan(R), [-0.6, 0.6]); axis square
     xticks(1:taxa); yticks(1:taxa);
     edges = results.(names{d}).edges;
     label = sprintf('%d edges', edges);
