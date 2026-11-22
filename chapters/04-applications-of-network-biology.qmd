@@ -36,7 +36,7 @@ Two cautions are in order. First, the essential genes here are *predictions*, ma
 
 ### Predicting essential genes using network measures
 
-The example above uses the essential genes that NetGenes predicts from network features; see the cautions in the last two paragraphs, and Exercise 1 for a test against experiments.
+In a sense, the example above already does this: NetGenes predicts essential genes from features of the STRING network. Remember the two cautions above when reading its results; Exercise 1 tests the centralities against essentiality measured in experiments instead.
 
 ## Networks and modules in disease
 
@@ -59,7 +59,7 @@ Co-expression networks need many samples per condition, and PRECISE-1K [@lamoure
 ::: {.panel-tabset group="language"}
 ## MATLAB
 
-*Needs only base MATLAB.*
+*Core MATLAB only.*
 
 ```{.matlab include="/examples/network-applications/differential_network/differential_network.m"}
 ```
@@ -92,7 +92,7 @@ $$
 
 where $\langle k \rangle$ and $\langle k^2 \rangle$ are the mean degree and the mean squared degree [@newman2002]. This result comes from viewing the epidemic as a percolation process: keep each link of the network with probability $T$, and an outbreak reaches everyone in the connected cluster of its first case (book, §4.4.1). For an Erdős–Rényi network, $\langle k^2 \rangle - \langle k \rangle = \langle k \rangle^2$, so $T_c = 1/\langle k \rangle$. In a scale-free network, the hubs make $\langle k^2 \rangle$ large, and so the threshold small; in an infinitely large scale-free network, it disappears altogether [@pastorsatorras2001].
 
-The code simulates epidemics on Erdős–Rényi and scale-free networks of 2000 people, each with four contacts on average, starting each from one randomly chosen person. It then vaccinates 10% of the scale-free network, either at random or by choosing the people with the most contacts, and repeats the epidemic.
+Let us simulate epidemics on Erdős–Rényi and scale-free networks of 2000 people, each with four contacts on average, starting each from one randomly chosen person. We then vaccinate 10% of the scale-free network, either at random or by choosing the people with the most contacts, and repeat the epidemic.
 
 ::: {.panel-tabset group="language"}
 ## MATLAB
@@ -114,11 +114,11 @@ The code simulates epidemics on Erdős–Rényi and scale-free networks of 2000 
 ![](/examples/network-applications/epidemic_networks/out/python/fig-epidemic-networks.png)
 :::
 
-The threshold for the Erdős–Rényi network is 0.25, as expected, but for the scale-free network it is only about 0.09. Between the two, an infection that would die out among people with similar numbers of contacts spreads on the scale-free network, reaching hubs, which pass it on widely: at $T = 0.3$, it infects on average 19% of the scale-free network against 9% of the Erdős–Rényi one. Well above both thresholds, the two networks fare much alike.
+The threshold for the Erdős–Rényi network is 0.25, as expected, but for the scale-free network it is only about 0.09. Between the two, an infection that would die out among people with similar numbers of contacts spreads on the scale-free network, reaching hubs, which pass it on widely: at $T = 0.3$, it infects on average 18 to 19% of the scale-free network (the two languages differ slightly), against 9% of the Erdős–Rényi one. Well above both thresholds, the two networks fare much alike.
 
-Vaccination shows the other side of the hubs. Vaccinating a random 10% of people reduces the average epidemic only from about 62% to 43% of the population, but vaccinating the 10% with the most contacts stops it almost completely. Removing the hubs breaks the network into pieces too small to sustain an epidemic, just as targeted attacks on hubs fragment scale-free networks far faster than random failures do (book §3.5.2; Exercise 3 of @sec-networks). Finding the hubs of a real contact network is hard, but there is a clever shortcut: vaccinate a random *contact* of a randomly chosen person, who is more likely to be a hub than the person is (Exercise 5).
+Vaccination shows the other side of the hubs. Vaccinating a random 10% of people reduces the average epidemic only from about 60% to 43–45% of the population, but vaccinating the 10% with the most contacts stops it almost completely. Removing the hubs breaks the network into pieces too small to sustain an epidemic, just as targeted attacks on hubs fragment scale-free networks far faster than random failures do (book §3.5.2; Exercise 3 of @sec-networks). Finding the hubs of a real contact network is hard, but there is a clever shortcut: vaccinate a random *contact* of a randomly chosen person, who is more likely to be a hub than the person is (Exercise 5).
 
-The two examples are related. In each, a few highly connected nodes matter far more than their numbers suggest, whether for the survival of the cell or for the spread of an infection.
+The centrality–lethality and epidemic examples are related. In each, a few highly connected nodes matter far more than their numbers suggest, whether for the survival of the cell or for the spread of an infection.
 
 ### Agent-based simulations
 
@@ -143,7 +143,7 @@ How well can the structure of a network predict its missing edges? A standard wa
 ::: {.panel-tabset group="language"}
 ## MATLAB
 
-*Needs only base MATLAB.*
+*Core MATLAB only.*
 
 ```{.matlab include="/examples/network-applications/link_prediction/link_prediction.m"}
 ```
@@ -173,4 +173,4 @@ The three indices based on common neighbours are all excellent here (AUC = 0.95)
 
 ## Going further {.unnumbered}
 
-Network ideas reach well beyond these two examples, to disease modules in human interaction networks (§4.2), differential network analysis (§4.3), molecular graphs and retrosynthesis (§4.5), protein folding networks (§4.6) and link prediction (§4.7) in book Chapter 4. For epidemics, agent-based simulations on realistic contact networks, such as EpiSims, add time and the movement of people (book, §4.4.2).
+Network ideas reach well beyond the examples of this chapter, to disease modules in human interaction networks (§4.2), molecular graphs and retrosynthesis (§4.5) and protein folding networks (§4.6) in book Chapter 4. For epidemics, agent-based simulations on realistic contact networks, such as EpiSims, add time and the movement of people (book, §4.4.2).

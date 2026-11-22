@@ -50,7 +50,7 @@ Every example in this companion is a simulation, in both MATLAB and Python; [Get
 
 ## Examples of models
 
-Two classic models show what a dynamic model is and what it can tell us. Both are solved with the standard ODE solvers, `ode45` in MATLAB and `solve_ivp` in Python; @sec-odes looks at how such solvers work.
+Let us now look at the two classic models in turn. We solve both with the standard ODE solvers, `ode45` in MATLAB and `solve_ivp` in Python; @sec-odes looks at how such solvers work.
 
 ### Lotka–Volterra predator–prey model
 
@@ -82,7 +82,7 @@ Deer are born at rate $b$ and are eaten at a rate proportional to how often deer
 ![](/examples/first-models/lotka_volterra/out/python/fig-lotka-volterra.png)
 :::
 
-The populations oscillate, with the lions lagging behind the deer: plenty of deer lets the lions multiply, more lions eat more deer, the deer decline, the lions starve, and the cycle begins again, about every nine years. In the **phase plane** (right), where time is left out and the two populations are plotted against each other, each starting point traces its own closed loop around the steady state. The loops never grow or shrink, because the quantity $V = rD - d\ln D + pL - b\ln L$ stays exactly constant along every solution; the code checks this, and the tiny change it finds measures the error of the numerical solver.
+The populations oscillate, with the lions lagging behind the deer: plenty of deer lets the lions multiply, more lions eat more deer, the deer decline, the lions starve, and the cycle begins again, about every nine years. In the **phase plane** (right), where time is left out and the two populations are plotted against each other, each starting point traces its own closed loop around the steady state. The loops never grow or shrink, because the quantity $V = rD - d\ln D + pL - b\ln L$ stays exactly constant along every solution; our code checks this, and the tiny change it finds measures the error of the numerical solver.
 
 The code also shows a useful feature of both solvers: **events**. Asked to watch for the moments at which $D - D^*$ crosses zero upwards, the solver reports them precisely, which gives the period of the cycle. For small oscillations around the steady state, the period is $2\pi/\sqrt{bd} \approx 8.9$ years; our larger cycle is a little slower.
 
@@ -112,7 +112,7 @@ $$
 R_\infty = 1 - S_0\, e^{-R_0 R_\infty},
 $$
 
-which has exactly one solution between 0 and 1, easily found with `fzero` in MATLAB or `brentq` in Python. The code simulates an epidemic with $R_0 = 3$, starting from one infected person in 10,000, and then compares simulated and predicted final sizes for $R_0$ from 0.5 to 4.
+which has exactly one solution between 0 and 1, easily found with `fzero` in MATLAB or `brentq` in Python. Our code simulates an epidemic with $R_0 = 3$, starting from one infected person in 10,000, and then compares simulated and predicted final sizes for $R_0$ from 0.5 to 4.
 
 ::: {.panel-tabset group="language"}
 ## MATLAB

@@ -2,7 +2,7 @@
 
 This is a hands-on code companion to *An Introduction to Computational Systems Biology: Systems-Level Modelling of Cellular Networks* (Raman, 2021, CRC Press), and to the course BT5240 at IIT Madras.
 
-**Its chapters and sections follow the book exactly**: §5.3.1 here is §5.3.1 in the book, with the same title. Where a section has worked examples, they are given **in both MATLAB and Python**, and the two versions produce the same numbers and the same figures; pick your language in any code tab, and the choice carries over to every other tab on the page. Sections without code say so, and point back to the book. A few topics go beyond the book, such as stochastic simulation. They appear at the end of a chapter, in sections labelled with letters (§5.A, §12.A) so that they cannot be confused with the book's own sections.
+**Its chapters and sections follow the book exactly**: §5.3.1 here is §5.3.1 in the book, with the same title. Where a section has worked examples, they are given **in both MATLAB and Python**, and the two versions produce the same numbers (for random examples, the same averages) and the same figures; pick your language in any code tab, and the choice carries over to every other tab on the page. Sections without code say so, and point back to the book. A few topics go beyond the book, such as stochastic simulation. They appear at the end of a chapter, in sections labelled with letters (§5.A, §12.A) so that they cannot be confused with the book's own sections.
 
 The text is deliberately short: the theory is in the book, and this companion is about putting it to work.
 

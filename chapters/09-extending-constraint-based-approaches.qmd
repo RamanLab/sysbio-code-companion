@@ -47,7 +47,7 @@ MoMA never predicts faster growth than FBA, since FBA gives the maximum; for 27 
 
 ROOM [@shlomi2005] counts changes instead of measuring distance. A flux has changed *significantly* if it leaves a band around its wild-type value, $[w - \delta|w| - \epsilon,\ w + \delta|w| + \epsilon]$, and ROOM minimises the number of such changes (book, Eq. 9.5). Each flux gets a binary variable $y_i$, which is 1 if it changes, so this is a **mixed-integer linear programme** (MILP): `intlinprog` in MATLAB and SciPy's `milp` in Python. Many flux distributions reach the fewest changes, so the code then reports the fastest growth among them. We use $\delta = 0.03$ and $\epsilon = 0.001$, the values used for flux predictions in the book, and the same wild-type reference as MoMA.
 
-MILPs are much harder than LPs or QPs, and the solution time grows quickly with the number of binary variables. Two choices keep this example fast. We look at only five deletions. And the bounds in Eq. 9.5, which act as "big-M" constants, are replaced by the tightest bounds the network allows, from FVA, rather than ±1000.
+MILPs are much harder than LPs or QPs, and the solution time grows quickly with the number of binary variables. Two choices keep this example fast: we look at only five deletions, and we replace the bounds in Eq. 9.5, which act as "big-M" constants, by the tightest bounds the network allows, from FVA, in place of ±1000.
 
 ::: {.panel-tabset group="language"}
 ## MATLAB
@@ -137,7 +137,7 @@ To try E-Flux on real data, we use RNA-seq profiles from the PRECISE compendium 
 ![](/examples/extending-cbm/eflux/out/python/fig-eflux.png)
 :::
 
-At first sight, E-Flux does well: its predicted growth rates correlate with the measured ones, with $r = 0.78$ when expression is used as TPM, as in the original method, and $r = 0.84$ with log-transformed values. Look closely at the plots, though. Both correlations come almost entirely from acetate: E-Flux correctly predicts that *E. coli* grows far more slowly on acetate than on any of the sugars, but it does not order the sugars themselves. With log-transformed values, glucose, the fastest in the experiments, is predicted to be the slowest of the sugars; with TPM, xylose falls well below the other sugars, although it is measured to grow faster than glycerol. Six samples are far too few to choose between the two transformations, and the choice clearly changes the predictions. This is typical of methods that integrate omic data: they capture large differences between conditions quite well, but the finer predictions depend on choices (normalisation, thresholds, how missing genes are treated) that are not dictated by the biology.
+At first sight, E-Flux does well: its predicted growth rates correlate with the measured ones, with $r = 0.78$ when expression is used as TPM, as in the original method, and $r = 0.84$ with log-transformed values. Look closely at the plots, though. Both correlations come almost entirely from acetate: E-Flux correctly predicts that *E. coli* grows far more slowly on acetate than on any of the sugars, but it does not order the sugars and glycerol among themselves. With log-transformed values, glucose, the fastest in the experiments, is predicted to be the slowest of these four; with TPM, xylose falls well below the other three, although it is measured to grow faster than glycerol. Six samples are far too few to choose between the two transformations, and the choice clearly changes the predictions. This is typical of methods that integrate omic data: they capture large differences between conditions quite well, but the finer predictions depend on choices (normalisation, thresholds, how missing genes are treated) that are not dictated by the biology.
 
 ### Tissue-specific models
 
@@ -145,7 +145,7 @@ At first sight, E-Flux does well: its predicted growth rates correlate with the 
 
 ## Compartmentalised models
 
-The community model of §11.1.3 treats each organism as a compartment of a larger model.
+*There is no code for this section; see the book.* Note, though, that the community model of §11.1.3 treats each organism as a compartment of a larger model.
 
 ## Dynamic Flux Balance Analysis (dFBA)
 
@@ -177,7 +177,7 @@ We start with 0.01 g/L of cells in 20 mM glucose and limit oxygen uptake to 15 m
 ![](/examples/extending-cbm/dynamic_fba/out/python/fig-dynamic-fba.png)
 :::
 
-The culture grows exponentially on glucose at 0.72 per hour. With oxygen limited, the fastest way to grow is to oxidise only part of the glucose, and to secrete the rest of its carbon as acetate. This **overflow metabolism** is well known in *E. coli*, and FBA predicts it quantitatively [@varma1994]. By the time the glucose is used up, about 7 hours in, acetate has accumulated to 13.5 mM. The cells then switch to acetate, growing about ten times more slowly, until they have used up nearly all of it. This two-phase growth, or **diauxie**, emerges here from optimisation alone, without any model of the regulation that controls it in real cells.
+The culture grows exponentially on glucose at 0.72 per hour. With oxygen limited, the fastest way to grow is to oxidise only part of the glucose, and to secrete the rest of its carbon as acetate. This **overflow metabolism** is well known in *E. coli*, and FBA predicts it quantitatively [@varma1994]. By the time the glucose is used up, about 7 hours in, acetate has accumulated to 13.5 mM. The cells then switch to acetate, growing about ten times more slowly, until the acetate, too, runs out, at about 8.7 hours. This two-phase growth, or **diauxie**, emerges here from optimisation alone, without any model of the regulation that controls it in real cells.
 
 The step size matters: each FBA problem assumes fluxes stay constant for $\Delta t$, so the step must be short compared with the time over which concentrations change. At $\Delta t = 0.01$ h, the simulation solves 1200 linear programmes, which takes a few seconds.
 
@@ -211,7 +211,7 @@ The network of Figure 9.2 in the book is small enough that we can find its EFMs 
 ![](/examples/extending-cbm/efms/out/python/fig-efms.png){width=85%}
 :::
 
-The code finds the seven EFMs of Figure 9.2, numbered as in the book, and confirms that four of them ($EFM1^*$ to $EFM4^*$) are extreme pathways. $EFM5$, $EFM6$ and $EFM7$ are each the sum of $EFM1^*$ and one of the others; in $EFM6$ and $EFM7$, the flux through $v_{3r}$ cancels in the sum. Note that this approach tests all $2^{11} = 2048$ sets of reactions. The number of sets doubles with every reaction added, so even the *E. coli* core model, with 95 reactions, is far out of reach. Practical tools, such as efmtool [@terzer2008], use the double description method instead, and can enumerate the very large numbers of EFMs of networks of that size.
+The code finds the seven EFMs of Figure 9.2, numbered as in the book, and confirms that four of them ($EFM1^*$ to $EFM4^*$) are extreme pathways. $EFM5$, $EFM6$ and $EFM7$ are each the sum of $EFM1^*$ and one of the others: in every such sum, the flux through $v_{4r}$ cancels, and in $EFM6$ and $EFM7$ that through $v_{3r}$ cancels as well. Note that this approach tests all $2^{11} = 2048$ sets of reactions. The number of sets doubles with every reaction added, so even the *E. coli* core model, with 95 reactions, is far out of reach. Practical tools, such as efmtool [@terzer2008], use the double description method instead, and can enumerate the very large numbers of EFMs of networks of that size.
 
 ### Applications
 
@@ -220,13 +220,13 @@ A very interesting application of EFMs is the calculation of maximal molar yield
 ## Exercises {.unnumbered}
 
 1. Use the linear version of MoMA, which minimises $\sum_j |v_j - w_j|$, and compare its predictions with the quadratic version. (Write $|v_j - w_j|$ with auxiliary variables, as in parsimonious FBA.) Why can its solution be non-unique?
-2. MoMA's predictions depend on the reference $\mathbf{w}$. Repeat the comparison with the parsimonious FBA solution (@sec-perturbations) as reference. Which predictions change? (Book Exercise 9.1 asks how the reference should be chosen when wild-type fluxes have been measured, all or some of them; see also §9.1.1.)
+2. MoMA's predictions depend on the reference $\mathbf{w}$. Repeat the comparison with the parsimonious FBA solution (@sec-cbm, §8.8.5) as reference. Which predictions change? (Book Exercise 9.1 asks how the reference should be chosen when wild-type fluxes have been measured, all or some of them; see also §9.1.1.)
 3. In dynamic FBA, raise the oxygen limit to 20 and then to 25 mmol/gDW/h. How do the acetate peak and the total biomass change? At what limit does acetate disappear altogether?
 4. Repeat the dynamic FBA simulation with step sizes of 0.1 and 0.5 h. How large can the step be before the results change noticeably?
 5. Simulate a fed-batch culture by adding glucose at a constant rate after the first 6 hours. Can you choose a feeding rate that avoids acetate production?
 6. Book Exercise 9.7: start from 0.025 g/L of cells in 15 mM glucose, with glucose and oxygen uptake both limited to 10 mmol/gDW/h, and follow glucose, acetate and formate for 8 hours. At this oxygen limit, FVA shows that the secretion rates of acetate and formate are not unique at maximum growth. How would you make the simulation give the same answer in any solver?
-7. Book Exercise 9.6 uses OptKnock (§9.3.1) to find three deletions that make the core model secrete lactate anaerobically. Check any proposed set of deletions with the FBA code of this chapter: what is the growth rate, and the lactate secretion at maximum growth?
+7. Book Exercise 9.6, which we took up in §9.3.1, can also be approached by hand. Propose your own set of three deletions for anaerobic lactate production, and check it with FBA and FVA: what is the growth rate, and the range of lactate secretion at maximum growth? Is your design growth-coupled?
 
 ## Going further {.unnumbered}
 
-Many other methods predict how fluxes respond to perturbations: ROOM minimises the number of significant flux changes (book, §9.2), and others integrate regulatory rules or gene expression data with the constraints (§9.4). The COBRA Toolbox implements the static-optimisation dFBA in `dynamicFBA.m`. Dynamic FBA has also been extended to communities of several species growing together; @sec-communities builds a community model.
+MoMA, ROOM and OptKnock are only a few of the many methods that predict how fluxes respond to perturbations; others integrate regulatory rules (rFBA, book §9.4.1) or build tissue-specific models from omic data (§9.4.3). The COBRA Toolbox implements the static-optimisation dFBA in `dynamicFBA.m`. Dynamic FBA has also been extended to communities of several species growing together; @sec-communities builds a community model.

@@ -50,7 +50,7 @@ Assortativity is the correlation coefficient between the degrees of the nodes at
 ::: {.panel-tabset group="language"}
 ## MATLAB
 
-*Needs only base MATLAB.*
+*Core MATLAB only.*
 
 ```{.matlab include="/examples/networks/assortativity/assortativity.m"}
 ```
@@ -99,9 +99,9 @@ Real networks often combine short paths with high clustering. Watts and Strogatz
 ![](/examples/networks/small_world/out/python/fig-small-world.png)
 :::
 
-The two curves fall at very different rewiring probabilities. Rewiring 1% of the edges already shortens the typical path by about 70%, because each rewired edge is a shortcut across the ring, while clustering hardly changes, because each rewired edge removes only a few of the many triangles around it. Between $p \approx 0.001$ and $p \approx 0.1$, the networks are **small worlds**: clustered like a lattice, with paths almost as short as in a random network. At $p = 1$, they are essentially random, and their clustering coefficient and path length are close to those of Erdős–Rényi networks with the same numbers of nodes and edges (about 0.02 and 2.9).
+The two curves fall at very different rewiring probabilities. Rewiring 1% of the edges already shortens the typical path by about 70%, because each rewired edge is a shortcut across the ring, while clustering hardly changes, because each rewired edge removes only a few of the many triangles around it. Between about $p = 0.01$ and $p = 0.1$, the networks are **small worlds**: clustered almost like a lattice, with paths far shorter than in the lattice and approaching those of a random network. At $p = 1$, they are essentially random, and their clustering coefficient and path length are close to those of Erdős–Rényi networks with the same numbers of nodes and edges (about 0.02 and 2.9).
 
-Since these networks are random, MATLAB and Python, which draw different random numbers, give slightly different results; the automated checks compare the averages, within 10%.
+Since these networks are random, MATLAB and Python, which draw different random numbers, give slightly different results; the automated checks compare the averages at $p = 0.1$ and $p = 1$, within 10%.
 
 ### Scale-free networks
 
@@ -146,7 +146,7 @@ We find communities in the karate club (§2.4.3) by maximising modularity, using
 ::: {.panel-tabset group="language"}
 ## MATLAB
 
-*Needs only base MATLAB.*
+*Core MATLAB only.*
 
 ```{.matlab include="/examples/networks/modularity/modularity.m"}
 ```
@@ -163,7 +163,7 @@ We find communities in the karate club (§2.4.3) by maximising modularity, using
 ![](/examples/networks/modularity/out/python/fig-modularity.png){width=70%}
 :::
 
-The first split already recovers the two factions of the club, misplacing only member 9 ($Q = 0.372$). Splitting further yields four communities, with $Q = 0.393$: each faction divides into an inner circle and a looser periphery. Newman reports a slightly higher modularity, 0.419, after an additional "fine-tuning" step that moves individual nodes between communities; we leave that as an exercise. Note also that the leading eigenvector of $\mathbf{B}$ and the Fiedler vector of $\mathbf{L}$ (§2.4.3) disagree about member 3: both methods are approximations to an intractable problem.
+The first split already recovers the two factions of the club, misplacing only member 9 ($Q = 0.371$). Splitting further yields four communities, with $Q = 0.393$: each faction divides into two smaller groups. On the instructor's side, for example, members 5, 6, 7, 11 and 17 form a tight group of their own, attached to the rest of the club almost only through member 1. Newman reports a slightly higher modularity, 0.419, after an additional "fine-tuning" step that moves individual nodes between communities; we leave that as an exercise. Note also that the leading eigenvector of $\mathbf{B}$ and the Fiedler vector of $\mathbf{L}$ (§2.4.3) disagree about member 3: both methods are approximations to an intractable problem.
 
 ### Similarity-based clustering
 
@@ -188,7 +188,7 @@ The transcriptional regulatory network of *E. coli* is the network in which moti
 ::: {.panel-tabset group="language"}
 ## MATLAB
 
-*Needs only base MATLAB.*
+*Core MATLAB only.*
 
 ```{.matlab include="/examples/networks/motifs/motifs.m"}
 ```
@@ -205,7 +205,7 @@ The transcriptional regulatory network of *E. coli* is the network in which moti
 ![](/examples/networks/motifs/out/python/fig-motifs.png)
 :::
 
-The network has 1996 feed-forward loops, against $761 \pm 100$ in the randomised networks: a $Z$-score of 12, and a clear motif, as Shen-Orr et al. first showed. Of the FFLs whose three edges all have known signs, 907 are coherent (the direct path from $X$ to $Z$ has the same sign as the indirect one, through $Y$) and 603 incoherent; recall from the book that the two types have quite different dynamics, a sign-sensitive delay and a pulse generator. Feedback loops, on the other hand, are rare: only 12, although this is still more than in the randomised networks. In *E. coli*, feedback is mostly found elsewhere: 127 regulators regulate their own genes, most of them negatively.
+The network has 1996 feed-forward loops, against $761 \pm 100$ in the randomised networks: a $Z$-score of 12, and a clear motif, as Shen-Orr et al. first showed [@shenorr2002]. Of the FFLs whose three edges all have known signs, 907 are coherent (the direct path from $X$ to $Z$ has the same sign as the indirect one, through $Y$) and 603 incoherent; recall from the book that the two types have quite different dynamics, a sign-sensitive delay and a pulse generator, respectively. Feedback loops, on the other hand, are rare: only 12, although this is still more than in the randomised networks. In *E. coli*, feedback is mostly found elsewhere: 127 regulators regulate their own genes, most of them negatively.
 
 ### Randomising networks
 
@@ -224,7 +224,7 @@ We remove an increasing fraction of the proteins of the *E. coli* STRING network
 ::: {.panel-tabset group="language"}
 ## MATLAB
 
-*Needs only base MATLAB.*
+*Core MATLAB only.*
 
 ```{.matlab include="/examples/networks/attacks/attacks.m"}
 ```
@@ -241,13 +241,13 @@ We remove an increasing fraction of the proteins of the *E. coli* STRING network
 ![](/examples/networks/attacks/out/python/fig-attacks.png){width=65%}
 :::
 
-Both networks hold together remarkably well under random failures: the largest component simply shrinks with the number of nodes removed. Under attack, the STRING network survives the loss of a surprising number of hubs, because it is dense (each protein has 16 partners on average), but it collapses once about 60% of its proteins are gone; the random graph lasts until about 80%. The difference is the heterogeneity of the degrees: in the STRING network, the hubs hold together much more of the network than they do in a random graph. In sparser networks, such as the Internet and the World Wide Web studied by Albert, Jeong and Barabási, the collapse under attack comes much earlier.
+Both networks hold together remarkably well under random failures: the largest component simply shrinks with the number of nodes removed. Under attack, the STRING network survives the loss of a surprising number of hubs, because it is dense (each protein has 16 partners on average), but it collapses once about 60% of its proteins are gone; the random graph lasts until about 80%. The difference is the heterogeneity of the degrees: in the STRING network, the hubs hold together much more of the network than they do in a random graph. In sparser networks, such as the Internet and the World Wide Web studied by Albert, Jeong and Barabási [@albert2000], the collapse under attack comes much earlier.
 
 ## Troubleshooting
 
 ### Is your network really scale-free?
 
-Plotting the fraction of nodes with degree *at least* $k$ (right panel), in place of the fraction with degree exactly $k$, avoids most of the noise in the tail, where only one or two nodes have each degree. Even so, deciding whether a real network is truly scale-free from a straight-looking line on a log–log plot is risky; the book discusses better tests (§3.6.1).
+Plotting the fraction of nodes with degree *at least* $k$ (right panel of the figure in §3.2.3), in place of the fraction with degree exactly $k$, avoids most of the noise in the tail, where only one or two nodes have each degree. Even so, deciding whether a real network is truly scale-free from a straight-looking line on a log–log plot is risky; the book discusses better tests (§3.6.1).
 
 ## Software tools
 
@@ -265,4 +265,4 @@ Plotting the fraction of nodes with degree *at least* $k$ (right panel), in plac
 
 ## Going further {.unnumbered}
 
-Detecting communities and network motifs (book, §3.3–3.4) builds on the same tools, together with randomised networks that preserve each node's degree. Chapter 4 of the book applies these ideas to biological questions, from predicting essential genes to finding disease modules.
+Chapter 4 of the book applies these ideas to biological questions, from predicting essential genes to finding disease modules; @sec-network-applications works through several of them in code.

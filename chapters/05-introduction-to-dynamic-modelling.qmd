@@ -34,7 +34,7 @@ $$
 v = \frac{v_\text{max}[S]}{K_M + [S]}, \qquad v_\text{max} = k_2 E_0, \qquad K_M = \frac{k_{-1} + k_2}{k_1}.
 $$
 
-The rate law is so widely used that it is easy to forget it is an approximation. The code below solves both models, for a small and a large amount of enzyme, with $K_M = 2$ mM and $S_0 = 10$ mM.
+The rate law is so widely used that it is easy to forget it is an approximation. Let us solve both models, for a small and a large amount of enzyme, with $K_M = 2$ mM and $S_0 = 10$ mM.
 
 ::: {.panel-tabset group="language"}
 ## MATLAB
@@ -60,11 +60,11 @@ With little enzyme, the two models are indistinguishable: they never differ by m
 
 ### Co-operativity: Hill kinetics
 
-Exercise 5 replaces the Michaelis–Menten rate law of the example above with Hill kinetics.
+There is no separate example for this section; in Exercise 5, we replace the Michaelis–Menten rate law of the example above with a Hill rate law and compare the time courses.
 
 ### An illustrative example: a three-node oscillator
 
-Exercise 7 asks you to simulate this oscillator.
+There is no separate example for this section; Exercise 7 invites you to simulate this oscillator yourself.
 
 ## Generalised rate equations
 
@@ -75,7 +75,7 @@ Where do the kinetic orders of an S-system come from? One answer is that they ar
 ::: {.panel-tabset group="language"}
 ## MATLAB
 
-*Needs only base MATLAB.*
+*Core MATLAB only.*
 
 ```{.matlab include="/examples/odes/s_system/s_system.m"}
 ```
@@ -156,7 +156,7 @@ You will rarely write your own solver. MATLAB and SciPy provide well-tested solv
 
 ### Handling stiff equations
 
-The quasi-steady-state approximation works because binding is fast and catalysis is slow. That same separation of time scales causes trouble for numerical solvers. Below, the enzyme model is solved again with $E_0 \ll S_0$, while binding and unbinding ($k_1 = k_{-1}$) are made faster and faster.
+The quasi-steady-state approximation works because binding is fast and catalysis is slow. That same separation of time scales causes trouble for numerical solvers. Let us solve the enzyme model again, with $E_0 \ll S_0$, making binding and unbinding ($k_1 = k_{-1}$) faster and faster.
 
 ::: {.panel-tabset group="language"}
 ## MATLAB
@@ -191,7 +191,7 @@ Data never pin down a model completely. One practical way to see what the data d
 ::: {.panel-tabset group="language"}
 ## MATLAB
 
-*Needs only base MATLAB.*
+*Core MATLAB only.*
 
 ```{.matlab include="/examples/odes/ensemble/ensemble.m"}
 ```
@@ -299,7 +299,7 @@ the mean number of proteins at steady state is $k_m k_p / \gamma_m \gamma_p$, an
 ![](/examples/stochastic/gene_expression/out/python/fig-gene-expression.png)
 :::
 
-Both genes average about 50 proteins, but gene B jumps up in bursts, each time one of its rare mRNAs is translated many times over, and then decays; its Fano factor is about 24, against about 3 for gene A, and its distribution is wide and skewed. Ozbudak and colleagues found exactly this in *Bacillus subtilis*: increasing translation increased noise far more than increasing transcription did [@ozbudak2002]. Cells can therefore tune their noise, and not just their mean expression, through the balance of transcription and translation.
+Both genes average about 50 proteins, but gene B jumps up in bursts, each time one of its rare mRNAs is translated many times over, and then decays; its Fano factor is about 23, against about 3 for gene A (the theory gives 23.7 and 3.3), and its distribution is wide and skewed. Ozbudak and colleagues found exactly this in *Bacillus subtilis*: increasing translation increased noise far more than increasing transcription did [@ozbudak2002]. Cells can therefore tune their noise, as well as their mean expression, through the balance of transcription and translation.
 
 Since MATLAB and Python draw different random numbers, the two versions give slightly different estimates. The automated checks require both to be within 10% of theory for the mRNA example, and within 15% for the noisier protein estimates.
 
@@ -319,7 +319,7 @@ Noise is not always a nuisance. In circuits with two stable states, such as the 
 10. For the gene-expression model, vary $k_p$ from 1 to 50 while adjusting $k_m$ to keep the mean at 50 proteins. Plot the Fano factor against the burst size $k_p/\gamma_m$ and compare with the theory.
 11. Simulating every reaction becomes slow when molecules are abundant. Look up the **tau-leaping** method, which fires many reactions in each time step, and implement it for the mRNA example. How large can the time step be before the distribution is visibly wrong?
 
-Exercises 8–11 refer to the section on stochastic simulation.
+Exercises 8–11 refer to the section on stochastic simulation (§5.A).
 
 ## Going further {.unnumbered}
 

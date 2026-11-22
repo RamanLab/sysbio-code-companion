@@ -38,7 +38,7 @@ Each of the three classical linearisations of the Michaelis–Menten equation tu
 ![](/examples/parameter-estimation/linear_regression/out/python/fig-linear-regression.png)
 :::
 
-For the exercise data, the Lineweaver–Burk plot gives $K_M = 1.04$ mM, whereas non-linear regression gives 0.82 mM; the other two plots fall in between. The simulations show that this is no accident. A reciprocal blows up the noise in the slowest rates, at the lowest substrate concentrations, and these points then dominate the fit (see the leftmost point in the double reciprocal plot). Across the 200 datasets, the median error in $K_M$ is 28% for Lineweaver–Burk, against 9% for non-linear regression, and the spread of its estimates is far wider. Hanes–Woolf comes surprisingly close to non-linear regression here; even so, with non-linear regression a few lines of code away, there is little reason to use any of the transformations.
+For the exercise data, the Lineweaver–Burk plot gives $K_M = 1.04$ mM, whereas non-linear regression gives 0.82 mM; the other two plots fall in between. The simulations show that this is no accident. A reciprocal blows up the noise in the slowest rates, at the lowest substrate concentrations, and these points then dominate the fit (see the rightmost point in the double reciprocal plot, at the lowest substrate concentration). Across the 200 datasets, the median error in $K_M$ is 28% for Lineweaver–Burk, against 9% for non-linear regression, and the spread of its estimates is far wider; for a few datasets, it even returns a negative $K_M$. Hanes–Woolf comes surprisingly close to non-linear regression here; even so, with non-linear regression a few lines of code away, there is little reason to use any of the transformations.
 
 ### Least squares
 
@@ -61,11 +61,11 @@ If the measurement errors are independent and normally distributed with standard
 
 Both MATLAB and SciPy have solvers made for least-squares problems. They take a function that returns the vector of weighted *residuals*, one per data point, and minimise the sum of their squares. They use the structure of the problem to converge quickly, but, like all local methods, they need a starting guess.
 
-| | MATLAB | Python (SciPy) |
+| | MATLAB | Python (`scipy.optimize`) |
 |---|---|---|
-| Least squares (residual vector) | `lsqnonlin` (Optimization Toolbox) | `scipy.optimize.least_squares` |
-| General minimisation, no derivatives | `fminsearch` (core MATLAB) | `scipy.optimize.minimize(method="Nelder-Mead")` |
-| Global search | `ga`, `particleswarm` (Global Optimization Toolbox) | `scipy.optimize.differential_evolution` |
+| Least squares (residual vector) | `lsqnonlin` (Optimization Toolbox) | `least_squares` |
+| General minimisation, no derivatives | `fminsearch` (core MATLAB) | `minimize(method="Nelder-Mead")` |
+| Global search | `ga`, `particleswarm` (Global Optimization Toolbox) | `differential_evolution` |
 
 : Optimisers used for parameter estimation. {#tbl-optimisers}
 
@@ -93,7 +93,7 @@ We fit each dataset, D1, D2 and both together, from the same eight starting gues
 
 With both datasets, all eight starts arrive at the same answer, $v_\text{max} = 25.8$ mmol L^−1^ s^−1^, $K_M = 11.6$ mM and $K_I = 36.8$ mM, and the curves follow the data well (left panel).
 
-With D1 alone, something quite different happens. All eight starts again reach exactly the same SSE and the same $v_\text{max}$, and every one of them reports a successful fit. Yet $K_M$ ranges from about 1 to 15 mM and $K_I$ from below 1 to several hundred mM. The right panel shows why. At a single inhibitor concentration, $K_M$ and $K_I$ enter the rate law only through the combination
+With D1 alone, something quite different happens. All eight starts again reach exactly the same SSE and the same $v_\text{max}$, and every one of them reports a successful fit. Yet $K_M$ ranges from about 1 to 15 mM, and $K_I$ from below 1 mM to tens or even hundreds of mM; the two languages stop at different points, because their solvers take different paths. The right panel shows why. At a single inhibitor concentration, $K_M$ and $K_I$ enter the rate law only through the combination
 
 $$
 K_M^\text{app} = K_M\left(1 + \frac{I}{K_I}\right),
@@ -135,7 +135,7 @@ The data, measured every half hour for 12 hours with 10% error, are synthetic, m
 ![](/examples/parameter-estimation/fit_timecourse/out/python/fig-fit-timecourse.png)
 :::
 
-With both species measured, all eight fits find the same estimates, close to the true values: $k_m = 9.50$, $g_m = 0.963$, $k_p = 5.23$ and $g_p = 0.205$. With the protein alone, all eight fits are equally good, but they disagree completely about $k_m$ and $k_p$, which range over a factor of 30 (right). Only their product is determined, $k_m k_p \approx 55.6$. The reason is clear from the equations: doubling $k_m$ doubles the mRNA, and halving $k_p$ then restores the protein exactly. The two degradation rates are identifiable as a pair, 0.156 and 1.27 per hour, but the protein data cannot say which belongs to the mRNA and which to the protein: the solution for $p(t)$ is unchanged when $g_m$ and $g_p$ are swapped, and the fits come out either way round. Note, too, that these estimates lie further from the true values than those from both species: with less information, the same noise moves the estimates more.
+With both species measured, all eight fits find the same estimates, close to the true values: $k_m = 9.50$, $g_m = 0.963$, $k_p = 5.23$ and $g_p = 0.205$. With the protein alone, all eight fits are equally good, but they disagree completely about $k_m$ and $k_p$, which range over a factor of 20 or more (right). Only their product is determined, $k_m k_p \approx 55.6$. The reason is clear from the equations: doubling $k_m$ doubles the mRNA, and halving $k_p$ then restores the protein exactly. The two degradation rates are identifiable as a pair, 0.156 and 1.27 per hour, but the protein data cannot say which belongs to the mRNA and which to the protein: the solution for $p(t)$ is unchanged when $g_m$ and $g_p$ are swapped, and the fits come out either way round. Note, too, that these estimates lie further from the true values than those from both species: with less information, the same noise moves the estimates more.
 
 This is the time-course version of the lesson of the inhibition example: a model can fit the data perfectly while some of its parameters remain undetermined. Measuring a second species, or knowing one parameter from a separate experiment (an mRNA half-life, say), restores identifiability.
 
@@ -209,7 +209,7 @@ The algorithm below is one of the simplest of them, a (10 + 40) evolution strate
 ![](/examples/parameter-estimation/evolutionary/out/python/fig-evolutionary.png)
 :::
 
-Starting from parameter sets scattered across more than three orders of magnitude, the population gathers into the basin we saw in the landscape and closes in on the least-squares estimate. After 60 generations, or 2450 evaluations of the SSE, the best parameter set is within a few per cent of the least-squares estimates, and its SSE is within 0.02% of the least-squares minimum. Notice that, on the way, the parents spread out along the same valley as before: the algorithm finds $K_M^\text{app}$ well before it pins down $K_M$ and $K_I$ separately.
+Starting from parameter sets scattered across more than three orders of magnitude, the population gathers into the basin we saw in the landscape and closes in on the least-squares estimate. After 60 generations, or 2450 evaluations of the SSE, the best parameter set is within a few per cent of the least-squares estimates, and its SSE is within 0.02% of the least-squares minimum. Note that, on the way, the parents spread out along the same valley as before: the algorithm finds $K_M^\text{app}$ well before it pins down $K_M$ and $K_I$ separately.
 
 MATLAB and Python draw different random numbers, so the two versions follow different paths and end at slightly different points; the automated checks require both to land within 5% of the least-squares optimum. Run either version with a few different seeds to see how much the result varies.
 
@@ -241,7 +241,7 @@ The inhibition data of §6.2.2 were collected for an enzyme with a *competitive*
 ![](/examples/parameter-estimation/model_selection/out/python/fig-model-selection.png)
 :::
 
-The results are instructive. Uncompetitive inhibition is clearly worse, and its parameters are strongly correlated ($|\kappa| = 0.99$). Mixed inhibition fits the data no better than the simpler models, despite its extra parameter, and its parameters are weakly determinable ($|\kappa| > 0.95$; note the uncertainty in $K_{I2}$). However, competitive and non-competitive inhibition fit the data *equally* well: their AICc values differ by less than 0.4, and the Akaike weights are 0.36 and 0.42. These data simply cannot distinguish between the two mechanisms. This is exactly the question posed in Exercise 6.1(b): to discriminate, we need more informative experiments, for instance rates at higher substrate concentrations, where a competitive inhibitor is overcome and a non-competitive one is not, or rates without any inhibitor at all.
+The results are instructive. Uncompetitive inhibition fits worse, with an Akaike weight of only 0.09, and its parameters are strongly correlated ($|\kappa| = 0.99$). Mixed inhibition fits the data no better than the simpler models, despite its extra parameter, and its parameters are weakly determinable ($|\kappa| > 0.95$; note the uncertainty in $K_{I2}$). However, competitive and non-competitive inhibition fit the data *equally* well: their AICc values differ by less than 0.4, and the Akaike weights are 0.36 and 0.42. These data simply cannot distinguish between the two mechanisms. This is exactly the question posed in Exercise 6.1(b): to discriminate, we need more informative experiments, for instance rates at higher substrate concentrations, where a competitive inhibitor is overcome and a non-competitive one is not, or rates without any inhibitor at all.
 
 ### Sensitivity and robustness of biological models
 
@@ -250,7 +250,7 @@ We compute the local sensitivities of Eq. 6.12 for the gene expression model of 
 ::: {.panel-tabset group="language"}
 ## MATLAB
 
-*Needs only base MATLAB.*
+*Core MATLAB only.*
 
 ```{.matlab include="/examples/parameter-estimation/sensitivity/sensitivity.m"}
 ```
@@ -267,7 +267,7 @@ We compute the local sensitivities of Eq. 6.12 for the gene expression model of 
 ![](/examples/parameter-estimation/sensitivity/out/python/fig-sensitivity.png)
 :::
 
-The two synthesis rates, $k_m$ and $k_p$, enter the model linearly, so the protein level is always exactly proportional to each (sensitivity 1). The degradation rates matter little early on, and increasingly so as the system approaches steady state, where $p^* = k_mk_p/(g_mg_p)$ and the sensitivities tend to $+1, -1, +1, -1$, a useful check on the code. Note also that the protein responds to $g_m$ much sooner than to $g_p$: mRNA turns over in about an hour, but protein takes several. Global sensitivity analyses (§6.4.2.2) repeat such calculations across many parameter sets, sampled from the whole parameter space.
+The two synthesis rates, $k_m$ and $k_p$, enter the model linearly, so the protein level is always exactly proportional to each (sensitivity 1; in the right panel, the two lines coincide). The degradation rates matter little early on, and increasingly so as the system approaches steady state, where $p^* = k_mk_p/(g_mg_p)$ and the sensitivities tend to $+1, -1, +1, -1$, a useful check on the code. Note also that the protein responds to $g_m$ much sooner than to $g_p$: mRNA turns over in about an hour, but protein takes several. Global sensitivity analyses (§6.4.2.2) repeat such calculations across many parameter sets, sampled from the whole parameter space.
 
 ## Troubleshooting
 
@@ -282,7 +282,7 @@ Near the optimum, the cost function is approximately a quadratic form, with Hess
 ::: {.panel-tabset group="language"}
 ## MATLAB
 
-*Needs only base MATLAB.*
+*Core MATLAB only.*
 
 ```{.matlab include="/examples/parameter-estimation/sloppiness/sloppiness.m"}
 ```
@@ -299,7 +299,7 @@ Near the optimum, the cost function is approximately a quadratic form, with Hess
 ![](/examples/parameter-estimation/sloppiness/out/python/fig-sloppiness.png){width=55%}
 :::
 
-With both mRNA and protein, the eigenvalues span two and a half orders of magnitude ($\lambda_{min}/\lambda_{max} = 0.0034$). By the criterion of the book, the model is just short of sloppy; even so, the sloppiest direction (all four parameters changing together, synthesis and degradation of protein against those of mRNA) is far less constrained than the stiffest. With protein data alone, one eigenvalue is zero, up to rounding error. Its eigenvector, $\log k_m$ up and $\log k_p$ down by the same amount, is a direction in which the cost does not change at all: the protein data fix only the product $k_mk_p$, exactly as we found by fitting in §6.2.2. Here, sloppiness has become non-identifiability, and no amount of protein data can cure it; only a different measurement, of mRNA, can.
+With both mRNA and protein, the eigenvalues span two and a half orders of magnitude ($\lambda_{min}/\lambda_{max} = 0.0034$). By the criterion of the book (the dotted line, at $10^{-3}$), the model is just short of sloppy; even so, the sloppiest direction (all four parameters changing together, synthesis and degradation of protein against those of mRNA) is far less constrained than the stiffest. With protein data alone, one eigenvalue is zero, up to rounding error; it cannot be drawn on a logarithmic scale, which is why the figure shows only three for this experiment. Its eigenvector, $\log k_m$ up and $\log k_p$ down by the same amount, is a direction in which the cost does not change at all: the protein data fix only the product $k_mk_p$, exactly as we found by fitting in §6.2.2. Here, sloppiness has become non-identifiability, and no amount of protein data can cure it; only a different measurement, of mRNA, can.
 
 ### Choosing a search algorithm
 

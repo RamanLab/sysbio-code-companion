@@ -103,7 +103,7 @@ R1 and the route R2 → R3 both turn A into ATP + B, so the cell can split the 6
 
 The same ideas carry over unchanged to real networks. The *E. coli* core model [@orth2010] has 95 reactions, 72 metabolites and 137 genes, covering glycolysis, the pentose phosphate pathway, the TCA cycle and oxidative phosphorylation. At this scale we no longer write $\mathbf{S}$ by hand. A standard model file (SBML) is read by a modelling package, COBRApy in Python and the COBRA Toolbox in MATLAB, which builds and solves the LP for us.
 
-Two things to know when reading the code:
+Note two things before we read the code:
 
 * **Exchange reactions** such as `EX_glc__D_e` (glucose) and `EX_o2_e` (oxygen) are written as *secretion*, so **uptake is a negative flux**. Allowing up to 10 mmol/gDW/h of glucose uptake therefore means setting the lower bound to −10.
 * The model includes an **ATP maintenance** reaction, `ATPM`, with a lower bound of 8.39 mmol/gDW/h: ATP the cell must spend just to stay alive, whether it grows or not.
@@ -132,7 +132,7 @@ With glucose uptake capped at 10 mmol/gDW/h, the predicted growth rate is 0.874 
 
 * **At zero glucose the problem is infeasible.** With no carbon source, nothing can meet the ATP maintenance demand, so no flux vector satisfies all the constraints, and FBA cannot return any growth rate, even zero. The curves start only once glucose uptake covers maintenance, which takes more glucose without oxygen than with it.
 * **When glucose is the only limit, growth rises in a straight line.** This is a general property of linear programs: scaling the one binding constraint scales the solution.
-* **When oxygen is also limited** (the middle curve), the line bends at the point where oxygen runs out, and beyond it each extra unit of glucose buys less growth. A different constraint has become binding.
+* **When oxygen is also limited** (the middle curve), the line bends where oxygen runs out, at about 4 mmol/gDW/h of glucose, and beyond it each extra unit of glucose buys less growth. A different constraint has become binding.
 
 ## Flux Variability Analysis (FVA)
 
@@ -146,7 +146,7 @@ $$
 \mathbf{c}^\top\mathbf{v} \ge \alpha f^*.
 $$
 
-That is two LPs per reaction. The code below runs FVA at $\alpha = 1$ (exactly optimal growth) and $\alpha = 0.9$.
+That is two LPs per reaction. Let us run FVA on the toy network at $\alpha = 1$ (exactly optimal growth) and $\alpha = 0.9$.
 
 ::: {.panel-tabset group="language"}
 ## MATLAB
@@ -174,7 +174,7 @@ At optimal growth, $v_1$, $v_2$ and $v_3$ can each take any value between 0 and 
 
 ### Blocked reactions and dead-end metabolites
 
-A reaction is *blocked* if it cannot carry flux at steady state, whatever the bounds allow. For the small network of Figure 8.3, the reduced row echelon form of $\mathbf{S}$ (Eq. 8.14) shows this directly: a row with a single non-zero entry forces that flux to zero. The code finds $v_3$ and $b_3$ this way, and confirms them by FVA with no objective. It then looks for dead-end metabolites in the *E. coli* core model, metabolites that are only produced or only consumed.
+A reaction is *blocked* if it cannot carry flux at steady state, whatever the bounds allow. For the small network of Figure 8.3, the reduced row echelon form of $\mathbf{S}$ (Eq. 8.14) shows this directly: a row with a single non-zero entry forces that flux to zero. Our code finds $v_3$ and $b_3$ this way, and confirms them by FVA with no objective. It then looks for dead-end metabolites in the *E. coli* core model, metabolites that are only produced or only consumed.
 
 ::: {.panel-tabset group="language"}
 ## MATLAB
@@ -201,7 +201,7 @@ Dead-end metabolites (§8.8.1) are where gap-filling starts: each one marks a re
 
 ### Multiple solutions
 
-The toy example of §8.6 has many optimal flux distributions; FVA (§8.7) shows how far each flux can vary.
+Remember, the toy example of §8.6 has many optimal flux distributions; FVA (§8.7) shows how far each flux can vary among them.
 
 ### Loops
 
@@ -230,7 +230,7 @@ The network of Figure 8.4 contains a cycle, $v_3$ and $v_4$, that is balanced on
 
 ### Parsimonious FBA (pFBA)
 
-pFBA (Eq. 8.15) picks, among all flux distributions with optimal growth, one with the least total flux, on the argument that the cell avoids making enzymes it does not need. The code above, for the *E. coli* core model on glucose, finds a growth rate of 0.874 h^−1^ and a minimal total flux of 518.4 mmol/gDW/h. It then classifies every internal reaction as in the book:
+pFBA (Eq. 8.15) picks, among all flux distributions with optimal growth, one with the least total flux, on the argument that the cell avoids making enzymes it does not need. For the *E. coli* core model on glucose, the code above finds a growth rate of 0.874 h^−1^ and a minimal total flux of 518.4 mmol/gDW/h. It then classifies every internal reaction as in the book:
 
 * **essential** (13): without it, growth falls below 1% of the optimum;
 * **pFBA optima** (27): it can carry flux in a pFBA solution;
@@ -242,7 +242,7 @@ The one ELE reaction is fumarate reductase, `FRD7`, which runs the reverse of su
 
 ### ATP maintenance fluxes
 
-The *E. coli* core example in §8.6 has an ATP maintenance reaction with a fixed lower bound; Exercise 5 asks you to find it.
+The *E. coli* core example in §8.6 includes the ATP maintenance reaction, `ATPM`, with a lower bound of 8.39 mmol/gDW/h. Remember, this is why FBA is infeasible there at very low glucose uptake: nothing can meet the maintenance demand.
 
 ## Troubleshooting
 

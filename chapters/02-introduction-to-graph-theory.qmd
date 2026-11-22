@@ -48,7 +48,7 @@ Many biological systems are naturally described as networks: proteins that bind 
 
 A network, or graph, is a set of nodes joined by edges. For an undirected network of $n$ nodes, the **adjacency matrix** $\mathbf{A}$ has $a_{ij} = 1$ if nodes $i$ and $j$ are joined, and 0 otherwise.
 
-In MATLAB, networks are `graph` objects (or `digraph` for directed networks), part of core MATLAB. In Python, the standard package is NetworkX. Both provide shortest paths and centrality measures; we compute the clustering coefficient and closeness from their definitions, so that both languages use exactly the same formulas as the book.
+In MATLAB, networks are `graph` objects (or `digraph` for directed networks), part of core MATLAB. In Python, the standard package is NetworkX. Both provide shortest paths and centrality measures. In @sec-networks, we compute the clustering coefficient and closeness from their definitions, so that both languages use exactly the same formulas as the book. @tbl-graphs collects the functions we use most.
 
 | | MATLAB | Python (NetworkX) |
 |---|---|---|
@@ -67,7 +67,7 @@ The Laplacian, $\mathbf{L} = \mathbf{D} - \mathbf{A}$, where $\mathbf{D}$ is the
 ::: {.panel-tabset group="language"}
 ## MATLAB
 
-*Needs only base MATLAB.*
+*Core MATLAB only.*
 
 ```{.matlab include="/examples/networks/laplacian/laplacian.m"}
 ```
@@ -84,7 +84,7 @@ The Laplacian, $\mathbf{L} = \mathbf{D} - \mathbf{A}$, where $\mathbf{D}$ is the
 ![](/examples/networks/laplacian/out/python/fig-laplacian.png)
 :::
 
-The Fiedler vector, computed from the friendships alone, places 32 of the 34 members on the side they actually joined. The two it misplaces, members 3 and 9, have friends on both sides, and their entries in the Fiedler vector are close to zero (see the bar chart). Cutting the ten friendships between the two halves disconnects the network, and a second zero eigenvalue duly appears. We shall return to this network, and to finding such groups, in §3.3.
+The Fiedler vector, computed from the friendships alone, places 32 of the 34 members on the side they actually joined. The two it misplaces, members 3 and 9 (highlighted in the network drawing), have friends on both sides, and their entries in the Fiedler vector are close to zero (see the bar chart). Cutting the ten friendships between the two halves disconnects the network, and a second zero eigenvalue duly appears. We shall return to this network, and to finding such groups, in §3.3.
 
 ## Graph representations of biological networks
 
@@ -111,7 +111,7 @@ Metabolic networks can be represented as graphs in several ways, and the choice 
 ::: {.panel-tabset group="language"}
 ## MATLAB
 
-*Needs only base MATLAB; reads the model from `data/e_coli_core.mat`.*
+*Core MATLAB only; reads the model from `data/e_coli_core.mat`.*
 
 ```{.matlab include="/examples/networks/metabolic_graphs/metabolic_graphs.m"}
 ```
@@ -128,7 +128,7 @@ Metabolic networks can be represented as graphs in several ways, and the choice 
 ![](/examples/networks/metabolic_graphs/out/python/fig-metabolic-graphs.png)
 :::
 
-The most connected "metabolite" is the cytosolic proton, linked to 40 others, followed by water, protons outside the cell, and phosphate; ATP, ADP, NAD(H) and CO~2~ are not far behind. Such *currency metabolites* take part in so many reactions that they connect almost everything to everything else. With them, the mean shortest path between two metabolites is just 2.4, and glucose 6-phosphate is two steps away from succinate, through a proton! Such a path makes no biochemical sense. Removing 21 currency metabolites makes the paths meaningful: glucose 6-phosphate now reaches succinate through PEP, oxaloacetate, malate and fumarate, and the mean path length almost doubles, to 4.6. Note that the list of currency metabolites is a choice, and other reasonable choices give somewhat different numbers; this is one of the pitfalls discussed in §2.6.1.
+The most connected "metabolite" is the cytosolic proton, linked to 40 others, followed by water, protons outside the cell, and phosphate, which ties with pyruvate, a genuine hub of central metabolism; ADP, NADH, CO~2~ and ATP are not far behind (see the bar chart). Such *currency metabolites* take part in so many reactions that they connect almost everything to everything else. With them, the mean shortest path between two metabolites is just 2.4, and glucose 6-phosphate is two steps away from succinate, through a proton! Such a path makes no biochemical sense. Removing 21 currency metabolites makes the paths meaningful: glucose 6-phosphate now reaches succinate in five steps, for example through PEP, oxaloacetate, malate and fumarate, and the mean path length almost doubles, to 4.6. (Several paths are equally short, so the two languages may print different ones.) Note that the list of currency metabolites is a choice, and other reasonable choices give somewhat different numbers; this is one of the pitfalls discussed in §2.6.1.
 
 ## Common challenges & troubleshooting
 
