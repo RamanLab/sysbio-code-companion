@@ -28,13 +28,15 @@ fiedler = eigenvectors[:, 1]
 fiedler *= np.sign(fiedler[0])                      # member 1 positive
 side = np.where(fiedler > 0, "Mr. Hi", "Officer")
 agree = np.sum(side == faction)
+misplaced = np.flatnonzero(side != faction)
 
 print(f"Smallest eigenvalues: {np.round(eigenvalues[:4], 4)}")
-print(f"Zero eigenvalues: {np.sum(eigenvalues < 1e-9)} (connected components)")
+print(f"Zero eigenvalues: {np.sum(eigenvalues < 1e-9)} "
+      f"(connected components)")
 print(f"Algebraic connectivity: {eigenvalues[1]:.4f}")
 print(f"The Fiedler vector puts {agree} of {n} members on the side they "
       f"actually joined; it misplaces member(s) "
-      f"{', '.join(str(k) for k in np.flatnonzero(side != faction) + 1)}")
+      f"{', '.join(str(k) for k in misplaced + 1)}")
 
 # Remove the friendships between the two halves found by the Fiedler
 # vector: the network falls apart, and a second zero eigenvalue appears
@@ -46,30 +48,39 @@ ev_cut = np.linalg.eigvalsh(np.diag(A_cut.sum(axis=1)) - A_cut)
 print(f"Cutting the {len(cut)} edges between the halves leaves "
       f"{np.sum(ev_cut < 1e-9)} zero eigenvalues")
 
-# --- Plot: the network, coloured by the sign of the Fiedler vector
+# --- Plot: the network, coloured by the sign of the Fiedler vector;
+# a black ring marks the members who joined the other faction
 sbp.style()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 4.5))
 G = nx.from_numpy_array(A)
 pos = nx.spring_layout(G, seed=1)
-colours = ["#0072B2" if s == "Mr. Hi" else "#D55E00" for s in side]
+blue, red = sbp.PALETTE[0], sbp.PALETTE[3]
+colours = [blue if s == "Mr. Hi" else red for s in side]
 nx.draw_networkx_edges(G, pos, ax=ax1, alpha=0.3)
-nx.draw_networkx_nodes(G, pos, ax=ax1, node_color=colours, node_size=180,
-                       edgecolors=["black" if s != f else "none"
-                                   for s, f in zip(side, faction)])
+nx.draw_networkx_nodes(G, pos, ax=ax1, node_color=colours, node_size=180)
+xy = np.array([pos[k] for k in misplaced])
+ax1.scatter(xy[:, 0], xy[:, 1], s=320, facecolors="none",
+            edgecolors="black", linewidths=1.5, zorder=3)
 nx.draw_networkx_labels(G, pos, {k: k + 1 for k in range(n)}, ax=ax1,
                         font_size=7, font_color="white")
+ax1.scatter([], [], s=60, color=blue, label="Fiedler entry > 0")
+ax1.scatter([], [], s=60, color=red, label="Fiedler entry < 0")
+ax1.scatter([], [], s=60, facecolors="none", edgecolors="black",
+            linewidths=1.5, label="Joined the other faction")
+ax1.legend(loc="lower left", fontsize=9, frameon=False)
 ax1.set_title("Split by the Fiedler vector")
 ax1.axis("off")
 order = np.argsort(fiedler)
 ax2.bar(range(n), fiedler[order], color=[colours[k] for k in order])
-ax2.set_xticks(range(n), order + 1, fontsize=6, rotation=90)
+ax2.set_xticks(range(n), order + 1, fontsize=7, rotation=90)
 ax2.set_xlabel("Member")
 ax2.set_ylabel("Fiedler vector entry")
 sbp.save_figure(fig, __file__, "fig-laplacian")
 
 sbp.save_results(__file__, {
     "eigenvalues": eigenvalues, "fiedler": fiedler, "agree": agree,
-    "misplaced": np.flatnonzero(side != faction) + 1,
-    "cut_edges": len(cut), "zero_eigenvalues_after_cut": np.sum(ev_cut < 1e-9),
+    "misplaced": misplaced + 1,
+    "cut_edges": len(cut),
+    "zero_eigenvalues_after_cut": np.sum(ev_cut < 1e-9),
 })
 sbp.show()

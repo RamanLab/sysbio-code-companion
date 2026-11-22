@@ -45,7 +45,7 @@ subplot(1, 2, 1)
 plot(t, S, '-', 'Color', [0.000 0.447 0.698]);
 hold on
 plot(t, I, '-', 'Color', [0.835 0.369 0.000]);
-plot(t, R, '-', 'Color', [0.000 0.620 0.451]);
+plot(t, R, '--', 'Color', [0.000 0.620 0.451]);
 xlabel('Time (days)'); ylabel('Fraction of the population');
 title('An epidemic with R_0 = 3');
 legend({'S, susceptible', 'I, infected', 'R, recovered'}, ...
@@ -57,7 +57,7 @@ plot(R0s, theory, '-', 'Color', [0.6 0.6 0.6]);
 hold on
 plot(R0s, simulated, 'o', 'Color', [0.000 0.620 0.451], ...
     'MarkerFaceColor', [0.000 0.620 0.451], 'MarkerSize', 4);
-xline(1, ':', 'Color', [0.6 0.6 0.6]);
+xline(1, 'LineStyle', ':', 'Color', [0.6 0.6 0.6], 'LineWidth', 1.5);
 xlabel('Basic reproduction number R_0'); ylabel('Fraction ever infected');
 title('Final size of the epidemic');
 legend({'final-size equation', 'simulation'}, 'Location', 'southeast', ...

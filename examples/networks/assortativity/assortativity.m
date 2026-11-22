@@ -44,20 +44,25 @@ end
 fig = figure('Position', [100 100 900 400]);
 measures = {'assortativity', 'clustering'};
 labels = {'Assortativity r', 'Mean clustering'};
+okabe_ito = sbp.palette();
+blue = okabe_ito(1, :); red = okabe_ito(4, :);
 for p = 1:2
     subplot(1, 2, p); hold on
     for net = 1:2
         r = results.(keys{net});
-        h1 = plot(net - 1, r.(measures{p}), 'o', 'Color', [0.835 0.369 0.000], ...
-            'MarkerFaceColor', [0.835 0.369 0.000], 'MarkerSize', 9);
+        h1 = plot(net - 1, r.(measures{p}), 'o', 'Color', red, ...
+            'MarkerFaceColor', red, 'MarkerSize', 9);
         random = r.([measures{p} '_random']);
         h2 = plot(repmat(net - 0.85, size(random)), random, '_', ...
-            'Color', [0.000 0.447 0.698], 'MarkerSize', 12);
+            'Color', blue, 'MarkerSize', 12);
     end
     yline(0, 'k');
     set(gca, 'XTick', [0, 1], 'XTickLabel', {'karate club', 'E. coli STRING'});
     xlim([-0.5, 1.5]); title(labels{p}); box off
-    if p == 1, legend([h1, h2], {'network', 'randomised'}, 'Box', 'off'); end
+    if p == 1
+        legend([h1, h2], {'network', 'randomised'}, ...
+            'Location', 'northwest', 'Box', 'off');
+    end
 end
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-assortativity');
 

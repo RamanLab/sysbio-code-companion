@@ -55,13 +55,13 @@ print("Most rewired genes: " + ", ".join(
 
 # --- Plot: the two correlation matrices
 sbp.style()
-fig, axes = plt.subplots(1, 2, figsize=(12, 5.5))
+fig, axes = plt.subplots(1, 2, figsize=(13, 6.5), layout="constrained")
 for ax, carbon in zip(axes, ("glucose", "glycerol")):
     im = ax.imshow(r[carbon], cmap="RdBu_r", vmin=-1, vmax=1)
-    ax.set_xticks(range(g), genes, rotation=90, fontsize=6)
-    ax.set_yticks(range(g), genes, fontsize=6)
+    ax.set_xticks(range(g), genes, rotation=90, fontsize=7)
+    ax.set_yticks(range(g), genes, fontsize=7)
     ax.set_title(f"{carbon} ({n[carbon]} samples)")
-fig.colorbar(im, ax=axes, shrink=0.7, label="Pearson r")
+fig.colorbar(im, ax=axes, shrink=0.6, label="Pearson r")
 sbp.save_figure(fig, __file__, "fig-differential-network")
 
 sbp.save_results(__file__, {

@@ -39,9 +39,10 @@ fprintf('Erdős–Rényi, same n and m: C = %.4f, L = %.4f\n', er(1), er(2));
 
 %% Plot
 fig = figure;
-semilogx(probs, C_ratio, 'o-', 'Color', [0.000 0.447 0.698]);
+blue = [0.000 0.447 0.698]; orange = [0.902 0.624 0.000];
+semilogx(probs, C_ratio, 'o-', 'Color', blue, 'MarkerFaceColor', blue);
 hold on
-semilogx(probs, L_ratio, 's-', 'Color', [0.902 0.624 0.000]);
+semilogx(probs, L_ratio, 's-', 'Color', orange, 'MarkerFaceColor', orange);
 xlabel('Rewiring probability p'); ylabel('Relative to the ring lattice');
 title(sprintf('Watts–Strogatz networks, n = %d, %d neighbours', n, 2 * k));
 legend({'C(p) / C(0)', 'L(p) / L(0)'}, 'Location', 'southwest', ...

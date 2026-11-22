@@ -53,9 +53,10 @@ for e = 1:size(edges, 1)
     plot([x(i) x(j)], [y(i) y(j)], '-', 'Color', [0.6 0.6 0.6]);
 end
 scatter(x, y, 150 * deg, betweenness, 'filled', 'MarkerEdgeColor', 'k');
-text(x, y + 0.12 + 0.03 * deg', nodes, 'HorizontalAlignment', 'center');
-colormap(flipud(parula));
-cb = colorbar;
+text(x, y + 0.12 + 0.03 * deg', nodes, 'HorizontalAlignment', 'center', ...
+    'BackgroundColor', 'white', 'Margin', 1);
+colormap(sbp.colormap('viridis_r'));
+cb = colorbar('Ticks', 0:5:20);
 cb.Label.String = 'Betweenness centrality';
 title('Node size: degree; colour: betweenness');
 axis off

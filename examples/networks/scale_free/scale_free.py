@@ -77,11 +77,11 @@ ax2.loglog(k[1:][ccdf_er[1:] > 0], ccdf_er[1:][ccdf_er[1:] > 0], "s",
            color="#E69F00", ms=4, label="Erdős–Rényi")
 ax2.loglog(k[m:], m * (m + 1) / (k[m:] * (k[m:] + 1.0)), "-",
            color="#999999", label="theory, $m(m+1)/k(k+1)$")
-ax2.set_ylim(1e-5, 1.5)
+ax2.set_ylim(1e-6, 1.5)
 ax2.set_xlabel("Degree k")
 ax2.set_ylabel("Fraction of nodes with degree $\\geq$ k")
 ax2.set_title("Tail, on logarithmic axes")
-ax2.legend(frameon=False, loc="lower left")
+ax2.legend(frameon=False, loc="lower left", fontsize=9)
 sbp.save_figure(fig, __file__, "fig-scale-free")
 
 sbp.save_results(__file__, {

@@ -15,7 +15,8 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import sbp
 
-table = pd.read_csv(sbp.DATA / "ecoli_string_ppi.csv")[["protein1", "protein2"]]
+table = pd.read_csv(sbp.DATA / "ecoli_string_ppi.csv")
+table = table[["protein1", "protein2"]]
 names = np.unique(table.to_numpy())
 index = {name: i for i, name in enumerate(names)}
 edges = np.array([[index[a], index[b]] for a, b in table.to_numpy()])
@@ -67,10 +68,10 @@ styles = {("string", "failure"): ("#0072B2", "-"),
           ("string", "attack"): ("#D55E00", "-"),
           ("random_graph", "failure"): ("#0072B2", ":"),
           ("random_graph", "attack"): ("#D55E00", ":")}
-for (label, strategy), (colour, ls) in styles.items():
-    ax.plot(fractions, results[label][strategy], ls, color=colour, marker="o",
-            ms=3, label=f"{'STRING' if label == 'string' else 'random graph'}, "
-                        f"{strategy}")
+titles = {"string": "STRING", "random_graph": "random graph"}
+for (network, strategy), (colour, ls) in styles.items():
+    ax.plot(fractions, results[network][strategy], ls, color=colour,
+            marker="o", ms=3, label=f"{titles[network]}, {strategy}")
 ax.set_xlabel("Fraction of nodes removed")
 ax.set_ylabel("Largest component (fraction of nodes)")
 ax.legend(frameon=False, fontsize=9)

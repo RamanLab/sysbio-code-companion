@@ -13,7 +13,8 @@
 % non-edges, are chosen with sbp.uniform, so that MATLAB and Python use the
 % same ones.
 
-T = readtable(fullfile(sbp.data_dir(), 'ecoli_string_ppi.csv'), 'TextType', 'string');
+T = readtable(fullfile(sbp.data_dir(), 'ecoli_string_ppi.csv'), ...
+    'TextType', 'string');
 names = unique([T.protein1; T.protein2]);         % sorted
 [~, ia] = ismember(T.protein1, names);
 [~, ib] = ismember(T.protein2, names);
@@ -68,11 +69,13 @@ fprintf(['%.1f%% of the hidden edges join nodes with no common neighbour ' ...
 
 %% Plot
 fig = figure('Position', [100 100 600 400]);
-labels = {'common neighbours', 'Jaccard', 'Adamic–Adar', 'preferential attachment'};
-bar(categorical(labels, labels), cellfun(@(i) results.auc.(i), indices), ...
-    'FaceColor', [0.000 0.447 0.698]);
-yline(0.5, ':k'); ylim([0, 1]); ylabel('AUC');
-title('Predicting hidden STRING edges'); box off
+labels = ["common" + newline + "neighbours", "Jaccard", "Adamic–Adar", ...
+    "preferential" + newline + "attachment"];
+bar(cellfun(@(i) results.auc.(i), indices), ...
+    'FaceColor', [0.000 0.447 0.698], 'EdgeColor', 'none');
+xticks(1:4); xticklabels(labels); xtickangle(0);
+yline(0.5, ':k', 'LineWidth', 1.5); ylim([0, 1]); ylabel('AUC');
+title('Predicting hidden STRING edges')
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-link-prediction');
 
 sbp.save_results(mfilename('fullpath'), results);

@@ -114,7 +114,7 @@ for ax, (key, label) in zip(axes, [("assortativity", "Assortativity r"),
     ax.set_xticks([0, 1], ["karate club", "E. coli STRING"])
     ax.set_xlim(-0.5, 1.5)
     ax.set_title(label)
-axes[0].legend(frameon=False)
+axes[0].legend(loc="upper left", frameon=False)
 sbp.save_figure(fig, __file__, "fig-assortativity")
 
 sbp.save_results(__file__, results)

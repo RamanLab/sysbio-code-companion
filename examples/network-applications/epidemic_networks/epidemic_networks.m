@@ -64,25 +64,27 @@ fprintf(['Vaccinating 10%% at T = %g: mean fraction infected %.4f ' ...
 
 %% Plot
 blue = [0.000 0.447 0.698]; orange = [0.902 0.624 0.000];
+sky_blue = [0.337 0.706 0.914];
 fig = figure('Position', [100 100 1000 400]);
 subplot(1, 5, 1:3)
 plot(T_values, size_er, 's-', 'Color', orange, 'MarkerFaceColor', orange);
 hold on
 plot(T_values, size_ba, 'o-', 'Color', blue, 'MarkerFaceColor', blue);
-xline(Tc.er, ':', 'Color', orange); xline(Tc.ba, ':', 'Color', blue);
+xline(Tc.er, 'LineStyle', ':', 'Color', orange, 'LineWidth', 1);
+xline(Tc.ba, 'LineStyle', ':', 'Color', blue, 'LineWidth', 1);
 xlabel('Transmissibility T'); ylabel('Mean fraction infected');
 title('Epidemic size (dotted: thresholds)');
-legend({'Erdős–Rényi', 'scale-free'}, 'Location', 'northwest', ...
+legend({'Erdős–Rényi', 'scale-free'}, 'Location', 'southeast', ...
     'Box', 'off');
-box off
 subplot(1, 5, 4:5)
-b = bar(categorical({'none', 'random 10%', 'top 10% by degree'}, ...
-    {'none', 'random 10%', 'top 10% by degree'}), ...
-    [vacc.none vacc.random vacc.hubs], 'FaceColor', 'flat');
-b.CData = [0.6 0.6 0.6; 0.62 0.79 0.88; blue];
+labels = ["none", "random" + newline + "10%", ...
+    "top 10%" + newline + "by degree"];
+b = bar([vacc.none vacc.random vacc.hubs], 'FaceColor', 'flat', ...
+    'EdgeColor', 'none');
+b.CData = [0.6 0.6 0.6; sky_blue; blue];
+xticks(1:3); xticklabels(labels); xtickangle(0);
 ylabel('Mean fraction infected'); xlabel('Who is vaccinated');
 title(sprintf('Vaccination, scale-free, T = %g', T_vacc));
-box off
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-epidemic-networks');
 
 high = T_values >= 0.4;     % well above both thresholds

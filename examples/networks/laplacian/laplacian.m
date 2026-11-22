@@ -30,7 +30,8 @@ agree = sum(side == faction);
 misplaced = find(side ~= faction);
 
 fprintf('Smallest eigenvalues: %s\n', mat2str(round(eigenvalues(1:4)', 4)));
-fprintf('Zero eigenvalues: %d (connected components)\n', sum(eigenvalues < 1e-9));
+fprintf('Zero eigenvalues: %d (connected components)\n', ...
+    sum(eigenvalues < 1e-9));
 fprintf('Algebraic connectivity: %.4f\n', eigenvalues(2));
 fprintf(['The Fiedler vector puts %d of %d members on the side they ' ...
     'actually joined; it misplaces member(s) %s\n'], agree, n, ...
@@ -45,25 +46,35 @@ for e = find(cut)
     A_cut(edges(e, 2), edges(e, 1)) = 0;
 end
 ev_cut = eig(diag(sum(A_cut, 2)) - A_cut);
-fprintf('Cutting the %d edges between the halves leaves %d zero eigenvalues\n', ...
-    sum(cut), sum(ev_cut < 1e-9));
+fprintf(['Cutting the %d edges between the halves leaves %d zero ' ...
+    'eigenvalues\n'], sum(cut), sum(ev_cut < 1e-9));
 
-%% Plot: the network, coloured by the sign of the Fiedler vector
+%% Plot: the network, coloured by the sign of the Fiedler vector;
+% a black ring marks the members who joined the other faction
 fig = figure('Position', [100 100 1100 450]);
 subplot(1, 2, 1)
-blue = [0.000 0.447 0.698]; red = [0.835 0.369 0.000];
+okabe_ito = sbp.palette();
+blue = okabe_ito(1, :); red = okabe_ito(4, :);
 colours = repmat(red, n, 1);
 colours(side == "Mr. Hi", :) = repmat(blue, sum(side == "Mr. Hi"), 1);
 h = plot(graph(A), 'Layout', 'force', 'NodeColor', colours, ...
     'MarkerSize', 7, 'EdgeAlpha', 0.3);
-highlight(h, misplaced, 'MarkerSize', 11);
+hold on
+plot(h.XData(misplaced), h.YData(misplaced), 'ko', 'MarkerSize', 11, ...
+    'LineWidth', 1.5);
+p1 = plot(NaN, NaN, 'o', 'MarkerFaceColor', blue, 'MarkerEdgeColor', 'none');
+p2 = plot(NaN, NaN, 'o', 'MarkerFaceColor', red, 'MarkerEdgeColor', 'none');
+p3 = plot(NaN, NaN, 'ko', 'LineWidth', 1.5);
+legend([p1 p2 p3], {'Fiedler entry > 0', 'Fiedler entry < 0', ...
+    'Joined the other faction'}, 'Location', 'southwest', 'Box', 'off');
 title('Split by the Fiedler vector'); axis off
 subplot(1, 2, 2)
 [~, order] = sort(fiedler);
-b = bar(fiedler(order), 'FaceColor', 'flat');
+b = bar(fiedler(order), 'FaceColor', 'flat', 'EdgeColor', 'none');
 b.CData = colours(order, :);
-set(gca, 'XTick', 1:n, 'XTickLabel', order, 'FontSize', 6);
-xlabel('Member'); ylabel('Fiedler vector entry'); box off
+xticks(1:n); xticklabels(string(order)); xtickangle(90);
+ax = gca; ax.XAxis.FontSize = 7; ylim padded
+xlabel('Member', 'FontSize', 11); ylabel('Fiedler vector entry')
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-laplacian');
 
 results.eigenvalues = eigenvalues';

@@ -37,7 +37,8 @@ def counts(src, dst):
     """Numbers of FFLs and FBLs."""
     A = sparse.csr_matrix((np.ones(len(src)), (src, dst)), shape=(n, n))
     AA = A @ A
-    return int(AA.multiply(A).sum()), int(round((AA @ A).diagonal().sum() / 3))
+    fbl = int(round((AA @ A).diagonal().sum() / 3))
+    return int(AA.multiply(A).sum()), fbl
 
 
 def randomise(src, dst, seed, swaps_per_edge=10):
@@ -82,17 +83,20 @@ print(f"Feedback loops:     {fbl}; randomised {mean[1]:.1f} ± {sd[1]:.1f}; "
 print(f"FFLs with all signs known: {coherent} coherent, {incoherent} "
       "incoherent")
 
-# --- Plot
+# --- Plot, with the same bins in both languages
 sbp.style()
 fig, axes = plt.subplots(1, 2, figsize=(9, 4))
-for ax, k, label in zip(axes, (0, 1), ("Feed-forward loops", "Feedback loops")):
-    ax.hist(random_counts[:, k], bins=8, color="#0072B2",
-            label="randomised")
+labels = ("Feed-forward loops", "Feedback loops")
+bin_edges = (np.arange(550, 901, 50), np.arange(-0.5, 9))
+for k, ax in enumerate(axes):
+    ax.hist(random_counts[:, k], bins=bin_edges[k], color="#0072B2",
+            edgecolor="white", label="randomised")
     ax.axvline([ffl, fbl][k], color="#D55E00", lw=2, label="E. coli")
-    ax.set_title(f"{label} (Z = {z[k]:.1f})")
+    ax.locator_params(integer=True)                 # whole-number ticks
+    ax.set_title(f"{labels[k]} (Z = {z[k]:.1f})")
     ax.set_xlabel("Count")
 axes[0].set_ylabel("Randomised networks")
-axes[0].legend(frameon=False)
+axes[0].legend(loc="upper center", frameon=False)
 sbp.save_figure(fig, __file__, "fig-motifs")
 
 sbp.save_results(__file__, {

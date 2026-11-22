@@ -60,8 +60,10 @@ sc = ax.scatter(x, y, s=150 * degree, c=betweenness, cmap="viridis_r",
                 edgecolors="k", zorder=2)
 for i, v in enumerate(nodes):
     ax.annotate(v, (x[i], y[i]), xytext=(0, 14 + 2 * degree[i]),
-                textcoords="offset points", ha="center")
-fig.colorbar(sc, ax=ax, label="Betweenness centrality")
+                textcoords="offset points", ha="center",
+                bbox=dict(facecolor="white", edgecolor="none", pad=1))
+fig.colorbar(sc, ax=ax, label="Betweenness centrality",
+             ticks=range(0, 21, 5))
 ax.set_title("Node size: degree; colour: betweenness")
 ax.set_axis_off()
 ax.set_ylim(-0.4, 1.6)

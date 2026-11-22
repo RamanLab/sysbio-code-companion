@@ -8,7 +8,8 @@
 % Python. For comparison, we do the same for an Erdős–Rényi random graph
 % with the same numbers of nodes and edges, also drawn with sbp.uniform.
 
-T = readtable(fullfile(sbp.data_dir(), 'ecoli_string_ppi.csv'), 'TextType', 'string');
+T = readtable(fullfile(sbp.data_dir(), 'ecoli_string_ppi.csv'), ...
+    'TextType', 'string');
 names = unique([T.protein1; T.protein2]);         % sorted
 [~, ia] = ismember(T.protein1, names);
 [~, ib] = ismember(T.protein2, names);
@@ -44,10 +45,14 @@ end
 %% Plot
 fig = figure('Position', [100 100 600 450]); hold on
 blue = [0.000 0.447 0.698]; red = [0.835 0.369 0.000];
-plot(fractions, results.string.failure, '-o', 'Color', blue, 'MarkerSize', 3);
-plot(fractions, results.string.attack, '-o', 'Color', red, 'MarkerSize', 3);
-plot(fractions, results.random_graph.failure, ':o', 'Color', blue, 'MarkerSize', 3);
-plot(fractions, results.random_graph.attack, ':o', 'Color', red, 'MarkerSize', 3);
+styles = {'string', 'failure', blue, '-'; 'string', 'attack', red, '-';
+          'random_graph', 'failure', blue, ':';
+          'random_graph', 'attack', red, ':'};
+for k = 1:4
+    plot(fractions, results.(styles{k, 1}).(styles{k, 2}), styles{k, 4}, ...
+        'Color', styles{k, 3}, 'Marker', 'o', 'MarkerSize', 3, ...
+        'MarkerFaceColor', styles{k, 3});
+end
 legend({'STRING, failure', 'STRING, attack', 'random graph, failure', ...
     'random graph, attack'}, 'Box', 'off');
 xlabel('Fraction of nodes removed');

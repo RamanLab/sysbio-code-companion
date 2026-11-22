@@ -66,7 +66,7 @@ subplot(1, 2, 1)
 semilogx(mean_deg, frac_ess, 'o-', 'Color', [0.000 0.447 0.698], ...
     'MarkerFaceColor', [0.000 0.447 0.698]);
 yline(mean(is_ess), ':', 'all proteins', 'Color', [0.6 0.6 0.6], ...
-    'LabelHorizontalAlignment', 'left');
+    'LineWidth', 1, 'LabelHorizontalAlignment', 'left');
 xlim([1 100]); xticks([1 2 5 10 20 50 100]);
 xlabel('Mean degree of the group'); ylabel('Fraction essential');
 title('Ten groups of proteins, by degree');

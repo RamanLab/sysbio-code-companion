@@ -13,7 +13,8 @@
 % from the signs of their edges. Random choices come from sbp.uniform, so
 % that MATLAB and Python make the same swaps.
 
-trn = readtable(fullfile(sbp.data_dir(), 'ecoli_trn.csv'), 'TextType', 'string');
+trn = readtable(fullfile(sbp.data_dir(), 'ecoli_trn.csv'), ...
+    'TextType', 'string');
 names = unique([trn.regulator; trn.target]);      % sorted
 n = numel(names);
 [~, src] = ismember(trn.regulator, names);
@@ -53,18 +54,23 @@ fprintf('Feedback loops:     %d; randomised %.1f ± %.1f; Z = %.1f\n', ...
 fprintf('FFLs with all signs known: %d coherent, %d incoherent\n', ...
     coherent, incoherent);
 
-%% Plot
+%% Plot, with the same bins in both languages
 fig = figure('Position', [100 100 900 400]);
 labels = {'Feed-forward loops', 'Feedback loops'};
+bin_edges = {550:50:900, -0.5:1:8.5};
 real_counts = [ffl, fbl];
 for k = 1:2
     subplot(1, 2, k); hold on
-    histogram(random_counts(:, k), 8, 'FaceColor', [0.000 0.447 0.698]);
+    h = histogram(random_counts(:, k), bin_edges{k}, ...
+        'FaceColor', [0.000 0.447 0.698], 'FaceAlpha', 1, ...
+        'EdgeColor', 'white');
     xline(real_counts(k), 'Color', [0.835 0.369 0.000], 'LineWidth', 2);
-    title(sprintf('%s (Z = %.1f)', labels{k}, z(k))); xlabel('Count'); box off
+    yticks(0:max(h.Values))                       % whole-number ticks
+    title(sprintf('%s (Z = %.1f)', labels{k}, z(k))); xlabel('Count')
     if k == 1
         ylabel('Randomised networks');
-        legend({'randomised', 'E. coli'}, 'Box', 'off');
+        legend({'randomised', 'E. coli'}, 'Location', 'north', ...
+            'Box', 'off');
     end
 end
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-motifs');

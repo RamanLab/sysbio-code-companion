@@ -13,8 +13,8 @@
 
 expr = readtable(fullfile(sbp.data_dir(), 'precise1k_carbon_log_tpm.csv'), ...
     'ReadRowNames', true, 'VariableNamingRule', 'preserve');
-samples = readtable(fullfile(sbp.data_dir(), 'precise1k_carbon_samples.csv'), ...
-    'TextType', 'string');
+samples = readtable(fullfile(sbp.data_dir(), ...
+    'precise1k_carbon_samples.csv'), 'TextType', 'string');
 genes = expr.Properties.RowNames';
 g = numel(genes);
 
@@ -52,18 +52,20 @@ fprintf('Most rewired genes: %s\n', strjoin(compose('%s (%d)', ...
     string(genes(most)'), rewired(most)'), ', '));
 
 %% Plot: the two correlation matrices
-fig = figure('Position', [100 100 1200 550]);
-t = linspace(0, 1, 128)';
-cmap = [[t; ones(128, 1)], [t; flipud(t)], [ones(128, 1); flipud(t)]];
+fig = figure('Position', [100 100 1300 650]);
+tiledlayout(1, 2, 'TileSpacing', 'compact');
 for c = 1:2
-    subplot(1, 2, c)
-    imagesc(r.(carbons{c}), [-1, 1]); colormap(cmap); axis square
+    nexttile
+    imagesc(r.(carbons{c}), [-1, 1]); axis image
+    colormap(sbp.colormap('RdBu_r'));
     set(gca, 'XTick', 1:g, 'XTickLabel', genes, 'YTick', 1:g, ...
-        'YTickLabel', genes, 'FontSize', 6);
+        'YTickLabel', genes, 'FontSize', 7);
     xtickangle(90);
-    title(sprintf('%s (%d samples)', carbons{c}, n.(carbons{c})), 'FontSize', 11);
+    title(sprintf('%s (%d samples)', carbons{c}, n.(carbons{c})), ...
+        'FontSize', 11);
 end
-cb = colorbar; cb.Label.String = 'Pearson r';
+cb = colorbar('FontSize', 10); cb.Layout.Tile = 'east';
+cb.Label.String = 'Pearson r';
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-differential-network');
 
 results.genes = genes;

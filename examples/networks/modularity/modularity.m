@@ -48,12 +48,14 @@ if halves(1) ~= 1, halves = 3 - halves; end      % member 1 in the first half
 
 first = repmat("Officer", 1, n);
 first(halves == 1) = "Mr. Hi";
+misplaced = find(first ~= faction);
 fprintf(['First split: Q = %.4f; it places %d of %d members on the side ' ...
     'they joined (misplaced: %s)\n'], Q(halves), sum(first == faction), n, ...
-    strjoin(string(find(first ~= faction)), ', '));
+    strjoin(string(misplaced), ', '));
 fprintf('Final: %d communities, Q = %.4f\n', numel(communities), Q(labels));
 for c = 1:numel(communities)
-    fprintf('  community %d: members %s\n', c, strjoin(string(communities{c}), ', '));
+    fprintf('  community %d: members %s\n', c, ...
+        strjoin(string(communities{c}), ', '));
 end
 
 %% Plot
@@ -77,7 +79,7 @@ function parts = split_group(B, group, two_m)
 % Split a group of nodes in two, or return {} if no split increases the
 % modularity.
 Bg = B(group, group);
-Bg = Bg - diag(sum(Bg, 2));                      % generalised modularity matrix
+Bg = Bg - diag(sum(Bg, 2));               % generalised modularity matrix
 [V, D] = eig((Bg + Bg') / 2);
 [value, top] = max(diag(D));
 parts = {};

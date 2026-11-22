@@ -61,11 +61,12 @@ loglog(k(ok), ccdf_er(ok), 's', 'Color', orange, ...
     'MarkerFaceColor', orange, 'MarkerSize', 4);
 kk = k(m + 1:end);
 loglog(kk, m * (m + 1) ./ (kk .* (kk + 1)), '-', 'Color', [0.6 0.6 0.6]);
-ylim([1e-5 1.5]);
+ylim([1e-6 1.5]);
 xlabel('Degree k'); ylabel('Fraction of nodes with degree \geq k');
 title('Tail, on logarithmic axes');
 legend({'preferential attachment', 'Erdős–Rényi', ...
-    'theory, m(m+1)/k(k+1)'}, 'Location', 'southwest', 'Box', 'off');
+    'theory, m(m+1)/k(k+1)'}, 'Location', 'southwest', 'Box', 'off', ...
+    'FontSize', 9);
 box off
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-scale-free');
 

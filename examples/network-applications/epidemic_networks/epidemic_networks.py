@@ -118,10 +118,10 @@ for name, colour in [("er", "#E69F00"), ("ba", "#0072B2")]:
 ax1.set_xlabel("Transmissibility T")
 ax1.set_ylabel("Mean fraction infected")
 ax1.set_title("Epidemic size (dotted: thresholds)")
-ax1.legend(frameon=False)
+ax1.legend(loc="lower right", frameon=False)
 labels = ["none", "random\n10%", "top 10%\nby degree"]
 ax2.bar(labels, [vacc["none"], vacc["random"], vacc["hubs"]],
-        color=["#999999", "#9ecae1", "#0072B2"])
+        color=["#999999", "#56B4E9", "#0072B2"])
 ax2.set_ylabel("Mean fraction infected")
 ax2.set_title(f"Vaccination, scale-free, T = {T_vacc}")
 ax2.set_xlabel("Who is vaccinated")

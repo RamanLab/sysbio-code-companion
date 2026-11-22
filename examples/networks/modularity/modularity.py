@@ -73,9 +73,10 @@ assert abs(nx.community.modularity(G, [set(g) for g in communities])
            - modularity(labels)) < 1e-12
 
 first = np.where(halves == 1, "Mr. Hi", "Officer")
+misplaced = np.flatnonzero(first != faction) + 1
 print(f"First split: Q = {modularity(halves):.4f}; it places "
       f"{np.sum(first == faction)} of {n} members on the side they joined "
-      f"(misplaced: {', '.join(str(x) for x in np.flatnonzero(first != faction) + 1)})")
+      f"(misplaced: {', '.join(str(x) for x in misplaced)})")
 print(f"Final: {len(communities)} communities, Q = {modularity(labels):.4f}")
 for c, g in enumerate(communities, start=1):
     print(f"  community {c}: members {', '.join(str(x) for x in g + 1)}")

@@ -20,7 +20,8 @@ from scipy import sparse
 import matplotlib.pyplot as plt
 import sbp
 
-table = pd.read_csv(sbp.DATA / "ecoli_string_ppi.csv")[["protein1", "protein2"]]
+table = pd.read_csv(sbp.DATA / "ecoli_string_ppi.csv")
+table = table[["protein1", "protein2"]]
 names = np.unique(table.to_numpy())
 index = {name: i for i, name in enumerate(names)}
 edges = np.array([[index[a], index[b]] for a, b in table.to_numpy()])
@@ -89,9 +90,10 @@ def auc(positive, negative):
 
 
 positive, negative = scores(hidden), scores(non_edges)
+no_common = float(np.mean(positive["common_neighbours"] == 0))
 results = {"hidden": len(hidden),
            "auc": {k: auc(positive[k], negative[k]) for k in positive},
-           "no_common_neighbour": float(np.mean(positive["common_neighbours"] == 0))}
+           "no_common_neighbour": no_common}
 print(f"{len(hidden)} hidden edges, and as many non-edges")
 for k, v in results["auc"].items():
     print(f"  AUC, {k.replace('_', ' ')}: {v:.3f}")
