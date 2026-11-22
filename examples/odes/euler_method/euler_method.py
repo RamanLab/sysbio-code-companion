@@ -67,7 +67,7 @@ ax1.set_ylim(0, 20)
 ax1.set_xlabel("t")
 ax1.set_ylabel("x(t)")
 ax1.set_title("Forward Euler")
-ax1.legend(frameon=False, loc="lower right")
+ax1.legend(frameon=False, loc="upper right")
 
 ax2.plot(t_fine, exact(t_fine), "k-", lw=2, label="exact")
 ax2.plot(t_f, x_f, "o-", color="#D55E00", ms=4, label="forward, Δt = 1.1")

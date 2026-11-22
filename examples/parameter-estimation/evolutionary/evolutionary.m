@@ -65,9 +65,11 @@ fprintf(['Best after %d generations (%d SSE evaluations): vmax = %.3f, ' ...
 fig = figure('Position', [100 100 1000 400]);
 subplot(1, 2, 1)
 semilogy(0:n_generations, best_per_generation, 'o-', ...
-    'Color', [0.000 0.447 0.698], 'MarkerSize', 3);
+    'Color', [0.000 0.447 0.698], 'MarkerSize', 3, ...
+    'MarkerFaceColor', [0.000 0.447 0.698]);
 hold on
-yline(63.7765, '--', 'Color', [0.6 0.6 0.6]);
+yline(63.7765, '--', 'Color', [0.6 0.6 0.6], 'LineWidth', 1.5);
+ylim([50 Inf]);   % so the optimum is not on the axis
 xlabel('Generation'); ylabel('Best SSE so far'); title('Convergence');
 legend({'', 'least-squares optimum (fit\_inhibition)'}, 'Box', 'off');
 box off

@@ -40,19 +40,27 @@ y = y(2:end, :);               % drop t = 0, which we added as the start
 %% Plot
 fig = figure('Position', [100 100 1000 400]);
 subplot(1, 2, 1)
-semilogx(t, y(:, 2) / E0, '-', 'Color', [0.000 0.620 0.451], 'LineWidth', 2);
+semilogx(t, y(:, 2) / E0, '-', 'Color', [0.000 0.620 0.451], ...
+    'LineWidth', 2);
 hold on
-semilogx(t, y(:, 3) / S0, '-', 'Color', [0.000 0.447 0.698], 'LineWidth', 2);
+semilogx(t, y(:, 3) / S0, '-', 'Color', [0.000 0.447 0.698], ...
+    'LineWidth', 2);
+% Label the curves directly: no room for a legend that misses them
+text(1e-1, 0.93, 'ES / E_0 (fast)', 'Color', [0.000 0.620 0.451], ...
+    'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom');
+text(1e-2, 0.03, 'P / S_0 (slow)', 'Color', [0.000 0.447 0.698], ...
+    'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom');
+ylim([0 1]);
 xlabel('Time (s)'); ylabel('Fraction');
 title('Two time scales (k_1 = k_{-1} = 100)');
-legend({'ES / E_0 (fast)', 'P / S_0 (slow)'}, 'Location', 'northwest', ...
-    'Box', 'off');
 box off
 
 subplot(1, 2, 2)
-loglog(speeds, cost_nonstiff, 'o-', 'Color', [0.902 0.624 0.000]);
+loglog(speeds, cost_nonstiff, 'o-', 'Color', [0.902 0.624 0.000], ...
+    'MarkerFaceColor', [0.902 0.624 0.000]);
 hold on
-loglog(speeds, cost_stiff, 's-', 'Color', [0.000 0.447 0.698]);
+loglog(speeds, cost_stiff, 's-', 'Color', [0.000 0.447 0.698], ...
+    'MarkerFaceColor', [0.000 0.447 0.698]);
 xlabel('Binding rate constants k_1 = k_{-1}');
 ylabel('Function evaluations');
 title('Cost of solving to t = 50 s');

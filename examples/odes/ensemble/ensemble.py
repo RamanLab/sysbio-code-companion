@@ -38,7 +38,8 @@ def simulate(p, t):
 
 def residuals(log_p):
     m, prot = simulate(np.exp(log_p), t_obs)
-    return np.r_[(m - m_obs) / (delta * m_obs), (prot - p_obs) / (delta * p_obs)]
+    return np.r_[(m - m_obs) / (delta * m_obs),
+                 (prot - p_obs) / (delta * p_obs)]
 
 
 # Covariance of log(theta): (J'J)^-1, J by central differences
@@ -97,7 +98,7 @@ ax.axvline(12, ls=":", color="black")
 ax.set_xlabel("Time (h)")
 ax.set_ylabel("Protein (molecules per cell)")
 ax.set_title("50 members of the ensemble")
-ax.legend(frameon=False)
+ax.legend(frameon=False, loc="lower right")
 sbp.save_figure(fig, __file__, "fig-ensemble")
 
 sbp.save_results(__file__, results)

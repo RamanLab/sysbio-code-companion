@@ -47,10 +47,12 @@ for k = 1:members
     p = members_theta(k, :);
     x = simulate(p, t);
     halved = simulate(p .* [1, 1, 0.5, 1], t);
-    pred(k, :) = [x(2, 1), x(2, 2), halved(2, 2), log(2) / p(2), log(2) / p(4)];
+    pred(k, :) = [x(2, 1), x(2, 2), halved(2, 2), log(2) / p(2), ...
+                  log(2) / p(4)];
 end
 
-fprintf('Prediction (200 members)          median   5%% to 95%%       spread\n');
+fprintf(['Prediction (200 members)          median   5%% to 95%%' ...
+    '       spread\n']);
 for c = 1:numel(names)
     s = sort(pred(:, c));
     % median, and the 10th and 190th of the 200 sorted values (the 5th
@@ -70,10 +72,11 @@ for k = 1:50
     plot(tt, [0, x(2, :)], 'Color', [0.000 0.447 0.698 0.15]);
 end
 h = plot(t_obs, p_obs, 'ko', 'MarkerSize', 4, 'MarkerFaceColor', 'k');
-xline(12, ':k');
+xline(12, ':k', 'LineWidth', 1.5);
 xlabel('Time (h)'); ylabel('Protein (molecules per cell)');
 title('50 members of the ensemble');
-legend(h, 'data (12 h)', 'Box', 'off'); box off
+legend(h, 'data (12 h)', 'Box', 'off', 'Location', 'southeast');
+box off
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-ensemble');
 
 sbp.save_results(mfilename('fullpath'), results);
@@ -89,5 +92,6 @@ end
 
 function r = residuals(p, t, m_obs, p_obs, delta)
 x = simulate(p, t);
-r = [(x(1, :) - m_obs) ./ (delta * m_obs), (x(2, :) - p_obs) ./ (delta * p_obs)]';
+r = [(x(1, :) - m_obs) ./ (delta * m_obs), ...
+     (x(2, :) - p_obs) ./ (delta * p_obs)]';
 end

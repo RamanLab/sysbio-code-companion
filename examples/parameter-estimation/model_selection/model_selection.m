@@ -63,7 +63,8 @@ weights = weights / sum(weights);
 for m = 1:numel(names)
     r = results.(names{m});
     results.(names{m}).weight = weights(m);
-    fprintf('%-15s chi2 = %6.2f  AIC = %6.2f  AICc = %6.2f  weight = %.2f\n', ...
+    fprintf(['%-15s chi2 = %6.2f  AIC = %6.2f  AICc = %6.2f  ' ...
+        'weight = %.2f\n'], ...
         names{m}, r.chi2, r.aic, r.aicc, weights(m));
     parts = arrayfun(@(j) sprintf('%s = %.3g ± %.2g', params{m}{j}, ...
         r.parameters(j), r.sd(j)), 1:numel(params{m}), 'UniformOutput', false);
@@ -74,26 +75,32 @@ end
 
 %% Plot: data and the two best models, and the Akaike weights
 fig = figure('Position', [100 100 1000 400]);
-subplot(1, 5, 1:3); hold on
+tiledlayout(1, 5);
+nexttile([1 3]); hold on
 s_fine = linspace(0.5, 20, 200)';
 markers = {'o', 's'}; levels = [10, 20];
 colours = {[0.000 0.447 0.698], [0.835 0.369 0.000]};
+styles = {'-', '--'};
 shown = {'competitive', 'noncompetitive'};
 for l = 1:2
-    keep = I == levels(l);
-    errorbar(S(keep), v(keep), delta * v(keep), markers{l}, 'Color', 'k', ...
-        'MarkerSize', 4, 'DisplayName', sprintf('data, I = %d mM', levels(l)));
     for m = 1:2
         rate = rates{strcmp(names, shown{m})};
-        h = plot(s_fine, rate(results.(shown{m}).parameters, s_fine, levels(l)), ...
-            'Color', colours{m}, 'DisplayName', shown{m});
+        h = plot(s_fine, ...
+            rate(results.(shown{m}).parameters, s_fine, levels(l)), ...
+            'Color', colours{m}, 'LineStyle', styles{m}, ...
+            'DisplayName', shown{m});
         if l == 2, h.HandleVisibility = 'off'; end
     end
+    keep = I == levels(l);
+    errorbar(S(keep), v(keep), delta * v(keep), markers{l}, ...
+        'Color', 'k', 'MarkerFaceColor', 'k', 'MarkerSize', 4, ...
+        'CapSize', 2, 'DisplayName', sprintf('data, I = %d mM', levels(l)));
 end
 xlabel('S (mM)'); ylabel('v (mmol/L/s)');
-legend('Box', 'off', 'Location', 'southeast'); box off
-subplot(1, 5, 4:5)
+legend('Box', 'off', 'Location', 'northwest'); box off
+nexttile([1 2])
 bar(categorical(names, names), weights, 'FaceColor', [0.000 0.447 0.698]);
+xtickangle(30);
 ylabel('Akaike weight'); title('Support for each model'); box off
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-model-selection');
 

@@ -49,17 +49,30 @@ for k = 1:numel(attractors)
         basin_sizes(k));
 end
 
-%% Plot the state transition map
+%% Plot the state transition map. Fixed positions (the same in Python)
+% keep every edge clear of the other nodes. The steady state's self-loop
+% is not drawn, but labelled.
 labels = arrayfun(label, 0:2^n - 1, 'UniformOutput', false);
-G = digraph(1:2^n, succ + 1, [], labels);   % MATLAB counts nodes from 1
-% Same positions as the Python version, for states 000, 001, ..., 111
-x = [3 1 2 3 0 1 0 2];
-y = [1 1 1.5 0 1 0 0 0.5];
+moving = succ ~= 0:2^n - 1;
+G = digraph(find(moving), succ(moving) + 1, [], labels);  % nodes from 1
+% Positions of states 000, 001, ..., 111
+x = [2 1 2 3 0 1 0 2];
+y = [0 1.5 2 0 1.5 0 0 1];
 in_attractor = ismember(0:2^n - 1, [attractors{:}]);
+colours = ones(2^n, 3);                              % white ...
+colours(in_attractor, :) = repmat([0.902 0.624 0.000], ...
+    nnz(in_attractor), 1);                           % ... or orange
 fig = figure('Position', [100 100 700 350]);
-h = plot(G, 'XData', x, 'YData', y, 'NodeLabel', labels, ...
-    'MarkerSize', 12, 'NodeColor', 'k', 'EdgeColor', 'k', 'ArrowSize', 10);
-highlight(h, find(in_attractor), 'NodeColor', [0.902 0.624 0.000]);
+plot(G, 'XData', x, 'YData', y, 'NodeLabel', {}, 'Marker', 'none', ...
+    'EdgeColor', 'k', 'EdgeAlpha', 1, 'LineWidth', 1, ...
+    'ArrowSize', 12, 'ArrowPosition', 0.6);
+hold on
+scatter(x, y, 1100, colours, 'filled', 'MarkerEdgeColor', 'k');
+text(x, y, labels, 'HorizontalAlignment', 'center', 'FontSize', 11);
+text(3, -0.3, {'steady state', '(011 => 011)'}, ...
+    'HorizontalAlignment', 'center', 'VerticalAlignment', 'top', ...
+    'FontSize', 9);
+xlim([-0.4 3.4]); ylim([-0.8 2.3]);
 title('State transitions (orange: states in an attractor)');
 axis off
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-three-genes');

@@ -49,14 +49,19 @@ subplot(1, 2, 1); hold on
 x = linspace(0, 1 / min(S), 50);
 vm = exercise(1, 1); km = exercise(1, 2);
 plot(1 ./ S, 1 ./ v, 'ko', 'MarkerFaceColor', 'k');
-plot(x, km / vm * x + 1 / vm, 'Color', [0.835 0.369 0.000], 'LineWidth', 1.5);
+plot(x, km / vm * x + 1 / vm, 'Color', [0.835 0.369 0.000], ...
+    'LineWidth', 1.5);
 xlabel('1/S (1/mM)'); ylabel('1/v (s/mM)');
 title('Lineweaver-Burk plot, Exercise 6.5'); box off
 subplot(1, 2, 2); hold on
 groups = categorical(repmat({'LB', 'EH', 'HW', 'non-linear'}, ...
     size(estimates, 1), 1), {'LB', 'EH', 'HW', 'non-linear'});
-boxchart(groups(:), reshape(estimates(:, :, 2), [], 1), 'MarkerStyle', 'none');
-yline(true_values(2), ':k');
+boxchart(groups(:), reshape(estimates(:, :, 2), [], 1), ...
+    'MarkerStyle', 'none', 'BoxFaceColor', 'w', 'BoxFaceAlpha', 1, ...
+    'BoxEdgeColor', 'k', 'WhiskerLineColor', 'k', ...
+    'BoxMedianLineColor', [0.902 0.624 0.000]);
+yline(true_values(2), ':k', 'LineWidth', 1.5);
+ylim([0.3 1.8]);
 ylabel('Estimated KM (mM)'); title('KM from 200 simulated datasets'); box off
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-linear-regression');
 

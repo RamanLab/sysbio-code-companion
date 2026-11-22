@@ -58,7 +58,7 @@ for ax, (name, (E0, t_end)) in zip(axes, cases.items()):
     ax.plot(t, P_mm, "--", color="#E69F00", lw=2, label="Michaelis–Menten")
     ax.set_xlabel("Time (s)")
     ax.set_ylabel("Product P (mM)")
-    ax.set_title(f"$E_0$ = {E0} mM, $S_0$ = {S0:g} mM")
+    ax.set_title(f"$E_0$ = {E0:g} mM, $S_0$ = {S0:g} mM")
     ax.legend(frameon=False, loc="lower right")
 sbp.save_figure(fig, __file__, "fig-michaelis-menten")
 

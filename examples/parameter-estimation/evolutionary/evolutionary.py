@@ -71,12 +71,14 @@ fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
 ax1.semilogy(best_per_generation, "o-", color="#0072B2", ms=3)
 ax1.axhline(63.7765, color="#999999", ls="--",
             label="least-squares optimum (fit_inhibition)")
+ax1.set_ylim(bottom=50)   # so the optimum is not on the axis
 ax1.set_xlabel("Generation")
 ax1.set_ylabel("Best SSE so far")
 ax1.set_title("Convergence")
 ax1.legend(frameon=False)
 
-colors = {0: "#bbbbbb", 5: "#E69F00", 20: "#009E73", n_generations: "#0072B2"}
+colors = {0: "#bbbbbb", 5: "#E69F00", 20: "#009E73",
+          n_generations: "#0072B2"}
 for g, P in snapshots.items():
     ax2.plot(10.0 ** P[:, 1], 10.0 ** P[:, 2], "o", color=colors[g], ms=5,
              label=f"generation {g}")

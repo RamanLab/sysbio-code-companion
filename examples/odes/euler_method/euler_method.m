@@ -33,19 +33,22 @@ plot(t_fine, exact(t_fine), 'k-', 'LineWidth', 2);
 hold on
 for k = 1:3                     % dt = 1.1 is in the right panel
     [t, x] = forward_euler(a, b, c, t_end, steps(k));
-    plot(t, x, 'o-', 'Color', colors(k, :), 'MarkerSize', 4);
+    plot(t, x, 'o-', 'Color', colors(k, :), 'MarkerSize', 4, ...
+        'MarkerFaceColor', colors(k, :));
 end
 ylim([0 20]);
 xlabel('t'); ylabel('x(t)'); title('Forward Euler');
 legend(['exact', compose('\\Deltat = %g', steps(1:3))], ...
-    'Location', 'southeast', 'Box', 'off');
+    'Location', 'northeast', 'Box', 'off');
 box off
 
 subplot(1, 2, 2)
 plot(t_fine, exact(t_fine), 'k-', 'LineWidth', 2);
 hold on
-plot(t_f, x_f, 'o-', 'Color', colors(4, :), 'MarkerSize', 4);
-plot(t_b, x_b, 's-', 'Color', colors(1, :), 'MarkerSize', 4);
+plot(t_f, x_f, 'o-', 'Color', colors(4, :), 'MarkerSize', 4, ...
+    'MarkerFaceColor', colors(4, :));
+plot(t_b, x_b, 's-', 'Color', colors(1, :), 'MarkerSize', 4, ...
+    'MarkerFaceColor', colors(1, :));
 ylim([-2 25]);
 xlabel('t'); title('Forward vs backward Euler');
 legend({'exact', 'forward, \Deltat = 1.1', 'backward, \Deltat = 1.1'}, ...

@@ -83,18 +83,22 @@ for ax, f in zip(axes, factors):
     approx = solve_ivp(bst_model, [0, 10], [x1s, x2s], t_eval=t,
                        args=(f,), rtol=1e-10, atol=1e-12).y
     exact_ss, bst_ss = steady_state(f * V1), s_steady_state(f)
-    results[f"supply_up_{round(100 * (f - 1))}"] = {"full": exact_ss, "s_system": bst_ss,
-                               "error_percent": 100 * (bst_ss / exact_ss - 1)}
-    print(f"Supply x{f}: new steady state, full model X1 = {exact_ss[0]:.4f},"
+    results[f"supply_up_{round(100 * (f - 1))}"] = {
+        "full": exact_ss, "s_system": bst_ss,
+        "error_percent": 100 * (bst_ss / exact_ss - 1)}
+    print(f"Supply x{f}: new steady state, full model "
+          f"X1 = {exact_ss[0]:.4f},"
           f" X2 = {exact_ss[1]:.4f}; S-system X1 = {bst_ss[0]:.4f}, "
           f"X2 = {bst_ss[1]:.4f}")
-    for i, (name, colour) in enumerate((("X1", "#0072B2"), ("X2", "#D55E00"))):
+    for i, (name, colour) in enumerate((("X1", "#0072B2"),
+                                        ("X2", "#D55E00"))):
         ax.plot(t, full[i], color=colour, label=f"{name}, full model")
-        ax.plot(t, approx[i], "--", color=colour, label=f"{name}, S-system")
+        ax.plot(t, approx[i], "--", color=colour,
+                label=f"{name}, S-system")
     ax.set_title(f"Supply raised {round(100 * (f - 1))}%")
     ax.set_xlabel("Time")
 axes[0].set_ylabel("Concentration")
-axes[0].legend(frameon=False, fontsize=8)
+axes[0].legend(frameon=False, fontsize=8, loc="upper right")
 sbp.save_figure(fig, __file__, "fig-s-system")
 
 sbp.save_results(__file__, results)

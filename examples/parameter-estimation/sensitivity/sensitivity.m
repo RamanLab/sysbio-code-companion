@@ -26,26 +26,32 @@ end
 fprintf('Normalised sensitivity of protein to each parameter:\n');
 fprintf('   t (h)  %s\n', sprintf('%8s', names{:}));
 for k = [1, 4, 12, 24, 48]
-    fprintf('  %5.1f   %s\n', t(k), sprintf('%8.3f', squeeze(normalised(2, k, :))));
+    fprintf('  %5.1f   %s\n', t(k), ...
+        sprintf('%8.3f', squeeze(normalised(2, k, :))));
 end
 fprintf(['At steady state, p* = k_m k_p / (g_m g_p): the sensitivities ' ...
     'approach +1, -1, +1, -1.\n']);
 
 %% Plot
 fig = figure('Position', [100 100 1000 400]);
+tiledlayout(1, 2, 'TileSpacing', 'compact');
 colours = [0.000 0.447 0.698; 0.902 0.624 0.000; 0.000 0.620 0.451; ...
            0.835 0.369 0.000];
+styles = {'-', '--', '-', '--'};   % dashed: degradation rates
 titles = {'mRNA', 'Protein'};
 for i = 1:2
-    subplot(1, 2, i); hold on
+    ax(i) = nexttile; hold on
     for j = 1:numel(names)
-        plot(t, normalised(i, :, j), 'Color', colours(j, :), 'LineWidth', 1.5);
+        plot(t, normalised(i, :, j), 'Color', colours(j, :), ...
+            'LineStyle', styles{j}, 'LineWidth', 1.5);
     end
     yline(0, 'k');
     xlabel('Time (h)'); title(titles{i}); box off
-    if i == 1, ylabel('Normalised sensitivity'); end
+    if i == 1, ylabel('Normalised sensitivity'); else, yticklabels({}); end
 end
-legend(names, 'Box', 'off', 'Interpreter', 'none');
+linkaxes(ax, 'y');
+lgd = legend(names, 'Box', 'off', 'Interpreter', 'tex');
+lgd.Layout.Tile = 'east';
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-sensitivity');
 
 results.t = t;

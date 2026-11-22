@@ -32,10 +32,10 @@ for c = 1:2
     [V, D] = eig(J' * J);
     [ev, order] = sort(diag(D), 'descend');
     sloppiest = V(:, order(end));
-    first = sloppiest(find(abs(sloppiest) > 1e-3, 1));  % fix the sign: first
-    sloppiest = sign(first) * sloppiest;                %   clear entry positive
-    results.(keys{c}) = struct('eigenvalues', ev', 'ratio', ev(end) / ev(1), ...
-        'sloppiest', sloppiest');
+    first = sloppiest(find(abs(sloppiest) > 1e-3, 1));  % fix the sign:
+    sloppiest = sign(first) * sloppiest;   % first clear entry positive
+    results.(keys{c}) = struct('eigenvalues', ev', ...
+        'ratio', ev(end) / ev(1), 'sloppiest', sloppiest');
     fprintf('%s: eigenvalues %s;  lambda_min/lambda_max = %.2g\n', keys{c}, ...
         strjoin(compose('%.3g', ev'), ', '), ev(end) / ev(1));
     fprintf('   sloppiest direction (in log parameters): %s\n', ...
@@ -45,16 +45,18 @@ end
 %% Plot: the eigenvalue spectra
 fig = figure('Position', [100 100 500 450]); hold on
 for c = 1:2
-    ev = max(results.(keys{c}).eigenvalues, 1e-12);   % for a log scale
-    for e = ev / ev(1)
+    ev = results.(keys{c}).eigenvalues;
+    ratio = max(ev / ev(1), 1e-12);   % zero is drawn at 1e-12
+    for e = ratio
         plot([c - 1.3, c - 0.7], [e, e], 'Color', [0.000 0.447 0.698], ...
             'LineWidth', 1.5);
     end
 end
 set(gca, 'YScale', 'log', 'XTick', [0, 1], 'XTickLabel', labels);
-ylim([1e-12, 3]); xlim([-0.6, 1.6]);
-yline(1e-3, ':k');
-ylabel('Eigenvalue / largest eigenvalue'); title('Eigenvalues of J''J'); box off
+ylim([1e-13, 3]); xlim([-0.6, 1.6]);
+yline(1e-3, ':k', 'LineWidth', 1);
+ylabel('Eigenvalue / largest eigenvalue'); title('Eigenvalues of J''J');
+box off
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-sloppiness');
 
 sbp.save_results(mfilename('fullpath'), results);

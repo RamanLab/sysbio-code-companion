@@ -31,7 +31,7 @@ fig = figure('Position', [100 100 1000 400]);
 subplot(1, 2, 1)
 colors = [0.000 0.447 0.698; 0.000 0.620 0.451; 0.800 0.475 0.655];
 for r = 1:3
-    stairs(t_grid, runs(r, :), 'Color', colors(r, :));
+    stairs(t_grid, runs(r, :), 'Color', colors(r, :), 'LineWidth', 1);
     hold on
 end
 plot(t_grid, mean(runs, 1), '-', 'Color', [0.902 0.624 0.000], ...

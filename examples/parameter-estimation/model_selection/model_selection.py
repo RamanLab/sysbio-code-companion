@@ -31,7 +31,8 @@ models = {
     "uncompetitive":  (["vmax", "KM", "KI"],
                        lambda p, S, I: p[0] * S / (p[1] + S * (1 + I / p[2]))),
     "noncompetitive": (["vmax", "KM", "KI"],
-                       lambda p, S, I: p[0] * S / ((p[1] + S) * (1 + I / p[2]))),
+                       lambda p, S, I: p[0] * S
+                       / ((p[1] + S) * (1 + I / p[2]))),
     "mixed":          (["vmax", "KM", "KI", "KI2"],
                        lambda p, S, I: p[0] * S / (p[1] * (1 + I / p[2])
                                              + S * (1 + I / p[3]))),
@@ -86,8 +87,8 @@ for (name, r), w in zip(results.items(), weights):
     names = models[name][0]
     print(f"{name:15s} chi2 = {r['chi2']:6.2f}  AIC = {r['aic']:6.2f}  "
           f"AICc = {r['aicc']:6.2f}  weight = {w:.2f}")
-    print("   " + ", ".join(f"{a} = {b:.3g} ± {c:.2g}"
-                            for a, b, c in zip(names, r["parameters"], r["sd"])))
+    print("   " + ", ".join(f"{a} = {b:.3g} ± {c:.2g}" for a, b, c
+                            in zip(names, r["parameters"], r["sd"])))
     worst = np.max(np.abs(r["kappa"] - np.eye(len(names))))
     print(f"   largest |cross-correlation| = {worst:.3f}")
 
@@ -97,20 +98,23 @@ fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4),
                                gridspec_kw={"width_ratios": [1.4, 1]})
 s_fine = np.linspace(0.5, 20, 200)
 for level, marker in ((10, "o"), (20, "s")):
-    keep = I == level
-    ax1.errorbar(S[keep], v[keep], yerr=delta * v[keep], fmt=marker,
-                 color="black", ms=4, capsize=2, label=f"data, I = {level} mM")
-    for name, colour in (("competitive", "#0072B2"),
-                         ("noncompetitive", "#D55E00")):
+    for name, colour, style in (("competitive", "#0072B2", "-"),
+                                ("noncompetitive", "#D55E00", "--")):
         rate = models[name][1]
         ax1.plot(s_fine, rate(results[name]["parameters"], s_fine, level),
-                 color=colour, label=name if level == 10 else None)
+                 color=colour, ls=style,
+                 label=name if level == 10 else None)
+    keep = I == level
+    ax1.errorbar(S[keep], v[keep], yerr=delta * v[keep], fmt=marker,
+                 color="black", ms=4, capsize=2,
+                 label=f"data, I = {level} mM")
 ax1.set_xlabel("S (mM)")
 ax1.set_ylabel("v (mmol/L/s)")
-ax1.legend(frameon=False, fontsize=9)
+ax1.legend(frameon=False, fontsize=9, loc="upper left")
 ax2.bar(list(results), weights, color="#0072B2")
 ax2.set_ylabel("Akaike weight")
 ax2.tick_params(axis="x", rotation=30)
+plt.setp(ax2.get_xticklabels(), ha="right", rotation_mode="anchor")
 ax2.set_title("Support for each model")
 sbp.save_figure(fig, __file__, "fig-model-selection")
 

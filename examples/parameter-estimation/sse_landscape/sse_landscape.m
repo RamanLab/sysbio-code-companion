@@ -40,9 +40,10 @@ end
 
 %% Plot: log10(SSE - best SSE + 1), so that the best point is at 0
 fig = figure('Position', [100 100 1000 420]);
+tiledlayout(1, 2, 'TileSpacing', 'compact');
 titles = {'D1 only (I = 10 mM)', 'D1 and D2 together'};
 for d = 1:2
-    subplot(1, 2, d)
+    nexttile
     Z = log10(SSE.(names{d}) - min(SSE.(names{d})(:)) + 1);
     contourf(KM_grid, KI_grid, min(Z, 3), linspace(0, 3, 13), ...
         'LineStyle', 'none');
@@ -50,13 +51,14 @@ for d = 1:2
     plot(results.(names{d}).KM, results.(names{d}).KI, 'p', ...
         'Color', [0.835 0.369 0.000], ...
         'MarkerFaceColor', [0.835 0.369 0.000], 'MarkerSize', 14);
-    colormap(flipud(parula));
+    colormap(sbp.colormap('viridis_r'));
     clim([0 3]);
     xlabel('K_M (mM)');
-    if d == 1, ylabel('K_I (mM)'); end
+    if d == 1, ylabel('K_I (mM)'); else, yticklabels({}); end
     title(titles{d});
 end
 cb = colorbar;
+cb.Layout.Tile = 'east';
 cb.Label.String = 'log_{10}(SSE - best SSE + 1)';
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-sse-landscape');
 

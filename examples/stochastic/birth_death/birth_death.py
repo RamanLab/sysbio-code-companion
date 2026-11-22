@@ -59,7 +59,7 @@ ax2.plot(m, poisson.pmf(m, k / gamma), "o-", color="#E69F00", ms=4,
 ax2.set_xlabel("Number of mRNA molecules")
 ax2.set_ylabel("Probability")
 ax2.set_ylim(0, 0.17)
-ax2.legend(frameon=False, loc="upper right")
+ax2.legend(frameon=False, loc="upper right", reverse=True)  # bars first
 ax2.set_title("Distribution at steady state")
 sbp.save_figure(fig, __file__, "fig-birth-death")
 

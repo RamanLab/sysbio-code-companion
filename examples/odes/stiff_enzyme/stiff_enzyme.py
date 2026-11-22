@@ -46,14 +46,17 @@ sol = solve_ivp(enzyme, [0, t_end], [S0, 0, 0], method="BDF", t_eval=t,
 # --- Plot
 sbp.style()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
-ax1.semilogx(t, sol.y[1] / E0, "-", color="#009E73", lw=2,
-             label="ES / $E_0$ (fast)")
-ax1.semilogx(t, sol.y[2] / S0, "-", color="#0072B2", lw=2,
-             label="P / $S_0$ (slow)")
+ax1.semilogx(t, sol.y[1] / E0, "-", color="#009E73", lw=2)
+ax1.semilogx(t, sol.y[2] / S0, "-", color="#0072B2", lw=2)
+# Label the curves directly: no room for a legend that misses them
+ax1.text(1e-1, 0.93, "ES / $E_0$ (fast)", color="#009E73", ha="center",
+         va="bottom")
+ax1.text(1e-2, 0.03, "P / $S_0$ (slow)", color="#0072B2", ha="center",
+         va="bottom")
+ax1.set_ylim(0, 1)
 ax1.set_xlabel("Time (s)")
 ax1.set_ylabel("Fraction")
 ax1.set_title("Two time scales ($k_1 = k_{-1} = 100$)")
-ax1.legend(frameon=False)
 
 ax2.loglog(speeds, cost["nonstiff"], "o-", color="#E69F00",
            label="non-stiff solver")

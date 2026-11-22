@@ -34,8 +34,10 @@ fprintf('PBN: steady state 011 %.3f; cycle %.3f\n', ...
 
 %% Plot
 fig = figure('Position', [100 100 700 400]);
-b = bar(categorical(labels, labels), [pi_noise; pi_pbn]');
+b = bar(categorical(labels, labels), [pi_noise; pi_pbn]', ...
+    'EdgeColor', 'none');
 b(1).FaceColor = [0.6 0.6 0.6]; b(2).FaceColor = [0.000 0.447 0.698];
+set(gca, 'TickDir', 'out');   % no ticks between the bars of a group
 xlabel('State (g1 g2 g3)'); ylabel('Long-run probability');
 legend({'noise only', 'PBN'}, 'Box', 'off'); box off
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-probabilistic');
@@ -67,7 +69,8 @@ for s = 0:2 ^ n - 1
     for flips = 1:2 ^ n - 1                      % which genes flip (as bits)
         k = sum(bitget(flips, 1:n));
         t = bitxor(s, flips);
-        P(s + 1, t + 1) = P(s + 1, t + 1) + p_flip ^ k * (1 - p_flip) ^ (n - k);
+        P(s + 1, t + 1) = P(s + 1, t + 1) ...
+            + p_flip ^ k * (1 - p_flip) ^ (n - k);
     end
 end
 assert(all(abs(sum(P, 2) - 1) < 1e-12));

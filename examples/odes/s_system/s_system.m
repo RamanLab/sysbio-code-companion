@@ -42,21 +42,26 @@ results.steady_state = [x1s, x2s];
 results.kinetic_orders = [g12, h11, h22];
 opts = odeset('RelTol', 1e-10, 'AbsTol', 1e-12);
 fig = figure('Position', [100 100 1200 360]);
+tiledlayout(1, 3, 'TileSpacing', 'compact');
 colours = {[0.000 0.447 0.698], [0.835 0.369 0.000]};
 for k = 1:numel(factors)
     f = factors(k);
-    [~, full] = ode45(@(t, x) full_model(p, x, f * p.V1), t, [x1s; x2s], opts);
-    [~, approx] = ode45(@(t, x) bst_model(t, x, f), t, [x1s; x2s], opts);
+    [~, full] = ode45(@(t, x) full_model(p, x, f * p.V1), t, ...
+        [x1s; x2s], opts);
+    [~, approx] = ode45(@(t, x) bst_model(t, x, f), t, [x1s; x2s], ...
+        opts);
     exact_ss = steady_state(p, f * p.V1);
     % S-system steady state, in logs: g12 y2 - h11 y1 = ln(b1 / (f a1)),
     % and g21 y1 - h22 y2 = ln(b2 / a2), with y = ln X
-    bst_ss = exp([-h11, g12; g21, -h22] \ [log(b1 / (f * a1)); log(b2 / a2)])';
+    bst_ss = exp([-h11, g12; g21, -h22] ...
+        \ [log(b1 / (f * a1)); log(b2 / a2)])';
     key = sprintf('supply_up_%d', round(100 * (f - 1)));
     results.(key) = struct('full', exact_ss, 's_system', bst_ss, ...
         'error_percent', 100 * (bst_ss ./ exact_ss - 1));
-    fprintf(['Supply x%g: new steady state, full model X1 = %.4f, X2 = %.4f; ' ...
-        'S-system X1 = %.4f, X2 = %.4f\n'], f, exact_ss, bst_ss);
-    subplot(1, 3, k); hold on
+    fprintf(['Supply x%g: new steady state, full model ' ...
+        'X1 = %.4f, X2 = %.4f; S-system X1 = %.4f, X2 = %.4f\n'], ...
+        f, exact_ss, bst_ss);
+    ax(k) = nexttile; hold on
     for i = 1:2
         plot(t, full(:, i), 'Color', colours{i}, ...
             'DisplayName', sprintf('X%d, full model', i));
@@ -65,8 +70,14 @@ for k = 1:numel(factors)
     end
     title(sprintf('Supply raised %d%%', round(100 * (f - 1))));
     xlabel('Time'); box off
-    if k == 1, ylabel('Concentration'); legend('Box', 'off', 'FontSize', 8); end
+    if k == 1
+        ylabel('Concentration');
+        legend('Box', 'off', 'FontSize', 8, 'Location', 'northeast');
+    else
+        yticklabels({});
+    end
 end
+linkaxes(ax, 'y');
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-s-system');
 
 sbp.save_results(mfilename('fullpath'), results);

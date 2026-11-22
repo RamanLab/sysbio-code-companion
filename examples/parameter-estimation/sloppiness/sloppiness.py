@@ -62,24 +62,26 @@ for key, use_mrna in (("mrna_and_protein", True), ("protein_only", False)):
     stiffest = eigenvectors[:, order[0]]
     sloppiest = eigenvectors[:, order[-1]]
     first = sloppiest[np.abs(sloppiest) > 1e-3][0]  # fix the sign: first
-    sign = 1 if first > 0 else -1                      #   clear entry positive
+    sign = 1 if first > 0 else -1                   #   clear entry positive
     results[key] = {"eigenvalues": eigenvalues,
                     "ratio": eigenvalues[-1] / eigenvalues[0],
                     "sloppiest": sign * sloppiest}
     print(f"{key}: eigenvalues " + ", ".join(f"{e:.3g}" for e in eigenvalues)
           + f";  lambda_min/lambda_max = {results[key]['ratio']:.2g}")
     print("   sloppiest direction (in log parameters): "
-          + ", ".join(f"{n} {c:+.2f}" for n, c in zip(names, sign * sloppiest)))
+          + ", ".join(f"{n} {c:+.2f}"
+                      for n, c in zip(names, sign * sloppiest)))
 
 # --- Plot: the eigenvalue spectra
 sbp.style()
 fig, ax = plt.subplots(figsize=(5, 4.5))
 for x, (key, label) in enumerate([("mrna_and_protein", "mRNA and protein"),
                                   ("protein_only", "protein only")]):
-    ev = np.maximum(results[key]["eigenvalues"], 1e-12)  # for a log scale
-    ax.hlines(ev / ev[0], x - 0.3, x + 0.3, color="#0072B2")
+    ev = results[key]["eigenvalues"]
+    ratio = np.maximum(ev / ev[0], 1e-12)  # zero is drawn at 1e-12
+    ax.hlines(ratio, x - 0.3, x + 0.3, color="#0072B2")
 ax.set_yscale("log")
-ax.set_ylim(1e-12, 3)
+ax.set_ylim(1e-13, 3)
 ax.axhline(1e-3, ls=":", color="black", lw=1)
 ax.set_xticks([0, 1], ["mRNA and protein", "protein only"])
 ax.set_ylabel("Eigenvalue / largest eigenvalue")

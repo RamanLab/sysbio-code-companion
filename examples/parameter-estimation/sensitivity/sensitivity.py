@@ -49,14 +49,16 @@ print("At steady state, p* = k_m k_p / (g_m g_p): the sensitivities "
 sbp.style()
 fig, axes = plt.subplots(1, 2, figsize=(10, 4), sharey=True)
 colours = ["#0072B2", "#E69F00", "#009E73", "#D55E00"]
+styles = ["-", "--", "-", "--"]   # dashed: degradation rates
 for ax, i, title in zip(axes, (0, 1), ("mRNA", "Protein")):
-    for j, (n, c) in enumerate(zip(names, colours)):
-        ax.plot(t, normalised[i, :, j], color=c, label=n)
+    for j in range(len(names)):
+        ax.plot(t, normalised[i, :, j], color=colours[j], ls=styles[j],
+                label=f"${names[j]}$")
     ax.axhline(0, color="black", lw=0.5)
     ax.set_xlabel("Time (h)")
     ax.set_title(title)
 axes[0].set_ylabel("Normalised sensitivity")
-axes[1].legend(frameon=False)
+axes[1].legend(frameon=False, loc="center left", bbox_to_anchor=(1, 0.5))
 sbp.save_figure(fig, __file__, "fig-sensitivity")
 
 sbp.save_results(__file__, {"t": t, "mrna": normalised[0],

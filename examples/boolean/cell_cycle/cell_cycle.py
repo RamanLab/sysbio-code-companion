@@ -11,6 +11,7 @@ Ten genes and proteins; the update rules are the book's Eq. 7.4. With
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
 import sbp
 
 names = ["CycD", "Rb", "E2F", "CycE", "CycA", "p27", "Cdc20", "Cdh1",
@@ -98,7 +99,8 @@ traj = np.array(traj)
 
 sbp.style()
 fig, ax = plt.subplots(figsize=(8, 3.6))
-ax.imshow(traj.T, cmap="Blues", aspect="auto", vmin=0, vmax=1.3)
+ax.imshow(traj.T, aspect="auto", vmin=0, vmax=1,
+          cmap=ListedColormap(["#F7FAFF", "#0072B2"]))  # OFF: light, ON: dark
 ax.set_yticks(range(n), names)
 ax.set_xticks(range(0, 21, 2))
 ax.set_xlabel("Time step")

@@ -63,24 +63,27 @@ for a in attractors:
           f"{' -> '.join(label(s) for s in a)}; basin of {basins[min(a)]} "
           f"states")
 
-# --- Plot the state transition map
-G = nx.DiGraph([(label(s), label(succ[s])) for s in range(2 ** n)])
-pos = {"100": (0, 1), "110": (0, 0), "001": (1, 1), "101": (1, 0),
-       "010": (2, 1.5), "111": (2, 0.5), "000": (3, 1), "011": (3, 0)}
+# --- Plot the state transition map. Fixed positions (the same in MATLAB)
+# keep every edge clear of the other nodes. The steady state's self-loop
+# is not drawn, but labelled.
+G = nx.DiGraph([(label(s), label(succ[s])) for s in range(2 ** n)
+                if succ[s] != s])
+pos = {"000": (2, 0), "001": (1, 1.5), "010": (2, 2), "011": (3, 0),
+       "100": (0, 1.5), "101": (1, 0), "110": (0, 0), "111": (2, 1)}
 in_attractor = {label(s) for a in attractors for s in a}
 sbp.style()
 fig, ax = plt.subplots(figsize=(7, 3.5))
+nx.draw_networkx_edges(G, pos, ax=ax, node_size=1100, arrowsize=18)
 nx.draw_networkx_nodes(G, pos, ax=ax, node_size=1100, edgecolors="k",
                        node_color=["#E69F00" if v in in_attractor else "white"
                                    for v in G.nodes])
 nx.draw_networkx_labels(G, pos, ax=ax, font_size=11)
-nx.draw_networkx_edges(G, pos, ax=ax, node_size=1100, arrowsize=18,
-                       connectionstyle="arc3,rad=0.15")
-ax.annotate("steady state\n(011 => 011)", pos["011"], xytext=(0, -38),
-            textcoords="offset points", ha="center", va="top", fontsize=9)
+ax.text(3, -0.3, "steady state\n(011 => 011)", ha="center", va="top",
+        fontsize=9)
+ax.set_xlim(-0.4, 3.4)
+ax.set_ylim(-0.8, 2.3)
 ax.set_title("State transitions (orange: states in an attractor)")
 ax.set_axis_off()
-ax.margins(0.12)
 sbp.save_figure(fig, __file__, "fig-three-genes")
 
 sbp.save_results(__file__, {

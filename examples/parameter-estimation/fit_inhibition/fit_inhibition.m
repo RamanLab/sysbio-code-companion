@@ -64,9 +64,9 @@ S_fine = linspace(0, 21, 200);
 subplot(1, 2, 1)
 hold on
 errorbar(S, v10, delta * v10, 'o', 'Color', blue, 'MarkerSize', 4, ...
-    'MarkerFaceColor', blue);
+    'CapSize', 2, 'MarkerFaceColor', blue);
 errorbar(S, v20, delta * v20, 'o', 'Color', orange, 'MarkerSize', 4, ...
-    'MarkerFaceColor', orange);
+    'CapSize', 2, 'MarkerFaceColor', orange);
 plot(S_fine, rate(p, S_fine, 10), '-', 'Color', blue);
 plot(S_fine, rate(p, S_fine, 20), '-', 'Color', orange);
 xlabel('S (mM)'); ylabel('v (mmol L^{-1} s^{-1})');
