@@ -10,10 +10,11 @@
 % A in people. The basic reproductive number, R0 = beta p T0 / (c delta),
 % is the number of cells infected by the virus from one infected cell, at
 % the start. An antiviral (a neuraminidase inhibitor) that blocks virus
-% release with a given efficacy multiplies p by (1 - efficacy); we compare
-% treatment started on day 1, 2 and 3 of the infection.
+% release with a given efficacy multiplies p by (1 - efficacy); we
+% compare treatment started on day 1, 2 and 3 of the infection.
 
-par.beta = 2.7e-5; par.p = 1.2e-2; par.c = 3.0; par.delta = 4.0;  % per day
+% Rates per day; V in TCID50/mL
+par.beta = 2.7e-5; par.p = 1.2e-2; par.c = 3.0; par.delta = 4.0;
 T0 = 4e8; V0 = 9.3e-2;
 R0 = par.beta * par.p * T0 / (par.c * par.delta);
 fprintf('R0 = %.1f\n', R0);
@@ -25,6 +26,7 @@ efficacy = 0.98;
 fig = figure('Position', [100 100 650 450]);
 colours = {[0 0 0], [0.000 0.620 0.451], [0.000 0.447 0.698], ...
            [0.835 0.369 0.000]};
+styles = {'-', '--', '-.', ':'};
 for s = 1:numel(names)
     [t, y] = simulate(par, [T0; 0; V0], starts(s), efficacy);
     T = y(1, :); V = y(3, :);
@@ -35,16 +37,18 @@ for s = 1:numel(names)
     results.(names{s}) = struct('peak_virus', peak, ...
         'target_cells_left', T(end) / T0, ...
         'virus_area', sum((V(2:end) + V(1:end - 1)) / 2) * dt);
-    fprintf('%-10s peak %.3g TCID50/mL on day %.2f; %.1f%% of target cells left on day 10\n', ...
-        names{s}, peak, t(k), 100 * T(end) / T0);
+    fprintf(['%-10s peak %.3g TCID50/mL on day %.2f; %.1f%% of target ' ...
+        'cells left on day 10\n'], names{s}, peak, t(k), 100 * T(end) / T0);
     label = strrep(strrep(names{s}, '_', ' '), 'day', 'treated, day');
-    semilogy(t, max(V, 1e-3), 'Color', colours{s}, 'LineWidth', 1.5, ...
-        'DisplayName', label);
+    semilogy(t, max(V, 1e-3), styles{s}, 'Color', colours{s}, ...
+        'LineWidth', 1.5, 'DisplayName', label);
     hold on
 end
-ylim([1e-2, 1e7]); xlabel('Time (days)'); ylabel('Virus (TCID50/mL)');
+xlim([0 10]); ylim([1e-2, 1e7]); yticks(10.^(-2:2:6));
+xlabel('Time (days)'); ylabel('Virus (TCID50/mL)');
 legend('Box', 'off');
-title(sprintf('Influenza A, target-cell-limited model (R0 = %.1f)', R0)); box off
+title(sprintf('Influenza A, target-cell-limited model (R0 = %.1f)', R0));
+box off
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-viral-dynamics');
 
 sbp.save_results(mfilename('fullpath'), results);
@@ -64,7 +68,8 @@ tb = t(before);
 [~, x] = ode15s(rhs(par.p), tb, y0, opts);
 y(:, before) = x';
 if start < t(end)
-    [~, x] = ode15s(rhs(par.p * (1 - efficacy)), [start, t(~before)], x(end, :)', opts);
+    [~, x] = ode15s(rhs(par.p * (1 - efficacy)), [start, t(~before)], ...
+        x(end, :)', opts);
     y(:, ~before) = x(2:end, :)';
 end
 end

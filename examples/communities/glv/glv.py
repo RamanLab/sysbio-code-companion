@@ -51,7 +51,8 @@ starts = [[0.05, 0.05, 0.05], [0.5, 0.02, 0.1], [0.02, 0.6, 0.3]]
 u = sbp.uniform(5, 2 * len(starts) * len(t) * 3)
 gauss = (np.sqrt(-2 * np.log(u[0::2])) * np.cos(2 * np.pi * u[1::2]))
 gauss = gauss.reshape(len(starts), len(t), 3)
-data = [simulate(x0, t) * (1 + 0.05 * gauss[k]) for k, x0 in enumerate(starts)]
+data = [simulate(x0, t) * (1 + 0.05 * gauss[k])
+        for k, x0 in enumerate(starts)]
 
 # Regression: (ln x(t + dt) - ln x(t)) / dt  =  r + A x(t)
 rows, targets = [], []
@@ -79,10 +80,11 @@ for k, ax in enumerate(axes):
     for i in range(3):
         ax.plot(t, data[k][:, i], "o", color=colours[i], ms=3)
         ax.plot(tt, fitted[:, i], color=colours[i], label=species[i])
+    ax.set_xticks(range(0, 11, 2))
     ax.set_xlabel("Time (days)")
     ax.set_title(f"Experiment {k + 1}")
 axes[0].set_ylabel("Abundance")
-axes[0].legend(frameon=False)
+axes[0].legend(frameon=False, loc="upper left")
 sbp.save_figure(fig, __file__, "fig-glv")
 
 sbp.save_results(__file__, {

@@ -10,7 +10,8 @@ whole community, the problem is a linear programme:
     maximise mu
     subject to  S u_A = 0,  S u_B = 0,
                 u_A[biomass] = x mu,  u_B[biomass] = (1 - x) mu,
-                x lb_A <= u_A <= x ub_A, (1 - x) lb_B <= u_B <= (1 - x) ub_B,
+                x lb_A <= u_A <= x ub_A,
+                (1 - x) lb_B <= u_B <= (1 - x) ub_B,
                 what the community takes from the medium is available.
 """
 import numpy as np
@@ -140,11 +141,13 @@ for r, (a, b) in traded.items():
 # --- Plot
 sbp.style()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4),
-                               gridspec_kw={"width_ratios": [3, 2]})
+                               gridspec_kw={"width_ratios": [3, 2],
+                                            "wspace": 0.45})
 ax1.plot(fractions, growth, color="#0072B2")
 ax1.axhline(alone(lb0, ub0), color="#999999", ls=":", lw=1)
 ax1.text(0.5, 0.9, "wild type alone", ha="center", color="#666666",
          fontsize=9)
+ax1.set_xlim(0, 1)
 ax1.set_ylim(0, 1)
 ax1.set_xlabel("Fraction of strain A in the community")
 ax1.set_ylabel("Community growth rate (1/h)")
@@ -154,12 +157,13 @@ label = {"EX_akg_e": "2-oxoglutarate", "EX_glu__L_e": "glutamate",
          "EX_mal__L_e": "malate", "EX_fum_e": "fumarate"}
 names = [label.get(r, r) for r in traded]
 y = np.arange(len(traded))
-ax2.barh(y + 0.2, [v[0] for v in traded.values()], 0.4, color="#E69F00",
-         label="strain A")
-ax2.barh(y - 0.2, [v[1] for v in traded.values()], 0.4, color="#009E73",
-         label="strain B")
+ax2.barh(y + 0.2, [v[0] for v in traded.values()], 0.4,
+         color="#E69F00", label="strain A")
+ax2.barh(y - 0.2, [v[1] for v in traded.values()], 0.4,
+         color="#009E73", label="strain B")
 ax2.set_yticks(y, names)
 ax2.axvline(0, color="black", lw=0.5)
+ax2.set_xlim(-4.5, 4.5)
 ax2.set_xlabel("Exchange flux (+ secreted, − taken up)")
 ax2.set_title("Least cross-feeding, x = 0.5")
 ax2.set_ylim(-0.6, len(traded) + 0.2)

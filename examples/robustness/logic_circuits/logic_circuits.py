@@ -95,6 +95,7 @@ for name, x, y in zip(summary["name"], summary["n_genotypes"],
         ax1.annotate(name, (x, y), textcoords="offset points",
                      xytext=(5, -3), fontsize=8)
 ax1.set_xlim(8, 8000)
+ax1.set_ylim(-0.03, 0.6)
 ax1.set_xlabel("Number of circuits with this function")
 ax1.set_ylabel("Robustness of the function")
 ax1.set_title("Common functions are robust")
@@ -103,10 +104,12 @@ ax2.plot(levels, [evolvability[robustness == r].mean() for r in levels],
          "o-", color="#E69F00", label="single circuits")
 ax2.plot(summary["robustness"], summary["evolvability"], "s",
          color="#0072B2", label="functions (all their circuits)")
+ax2.set_xlim(-0.03, 0.83)
+ax2.set_ylim(1.5, 14.5)
 ax2.set_xlabel("Robustness")
 ax2.set_ylabel("New functions one mutation away")
 ax2.set_title("Robustness and evolvability")
-ax2.legend(frameon=False)
+ax2.legend(frameon=False, loc="lower left")
 sbp.save_figure(fig, __file__, "fig-logic-circuits")
 
 sbp.save_results(__file__, {

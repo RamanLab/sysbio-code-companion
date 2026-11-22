@@ -30,8 +30,8 @@ ev = eig(diag(x_star) * A);
 ev = ev(order);
 fprintf('Coexistence steady state: %s\n', strjoin(compose('%s = %.3f', ...
     string(species'), x_star), ', '));
-fprintf('Eigenvalues of the Jacobian: %s  (all real parts negative: stable)\n', ...
-    strjoin(compose('%.3f%+.3fi', real(ev), imag(ev)), ', '));
+fprintf(['Eigenvalues of the Jacobian: %s  (all real parts negative: ' ...
+    'stable)\n'], strjoin(compose('%.3f%+.3fi', real(ev), imag(ev)), ', '));
 
 % Three experiments, sampled every half day for 10 days, with 5% noise
 t = 0:0.5:10;
@@ -39,10 +39,11 @@ starts = [0.05, 0.05, 0.05; 0.5, 0.02, 0.1; 0.02, 0.6, 0.3];
 K = size(starts, 1); T = numel(t);
 u = sbp.uniform(5, 2 * K * T * 3);
 gauss = sqrt(-2 * log(u(1:2:end))) .* cos(2 * pi * u(2:2:end));
-gauss = reshape(gauss, 3, T, K);                  % species x time x experiment
+gauss = reshape(gauss, 3, T, K);         % species x time x experiment
 data = cell(1, K);
 for k = 1:K
-    data{k} = simulate(r, A, starts(k, :), t) .* (1 + 0.05 * gauss(:, :, k)');
+    data{k} = simulate(r, A, starts(k, :), t) ...
+        .* (1 + 0.05 * gauss(:, :, k)');
 end
 
 % Regression: (ln x(t + dt) - ln x(t)) / dt  =  r + A x(t)
@@ -55,7 +56,8 @@ theta = X \ Y;                                    % one column per species
 r_hat = theta(1, :);
 A_hat = theta(2:end, :)';
 fprintf('Estimated growth rates:  %s   (true %s)\n', ...
-    strjoin(compose('%.2f', r_hat), ', '), strjoin(compose('%.2f', r'), ', '));
+    strjoin(compose('%.2f', r_hat), ', '), ...
+    strjoin(compose('%.2f', r'), ', '));
 fprintf('Estimated interactions:\n');
 for i = 1:3
     fprintf('  %s: %s   (true %s)\n', species{i}, ...
@@ -67,17 +69,25 @@ end
 fig = figure('Position', [100 100 1200 360]);
 tt = linspace(0, 10, 201);
 colours = [0.000 0.447 0.698; 0.902 0.624 0.000; 0.000 0.620 0.451];
+ax = gobjects(1, K);
 for k = 1:K
-    subplot(1, 3, k); hold on
+    ax(k) = subplot(1, 3, k); hold on
     fitted = simulate(r_hat', A_hat, data{k}(1, :), tt);
     for i = 1:3
-        plot(t, data{k}(:, i), 'o', 'Color', colours(i, :), 'MarkerSize', 3, ...
+        plot(t, data{k}(:, i), 'o', 'Color', colours(i, :), ...
+            'MarkerFaceColor', colours(i, :), 'MarkerSize', 3, ...
             'HandleVisibility', 'off');
-        plot(tt, fitted(:, i), 'Color', colours(i, :), 'DisplayName', species{i});
+        plot(tt, fitted(:, i), 'Color', colours(i, :), ...
+            'DisplayName', species{i});
     end
+    xticks(0:2:10);
     xlabel('Time (days)'); title(sprintf('Experiment %d', k)); box off
-    if k == 1, ylabel('Abundance'); legend('Box', 'off'); end
+    if k == 1
+        ylabel('Abundance');
+        legend('Box', 'off', 'Location', 'northwest');
+    end
 end
+linkaxes(ax, 'y');
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-glv');
 
 results.steady_state = x_star';

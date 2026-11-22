@@ -54,8 +54,12 @@ fprintf('Steady state unstable at %d of %d grid points\n', ...
 %% Plot
 fig = figure('Position', [100 100 1000 400]);
 subplot(1, 2, 1)
-plot(t, Y(4:6, :));
-ylim([0 75]);
+colours = sbp.palette();
+hold on
+for i = 1:3
+    plot(t, Y(3 + i, :), 'Color', colours(i, :));
+end
+xlim([0 50]); ylim([0 75]);
 xlabel('Time'); ylabel('Protein level'); title('Oscillations');
 legend({'p1', 'p2', 'p3'}, 'Location', 'north', 'Orientation', ...
     'horizontal', 'Box', 'off');

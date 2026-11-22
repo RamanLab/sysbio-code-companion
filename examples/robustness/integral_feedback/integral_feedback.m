@@ -50,16 +50,21 @@ end
 
 %% Plot
 colours = [0.000 0.447 0.698; 0.902 0.624 0.000];
+styles = {'-', '--'};
+markers = {'o', 's'};
 fig = figure('Position', [100 100 1000 400]);
 subplot(1, 2, 1)
 patch([20 60 60 20], [0.3 0.3 2.2 2.2], [0.93 0.93 0.93], ...
     'EdgeColor', 'none');
 hold on
-h = plot(t, courses);
-set(h, {'Color'}, num2cell(colours, 2));
+h = gobjects(1, 2);
+for k = 1:2
+    h(k) = plot(t, courses(k, :), styles{k}, 'Color', colours(k, :));
+end
 text(40, 2.05, 'u = 2', 'HorizontalAlignment', 'center', ...
     'Color', [0.4 0.4 0.4]);
-ylim([0.3 2.2]);
+xlim([0 100]); ylim([0.3 2.2]);
+yticks([0.5 1 1.5 2]);
 xlabel('Time'); ylabel('Output y');
 title('Response to a step in the signal');
 legend(h, {'K = 0.01', 'K = 1'}, 'Box', 'off');
@@ -67,11 +72,12 @@ box off
 subplot(1, 2, 2)
 hold on
 for k = 1:2
-    plot(level(:, k), ratio(:, k), 'o', 'Color', colours(k, :), ...
-        'MarkerFaceColor', colours(k, :));
+    scatter(level(:, k), ratio(:, k), 36, colours(k, :), markers{k}, ...
+        'filled', 'MarkerFaceAlpha', 0.7);
 end
 yline(1, ':', 'Color', [0.6 0.6 0.6]);
-set(gca, 'XScale', 'log');
+set(gca, 'XScale', 'log', 'XMinorTick', 'off');
+xlim([0.15 5]); ylim([0.98 1.36]);
 xticks([0.2 0.5 1 2 4]);
 xlabel('Steady-state y before the step'); ylabel('y after / y before');
 title('81 parameter sets');

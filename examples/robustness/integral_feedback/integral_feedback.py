@@ -66,26 +66,33 @@ for K in K_values:
 # --- Plot
 sbp.style()
 colours = {0.01: "#0072B2", 1.0: "#E69F00"}
+styles = {0.01: "-", 1.0: "--"}
+markers = {0.01: "o", 1.0: "s"}
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
 for K in K_values:
-    ax1.plot(t, courses[K], color=colours[K], label=f"K = {K:g}")
+    ax1.plot(t, courses[K], styles[K], color=colours[K],
+             label=f"K = {K:g}")
 ax1.axvspan(20, 60, color="#eeeeee", zorder=0)
 ax1.text(40, 2.05, "u = 2", ha="center", color="#666666")
+ax1.set_xlim(0, 100)
 ax1.set_ylim(0.3, 2.2)
+ax1.set_yticks([0.5, 1, 1.5, 2])
 ax1.set_xlabel("Time")
 ax1.set_ylabel("Output y")
 ax1.set_title("Response to a step in the signal")
 ax1.legend(frameon=False)
 for K in K_values:
-    ax2.semilogx(level[K], ratio[K], "o", color=colours[K], alpha=0.7,
-                 label=f"K = {K:g}")
+    ax2.semilogx(level[K], ratio[K], markers[K], color=colours[K],
+                 alpha=0.7, label=f"K = {K:g}")
 ax2.axhline(1, color="#999999", ls=":", lw=1)
+ax2.set_xlim(0.15, 5)
+ax2.set_ylim(0.98, 1.36)
 ax2.set_xticks([0.2, 0.5, 1, 2, 4], labels=["0.2", "0.5", "1", "2", "4"])
 ax2.minorticks_off()
 ax2.set_xlabel("Steady-state y before the step")
 ax2.set_ylabel("y after / y before")
 ax2.set_title("81 parameter sets")
-ax2.legend(frameon=False)
+ax2.legend(frameon=False, loc="upper left")
 sbp.save_figure(fig, __file__, "fig-integral-feedback")
 
 sbp.save_results(__file__, {

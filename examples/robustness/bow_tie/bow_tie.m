@@ -16,26 +16,29 @@ s = load(fullfile(sbp.data_dir(), 'iML1515.mat'));
 model = s.iML1515;
 S = model.S; mets = model.mets; rxns = model.rxns;
 
-currency = {'h', 'h2o', 'atp', 'adp', 'amp', 'pi', 'ppi', 'nad', 'nadh', ...
-    'nadp', 'nadph', 'co2', 'coa', 'nh4', 'o2', 'q8', 'q8h2', 'mql8', ...
-    'mqn8', '2dmmq8', '2dmmql8', 'fad', 'fadh2', 'gtp', 'gdp', 'ctp', ...
-    'cdp', 'utp', 'udp', 'h2o2', 'na1', 'k', 'fe2', 'fe3', 'glu__L', 'akg', ...
-    'accoa', 'so4', 'gln__L'};
+currency = {'h', 'h2o', 'atp', 'adp', 'amp', 'pi', 'ppi', 'nad', ...
+    'nadh', 'nadp', 'nadph', 'co2', 'coa', 'nh4', 'o2', 'q8', 'q8h2', ...
+    'mql8', 'mqn8', '2dmmq8', '2dmmql8', 'fad', 'fadh2', 'gtp', 'gdp', ...
+    'ctp', 'cdp', 'utp', 'udp', 'h2o2', 'na1', 'k', 'fe2', 'fe3', ...
+    'glu__L', 'akg', 'accoa', 'so4', 'gln__L'};
 base = regexprep(mets, '_[^_]+$', '');            % drop the compartment
 keep = ~ismember(base, currency);
 
 src = {}; dst = {};
 for j = 1:numel(rxns)
     column = S(:, j);
-    if nnz(column) < 2 || startsWith(rxns{j}, 'BIOMASS') || strcmp(rxns{j}, 'ATPM')
+    if nnz(column) < 2 || startsWith(rxns{j}, 'BIOMASS') ...
+            || strcmp(rxns{j}, 'ATPM')
         continue
     end
     substrates = mets(column < 0 & keep);
     products = mets(column > 0 & keep);
     [a, b] = ndgrid(1:numel(substrates), 1:numel(products));
-    src = [src; substrates(a(:))]; dst = [dst; products(b(:))]; %#ok<AGROW>
+    src = [src; substrates(a(:))]; %#ok<AGROW>
+    dst = [dst; products(b(:))]; %#ok<AGROW>
     if model.lb(j) < 0
-        src = [src; products(b(:))]; dst = [dst; substrates(a(:))]; %#ok<AGROW>
+        src = [src; products(b(:))]; %#ok<AGROW>
+        dst = [dst; substrates(a(:))]; %#ok<AGROW>
     end
 end
 pairs = unique([string(src), string(dst)], 'rows');
@@ -60,7 +63,8 @@ for k = keys
     tags = extractAfter(nodes, regexpPattern('.*_'));
     counts = [sum(tags == "c"), sum(tags == "p"), sum(tags == "e")];
     results.(k{1}) = struct('size', numel(nodes), 'by_compartment', counts);
-    fprintf('  %-5s %5d metabolites (%.0f%%): %d cytosolic, %d periplasmic, %d extracellular\n', ...
+    fprintf(['  %-5s %5d metabolites (%.0f%%): %d cytosolic, ' ...
+        '%d periplasmic, %d extracellular\n'], ...
         k{1}, numel(nodes), 100 * numel(nodes) / numnodes(G), counts);
 end
 for m = ["glc__D_e", "pyr_c", "succ_c", "ala__L_c", "cbl1_e", "btn_c"]
@@ -78,11 +82,13 @@ heights = zeros(4, 3);
 for k = 1:4
     heights(k, :) = results.(keys{k}).by_compartment;
 end
-b = bar(categorical({'IN', 'core', 'OUT', 'rest'}, {'IN', 'core', 'OUT', 'rest'}), ...
-    heights, 'stacked');
+parts_order = {'IN', 'core', 'OUT', 'rest'};
+b = bar(categorical(parts_order, parts_order), heights, 'stacked', ...
+    'EdgeColor', 'none');
 colours = [0.000 0.447 0.698; 0.902 0.624 0.000; 0.000 0.620 0.451];
 for c = 1:3, b(c).FaceColor = colours(c, :); end
 ylabel('Metabolites'); title('The bow-tie of iML1515');
+% (MATLAB lists stacked bars in the order of the stack, top first)
 legend({'cytosol', 'periplasm', 'extracellular'}, 'Box', 'off'); box off
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-bow-tie');
 

@@ -39,9 +39,9 @@ def simulate(start=np.inf, eps=0.0):
                     args=(p,), method="LSODA", rtol=1e-10, atol=1e-8)
     y[:, before] = sol.y
     if start < t[-1]:
-        sol = solve_ivp(rhs, [start, t[-1]], sol.y[:, -1], t_eval=t[~before],
-                        args=(p * (1 - eps),), method="LSODA", rtol=1e-10,
-                        atol=1e-8)
+        sol = solve_ivp(rhs, [start, t[-1]], sol.y[:, -1],
+                        t_eval=t[~before], args=(p * (1 - eps),),
+                        method="LSODA", rtol=1e-10, atol=1e-8)
         y[:, ~before] = sol.y
     return t, y
 
@@ -68,10 +68,13 @@ sbp.style()
 fig, ax = plt.subplots(figsize=(6.5, 4.5))
 colours = {"untreated": "black", "day_1": "#009E73", "day_2": "#0072B2",
            "day_3": "#D55E00"}
+styles = {"untreated": "-", "day_1": "--", "day_2": "-.", "day_3": ":"}
 for name, V in curves.items():
-    ax.semilogy(t, np.maximum(V, 1e-3), color=colours[name],
+    ax.semilogy(t, np.maximum(V, 1e-3), styles[name], color=colours[name],
                 label=name.replace("_", " ").replace("day", "treated, day"))
+ax.set_xlim(0, 10)
 ax.set_ylim(1e-2, 1e7)
+ax.set_yticks(10.0 ** np.arange(-2, 7, 2))
 ax.set_xlabel("Time (days)")
 ax.set_ylabel("Virus (TCID50/mL)")
 ax.legend(frameon=False)

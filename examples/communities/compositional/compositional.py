@@ -36,7 +36,8 @@ results = {}
 for name, data in (("absolute", absolute), ("relative", relative),
                    ("clr", clr)):
     r = np.corrcoef(data.T)[upper]
-    results[name] = {"mean_r": r.mean(), "edges": int(np.sum(np.abs(r) > 0.2)),
+    results[name] = {"mean_r": r.mean(),
+                     "edges": int(np.sum(np.abs(r) > 0.2)),
                      "dominant_mean_r": np.corrcoef(data.T)[0, 1:].mean()}
     print(f"{name:9s} mean r = {r.mean():+.3f}; edges (|r| > 0.2): "
           f"{results[name]['edges']:2d} of {upper.sum()}; mean r with the "
@@ -45,8 +46,8 @@ for name, data in (("absolute", absolute), ("relative", relative),
 # --- Plot: correlation matrices
 sbp.style()
 fig, axes = plt.subplots(1, 3, figsize=(12, 4))
-titles = {"absolute": "Absolute abundances", "relative": "Relative abundances",
-          "clr": "CLR-transformed"}
+titles = {"absolute": "Absolute abundances",
+          "relative": "Relative abundances", "clr": "CLR-transformed"}
 for ax, (name, data) in zip(axes, (("absolute", absolute),
                                    ("relative", relative), ("clr", clr))):
     R = np.corrcoef(data.T)
@@ -54,7 +55,9 @@ for ax, (name, data) in zip(axes, (("absolute", absolute),
     im = ax.imshow(R, cmap="RdBu_r", vmin=-0.6, vmax=0.6)
     ax.set_xticks(range(taxa), range(1, taxa + 1))
     ax.set_yticks(range(taxa), range(1, taxa + 1))
-    ax.set_title(f"{titles[name]}\n{results[name]['edges']} edges")
+    edges = results[name]["edges"]
+    label = "1 edge" if edges == 1 else f"{edges} edges"
+    ax.set_title(f"{titles[name]}\n{label}")
 fig.colorbar(im, ax=axes, shrink=0.8, label="Pearson r")
 sbp.save_figure(fig, __file__, "fig-compositional")
 

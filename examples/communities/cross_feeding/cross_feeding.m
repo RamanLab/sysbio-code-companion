@@ -9,7 +9,8 @@
 %     maximise mu
 %     subject to  S u_A = 0,  S u_B = 0,
 %                 u_A(biomass) = x mu,  u_B(biomass) = (1 - x) mu,
-%                 x lb_A <= u_A <= x ub_A, (1 - x) lb_B <= u_B <= (1 - x) ub_B,
+%                 x lb_A <= u_A <= x ub_A,
+%                 (1 - x) lb_B <= u_B <= (1 - x) ub_B,
 %                 what the community takes from the medium is available.
 % Requires: Optimization Toolbox (the COBRA Toolbox is not needed).
 
@@ -22,8 +23,8 @@ ex = find(startsWith(ids, 'EX_'))';
 
 % The medium supplies glucose, oxygen, ammonium, phosphate, water and
 % protons, and takes up CO2; other metabolites come only from the cells
-medium = {'EX_glc__D_e', 'EX_o2_e', 'EX_nh4_e', 'EX_pi_e', 'EX_h2o_e', ...
-    'EX_h_e', 'EX_co2_e'};
+medium = {'EX_glc__D_e', 'EX_o2_e', 'EX_nh4_e', 'EX_pi_e', ...
+    'EX_h2o_e', 'EX_h_e', 'EX_co2_e'};
 in_medium = ismember(ids, medium);
 
 A = strain({'GLUDy', 'GLUSy'}, ids, ex, medium, lb0, ub0);
@@ -52,7 +53,8 @@ mu = -f;
 [z, least] = community(net, A, B, x, true, [mu * (1 - 1e-7), mu]);
 uA = z(1:n); uB = z(n + 1:2 * n);
 fprintf(['At x = 0.5 (growth %.4f /h), the least exchange needed, in ' ...
-    'mmol per gram of community per hour (+ secreted, - taken up):\n'], mu);
+    'mmol per gram of community per hour (+ secreted, - taken up):\n'], ...
+    mu);
 traded = ex(~in_medium(ex) & max(abs(uA(ex)), abs(uB(ex))) > 1e-4);
 for i = traded
     fprintf('  %-12s A %+.3f   B %+.3f\n', ids{i}, uA(i), uB(i));
@@ -64,7 +66,8 @@ subplot(1, 5, 1:3)
 plot(fractions, growth, 'Color', [0.000 0.447 0.698]);
 yline(alone(net, lb0, ub0), ':', 'wild type alone', ...
     'Color', [0.6 0.6 0.6], 'LabelHorizontalAlignment', 'center');
-ylim([0 1]);
+xlim([0 1]); ylim([0 1]);
+xticks(0:0.2:1); yticks(0:0.2:1);
 xlabel('Fraction of strain A in the community');
 ylabel('Community growth rate (1/h)');
 title('Growth depends on composition');
@@ -77,14 +80,18 @@ names = ids(traded);
 for k = 1:numel(names)
     if isKey(label, names{k}), names{k} = label(names{k}); end
 end
-h = barh(1:numel(traded), [uA(traded) uB(traded)]);
-h(1).FaceColor = [0.902 0.624 0.000]; h(2).FaceColor = [0.000 0.620 0.451];
-yticks(1:numel(traded)); yticklabels(names);
-xline(0, 'k');
+y = (1:numel(traded))';
+hold on
+barh(y + 0.2, uA(traded), 0.4, 'FaceColor', [0.902 0.624 0.000], ...
+    'EdgeColor', 'none', 'DisplayName', 'strain A');
+barh(y - 0.2, uB(traded), 0.4, 'FaceColor', [0.000 0.620 0.451], ...
+    'EdgeColor', 'none', 'DisplayName', 'strain B');
+yticks(y); yticklabels(names);
+xline(0, 'k', 'HandleVisibility', 'off');
+xlim([-4.5 4.5]); ylim([0.4, numel(traded) + 1.2]);
 xlabel('Exchange flux (+ secreted, - taken up)');
 title('Least cross-feeding, x = 0.5');
-legend(h, {'strain A', 'strain B'}, 'Location', 'northoutside', ...
-    'Orientation', 'horizontal', 'Box', 'off');
+legend('Location', 'north', 'Orientation', 'horizontal', 'Box', 'off');
 box off
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-cross-feeding');
 

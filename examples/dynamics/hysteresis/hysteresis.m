@@ -1,5 +1,6 @@
 %% Bistability and hysteresis in the toggle switch
-% The same toggle switch, du/dt = a1/(1 + v^n) - u, dv/dt = a2/(1 + u^n) - v,
+% The same toggle switch,
+%     du/dt = a1/(1 + v^n) - u,   dv/dt = a2/(1 + u^n) - v,
 % now with a2 = 5 fixed and a1, the strength of the promoter making u,
 % varied from 1 to 12 (in an experiment, an inducer does this). For each a1
 % we find all steady states and their stability. Then we simulate the
@@ -47,10 +48,14 @@ for k = 1:numel(a1_values)
 end
 h1 = plot(ramp, up, '^', 'Color', [0.000 0.447 0.698]);
 h2 = plot(ramp, down, 'v', 'Color', [0.902 0.624 0.000]);
-ylim([-0.5 12.5]);
+h3 = plot(NaN, NaN, 'k.', 'MarkerSize', 5);
+h4 = plot(NaN, NaN, '.', 'Color', [0.73 0.73 0.73], 'MarkerSize', 5);
+xlim([0.5 12.5]); ylim([-0.5 12.5]);
 xlabel('Promoter strength a1'); ylabel('Steady-state level of u');
 title('Bistability (shaded) and hysteresis');
-legend([h1 h2], {'simulated, a1 increasing', 'simulated, a1 decreasing'}, ...
+legend([h1 h2 h3 h4], {'simulated, a1 increasing', ...
+    'simulated, a1 decreasing', 'stable steady state', ...
+    'unstable steady state'}, ...
     'Location', 'northwest', 'Box', 'off', 'FontSize', 9);
 box off
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-hysteresis');

@@ -94,7 +94,7 @@ labelled = ismember(summary.name, ...
     {'A XOR B', 'A NOR B', 'FALSE', 'A OR B', 'A NAND B'});
 text(summary.n_genotypes(labelled) * 1.15, ...
     summary.robustness(labelled), summary.name(labelled), 'FontSize', 8);
-xlim([8 8000]);
+xlim([8 8000]); ylim([-0.03 0.6]);
 xlabel('Number of circuits with this function');
 ylabel('Robustness of the function');
 title('Common functions are robust');
@@ -106,6 +106,7 @@ plot(levels, mean_ev, 'o-', 'Color', orange, 'MarkerFaceColor', orange);
 hold on
 plot(summary.robustness, summary.evolvability, 's', 'Color', blue, ...
     'MarkerFaceColor', blue);
+xlim([-0.03 0.83]); ylim([1.5 14.5]);
 xlabel('Robustness'); ylabel('New functions one mutation away');
 title('Robustness and evolvability');
 legend({'single circuits', 'functions (all their circuits)'}, ...

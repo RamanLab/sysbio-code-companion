@@ -1,6 +1,7 @@
 """Bistability and hysteresis in the toggle switch.
 
-The same toggle switch, du/dt = a1/(1 + v^n) - u, dv/dt = a2/(1 + u^n) - v,
+The same toggle switch,
+    du/dt = a1/(1 + v^n) - u,   dv/dt = a2/(1 + u^n) - v,
 now with a2 = 5 fixed and a1, the strength of the promoter making u,
 varied from 1 to 12 (in an experiment, an inducer does this). For each a1
 we find all steady states and their stability. Then we simulate the
@@ -84,6 +85,8 @@ ax.plot(ramp, down, "v", color="#E69F00", ms=6, mfc="none",
 ax.plot([], [], ".", color="k", label="stable steady state")
 ax.plot([], [], ".", color="#bbbbbb", label="unstable steady state")
 ax.axvspan(bistable.min(), bistable.max(), color="#eeeeee", zorder=0)
+ax.set_xlim(0.5, 12.5)
+ax.set_ylim(-0.5, 12.5)
 ax.set_xlabel("Promoter strength a1")
 ax.set_ylabel("Steady-state level of u")
 ax.set_title("Bistability (shaded) and hysteresis")

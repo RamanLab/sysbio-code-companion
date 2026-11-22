@@ -69,8 +69,8 @@ x = np.linspace(0, 12, 400)
 ax.plot(a1 / (1 + x ** n), x, "k-", lw=2, label="u-nullcline (du/dt = 0)")
 ax.plot(x, a2 / (1 + x ** n), "k--", lw=2, label="v-nullcline (dv/dt = 0)")
 for s in states:
-    ax.plot(s["u"], s["v"], "o", ms=10, mec="k", mew=1.5,
-            color="k" if s["stable"] else "white")
+    ax.plot(s["u"], s["v"], "o", ms=10, mec="k", mew=1.5, clip_on=False,
+            color="k" if s["stable"] else "white", zorder=3)
 ax.set_xlim(0, 12)
 ax.set_ylim(0, 12)
 ax.set_xlabel("Repressor 1, u")

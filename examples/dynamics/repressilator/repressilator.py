@@ -85,12 +85,13 @@ print(f"Steady state unstable at {unstable.sum()} of {unstable.size} "
 sbp.style()
 fig, axes = plt.subplots(1, 2, figsize=(10, 4))
 for i, name in enumerate(["p1", "p2", "p3"]):
-    axes[0].plot(t, Y[3 + i], label=name)
+    axes[0].plot(t, Y[3 + i], color=sbp.PALETTE[i], label=name)
 axes[0].set_xlabel("Time")
 axes[0].set_ylabel("Protein level")
 axes[0].set_title("Oscillations")
+axes[0].set_xlim(0, 50)
 axes[0].set_ylim(0, 75)
-axes[0].legend(frameon=False, loc="upper right", ncol=3)
+axes[0].legend(frameon=False, loc="upper center", ncol=3)
 axes[1].contourf(alphas, betas, unstable.astype(float), levels=[0.5, 1.5],
                  colors=["#c6dbef"])
 axes[1].contour(alphas, betas, unstable.astype(float), levels=[0.5],

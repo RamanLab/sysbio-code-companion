@@ -31,22 +31,26 @@ names = {'absolute', 'relative', 'clr'};
 titles = {'Absolute abundances', 'Relative abundances', 'CLR-transformed'};
 data = {absolute, relative, clr};
 fig = figure('Position', [100 100 1200 400]);
-t = linspace(0, 1, 128)';
-cmap = [[t; ones(128, 1)], [t; flipud(t)], [ones(128, 1); flipud(t)]];
+tiledlayout(1, 3, 'TileSpacing', 'compact');
 for d = 1:3
     R = corrcoef(data{d});
     r = R(upper);
-    results.(names{d}) = struct('mean_r', mean(r), 'edges', sum(abs(r) > 0.2), ...
-        'dominant_mean_r', mean(R(1, 2:end)));
+    results.(names{d}) = struct('mean_r', mean(r), ...
+        'edges', sum(abs(r) > 0.2), 'dominant_mean_r', mean(R(1, 2:end)));
     fprintf(['%-9s mean r = %+.3f; edges (|r| > 0.2): %2d of %d; mean r ' ...
         'with the dominant taxon = %+.3f\n'], names{d}, mean(r), ...
         sum(abs(r) > 0.2), sum(upper, 'all'), mean(R(1, 2:end)));
-    subplot(1, 3, d)
+    nexttile
     R(logical(eye(taxa))) = NaN;
-    imagesc(R, 'AlphaData', ~isnan(R), [-0.6, 0.6]); colormap(cmap); axis square
-    title({titles{d}, sprintf('%d edges', results.(names{d}).edges)});
+    imagesc(R, [-0.6, 0.6], 'AlphaData', ~isnan(R)); axis square
+    xticks(1:taxa); yticks(1:taxa);
+    edges = results.(names{d}).edges;
+    label = sprintf('%d edges', edges);
+    if edges == 1, label = '1 edge'; end
+    title({titles{d}, label});
 end
-cb = colorbar; cb.Label.String = 'Pearson r';
+colormap(fig, sbp.colormap('RdBu_r'));
+cb = colorbar; cb.Layout.Tile = 'east'; cb.Label.String = 'Pearson r';
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-compositional');
 
 sbp.save_results(mfilename('fullpath'), results);

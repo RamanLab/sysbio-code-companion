@@ -36,7 +36,8 @@ keep = np.array([m.rsplit("_", 1)[0] not in currency for m in mets])
 G = nx.DiGraph()
 for j, r in enumerate(rxns):
     column = S[:, j]
-    if np.count_nonzero(column) < 2 or r.startswith("BIOMASS") or r == "ATPM":
+    if (np.count_nonzero(column) < 2 or r.startswith("BIOMASS")
+            or r == "ATPM"):
         continue
     substrates = [mets[i] for i in np.flatnonzero((column < 0) & keep)]
     products = [mets[i] for i in np.flatnonzero((column > 0) & keep)]
@@ -61,12 +62,15 @@ def compartments(nodes):
     return [tags.count(c) for c in ("c", "p", "e")]
 
 
-results = {"metabolites": G.number_of_nodes(), "edges": G.number_of_edges()}
+results = {"metabolites": G.number_of_nodes(),
+           "edges": G.number_of_edges()}
 print(f"{G.number_of_nodes()} metabolites, {G.number_of_edges()} edges")
 for name, nodes in parts.items():
-    results[name] = {"size": len(nodes), "by_compartment": compartments(nodes)}
+    results[name] = {"size": len(nodes),
+                     "by_compartment": compartments(nodes)}
     c, p, e = compartments(nodes)
-    print(f"  {name:5s} {len(nodes):5d} metabolites ({100 * len(nodes) / len(G):.0f}%): "
+    print(f"  {name:5s} {len(nodes):5d} metabolites "
+          f"({100 * len(nodes) / len(G):.0f}%): "
           f"{c} cytosolic, {p} periplasmic, {e} extracellular")
 results["landmarks"] = {}
 for m in ("glc__D_e", "pyr_c", "succ_c", "ala__L_c", "cbl1_e", "btn_c"):
@@ -87,7 +91,7 @@ for k, (label, colour) in enumerate((("cytosol", "#0072B2"),
     bottom += heights
 ax.set_ylabel("Metabolites")
 ax.set_title("The bow-tie of iML1515")
-ax.legend(frameon=False)
+ax.legend(frameon=False, reverse=True)   # in the order of the stack
 sbp.save_figure(fig, __file__, "fig-bow-tie")
 
 sbp.save_results(__file__, results)
