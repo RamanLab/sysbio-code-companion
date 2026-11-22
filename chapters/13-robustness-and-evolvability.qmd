@@ -21,7 +21,7 @@ Is the bow-tie of Figure 13.1 visible in a real metabolic network? Following Ma 
 ::: {.panel-tabset group="language"}
 ## MATLAB
 
-*Needs only base MATLAB; reads iML1515 from `data/iML1515.mat`.*
+*Core MATLAB only; reads iML1515 from `data/iML1515.mat`.*
 
 ```{.matlab include="/examples/robustness/bow_tie/bow_tie.m"}
 ```

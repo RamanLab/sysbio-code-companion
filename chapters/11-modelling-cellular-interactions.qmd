@@ -11,7 +11,7 @@ Microbial association networks are inferred from the co-occurrence of taxa acros
 ::: {.panel-tabset group="language"}
 ## MATLAB
 
-*Needs only base MATLAB.*
+*Core MATLAB only.*
 
 ```{.matlab include="/examples/communities/compositional/compositional.m"}
 ```
@@ -37,7 +37,7 @@ The generalised Lotka–Volterra (gLV) model extends the predator–prey model o
 ::: {.panel-tabset group="language"}
 ## MATLAB
 
-*Needs only base MATLAB.*
+*Core MATLAB only.*
 
 ```{.matlab include="/examples/communities/glv/glv.m"}
 ```
@@ -113,7 +113,7 @@ The simplest ODE model of an infection within a host is the target-cell-limited 
 ::: {.panel-tabset group="language"}
 ## MATLAB
 
-*Needs only base MATLAB.*
+*Core MATLAB only.*
 
 ```{.matlab include="/examples/communities/viral_dynamics/viral_dynamics.m"}
 ```
