@@ -30,7 +30,7 @@ python examples/constraint-based/toy_fba/toy_fba.py
 
 ## MATLAB
 
-The examples use core MATLAB (R2021a or newer) and, where noted at the top of a script, standard MathWorks toolboxes such as the Optimization Toolbox. Some constraint-based examples need the [COBRA Toolbox](https://opencobra.github.io/cobratoolbox/); each chapter says so where this applies.
+The examples use core MATLAB (R2022a or newer; they are tested with R2024b) and, where noted at the top of a script, standard MathWorks toolboxes such as the Optimization Toolbox. Some constraint-based examples need the [COBRA Toolbox](https://opencobra.github.io/cobratoolbox/); each chapter says so where this applies.
 
 Start MATLAB in the repository folder and run, once per session:
 

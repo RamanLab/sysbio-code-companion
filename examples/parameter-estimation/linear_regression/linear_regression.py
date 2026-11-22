@@ -67,7 +67,7 @@ ax1.set_xlabel("1/S (1/mM)")
 ax1.set_ylabel("1/v (s/mM)")
 ax1.set_title("Lineweaver-Burk plot, Exercise 6.5")
 ax2.boxplot([estimates[:, k, 1] for k in range(4)], showfliers=False,
-            medianprops={"color": "#E69F00"})
+            medianprops={"color": "k"})
 ax2.set_xticks(range(1, 5), ["LB", "EH", "HW", "non-linear"])
 ax2.axhline(true[1], ls=":", color="black")
 ax2.set_ylim(0.3, 1.8)

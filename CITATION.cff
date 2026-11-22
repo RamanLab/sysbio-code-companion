@@ -1,0 +1,43 @@
+cff-version: 1.2.0
+message: >-
+  If you use this companion, please cite it as below, together with the
+  book it accompanies.
+type: software
+title: "Computational Systems Biology in MATLAB and Python: a code companion"
+abstract: >-
+  An open code companion to the book "An Introduction to Computational
+  Systems Biology: Systems-Level Modelling of Cellular Networks" (Karthik
+  Raman, CRC Press, 2021). Its chapters and sections follow the book's, and
+  every worked example is given in both MATLAB and Python, with results
+  that are checked against each other and against the book on every change.
+authors:
+  - family-names: Raman
+    given-names: Karthik
+    affiliation: Indian Institute of Technology Madras
+repository-code: "https://github.com/RamanLab/sysbio-code-companion"
+url: "https://ramanlab.github.io/sysbio-code-companion"
+license:
+  - MIT
+  - CC-BY-4.0
+keywords:
+  - systems biology
+  - computational biology
+  - network biology
+  - constraint-based modelling
+  - dynamic modelling
+  - MATLAB
+  - Python
+  - teaching
+references:
+  - type: book
+    title: >-
+      An Introduction to Computational Systems Biology: Systems-Level
+      Modelling of Cellular Networks
+    authors:
+      - family-names: Raman
+        given-names: Karthik
+    publisher:
+      name: CRC Press
+    year: 2021
+    doi: 10.1201/9780429486951
+    isbn: "9781138597327"
