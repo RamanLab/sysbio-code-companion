@@ -91,7 +91,7 @@ end
 fig = figure('Position', [100 100 700 350]);
 counts = cellfun(@numel, members);
 barh(categorical(labels, fliplr(labels)), counts, ...
-    'FaceColor', [0.122 0.467 0.706]);
+    'FaceColor', [0.000 0.447 0.698]);
 text(counts + 0.3, categorical(labels, fliplr(labels)), ...
     string(counts), 'VerticalAlignment', 'middle');
 xlabel('Number of internal reactions');

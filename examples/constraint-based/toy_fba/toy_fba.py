@@ -48,7 +48,7 @@ print(f"Largest mass-balance violation |Sv| = {np.abs(S @ v).max():.1e}")
 # --- Plot the flux distribution
 sbp.style()
 fig, ax = plt.subplots()
-ax.bar(rxns, v, color="#1f77b4")
+ax.bar(rxns, v, color="#0072B2")
 ax.set_xlabel("Reaction")
 ax.set_ylabel("Flux (mmol/gDW/h)")
 ax.set_title(f"An optimal flux distribution (vbio = {growth:g})")

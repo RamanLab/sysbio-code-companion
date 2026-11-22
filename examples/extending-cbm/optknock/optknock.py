@@ -178,10 +178,10 @@ for K in (1, 2, 3):
 sbp.style()
 fig, axes = plt.subplots(1, 2, figsize=(11, 4.3), sharey=True)
 panels = [("Three knock-outs",
-           [(", ".join(best(3, 4)[1]) + " (OptKnock)", best(3, 4)[1], "#d62728"),
-            (", ".join(best(3, 3)[1]), best(3, 3)[1], "#1f77b4")]),
+           [(", ".join(best(3, 4)[1]) + " (OptKnock)", best(3, 4)[1], "#D55E00"),
+            (", ".join(best(3, 3)[1]), best(3, 3)[1], "#0072B2")]),
           ("One knock-out",
-           [(", ".join(best(1, 3)[1]), best(1, 3)[1], "#2ca02c")])]
+           [(", ".join(best(1, 3)[1]), best(1, 3)[1], "#009E73")])]
 for ax, (title, shown) in zip(axes, panels):
     for label, ko, colour in [("wild type", [], "#999999")] + shown:
         mus, low, high = envelope(ko)

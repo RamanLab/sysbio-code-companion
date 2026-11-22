@@ -66,7 +66,7 @@ end
 %% Plot: data, and the fitted model's predictions
 fig = figure('Position', [100 100 1200 360]);
 tt = linspace(0, 10, 201);
-colours = [0.122 0.467 0.706; 1.000 0.498 0.055; 0.173 0.627 0.173];
+colours = [0.000 0.447 0.698; 0.902 0.624 0.000; 0.000 0.620 0.451];
 for k = 1:K
     subplot(1, 3, k); hold on
     fitted = simulate(r_hat', A_hat, data{k}(1, :), tt);

@@ -67,16 +67,16 @@ fig = figure('Position', [100 100 1000 420]);
 subplot(1, 5, 1:2)
 plot([0 1.05], [0 1.05], ':', 'Color', [0.6 0.6 0.6]);
 hold on
-plot(growth_fba, growth_moma, 'o', 'Color', [0.122 0.467 0.706], ...
-    'MarkerFaceColor', [0.122 0.467 0.706]);
+plot(growth_fba, growth_moma, 'o', 'Color', [0.000 0.447 0.698], ...
+    'MarkerFaceColor', [0.000 0.447 0.698]);
 xlabel('FBA (fraction of wild type)'); ylabel('MoMA (fraction of wild type)');
 title('Growth after 74 deletions');
 box off
 subplot(1, 5, 3:5)
 b = bar(categorical(show, show), [pfk.wild_type; pfk.fba; pfk.moma]');
 b(1).FaceColor = [0.6 0.6 0.6];
-b(2).FaceColor = [1.000 0.498 0.055];
-b(3).FaceColor = [0.122 0.467 0.706];
+b(2).FaceColor = [0.902 0.624 0.000];
+b(3).FaceColor = [0.000 0.447 0.698];
 ylabel('Flux (mmol/gDW/h)'); title('Fluxes after deleting PFK');
 legend({'wild type', 'FBA', 'MoMA'}, 'Box', 'off');
 box off

@@ -84,7 +84,7 @@ for c, g in enumerate(communities, start=1):
 sbp.style()
 fig, ax = plt.subplots(figsize=(6, 5))
 pos = nx.spring_layout(G, seed=1)
-palette = ["#1f77b4", "#aec7e8", "#d62728", "#ff9896", "#2ca02c", "#98df8a"]
+palette = ["#0072B2", "#99C7E0", "#D55E00", "#EEBF99", "#009E73", "#99D8C7"]
 nx.draw_networkx_edges(G, pos, ax=ax, alpha=0.3)
 nx.draw_networkx_nodes(G, pos, ax=ax, node_size=200,
                        node_color=[palette[c - 1] for c in labels],

@@ -53,7 +53,8 @@ quiver(U, V, a1 ./ (1 + V.^n) - U, a2 ./ (1 + U.^n) - V, ...
     'Color', [0.8 0.8 0.8]);
 hold on
 for k = 1:numel(trajs)
-    if ends_high_u(k), c = [0.122 0.467 0.706]; else, c = [1 0.498 0.055]; end
+    c = [0.902 0.624 0.000];                  % orange: ends with V high
+    if ends_high_u(k), c = [0.000 0.447 0.698]; end   % blue: U high
     plot(trajs{k}(:, 1), trajs{k}(:, 2), '-', 'Color', c, 'LineWidth', 0.8);
 end
 x = linspace(0, 12, 400);

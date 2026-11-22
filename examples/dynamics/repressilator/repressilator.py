@@ -95,7 +95,7 @@ axes[1].contourf(alphas, betas, unstable.astype(float), levels=[0.5, 1.5],
                  colors=["#c6dbef"])
 axes[1].contour(alphas, betas, unstable.astype(float), levels=[0.5],
                 colors="k", linewidths=1)
-axes[1].plot(alpha, beta, "*", color="#d62728", ms=12)
+axes[1].plot(alpha, beta, "*", color="#D55E00", ms=12)
 axes[1].set_xscale("log")
 axes[1].set_yscale("log")
 axes[1].set_xlabel(r"$\alpha$ (maximum transcription)")

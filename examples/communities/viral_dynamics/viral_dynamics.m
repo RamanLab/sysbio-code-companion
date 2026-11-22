@@ -23,8 +23,8 @@ names = {'untreated', 'day_1', 'day_2', 'day_3'};
 starts = [Inf, 1, 2, 3];
 efficacy = 0.98;
 fig = figure('Position', [100 100 650 450]);
-colours = {[0 0 0], [0.173 0.627 0.173], [0.122 0.467 0.706], ...
-           [0.839 0.153 0.157]};
+colours = {[0 0 0], [0.000 0.620 0.451], [0.000 0.447 0.698], ...
+           [0.835 0.369 0.000]};
 for s = 1:numel(names)
     [t, y] = simulate(par, [T0; 0; V0], starts(s), efficacy);
     T = y(1, :); V = y(3, :);

@@ -86,9 +86,9 @@ print(f"FFLs with all signs known: {coherent} coherent, {incoherent} "
 sbp.style()
 fig, axes = plt.subplots(1, 2, figsize=(9, 4))
 for ax, k, label in zip(axes, (0, 1), ("Feed-forward loops", "Feedback loops")):
-    ax.hist(random_counts[:, k], bins=8, color="#1f77b4",
+    ax.hist(random_counts[:, k], bins=8, color="#0072B2",
             label="randomised")
-    ax.axvline([ffl, fbl][k], color="#d62728", lw=2, label="E. coli")
+    ax.axvline([ffl, fbl][k], color="#D55E00", lw=2, label="E. coli")
     ax.set_title(f"{label} (Z = {z[k]:.1f})")
     ax.set_xlabel("Count")
 axes[0].set_ylabel("Randomised networks")

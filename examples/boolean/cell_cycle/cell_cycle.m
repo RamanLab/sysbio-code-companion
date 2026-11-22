@@ -90,7 +90,7 @@ end
 
 fig = figure('Position', [100 100 800 360]);
 imagesc(0:20, 1:n, traj', [0 1]);
-colormap([0.97 0.98 1; 0.12 0.47 0.71]);   % OFF: light, ON: dark
+colormap([0.97 0.98 1; 0.00 0.45 0.70]);   % OFF: light, ON: dark
 set(gca, 'YTick', 1:n, 'YTickLabel', names, 'XTick', 0:2:20, 'Box', 'off');
 xlabel('Time step');
 title('Synchronous trajectory from a G1-like state (dark: ON, light: OFF)');

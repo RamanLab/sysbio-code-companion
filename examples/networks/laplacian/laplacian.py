@@ -51,7 +51,7 @@ sbp.style()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 4.5))
 G = nx.from_numpy_array(A)
 pos = nx.spring_layout(G, seed=1)
-colours = ["#1f77b4" if s == "Mr. Hi" else "#d62728" for s in side]
+colours = ["#0072B2" if s == "Mr. Hi" else "#D55E00" for s in side]
 nx.draw_networkx_edges(G, pos, ax=ax1, alpha=0.3)
 nx.draw_networkx_nodes(G, pos, ax=ax1, node_color=colours, node_size=180,
                        edgecolors=["black" if s != f else "none"

@@ -73,7 +73,7 @@ for i in top:
 # --- Plot
 sbp.style()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
-ax1.plot(mean_deg, frac_ess, "o-", color="#1f77b4")
+ax1.plot(mean_deg, frac_ess, "o-", color="#0072B2")
 ax1.axhline(is_ess.mean(), color="#999999", ls=":", lw=1)
 ax1.text(1.1, is_ess.mean() + 0.01, "all proteins", color="#666666",
          fontsize=9)
@@ -84,8 +84,8 @@ ax1.minorticks_off()
 ax1.set_xlabel("Mean degree of the group")
 ax1.set_ylabel("Fraction essential")
 ax1.set_title("Ten groups of proteins, by degree")
-for name, colour in [("degree", "#1f77b4"), ("closeness", "#ff7f0e"),
-                     ("eigenvector", "#2ca02c")]:
+for name, colour in [("degree", "#0072B2"), ("closeness", "#E69F00"),
+                     ("eigenvector", "#009E73")]:
     c = centrality[name]
     thresholds = np.sort(np.unique(c))[::-1]
     tpr = [(c[is_ess] >= t).mean() for t in thresholds]

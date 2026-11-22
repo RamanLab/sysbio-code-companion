@@ -141,7 +141,7 @@ for r, (a, b) in traded.items():
 sbp.style()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4),
                                gridspec_kw={"width_ratios": [3, 2]})
-ax1.plot(fractions, growth, color="#1f77b4")
+ax1.plot(fractions, growth, color="#0072B2")
 ax1.axhline(alone(lb0, ub0), color="#999999", ls=":", lw=1)
 ax1.text(0.5, 0.9, "wild type alone", ha="center", color="#666666",
          fontsize=9)
@@ -154,9 +154,9 @@ label = {"EX_akg_e": "2-oxoglutarate", "EX_glu__L_e": "glutamate",
          "EX_mal__L_e": "malate", "EX_fum_e": "fumarate"}
 names = [label.get(r, r) for r in traded]
 y = np.arange(len(traded))
-ax2.barh(y + 0.2, [v[0] for v in traded.values()], 0.4, color="#ff7f0e",
+ax2.barh(y + 0.2, [v[0] for v in traded.values()], 0.4, color="#E69F00",
          label="strain A")
-ax2.barh(y - 0.2, [v[1] for v in traded.values()], 0.4, color="#2ca02c",
+ax2.barh(y - 0.2, [v[1] for v in traded.values()], 0.4, color="#009E73",
          label="strain B")
 ax2.set_yticks(y, names)
 ax2.axvline(0, color="black", lw=0.5)

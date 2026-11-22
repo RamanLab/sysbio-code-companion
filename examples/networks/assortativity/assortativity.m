@@ -48,11 +48,11 @@ for p = 1:2
     subplot(1, 2, p); hold on
     for net = 1:2
         r = results.(keys{net});
-        h1 = plot(net - 1, r.(measures{p}), 'o', 'Color', [0.839 0.153 0.157], ...
-            'MarkerFaceColor', [0.839 0.153 0.157], 'MarkerSize', 9);
+        h1 = plot(net - 1, r.(measures{p}), 'o', 'Color', [0.835 0.369 0.000], ...
+            'MarkerFaceColor', [0.835 0.369 0.000], 'MarkerSize', 9);
         random = r.([measures{p} '_random']);
         h2 = plot(repmat(net - 0.85, size(random)), random, '_', ...
-            'Color', [0.122 0.467 0.706], 'MarkerSize', 12);
+            'Color', [0.000 0.447 0.698], 'MarkerSize', 12);
     end
     yline(0, 'k');
     set(gca, 'XTick', [0, 1], 'XTickLabel', {'karate club', 'E. coli STRING'});

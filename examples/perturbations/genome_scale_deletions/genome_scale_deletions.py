@@ -39,7 +39,7 @@ fig, ax = plt.subplots(figsize=(5, 4.5))
 counts = [len(essential), len(reduced),
           len(genes) - len(essential) - len(reduced)]
 ax.bar(["lethal (< 1%)", "reduced", "no effect"], counts,
-       color=["#d62728", "#ff7f0e", "#1f77b4"])
+       color=["#D55E00", "#E69F00", "#0072B2"])
 for x, k in enumerate(counts):
     ax.text(x, k, str(k), ha="center", va="bottom")
 ax.set_ylabel("Genes")

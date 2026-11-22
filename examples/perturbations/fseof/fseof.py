@@ -97,8 +97,8 @@ env_max, env_min = np.array(env_max), np.array(env_min)
 sbp.style()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
 ax1.fill_between(mu_grid, env_min, env_max, color="#c6dbef")
-ax1.plot(mu_grid, env_max, color="#1f77b4")
-ax1.plot(growth, fractions * succ_max, "o", color="#d62728",
+ax1.plot(mu_grid, env_max, color="#0072B2")
+ax1.plot(growth, fractions * succ_max, "o", color="#D55E00",
          label="FSEOF steps")
 ax1.set_xlabel("Growth rate (1/h)")
 ax1.set_ylabel("Succinate secretion (mmol/gDW/h)")

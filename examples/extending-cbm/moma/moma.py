@@ -110,14 +110,14 @@ sbp.style()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4.2),
                                gridspec_kw={"width_ratios": [2, 3]})
 ax1.plot([0, 1.05], [0, 1.05], ":", color="#999999")
-ax1.plot(growth_fba, growth_moma, "o", color="#1f77b4", alpha=0.7)
+ax1.plot(growth_fba, growth_moma, "o", color="#0072B2", alpha=0.7)
 ax1.set_xlabel("FBA (fraction of wild type)")
 ax1.set_ylabel("MoMA (fraction of wild type)")
 ax1.set_title("Growth after 74 deletions")
 x = np.arange(len(show))
 for k, (name, colour) in enumerate([("wild_type", "#999999"),
-                                    ("fba", "#ff7f0e"),
-                                    ("moma", "#1f77b4")]):
+                                    ("fba", "#E69F00"),
+                                    ("moma", "#0072B2")]):
     ax2.bar(x + (k - 1) * 0.27, pfk[name], 0.27, color=colour,
             label={"wild_type": "wild type", "fba": "FBA",
                    "moma": "MoMA"}[name])

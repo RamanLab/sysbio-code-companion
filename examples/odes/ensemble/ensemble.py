@@ -91,7 +91,7 @@ sbp.style()
 fig, ax = plt.subplots(figsize=(6.5, 4.5))
 tt = np.linspace(0, 48, 97)
 for p in members_theta[:50]:
-    ax.plot(tt, simulate(p, tt)[1], color="#1f77b4", alpha=0.15)
+    ax.plot(tt, simulate(p, tt)[1], color="#0072B2", alpha=0.15)
 ax.plot(t_obs, p_obs, "o", color="black", ms=4, label="data (12 h)")
 ax.axvline(12, ls=":", color="black")
 ax.set_xlabel("Time (h)")

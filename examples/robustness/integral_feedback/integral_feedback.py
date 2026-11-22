@@ -65,7 +65,7 @@ for K in K_values:
 
 # --- Plot
 sbp.style()
-colours = {0.01: "#1f77b4", 1.0: "#ff7f0e"}
+colours = {0.01: "#0072B2", 1.0: "#E69F00"}
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
 for K in K_values:
     ax1.plot(t, courses[K], color=colours[K], label=f"K = {K:g}")

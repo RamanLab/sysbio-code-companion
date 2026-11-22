@@ -103,7 +103,7 @@ sbp.style()
 fig, ax = plt.subplots(figsize=(6, 4))
 labels = ["common\nneighbours", "Jaccard", "Adamic–Adar",
           "preferential\nattachment"]
-ax.bar(labels, list(results["auc"].values()), color="#1f77b4")
+ax.bar(labels, list(results["auc"].values()), color="#0072B2")
 ax.axhline(0.5, ls=":", color="black")
 ax.set_ylim(0, 1)
 ax.set_ylabel("AUC")

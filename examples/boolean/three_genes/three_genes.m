@@ -59,7 +59,7 @@ in_attractor = ismember(0:2^n - 1, [attractors{:}]);
 fig = figure('Position', [100 100 700 350]);
 h = plot(G, 'XData', x, 'YData', y, 'NodeLabel', labels, ...
     'MarkerSize', 12, 'NodeColor', 'k', 'EdgeColor', 'k', 'ArrowSize', 10);
-highlight(h, find(in_attractor), 'NodeColor', [1.000 0.498 0.055]);
+highlight(h, find(in_attractor), 'NodeColor', [0.902 0.624 0.000]);
 title('State transitions (orange: states in an attractor)');
 axis off
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-three-genes');

@@ -50,11 +50,11 @@ growth_anaer = growth_curve(0)     # no oxygen
 # --- Plot
 sbp.style()
 fig, ax = plt.subplots()
-ax.plot(uptake, growth_aer, "o-", color="#1f77b4", ms=4,
+ax.plot(uptake, growth_aer, "o-", color="#0072B2", ms=4,
         label="O$_2$ unlimited")
-ax.plot(uptake, growth_o2_10, "^-", color="#2ca02c", ms=4,
+ax.plot(uptake, growth_o2_10, "^-", color="#009E73", ms=4,
         label="O$_2$ uptake ≤ 10")
-ax.plot(uptake, growth_anaer, "s-", color="#ff7f0e", ms=4,
+ax.plot(uptake, growth_anaer, "s-", color="#E69F00", ms=4,
         label="no O$_2$")
 ax.set_xlabel("Maximum glucose uptake (mmol/gDW/h)")
 ax.set_ylabel("Growth rate (1/h)")

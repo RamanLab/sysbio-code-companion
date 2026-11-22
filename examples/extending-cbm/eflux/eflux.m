@@ -53,8 +53,8 @@ end
 fig = figure('Position', [100 100 1000 400]);
 for t = 1:2
     subplot(1, 2, t)
-    plot(measured, predicted(t, :), 'o', 'Color', [0.122 0.467 0.706], ...
-        'MarkerFaceColor', [0.122 0.467 0.706]);
+    plot(measured, predicted(t, :), 'o', 'Color', [0.000 0.447 0.698], ...
+        'MarkerFaceColor', [0.000 0.447 0.698]);
     text(measured, predicted(t, :), strcat({'  '}, carbon), ...
         'VerticalAlignment', 'bottom', 'FontSize', 9);
     xlabel('Measured growth rate (1/h)');

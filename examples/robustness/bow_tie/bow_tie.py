@@ -79,9 +79,9 @@ sbp.style()
 fig, ax = plt.subplots(figsize=(6.5, 4))
 names = ["IN", "core", "OUT", "rest"]
 bottom = np.zeros(4)
-for k, (label, colour) in enumerate((("cytosol", "#1f77b4"),
-                                     ("periplasm", "#ff7f0e"),
-                                     ("extracellular", "#2ca02c"))):
+for k, (label, colour) in enumerate((("cytosol", "#0072B2"),
+                                     ("periplasm", "#E69F00"),
+                                     ("extracellular", "#009E73"))):
     heights = [results[p]["by_compartment"][k] for p in parts]
     ax.bar(names, heights, bottom=bottom, color=colour, label=label)
     bottom += heights

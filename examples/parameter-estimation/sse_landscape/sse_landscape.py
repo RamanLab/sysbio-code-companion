@@ -61,7 +61,7 @@ for ax, name in zip(axes, SSE):
     Z = np.log10(SSE[name] - SSE[name].min() + 1)
     cs = ax.contourf(KM_grid, KI_grid, Z, levels=levels, cmap="viridis_r",
                      extend="max")
-    ax.plot(results[name]["KM"], results[name]["KI"], "*", color="#d62728",
+    ax.plot(results[name]["KM"], results[name]["KI"], "*", color="#D55E00",
             ms=14)
     ax.set_xlabel("$K_M$ (mM)")
     ax.set_title(titles[name])

@@ -66,8 +66,8 @@ for name, (start, eps) in scenarios.items():
 # --- Plot
 sbp.style()
 fig, ax = plt.subplots(figsize=(6.5, 4.5))
-colours = {"untreated": "black", "day_1": "#2ca02c", "day_2": "#1f77b4",
-           "day_3": "#d62728"}
+colours = {"untreated": "black", "day_1": "#009E73", "day_2": "#0072B2",
+           "day_3": "#D55E00"}
 for name, V in curves.items():
     ax.semilogy(t, np.maximum(V, 1e-3), color=colours[name],
                 label=name.replace("_", " ").replace("day", "treated, day"))

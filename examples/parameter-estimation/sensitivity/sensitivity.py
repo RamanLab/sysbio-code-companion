@@ -48,7 +48,7 @@ print("At steady state, p* = k_m k_p / (g_m g_p): the sensitivities "
 # --- Plot
 sbp.style()
 fig, axes = plt.subplots(1, 2, figsize=(10, 4), sharey=True)
-colours = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728"]
+colours = ["#0072B2", "#E69F00", "#009E73", "#D55E00"]
 for ax, i, title in zip(axes, (0, 1), ("mRNA", "Protein")):
     for j, (n, c) in enumerate(zip(names, colours)):
         ax.plot(t, normalised[i, :, j], color=c, label=n)

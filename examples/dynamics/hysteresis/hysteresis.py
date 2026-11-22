@@ -77,9 +77,9 @@ fig, ax = plt.subplots(figsize=(7, 4.5))
 for a1, b in zip(a1_values, branches):
     for u, stable in b:
         ax.plot(a1, u, ".", ms=3, color="k" if stable else "#bbbbbb")
-ax.plot(ramp, up, "^", color="#1f77b4", ms=6, mfc="none",
+ax.plot(ramp, up, "^", color="#0072B2", ms=6, mfc="none",
         label="simulated, a1 increasing")
-ax.plot(ramp, down, "v", color="#ff7f0e", ms=6, mfc="none",
+ax.plot(ramp, down, "v", color="#E69F00", ms=6, mfc="none",
         label="simulated, a1 decreasing")
 ax.plot([], [], ".", color="k", label="stable steady state")
 ax.plot([], [], ".", color="#bbbbbb", label="unstable steady state")

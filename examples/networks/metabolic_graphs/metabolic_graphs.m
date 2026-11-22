@@ -59,13 +59,13 @@ subplot(1, 2, 1)
 top = order(1:15);
 b = bar(deg(top), 'FaceColor', 'flat');
 is_currency = ismember(mets(top), currency);
-b.CData = repmat([0.122 0.467 0.706], 15, 1);
-b.CData(is_currency, :) = repmat([0.839 0.153 0.157], sum(is_currency), 1);
+b.CData = repmat([0.000 0.447 0.698], 15, 1);
+b.CData(is_currency, :) = repmat([0.835 0.369 0.000], sum(is_currency), 1);
 set(gca, 'XTick', 1:15, 'XTickLabel', mets(top), 'TickLabelInterpreter', 'none');
 xtickangle(60); ylabel('Degree');
 title('Most connected metabolites (red: currency)'); box off
 subplot(1, 2, 2); hold on
-colours = {[0.839 0.153 0.157], [0.122 0.467 0.706]};
+colours = {[0.835 0.369 0.000], [0.000 0.447 0.698]};
 for c = 1:2
     counts = results.(keys{c}).path_counts;
     plot(1:numel(counts), counts / sum(counts), 'o-', 'Color', colours{c});

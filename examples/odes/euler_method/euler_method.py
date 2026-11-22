@@ -56,7 +56,7 @@ t_b, x_b = backward_euler(1.1)
 
 # --- Plot
 sbp.style()
-colors = ["#1f77b4", "#2ca02c", "#ff7f0e"]
+colors = ["#0072B2", "#009E73", "#E69F00"]
 t_fine = np.linspace(0, 4.4, 441)
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
 ax1.plot(t_fine, exact(t_fine), "k-", lw=2, label="exact")
@@ -70,8 +70,8 @@ ax1.set_title("Forward Euler")
 ax1.legend(frameon=False, loc="lower right")
 
 ax2.plot(t_fine, exact(t_fine), "k-", lw=2, label="exact")
-ax2.plot(t_f, x_f, "o-", color="#d62728", ms=4, label="forward, Δt = 1.1")
-ax2.plot(t_b, x_b, "s-", color="#1f77b4", ms=4, label="backward, Δt = 1.1")
+ax2.plot(t_f, x_f, "o-", color="#D55E00", ms=4, label="forward, Δt = 1.1")
+ax2.plot(t_b, x_b, "s-", color="#0072B2", ms=4, label="backward, Δt = 1.1")
 ax2.set_ylim(-2, 25)
 ax2.set_xlabel("t")
 ax2.set_title("Forward vs backward Euler")

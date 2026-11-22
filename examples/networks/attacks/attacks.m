@@ -43,7 +43,7 @@ end
 
 %% Plot
 fig = figure('Position', [100 100 600 450]); hold on
-blue = [0.122 0.467 0.706]; red = [0.839 0.153 0.157];
+blue = [0.000 0.447 0.698]; red = [0.835 0.369 0.000];
 plot(fractions, results.string.failure, '-o', 'Color', blue, 'MarkerSize', 3);
 plot(fractions, results.string.attack, '-o', 'Color', red, 'MarkerSize', 3);
 plot(fractions, results.random_graph.failure, ':o', 'Color', blue, 'MarkerSize', 3);

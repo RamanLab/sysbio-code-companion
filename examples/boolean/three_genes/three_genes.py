@@ -71,7 +71,7 @@ in_attractor = {label(s) for a in attractors for s in a}
 sbp.style()
 fig, ax = plt.subplots(figsize=(7, 3.5))
 nx.draw_networkx_nodes(G, pos, ax=ax, node_size=1100, edgecolors="k",
-                       node_color=["#ff7f0e" if v in in_attractor else "white"
+                       node_color=["#E69F00" if v in in_attractor else "white"
                                    for v in G.nodes])
 nx.draw_networkx_labels(G, pos, ax=ax, font_size=11)
 nx.draw_networkx_edges(G, pos, ax=ax, node_size=1100, arrowsize=18,

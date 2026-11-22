@@ -48,7 +48,7 @@ sbp.style()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4),
                                gridspec_kw={"width_ratios": [2, 1]})
 window = slice(1000, 1301)
-colors = {"A": "#1f77b4", "B": "#ff7f0e"}
+colors = {"A": "#0072B2", "B": "#E69F00"}
 for name in genes:
     ax1.plot(t_grid[window] - t_grid[window][0], traces[name][window],
              color=colors[name], lw=1.2, label=f"gene {name}")

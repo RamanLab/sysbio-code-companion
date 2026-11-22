@@ -51,16 +51,16 @@ theory = [final_size(R0) for R0 in R0s]
 # --- Plot
 sbp.style()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
-for y, lab, col in [(S, "S, susceptible", "#1f77b4"),
-                    (I, "I, infected", "#d62728"),
-                    (R, "R, recovered", "#2ca02c")]:
+for y, lab, col in [(S, "S, susceptible", "#0072B2"),
+                    (I, "I, infected", "#D55E00"),
+                    (R, "R, recovered", "#009E73")]:
     ax1.plot(t, y, "-", color=col, label=lab)
 ax1.set_xlabel("Time (days)")
 ax1.set_ylabel("Fraction of the population")
 ax1.set_title(r"An epidemic with $R_0$ = 3")
 ax1.legend(frameon=False, loc="center right")
 ax2.plot(R0s, theory, "-", color="#999999", label="final-size equation")
-ax2.plot(R0s, simulated, "o", color="#2ca02c", ms=4, label="simulation")
+ax2.plot(R0s, simulated, "o", color="#009E73", ms=4, label="simulation")
 ax2.axvline(1, color="#999999", ls=":")
 ax2.set_xlabel("Basic reproduction number $R_0$")
 ax2.set_ylabel("Fraction ever infected")

@@ -59,13 +59,13 @@ end
 fig = figure('Position', [100 100 1000 400]);
 subplot(1, 2, 1)
 b = bar(categorical(rxns, rxns), [growth_fba; growth_room]');
-b(1).FaceColor = [1.000 0.498 0.055];
-b(2).FaceColor = [0.122 0.467 0.706];
+b(1).FaceColor = [0.902 0.624 0.000];
+b(2).FaceColor = [0.000 0.447 0.698];
 ylabel('Growth (fraction of wild type)'); title('Growth after each deletion');
 legend({'FBA', 'ROOM'}, 'Box', 'off', 'Location', 'southwest');
 box off
 subplot(1, 2, 2)
-bar(categorical(rxns, rxns), changes, 'FaceColor', [0.122 0.467 0.706]);
+bar(categorical(rxns, rxns), changes, 'FaceColor', [0.000 0.447 0.698]);
 ylabel('Significant flux changes'); title('Fewest flux changes (ROOM)');
 box off
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-room');

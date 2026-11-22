@@ -68,7 +68,7 @@ print(f"Best after {n_generations} generations ({n_evaluations} SSE "
 # --- Plot
 sbp.style()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
-ax1.semilogy(best_per_generation, "o-", color="#1f77b4", ms=3)
+ax1.semilogy(best_per_generation, "o-", color="#0072B2", ms=3)
 ax1.axhline(63.7765, color="#999999", ls="--",
             label="least-squares optimum (fit_inhibition)")
 ax1.set_xlabel("Generation")
@@ -76,7 +76,7 @@ ax1.set_ylabel("Best SSE so far")
 ax1.set_title("Convergence")
 ax1.legend(frameon=False)
 
-colors = {0: "#bbbbbb", 5: "#ff7f0e", 20: "#2ca02c", n_generations: "#1f77b4"}
+colors = {0: "#bbbbbb", 5: "#E69F00", 20: "#009E73", n_generations: "#0072B2"}
 for g, P in snapshots.items():
     ax2.plot(10.0 ** P[:, 1], 10.0 ** P[:, 2], "o", color=colors[g], ms=5,
              label=f"generation {g}")

@@ -77,7 +77,7 @@ fig = figure('Position', [100 100 1000 400]);
 subplot(1, 5, 1:3); hold on
 s_fine = linspace(0.5, 20, 200)';
 markers = {'o', 's'}; levels = [10, 20];
-colours = {[0.122 0.467 0.706], [0.839 0.153 0.157]};
+colours = {[0.000 0.447 0.698], [0.835 0.369 0.000]};
 shown = {'competitive', 'noncompetitive'};
 for l = 1:2
     keep = I == levels(l);
@@ -93,7 +93,7 @@ end
 xlabel('S (mM)'); ylabel('v (mmol/L/s)');
 legend('Box', 'off', 'Location', 'southeast'); box off
 subplot(1, 5, 4:5)
-bar(categorical(names, names), weights, 'FaceColor', [0.122 0.467 0.706]);
+bar(categorical(names, names), weights, 'FaceColor', [0.000 0.447 0.698]);
 ylabel('Akaike weight'); title('Support for each model'); box off
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-model-selection');
 

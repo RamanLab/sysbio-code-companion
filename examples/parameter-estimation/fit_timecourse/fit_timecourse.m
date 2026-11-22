@@ -45,7 +45,7 @@ fprintf(['Protein only: %d of %d fits reach the best SSE, %.4f; across ' ...
     min(product), max(product), mean(rates(:, 1)), mean(rates(:, 2)));
 
 %% Plot
-blue = [0.122 0.467 0.706]; orange = [1.000 0.498 0.055];
+blue = [0.000 0.447 0.698]; orange = [0.902 0.624 0.000];
 fig = figure('Position', [100 100 1000 400]);
 subplot(1, 2, 1)
 tt = linspace(0, 12, 241)';

@@ -54,8 +54,8 @@ for ax, (name, (E0, t_end)) in zip(axes, cases.items()):
     print(f"E0 = {E0} mM: max |P_full - P_MM| = {100 * err:.1f}% of S0")
     results[name] = {"E0": E0, "t": t, "P_full": P_full, "P_mm": P_mm,
                      "max_rel_difference": err}
-    ax.plot(t, P_full, "-", color="#1f77b4", lw=2, label="full mass action")
-    ax.plot(t, P_mm, "--", color="#ff7f0e", lw=2, label="Michaelis–Menten")
+    ax.plot(t, P_full, "-", color="#0072B2", lw=2, label="full mass action")
+    ax.plot(t, P_mm, "--", color="#E69F00", lw=2, label="Michaelis–Menten")
     ax.set_xlabel("Time (s)")
     ax.set_ylabel("Product P (mM)")
     ax.set_title(f"$E_0$ = {E0} mM, $S_0$ = {S0:g} mM")

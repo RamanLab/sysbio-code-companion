@@ -39,9 +39,9 @@ fprintf('Largest change in V along the solution: %.1e\n', drift);
 %% Plot
 fig = figure('Position', [100 100 1000 400]);
 subplot(1, 2, 1)
-plot(t, D, '-', 'Color', [0.122 0.467 0.706]);
+plot(t, D, '-', 'Color', [0.000 0.447 0.698]);
 hold on
-plot(t, L, '-', 'Color', [0.839 0.153 0.157]);
+plot(t, L, '-', 'Color', [0.835 0.369 0.000]);
 ylim([0 50]);
 xlabel('Time (years)'); ylabel('Population');
 title('Starting from 40 deer and 9 lions');
@@ -50,7 +50,7 @@ legend({'deer, D', 'lions, L'}, 'Location', 'north', 'Orientation', ...
 box off
 
 subplot(1, 2, 2)
-colors = [0.122 0.467 0.706; 0.173 0.627 0.173; 1.000 0.498 0.055];
+colors = [0.000 0.447 0.698; 0.000 0.620 0.451; 0.902 0.624 0.000];
 for k = 1:3
     plot(Y{k}(:, 1), Y{k}(:, 2), '-', 'Color', colors(k, :));
     hold on

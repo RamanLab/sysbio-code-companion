@@ -45,6 +45,13 @@ def save_results(script_file, results):
     path.write_text(json.dumps(_clean(results), indent=2, sort_keys=True) + "\n")
 
 
+# The Okabe-Ito palette, which stays distinguishable with colour blindness
+# (red-green especially): blue, orange, green, vermillion, purple, sky blue,
+# yellow. Use these, in this order, in both languages (MATLAB: sbp.palette).
+PALETTE = ["#0072B2", "#E69F00", "#009E73", "#D55E00", "#CC79A7",
+           "#56B4E9", "#F0E442"]
+
+
 def style():
     """A common, plain figure style for the whole companion."""
     plt.rcParams.update({
@@ -52,6 +59,7 @@ def style():
         "font.size": 11,
         "axes.spines.top": False,
         "axes.spines.right": False,
+        "axes.prop_cycle": plt.cycler(color=PALETTE),
     })
 
 

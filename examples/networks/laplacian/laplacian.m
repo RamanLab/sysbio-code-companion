@@ -51,7 +51,7 @@ fprintf('Cutting the %d edges between the halves leaves %d zero eigenvalues\n', 
 %% Plot: the network, coloured by the sign of the Fiedler vector
 fig = figure('Position', [100 100 1100 450]);
 subplot(1, 2, 1)
-blue = [0.122 0.467 0.706]; red = [0.839 0.153 0.157];
+blue = [0.000 0.447 0.698]; red = [0.835 0.369 0.000];
 colours = repmat(red, n, 1);
 colours(side == "Mr. Hi", :) = repmat(blue, sum(side == "Mr. Hi"), 1);
 h = plot(graph(A), 'Layout', 'force', 'NodeColor', colours, ...

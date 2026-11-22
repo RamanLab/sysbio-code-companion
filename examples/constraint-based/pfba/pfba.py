@@ -132,7 +132,7 @@ sbp.style()
 fig, ax = plt.subplots(figsize=(7, 3.5))
 labels = list(classes)
 ax.barh(labels[::-1], [len(classes[k]) for k in labels[::-1]],
-        color="#1f77b4")
+        color="#0072B2")
 for y, k in enumerate(labels[::-1]):
     ax.text(len(classes[k]) + 0.3, y, str(len(classes[k])), va="center")
 ax.set_xlabel("Number of internal reactions")

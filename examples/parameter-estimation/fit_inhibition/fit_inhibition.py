@@ -71,7 +71,7 @@ sbp.style()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
 p = [results["D1_D2"][k] for k in ("vmax", "KM", "KI")]
 S_fine = np.linspace(0, 21, 200)
-for I, v, col in [(10, v10, "#1f77b4"), (20, v20, "#ff7f0e")]:
+for I, v, col in [(10, v10, "#0072B2"), (20, v20, "#E69F00")]:
     ax1.errorbar(S, v, yerr=delta * v, fmt="o", color=col, ms=4,
                  capsize=2, label=f"data, I = {I} mM")
     ax1.plot(S_fine, rate(p, S_fine, I), "-", color=col)
@@ -84,9 +84,9 @@ KI_line = np.logspace(-1, 2.3, 200)
 ax2.plot(results["D1"]["KM_app"] / (1 + 10 / KI_line), KI_line, "-",
          color="#999999", label="$K_M(1 + 10/K_I)$ = best $K_M^{app}$ for D1")
 est = results["D1_estimates"]
-ax2.plot(est["KM"], est["KI"], "o", color="#1f77b4", ms=6,
+ax2.plot(est["KM"], est["KI"], "o", color="#0072B2", ms=6,
          label="estimates from D1, 8 starts")
-ax2.plot(p[1], p[2], "*", color="#d62728", ms=14,
+ax2.plot(p[1], p[2], "*", color="#D55E00", ms=14,
          label="estimate from D1 and D2")
 ax2.set_xscale("log")
 ax2.set_yscale("log")

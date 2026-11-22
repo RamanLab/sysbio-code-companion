@@ -65,7 +65,7 @@ fprintf(['Best after %d generations (%d SSE evaluations): vmax = %.3f, ' ...
 fig = figure('Position', [100 100 1000 400]);
 subplot(1, 2, 1)
 semilogy(0:n_generations, best_per_generation, 'o-', ...
-    'Color', [0.122 0.467 0.706], 'MarkerSize', 3);
+    'Color', [0.000 0.447 0.698], 'MarkerSize', 3);
 hold on
 yline(63.7765, '--', 'Color', [0.6 0.6 0.6]);
 xlabel('Generation'); ylabel('Best SSE so far'); title('Convergence');
@@ -73,8 +73,8 @@ legend({'', 'least-squares optimum (fit\_inhibition)'}, 'Box', 'off');
 box off
 
 subplot(1, 2, 2)
-colors = [0.733 0.733 0.733; 1.000 0.498 0.055;
-          0.173 0.627 0.173; 0.122 0.467 0.706];
+colors = [0.733 0.733 0.733; 0.902 0.624 0.000;
+          0.000 0.620 0.451; 0.000 0.447 0.698];
 for k = 1:numel(snapshots)
     P = 10 .^ snapshots{k};
     loglog(P(:, 2), P(:, 3), 'o', 'Color', colors(k, :), ...

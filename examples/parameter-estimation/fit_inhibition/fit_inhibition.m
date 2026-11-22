@@ -56,7 +56,7 @@ end
 
 %% Plot
 fig = figure('Position', [100 100 1000 400]);
-blue = [0.122 0.467 0.706]; orange = [1.000 0.498 0.055];
+blue = [0.000 0.447 0.698]; orange = [0.902 0.624 0.000];
 r = results.D1_D2;
 p = [r.vmax r.KM r.KI];
 S_fine = linspace(0, 21, 200);
@@ -82,8 +82,8 @@ loglog(results.D1.KM_app ./ (1 + 10 ./ KI_line), KI_line, '-', ...
 hold on
 est = results.D1_estimates;
 loglog(est.KM, est.KI, 'o', 'Color', blue, 'MarkerFaceColor', blue);
-loglog(p(2), p(3), 'p', 'Color', [0.839 0.153 0.157], ...
-    'MarkerFaceColor', [0.839 0.153 0.157], 'MarkerSize', 14);
+loglog(p(2), p(3), 'p', 'Color', [0.835 0.369 0.000], ...
+    'MarkerFaceColor', [0.835 0.369 0.000], 'MarkerSize', 14);
 xlabel('K_M (mM)'); ylabel('K_I (mM)');
 title('Where the estimates land');
 legend({'K_M(1 + 10/K_I) = best K_M^{app} for D1', ...

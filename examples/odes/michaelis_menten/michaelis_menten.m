@@ -39,9 +39,9 @@ for k = 1:2
         'P_mm', P_mm, 'max_rel_difference', err);
 
     subplot(1, 2, k)
-    plot(t, P_full, '-', 'Color', [0.122 0.467 0.706], 'LineWidth', 2);
+    plot(t, P_full, '-', 'Color', [0.000 0.447 0.698], 'LineWidth', 2);
     hold on
-    plot(t, P_mm, '--', 'Color', [1.000 0.498 0.055], 'LineWidth', 2);
+    plot(t, P_mm, '--', 'Color', [0.902 0.624 0.000], 'LineWidth', 2);
     xlabel('Time (s)'); ylabel('Product P (mM)');
     title(sprintf('E_0 = %g mM, S_0 = %g mM', E0, S0));
     legend({'full mass action', 'Michaelis–Menten'}, ...

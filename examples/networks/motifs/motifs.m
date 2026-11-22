@@ -59,8 +59,8 @@ labels = {'Feed-forward loops', 'Feedback loops'};
 real_counts = [ffl, fbl];
 for k = 1:2
     subplot(1, 2, k); hold on
-    histogram(random_counts(:, k), 8, 'FaceColor', [0.122 0.467 0.706]);
-    xline(real_counts(k), 'Color', [0.839 0.153 0.157], 'LineWidth', 2);
+    histogram(random_counts(:, k), 8, 'FaceColor', [0.000 0.447 0.698]);
+    xline(real_counts(k), 'Color', [0.835 0.369 0.000], 'LineWidth', 2);
     title(sprintf('%s (Z = %.1f)', labels{k}, z(k))); xlabel('Count'); box off
     if k == 1
         ylabel('Randomised networks');

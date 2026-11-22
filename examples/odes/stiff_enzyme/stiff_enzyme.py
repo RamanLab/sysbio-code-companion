@@ -46,18 +46,18 @@ sol = solve_ivp(enzyme, [0, t_end], [S0, 0, 0], method="BDF", t_eval=t,
 # --- Plot
 sbp.style()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
-ax1.semilogx(t, sol.y[1] / E0, "-", color="#2ca02c", lw=2,
+ax1.semilogx(t, sol.y[1] / E0, "-", color="#009E73", lw=2,
              label="ES / $E_0$ (fast)")
-ax1.semilogx(t, sol.y[2] / S0, "-", color="#1f77b4", lw=2,
+ax1.semilogx(t, sol.y[2] / S0, "-", color="#0072B2", lw=2,
              label="P / $S_0$ (slow)")
 ax1.set_xlabel("Time (s)")
 ax1.set_ylabel("Fraction")
 ax1.set_title("Two time scales ($k_1 = k_{-1} = 100$)")
 ax1.legend(frameon=False)
 
-ax2.loglog(speeds, cost["nonstiff"], "o-", color="#ff7f0e",
+ax2.loglog(speeds, cost["nonstiff"], "o-", color="#E69F00",
            label="non-stiff solver")
-ax2.loglog(speeds, cost["stiff"], "s-", color="#1f77b4",
+ax2.loglog(speeds, cost["stiff"], "s-", color="#0072B2",
            label="stiff solver")
 ax2.set_xlabel("Binding rate constants $k_1 = k_{-1}$")
 ax2.set_ylabel("Function evaluations")

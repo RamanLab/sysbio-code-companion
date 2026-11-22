@@ -63,7 +63,7 @@ fprintf(['Vaccinating 10%% at T = %g: mean fraction infected %.4f ' ...
     vacc.none, vacc.random, vacc.hubs);
 
 %% Plot
-blue = [0.122 0.467 0.706]; orange = [1.000 0.498 0.055];
+blue = [0.000 0.447 0.698]; orange = [0.902 0.624 0.000];
 fig = figure('Position', [100 100 1000 400]);
 subplot(1, 5, 1:3)
 plot(T_values, size_er, 's-', 'Color', orange, 'MarkerFaceColor', orange);

@@ -37,11 +37,11 @@ print(f"At t = {t_grid[-1]:g} min, over {n_runs} runs: mean {final.mean():.3f}"
 # --- Plot
 sbp.style()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
-colors = ["#1f77b4", "#2ca02c", "#9467bd"]
+colors = ["#0072B2", "#009E73", "#CC79A7"]
 for r, col in zip(range(3), colors):
     ax1.step(t_grid, runs[r], where="post", color=col, lw=1,
              label="one simulation" if r == 0 else None)
-ax1.plot(t_grid, runs.mean(axis=0), "-", color="#ff7f0e", lw=2,
+ax1.plot(t_grid, runs.mean(axis=0), "-", color="#E69F00", lw=2,
          label=f"mean of {n_runs} simulations")
 ax1.plot(t_grid, ode, "k--", lw=1.5, label="ODE")
 ax1.set_xlabel("Time (min)")
@@ -52,9 +52,9 @@ ax1.set_title("Trajectories")
 
 m = np.arange(0, 26)
 counts = np.bincount(final.astype(int), minlength=26)[:26] / n_runs
-ax2.bar(m, counts, color="#1f77b4", alpha=0.7,
+ax2.bar(m, counts, color="#0072B2", alpha=0.7,
         label=f"simulated, t = {t_grid[-1]:g} min")
-ax2.plot(m, poisson.pmf(m, k / gamma), "o-", color="#ff7f0e", ms=4,
+ax2.plot(m, poisson.pmf(m, k / gamma), "o-", color="#E69F00", ms=4,
          label=f"Poisson, mean {k / gamma:g}")
 ax2.set_xlabel("Number of mRNA molecules")
 ax2.set_ylabel("Probability")

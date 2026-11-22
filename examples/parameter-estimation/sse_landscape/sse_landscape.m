@@ -48,8 +48,8 @@ for d = 1:2
         'LineStyle', 'none');
     hold on
     plot(results.(names{d}).KM, results.(names{d}).KI, 'p', ...
-        'Color', [0.839 0.153 0.157], ...
-        'MarkerFaceColor', [0.839 0.153 0.157], 'MarkerSize', 14);
+        'Color', [0.835 0.369 0.000], ...
+        'MarkerFaceColor', [0.835 0.369 0.000], 'MarkerSize', 14);
     colormap(flipud(parula));
     clim([0 3]);
     xlabel('K_M (mM)');

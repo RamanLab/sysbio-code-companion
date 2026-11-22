@@ -89,7 +89,7 @@ ax1.set_title(f"{len(lethal_fastsl)} synthetic lethal pairs")
 for spine in ax1.spines.values():
     spine.set_visible(False)
 ax2.bar(["exhaustive", "Fast-SL"], [len(pairs), len(tested)],
-        color=["#999999", "#1f77b4"])
+        color=["#999999", "#0072B2"])
 ax2.set_ylabel("Double deletions simulated")
 ax2.set_title("Cost of the search")
 sbp.save_figure(fig, __file__, "fig-synthetic-lethals")

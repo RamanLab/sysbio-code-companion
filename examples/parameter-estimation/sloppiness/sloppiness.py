@@ -77,7 +77,7 @@ fig, ax = plt.subplots(figsize=(5, 4.5))
 for x, (key, label) in enumerate([("mrna_and_protein", "mRNA and protein"),
                                   ("protein_only", "protein only")]):
     ev = np.maximum(results[key]["eigenvalues"], 1e-12)  # for a log scale
-    ax.hlines(ev / ev[0], x - 0.3, x + 0.3, color="#1f77b4")
+    ax.hlines(ev / ev[0], x - 0.3, x + 0.3, color="#0072B2")
 ax.set_yscale("log")
 ax.set_ylim(1e-12, 3)
 ax.axhline(1e-3, ls=":", color="black", lw=1)

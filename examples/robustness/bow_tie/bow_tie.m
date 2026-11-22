@@ -80,7 +80,7 @@ for k = 1:4
 end
 b = bar(categorical({'IN', 'core', 'OUT', 'rest'}, {'IN', 'core', 'OUT', 'rest'}), ...
     heights, 'stacked');
-colours = [0.122 0.467 0.706; 1.000 0.498 0.055; 0.173 0.627 0.173];
+colours = [0.000 0.447 0.698; 0.902 0.624 0.000; 0.000 0.620 0.451];
 for c = 1:3, b(c).FaceColor = colours(c, :); end
 ylabel('Metabolites'); title('The bow-tie of iML1515');
 legend({'cytosol', 'periplasm', 'extracellular'}, 'Box', 'off'); box off

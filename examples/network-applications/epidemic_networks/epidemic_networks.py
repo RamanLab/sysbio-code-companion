@@ -111,9 +111,9 @@ print(f"Vaccinating 10% at T = {T_vacc}: mean fraction infected "
 sbp.style()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4),
                                gridspec_kw={"width_ratios": [3, 2]})
-ax1.plot(T_values, size["er"], "s-", color="#ff7f0e", label="Erdős–Rényi")
-ax1.plot(T_values, size["ba"], "o-", color="#1f77b4", label="scale-free")
-for name, colour in [("er", "#ff7f0e"), ("ba", "#1f77b4")]:
+ax1.plot(T_values, size["er"], "s-", color="#E69F00", label="Erdős–Rényi")
+ax1.plot(T_values, size["ba"], "o-", color="#0072B2", label="scale-free")
+for name, colour in [("er", "#E69F00"), ("ba", "#0072B2")]:
     ax1.axvline(Tc[name], color=colour, ls=":", lw=1)
 ax1.set_xlabel("Transmissibility T")
 ax1.set_ylabel("Mean fraction infected")
@@ -121,7 +121,7 @@ ax1.set_title("Epidemic size (dotted: thresholds)")
 ax1.legend(frameon=False)
 labels = ["none", "random\n10%", "top 10%\nby degree"]
 ax2.bar(labels, [vacc["none"], vacc["random"], vacc["hubs"]],
-        color=["#999999", "#9ecae1", "#1f77b4"])
+        color=["#999999", "#9ecae1", "#0072B2"])
 ax2.set_ylabel("Mean fraction infected")
 ax2.set_title(f"Vaccination, scale-free, T = {T_vacc}")
 ax2.set_xlabel("Who is vaccinated")

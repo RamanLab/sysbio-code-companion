@@ -68,11 +68,11 @@ sbp.style()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
 tt = np.linspace(0, 12, 241)
 mm, pp = simulate(best_both[:4], tt)
-ax1.plot(t, p_obs, "o", color="#1f77b4", label="protein (data)")
-ax1.plot(tt, pp, color="#1f77b4", label="protein (fit)")
-ax1.plot(t, m_obs * 10, "s", color="#ff7f0e", ms=4,
+ax1.plot(t, p_obs, "o", color="#0072B2", label="protein (data)")
+ax1.plot(tt, pp, color="#0072B2", label="protein (fit)")
+ax1.plot(t, m_obs * 10, "s", color="#E69F00", ms=4,
          label="mRNA × 10 (data)")
-ax1.plot(tt, mm * 10, color="#ff7f0e", label="mRNA × 10 (fit)")
+ax1.plot(tt, mm * 10, color="#E69F00", label="mRNA × 10 (fit)")
 ax1.set_xlabel("Time (h)")
 ax1.set_ylabel("Molecules per cell")
 ax1.set_title("Fit to mRNA and protein")
@@ -80,8 +80,8 @@ ax1.legend(frameon=False, fontsize=9)
 k = np.linspace(0.5, 100, 400)
 ax2.loglog(k, product.mean() / k, ":", color="#999999",
            label=r"$k_m k_p$ = constant")
-for name, marker, colour in [("mRNA and protein", "s", "#ff7f0e"),
-                             ("protein only", "o", "#1f77b4")]:
+for name, marker, colour in [("mRNA and protein", "s", "#E69F00"),
+                             ("protein only", "o", "#0072B2")]:
     f = fits[name]
     best = f[:, 4] < f[:, 4].min() + 1e-6
     ax2.loglog(f[best, 0], f[best, 2], marker, color=colour, ms=8,

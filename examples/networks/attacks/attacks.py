@@ -63,10 +63,10 @@ for label, e in (("string", edges), ("random_graph", er_graph(n, m, 7))):
 # --- Plot
 sbp.style()
 fig, ax = plt.subplots(figsize=(6, 4.5))
-styles = {("string", "failure"): ("#1f77b4", "-"),
-          ("string", "attack"): ("#d62728", "-"),
-          ("random_graph", "failure"): ("#1f77b4", ":"),
-          ("random_graph", "attack"): ("#d62728", ":")}
+styles = {("string", "failure"): ("#0072B2", "-"),
+          ("string", "attack"): ("#D55E00", "-"),
+          ("random_graph", "failure"): ("#0072B2", ":"),
+          ("random_graph", "attack"): ("#D55E00", ":")}
 for (label, strategy), (colour, ls) in styles.items():
     ax.plot(fractions, results[label][strategy], ls, color=colour, marker="o",
             ms=3, label=f"{'STRING' if label == 'string' else 'random graph'}, "

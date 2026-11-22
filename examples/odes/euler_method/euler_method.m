@@ -23,8 +23,8 @@ fprintf('Forward Euler is stable only for dt < 2/b = %g\n', 2/b);
 [t_b, x_b] = backward_euler(a, b, c, t_end, 1.1);
 
 %% Plot
-colors = [0.122 0.467 0.706; 0.173 0.627 0.173;
-          1.000 0.498 0.055; 0.839 0.153 0.157];
+colors = [0.000 0.447 0.698; 0.000 0.620 0.451;
+          0.902 0.624 0.000; 0.835 0.369 0.000];
 t_fine = linspace(0, 4.4, 441);
 fig = figure('Position', [100 100 1000 400]);
 

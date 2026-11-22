@@ -63,8 +63,8 @@ end
 %% Plot
 fig = figure('Position', [100 100 1000 400]);
 subplot(1, 2, 1)
-semilogx(mean_deg, frac_ess, 'o-', 'Color', [0.122 0.467 0.706], ...
-    'MarkerFaceColor', [0.122 0.467 0.706]);
+semilogx(mean_deg, frac_ess, 'o-', 'Color', [0.000 0.447 0.698], ...
+    'MarkerFaceColor', [0.000 0.447 0.698]);
 yline(mean(is_ess), ':', 'all proteins', 'Color', [0.6 0.6 0.6], ...
     'LabelHorizontalAlignment', 'left');
 xlim([1 100]); xticks([1 2 5 10 20 50 100]);
@@ -72,7 +72,7 @@ xlabel('Mean degree of the group'); ylabel('Fraction essential');
 title('Ten groups of proteins, by degree');
 box off
 subplot(1, 2, 2)
-colours = [0.122 0.467 0.706; 1.000 0.498 0.055; 0.173 0.627 0.173];
+colours = [0.000 0.447 0.698; 0.902 0.624 0.000; 0.000 0.620 0.451];
 hold on
 for c = 1:3
     x = cent.(names{c});

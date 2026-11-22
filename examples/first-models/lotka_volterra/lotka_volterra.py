@@ -51,14 +51,14 @@ print(f"Largest change in V along the solution: {drift:.1e}")
 # --- Plot
 sbp.style()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
-ax1.plot(t, D, "-", color="#1f77b4", label="deer, D")
-ax1.plot(t, L, "-", color="#d62728", label="lions, L")
+ax1.plot(t, D, "-", color="#0072B2", label="deer, D")
+ax1.plot(t, L, "-", color="#D55E00", label="lions, L")
 ax1.set_xlabel("Time (years)")
 ax1.set_ylabel("Population")
 ax1.set_title("Starting from 40 deer and 9 lions")
 ax1.set_ylim(0, 50)
 ax1.legend(frameon=False, loc="upper center", ncol=2)
-colors = ["#1f77b4", "#2ca02c", "#ff7f0e"]
+colors = ["#0072B2", "#009E73", "#E69F00"]
 for sol, y0, col in zip(sols, starts, colors):
     ax2.plot(sol.y[0], sol.y[1], "-", color=col,
              label=f"start ({y0[0]}, {y0[1]})")

@@ -85,7 +85,7 @@ fprintf(['Correlation of robustness and evolvability: %.3f for ' ...
     'genotypes, %.3f for phenotypes\n'], r_genotype, r_phenotype);
 
 %% Plot
-blue = [0.122 0.467 0.706]; orange = [1.000 0.498 0.055];
+blue = [0.000 0.447 0.698]; orange = [0.902 0.624 0.000];
 fig = figure('Position', [100 100 1000 420]);
 subplot(1, 2, 1)
 semilogx(summary.n_genotypes, summary.robustness, 'o', 'Color', blue, ...

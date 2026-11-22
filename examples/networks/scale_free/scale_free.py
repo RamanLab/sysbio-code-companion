@@ -64,17 +64,17 @@ print(f"Fraction of nodes with degree >= 10: {P_ba[10:].sum():.4f} "
 ccdf_ba, ccdf_er = P_ba[::-1].cumsum()[::-1], P_er[::-1].cumsum()[::-1]
 sbp.style()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
-ax1.plot(k, P_ba, "o", color="#1f77b4", ms=4, label="preferential attachment")
-ax1.plot(k, P_er, "s", color="#ff7f0e", ms=4, label="Erdős–Rényi")
+ax1.plot(k, P_ba, "o", color="#0072B2", ms=4, label="preferential attachment")
+ax1.plot(k, P_er, "s", color="#E69F00", ms=4, label="Erdős–Rényi")
 ax1.set_xlim(-0.5, 30)
 ax1.set_xlabel("Degree k")
 ax1.set_ylabel("Fraction of nodes with degree k")
 ax1.set_title("Degree distribution")
 ax1.legend(frameon=False)
 ax2.loglog(k[1:][ccdf_ba[1:] > 0], ccdf_ba[1:][ccdf_ba[1:] > 0], "o",
-           color="#1f77b4", ms=4, label="preferential attachment")
+           color="#0072B2", ms=4, label="preferential attachment")
 ax2.loglog(k[1:][ccdf_er[1:] > 0], ccdf_er[1:][ccdf_er[1:] > 0], "s",
-           color="#ff7f0e", ms=4, label="Erdős–Rényi")
+           color="#E69F00", ms=4, label="Erdős–Rényi")
 ax2.loglog(k[m:], m * (m + 1) / (k[m:] * (k[m:] + 1.0)), "-",
            color="#999999", label="theory, $m(m+1)/k(k+1)$")
 ax2.set_ylim(1e-5, 1.5)

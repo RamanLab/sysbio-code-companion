@@ -61,7 +61,7 @@ end
 %% Plot
 fig = figure('Position', [100 100 1000 400]);
 subplot(1, 5, 1:3)
-plot(fractions, growth, 'Color', [0.122 0.467 0.706]);
+plot(fractions, growth, 'Color', [0.000 0.447 0.698]);
 yline(alone(net, lb0, ub0), ':', 'wild type alone', ...
     'Color', [0.6 0.6 0.6], 'LabelHorizontalAlignment', 'center');
 ylim([0 1]);
@@ -78,7 +78,7 @@ for k = 1:numel(names)
     if isKey(label, names{k}), names{k} = label(names{k}); end
 end
 h = barh(1:numel(traded), [uA(traded) uB(traded)]);
-h(1).FaceColor = [1.000 0.498 0.055]; h(2).FaceColor = [0.173 0.627 0.173];
+h(1).FaceColor = [0.902 0.624 0.000]; h(2).FaceColor = [0.000 0.620 0.451];
 yticks(1:numel(traded)); yticklabels(names);
 xline(0, 'k');
 xlabel('Exchange flux (+ secreted, - taken up)');

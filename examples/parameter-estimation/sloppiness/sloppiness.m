@@ -47,7 +47,7 @@ fig = figure('Position', [100 100 500 450]); hold on
 for c = 1:2
     ev = max(results.(keys{c}).eigenvalues, 1e-12);   % for a log scale
     for e = ev / ev(1)
-        plot([c - 1.3, c - 0.7], [e, e], 'Color', [0.122 0.467 0.706], ...
+        plot([c - 1.3, c - 0.7], [e, e], 'Color', [0.000 0.447 0.698], ...
             'LineWidth', 1.5);
     end
 end

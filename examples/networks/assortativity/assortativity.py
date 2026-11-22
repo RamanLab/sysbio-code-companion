@@ -105,10 +105,10 @@ for ax, (key, label) in zip(axes, [("assortativity", "Assortativity r"),
                                    ("clustering", "Mean clustering")]):
     for x, name in enumerate(results):
         r = results[name]
-        ax.plot([x], [r[key]], "o", color="#d62728", ms=9,
+        ax.plot([x], [r[key]], "o", color="#D55E00", ms=9,
                 label="network" if x == 0 else None)
         ax.plot(np.full(len(r[f"{key}_random"]), x + 0.15),
-                r[f"{key}_random"], "_", color="#1f77b4", ms=12,
+                r[f"{key}_random"], "_", color="#0072B2", ms=12,
                 label="randomised" if x == 0 else None)
     ax.axhline(0, color="black", lw=0.5)
     ax.set_xticks([0, 1], ["karate club", "E. coli STRING"])

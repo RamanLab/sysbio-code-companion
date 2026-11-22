@@ -106,7 +106,7 @@ for t in predicted:
 sbp.style()
 fig, axes = plt.subplots(1, 2, figsize=(10, 4))
 for ax, t in zip(axes, predicted):
-    ax.plot(measured, predicted[t], "o", color="#1f77b4")
+    ax.plot(measured, predicted[t], "o", color="#0072B2")
     for x, y, c in zip(measured, predicted[t], carbon):
         ax.annotate(c, (x, y), textcoords="offset points", xytext=(5, 3),
                     fontsize=9)

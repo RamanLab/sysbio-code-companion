@@ -38,7 +38,7 @@ fprintf(['Fraction of nodes with degree >= 10: %.4f (theory for large ' ...
 % much less noisy in the tail than P(k) itself
 ccdf_ba = fliplr(cumsum(fliplr(P_ba)));
 ccdf_er = fliplr(cumsum(fliplr(P_er)));
-blue = [0.122 0.467 0.706]; orange = [1.000 0.498 0.055];
+blue = [0.000 0.447 0.698]; orange = [0.902 0.624 0.000];
 fig = figure('Position', [100 100 1000 400]);
 subplot(1, 2, 1)
 plot(k, P_ba, 'o', 'Color', blue, 'MarkerFaceColor', blue, 'MarkerSize', 4);

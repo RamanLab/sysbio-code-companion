@@ -49,7 +49,7 @@ subplot(1, 2, 1); hold on
 x = linspace(0, 1 / min(S), 50);
 vm = exercise(1, 1); km = exercise(1, 2);
 plot(1 ./ S, 1 ./ v, 'ko', 'MarkerFaceColor', 'k');
-plot(x, km / vm * x + 1 / vm, 'Color', [0.839 0.153 0.157], 'LineWidth', 1.5);
+plot(x, km / vm * x + 1 / vm, 'Color', [0.835 0.369 0.000], 'LineWidth', 1.5);
 xlabel('1/S (1/mM)'); ylabel('1/v (s/mM)');
 title('Lineweaver-Burk plot, Exercise 6.5'); box off
 subplot(1, 2, 2); hold on

@@ -70,7 +70,7 @@ fprintf(['%.1f%% of the hidden edges join nodes with no common neighbour ' ...
 fig = figure('Position', [100 100 600 400]);
 labels = {'common neighbours', 'Jaccard', 'Adamic–Adar', 'preferential attachment'};
 bar(categorical(labels, labels), cellfun(@(i) results.auc.(i), indices), ...
-    'FaceColor', [0.122 0.467 0.706]);
+    'FaceColor', [0.000 0.447 0.698]);
 yline(0.5, ':k'); ylim([0, 1]); ylabel('AUC');
 title('Predicting hidden STRING edges'); box off
 sbp.save_figure(fig, mfilename('fullpath'), 'fig-link-prediction');

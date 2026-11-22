@@ -67,8 +67,8 @@ colormap(gca, [1 1 1; 0.776 0.859 0.937]);
 clim([0 1]);
 hold on
 contour(alphas, betas, double(unstable), [0.5 0.5], 'k');
-plot(alpha, beta, 'p', 'Color', [0.839 0.153 0.157], ...
-    'MarkerFaceColor', [0.839 0.153 0.157], 'MarkerSize', 12);
+plot(alpha, beta, 'p', 'Color', [0.835 0.369 0.000], ...
+    'MarkerFaceColor', [0.835 0.369 0.000], 'MarkerSize', 12);
 set(gca, 'XScale', 'log', 'YScale', 'log');
 xlabel('\alpha (maximum transcription)');
 ylabel('\beta (mRNA / protein lifetime)');

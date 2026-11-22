@@ -5,7 +5,7 @@
 2. **Write the two scripts**, `<example_name>.py` and `<example_name>.m`. Keep them parallel, so a reader can follow one while looking at the other:
    * same variable names where the languages allow, same order of steps, same comments;
    * a short header saying what the example does, and which toolboxes or packages it needs;
-   * the same figure in both: same title, axis labels, legend and colours (blue `#1f77b4`, orange `#ff7f0e`, green `#2ca02c`);
+   * the same figure in both: same title, axis labels, legend and colours. Use the colour-blind-friendly Okabe–Ito palette, in this order: blue `#0072B2`, orange `#E69F00`, green `#009E73`, vermillion `#D55E00`, purple `#CC79A7`, sky blue `#56B4E9`, yellow `#F0E442` (`sbp.PALETTE` in Python, `sbp.palette` in MATLAB; both are also the default colour order). For colour maps, use `viridis` (sequential) or `RdBu_r` (diverging), with `sbp.colormap('viridis')` or `sbp.colormap('RdBu_r')` in MATLAB. Never let red against green carry the meaning: about one man in twelve cannot tell them apart, so vary the line style or marker as well where it matters;
    * lines of at most 79 characters, so they display without wrapping;
    * at the end, save the figure(s) with `sbp.save_figure` and the key numbers with `sbp.save_results`, using the **same keys** in both languages.
 

@@ -67,7 +67,7 @@ fig = figure('Position', [100 100 650 450]); hold on
 tt = linspace(0, 48, 97);
 for k = 1:50
     x = simulate(members_theta(k, :), tt(2:end));
-    plot(tt, [0, x(2, :)], 'Color', [0.122 0.467 0.706 0.15]);
+    plot(tt, [0, x(2, :)], 'Color', [0.000 0.447 0.698 0.15]);
 end
 h = plot(t_obs, p_obs, 'ko', 'MarkerSize', 4, 'MarkerFaceColor', 'k');
 xline(12, ':k');

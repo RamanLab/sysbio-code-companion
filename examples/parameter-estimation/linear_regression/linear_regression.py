@@ -62,7 +62,7 @@ fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4))
 x = np.linspace(0, 1 / S.min(), 50)
 vm, km = exercise[0]
 ax1.plot(1 / S, 1 / v, "o", color="black")
-ax1.plot(x, km / vm * x + 1 / vm, color="#d62728")
+ax1.plot(x, km / vm * x + 1 / vm, color="#D55E00")
 ax1.set_xlabel("1/S (1/mM)")
 ax1.set_ylabel("1/v (s/mM)")
 ax1.set_title("Lineweaver-Burk plot, Exercise 6.5")

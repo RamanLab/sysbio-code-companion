@@ -58,8 +58,8 @@ end
 
 %% Plot
 fig = figure('Position', [100 100 600 500]);
-palette = [0.122 0.467 0.706; 0.682 0.780 0.910; 0.839 0.153 0.157; ...
-           1.000 0.596 0.588; 0.173 0.627 0.173; 0.596 0.875 0.541];
+palette = [0.000 0.447 0.698; 0.600 0.780 0.878; 0.835 0.369 0.000; ...
+           0.933 0.749 0.600; 0.000 0.620 0.451; 0.600 0.847 0.780];
 plot(graph(A), 'Layout', 'force', 'NodeColor', palette(labels, :), ...
     'MarkerSize', 8, 'EdgeAlpha', 0.3);
 title(sprintf('%d communities, Q = %.3f', numel(communities), Q(labels)));

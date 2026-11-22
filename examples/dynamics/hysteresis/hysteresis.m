@@ -45,8 +45,8 @@ for k = 1:numel(a1_values)
     plot(a1_values(k) * ones(sum(~b(:, 2)), 1), b(b(:, 2) == 0, 1), ...
         '.', 'Color', [0.73 0.73 0.73], 'MarkerSize', 5);
 end
-h1 = plot(ramp, up, '^', 'Color', [0.122 0.467 0.706]);
-h2 = plot(ramp, down, 'v', 'Color', [1.000 0.498 0.055]);
+h1 = plot(ramp, up, '^', 'Color', [0.000 0.447 0.698]);
+h2 = plot(ramp, down, 'v', 'Color', [0.902 0.624 0.000]);
 ylim([-0.5 12.5]);
 xlabel('Promoter strength a1'); ylabel('Steady-state level of u');
 title('Bistability (shaded) and hysteresis');

@@ -40,9 +40,9 @@ y = y(2:end, :);               % drop t = 0, which we added as the start
 %% Plot
 fig = figure('Position', [100 100 1000 400]);
 subplot(1, 2, 1)
-semilogx(t, y(:, 2) / E0, '-', 'Color', [0.173 0.627 0.173], 'LineWidth', 2);
+semilogx(t, y(:, 2) / E0, '-', 'Color', [0.000 0.620 0.451], 'LineWidth', 2);
 hold on
-semilogx(t, y(:, 3) / S0, '-', 'Color', [0.122 0.467 0.706], 'LineWidth', 2);
+semilogx(t, y(:, 3) / S0, '-', 'Color', [0.000 0.447 0.698], 'LineWidth', 2);
 xlabel('Time (s)'); ylabel('Fraction');
 title('Two time scales (k_1 = k_{-1} = 100)');
 legend({'ES / E_0 (fast)', 'P / S_0 (slow)'}, 'Location', 'northwest', ...
@@ -50,9 +50,9 @@ legend({'ES / E_0 (fast)', 'P / S_0 (slow)'}, 'Location', 'northwest', ...
 box off
 
 subplot(1, 2, 2)
-loglog(speeds, cost_nonstiff, 'o-', 'Color', [1.000 0.498 0.055]);
+loglog(speeds, cost_nonstiff, 'o-', 'Color', [0.902 0.624 0.000]);
 hold on
-loglog(speeds, cost_stiff, 's-', 'Color', [0.122 0.467 0.706]);
+loglog(speeds, cost_stiff, 's-', 'Color', [0.000 0.447 0.698]);
 xlabel('Binding rate constants k_1 = k_{-1}');
 ylabel('Function evaluations');
 title('Cost of solving to t = 50 s');

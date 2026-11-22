@@ -60,9 +60,9 @@ subplot(1, 2, 1)
 fill([mu_grid fliplr(mu_grid)], [env_min fliplr(env_max)], ...
     [0.776 0.859 0.937], 'EdgeColor', 'none');
 hold on
-plot(mu_grid, env_max, 'Color', [0.122 0.467 0.706]);
-h = plot(growth, fractions * succ_max, 'o', 'Color', [0.839 0.153 0.157], ...
-    'MarkerFaceColor', [0.839 0.153 0.157]);
+plot(mu_grid, env_max, 'Color', [0.000 0.447 0.698]);
+h = plot(growth, fractions * succ_max, 'o', 'Color', [0.835 0.369 0.000], ...
+    'MarkerFaceColor', [0.835 0.369 0.000]);
 xlabel('Growth rate (1/h)'); ylabel('Succinate secretion (mmol/gDW/h)');
 title('Production envelope');
 legend(h, {'FSEOF steps'}, 'Box', 'off');

@@ -88,7 +88,7 @@ print(f"Correlation of robustness and evolvability: {r_genotype:.3f} for "
 sbp.style()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4.2))
 ax1.semilogx(summary["n_genotypes"], summary["robustness"], "o",
-             color="#1f77b4")
+             color="#0072B2")
 for name, x, y in zip(summary["name"], summary["n_genotypes"],
                       summary["robustness"]):
     if name in ["A XOR B", "A NOR B", "FALSE", "A OR B", "A NAND B"]:
@@ -100,9 +100,9 @@ ax1.set_ylabel("Robustness of the function")
 ax1.set_title("Common functions are robust")
 levels = np.unique(robustness)
 ax2.plot(levels, [evolvability[robustness == r].mean() for r in levels],
-         "o-", color="#ff7f0e", label="single circuits")
+         "o-", color="#E69F00", label="single circuits")
 ax2.plot(summary["robustness"], summary["evolvability"], "s",
-         color="#1f77b4", label="functions (all their circuits)")
+         color="#0072B2", label="functions (all their circuits)")
 ax2.set_xlabel("Robustness")
 ax2.set_ylabel("New functions one mutation away")
 ax2.set_title("Robustness and evolvability")

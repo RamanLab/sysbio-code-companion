@@ -61,13 +61,13 @@ for r, lo, hi in zip(rxns, vmin100, vmax100):
 sbp.style()
 fig, ax = plt.subplots()
 y = np.arange(n)
-ax.hlines(y + 0.15, vmin90, vmax90, color="#ff7f0e", lw=6,
+ax.hlines(y + 0.15, vmin90, vmax90, color="#E69F00", lw=6,
           label="90% of optimum")
-ax.hlines(y - 0.15, vmin100, vmax100, color="#1f77b4", lw=6,
+ax.hlines(y - 0.15, vmin100, vmax100, color="#0072B2", lw=6,
           label="100% of optimum")
 # Fixed fluxes have zero width, so mark both ends
-ax.plot(vmin100, y - 0.15, "|", color="#1f77b4", ms=10)
-ax.plot(vmin90, y + 0.15, "|", color="#ff7f0e", ms=10)
+ax.plot(vmin100, y - 0.15, "|", color="#0072B2", ms=10)
+ax.plot(vmin90, y + 0.15, "|", color="#E69F00", ms=10)
 ax.set_yticks(y, rxns)
 ax.invert_yaxis()
 ax.set_xlabel("Flux (mmol/gDW/h)")

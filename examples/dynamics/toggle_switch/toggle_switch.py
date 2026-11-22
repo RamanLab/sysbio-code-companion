@@ -64,7 +64,7 @@ dU, dV = a1 / (1 + V ** n) - U, a2 / (1 + U ** n) - V
 ax.quiver(U, V, dU, dV, color="#cccccc", angles="xy")
 for Y, high in zip(trajs, ends_high_u):
     ax.plot(Y[0], Y[1], "-", lw=0.8,
-            color="#1f77b4" if high else "#ff7f0e")
+            color="#0072B2" if high else "#E69F00")
 x = np.linspace(0, 12, 400)
 ax.plot(a1 / (1 + x ** n), x, "k-", lw=2, label="u-nullcline (du/dt = 0)")
 ax.plot(x, a2 / (1 + x ** n), "k--", lw=2, label="v-nullcline (dv/dt = 0)")

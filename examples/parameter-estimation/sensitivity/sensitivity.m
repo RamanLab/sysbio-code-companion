@@ -33,8 +33,8 @@ fprintf(['At steady state, p* = k_m k_p / (g_m g_p): the sensitivities ' ...
 
 %% Plot
 fig = figure('Position', [100 100 1000 400]);
-colours = [0.122 0.467 0.706; 1.000 0.498 0.055; 0.173 0.627 0.173; ...
-           0.839 0.153 0.157];
+colours = [0.000 0.447 0.698; 0.902 0.624 0.000; 0.000 0.620 0.451; ...
+           0.835 0.369 0.000];
 titles = {'mRNA', 'Protein'};
 for i = 1:2
     subplot(1, 2, i); hold on

@@ -72,7 +72,7 @@ for i, s in enumerate(species):
 sbp.style()
 fig, axes = plt.subplots(1, 3, figsize=(12, 3.6), sharey=True)
 tt = np.linspace(0, 10, 201)
-colours = ["#1f77b4", "#ff7f0e", "#2ca02c"]
+colours = ["#0072B2", "#E69F00", "#009E73"]
 for k, ax in enumerate(axes):
     fitted = solve_ivp(lambda _, x: x * (r_hat + A_hat @ x), [0, 10],
                        data[k][0], t_eval=tt, rtol=1e-8).y.T

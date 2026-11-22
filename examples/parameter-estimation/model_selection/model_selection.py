@@ -100,15 +100,15 @@ for level, marker in ((10, "o"), (20, "s")):
     keep = I == level
     ax1.errorbar(S[keep], v[keep], yerr=delta * v[keep], fmt=marker,
                  color="black", ms=4, capsize=2, label=f"data, I = {level} mM")
-    for name, colour in (("competitive", "#1f77b4"),
-                         ("noncompetitive", "#d62728")):
+    for name, colour in (("competitive", "#0072B2"),
+                         ("noncompetitive", "#D55E00")):
         rate = models[name][1]
         ax1.plot(s_fine, rate(results[name]["parameters"], s_fine, level),
                  color=colour, label=name if level == 10 else None)
 ax1.set_xlabel("S (mM)")
 ax1.set_ylabel("v (mmol/L/s)")
 ax1.legend(frameon=False, fontsize=9)
-ax2.bar(list(results), weights, color="#1f77b4")
+ax2.bar(list(results), weights, color="#0072B2")
 ax2.set_ylabel("Akaike weight")
 ax2.tick_params(axis="x", rotation=30)
 ax2.set_title("Support for each model")

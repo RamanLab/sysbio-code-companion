@@ -46,18 +46,18 @@ print(f"{len(essential_genes)} essential genes, of {len(model.genes)}: "
 # --- Plot: growth after each reaction deletion, sorted
 order = sorted(rxns, key=lambda r: ratio[r])
 values = np.array([ratio[r] for r in order])
-colors = np.where(values < 0.01, "#d62728",
-                  np.where(values < 0.99, "#ff7f0e", "#1f77b4"))
+colors = np.where(values < 0.01, "#D55E00",
+                  np.where(values < 0.99, "#E69F00", "#0072B2"))
 sbp.style()
 fig, ax = plt.subplots(figsize=(10, 4))
 ax.bar(range(len(order)), values, color=colors)
 lethal = np.flatnonzero(values < 0.01)      # zero-height bars: mark them
-ax.plot(lethal, np.full(lethal.size, 0.03), "v", color="#d62728", ms=5)
+ax.plot(lethal, np.full(lethal.size, 0.03), "v", color="#D55E00", ms=5)
 ax.set_xticks(range(len(order)), order, rotation=90, fontsize=7)
 ax.set_ylabel("Growth relative to wild type")
 ax.set_title("Single reaction deletions, E. coli core model, aerobic glucose")
-for col, lab in [("#d62728", "lethal (< 1%)"), ("#ff7f0e", "reduced"),
-                 ("#1f77b4", "no effect")]:
+for col, lab in [("#D55E00", "lethal (< 1%)"), ("#E69F00", "reduced"),
+                 ("#0072B2", "no effect")]:
     ax.bar(0, 0, color=col, label=lab)
 ax.legend(frameon=False, loc="upper left")
 sbp.save_figure(fig, __file__, "fig-single-deletions")

@@ -76,12 +76,12 @@ sbp.style()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 4))
 top = degree[:15]
 ax1.bar(range(15), [k for _, k in top],
-        color=["#d62728" if m in currency else "#1f77b4" for m, _ in top])
+        color=["#D55E00" if m in currency else "#0072B2" for m, _ in top])
 ax1.set_xticks(range(15), [m for m, _ in top], rotation=60, fontsize=8)
 ax1.set_ylabel("Degree")
 ax1.set_title("Most connected metabolites (red: currency)")
-for key, colour, label in (("with_currency", "#d62728", "with currency"),
-                           ("without_currency", "#1f77b4", "without")):
+for key, colour, label in (("with_currency", "#D55E00", "with currency"),
+                           ("without_currency", "#0072B2", "without")):
     counts = results[key]["path_counts"]
     ax2.plot(range(1, len(counts) + 1), counts / counts.sum(), "o-",
              color=colour, label=label)

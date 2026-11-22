@@ -29,12 +29,12 @@ fprintf(['At t = %g min, over %d runs: mean %.3f, variance %.3f ' ...
 %% Plot
 fig = figure('Position', [100 100 1000 400]);
 subplot(1, 2, 1)
-colors = [0.122 0.467 0.706; 0.173 0.627 0.173; 0.580 0.404 0.741];
+colors = [0.000 0.447 0.698; 0.000 0.620 0.451; 0.800 0.475 0.655];
 for r = 1:3
     stairs(t_grid, runs(r, :), 'Color', colors(r, :));
     hold on
 end
-plot(t_grid, mean(runs, 1), '-', 'Color', [1.000 0.498 0.055], ...
+plot(t_grid, mean(runs, 1), '-', 'Color', [0.902 0.624 0.000], ...
     'LineWidth', 2);
 plot(t_grid, ode, 'k--', 'LineWidth', 1.5);
 ylim([0 25]);
@@ -48,13 +48,13 @@ box off
 subplot(1, 2, 2)
 m = 0:25;
 counts = histcounts(final, -0.5:25.5) / n_runs;
-bar(m, counts, 'FaceColor', [0.122 0.467 0.706], 'FaceAlpha', 0.7, ...
+bar(m, counts, 'FaceColor', [0.000 0.447 0.698], 'FaceAlpha', 0.7, ...
     'EdgeColor', 'none');
 hold on
 lambda = k / gamma;
 plot(m, exp(-lambda) * lambda.^m ./ factorial(m), 'o-', ...
-    'Color', [1.000 0.498 0.055], 'MarkerSize', 4, ...
-    'MarkerFaceColor', [1.000 0.498 0.055]);
+    'Color', [0.902 0.624 0.000], 'MarkerSize', 4, ...
+    'MarkerFaceColor', [0.902 0.624 0.000]);
 ylim([0 0.17]);
 xlabel('Number of mRNA molecules'); ylabel('Probability');
 legend({sprintf('simulated, t = %g min', t_grid(end)), ...

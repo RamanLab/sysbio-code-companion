@@ -37,8 +37,8 @@ for j = 1:n
 end
 
 %% Plot: flux ranges at 100% and 90% of optimal growth
-blue = [0.122 0.467 0.706];
-orange = [1.000 0.498 0.055];
+blue = [0.000 0.447 0.698];
+orange = [0.902 0.624 0.000];
 fig = figure;
 hold on
 y = 1:n;
