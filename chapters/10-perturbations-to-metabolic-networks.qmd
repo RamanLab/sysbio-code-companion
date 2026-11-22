@@ -58,11 +58,11 @@ The core model leaves out most of metabolism, and with it most of the genes that
 ![](/examples/perturbations/genome_scale_deletions/out/python/fig-genome-scale-deletions.png){width=50%}
 :::
 
-In its default medium (aerobic, glucose), iML1515 grows at 0.877 h^−1^. 196 of its genes (13%) are predicted to be essential, and only 48 more slow growth at all. For 451 genes, almost a third, the deletion removes no reaction, because an isozyme or another subunit covers for it. Most of the network is robust to the loss of any single gene, a theme we return to in @sec-robustness.
+In its default medium (aerobic, glucose), iML1515 grows at 0.877 h^−1^. Of its genes, 196 (13%) are predicted to be essential, and only 48 more slow growth by more than 1%; deleting any one of the remaining 1272 leaves growth practically unchanged. Note that for 451 genes, almost a third, the deletion removes no reaction at all, because an isozyme or another subunit covers for it. Most of the network is robust to the loss of any single gene, a theme we return to in @sec-robustness.
 
 ### Gene deletions vs. reaction deletions
 
-The example in §10.1 deletes genes as well as reactions, and compares the two.
+The examples of §10.1 delete genes as well as reactions. Remember that the two give different answers for the core model, seven essential genes against thirteen essential reactions, and the GPR rules explain why.
 
 ## Synthetic lethals
 
@@ -70,7 +70,7 @@ Two reactions form a **synthetic lethal** pair if deleting either one alone leav
 
 ### Exhaustive enumeration
 
-The example in §10.2.3 runs the exhaustive search alongside Fast-SL.
+The example in §10.2.3 runs the exhaustive search alongside Fast-SL, so that we can check one against the other.
 
 ### Bi-level optimisation
 
@@ -78,7 +78,7 @@ The example in §10.2.3 runs the exhaustive search alongside Fast-SL.
 
 ### Fast-SL: massively pruning the search space
 
-The obvious way to find them is to test every pair of non-essential reactions (book, §10.2.1). For the core model that is $\binom{61}{2} = 1830$ double deletions, which is easy; for a genome-scale model with 2000 reactions it is about two million, and for triplets more than a billion. The Fast-SL algorithm, developed in our group, cuts down the search with a simple argument [@pratapa2015]. If some flux distribution that supports growth uses neither reaction of a pair, deleting both leaves that distribution intact, so the pair cannot be lethal. Hence:
+The obvious way to find synthetic lethal pairs is to test every pair of non-essential reactions (book, §10.2.1). For the core model that is $\binom{61}{2} = 1830$ double deletions, which is easy; for a genome-scale model with 2000 reactions it is about two million, and for triplets more than a billion. The Fast-SL algorithm, developed in our group, cuts down the search with a simple argument [@pratapa2015]. If some flux distribution that supports growth uses neither reaction of a pair, deleting both leaves that distribution intact, so the pair cannot be lethal. Hence:
 
 * at least one reaction of a lethal pair, call it $i$, must carry flux in a wild-type solution; and
 * the other reaction, $j$, must carry flux in a solution that remains once $i$ is deleted.
@@ -105,7 +105,7 @@ The sparser these solutions, the fewer pairs need to be tested, so Fast-SL uses 
 ![](/examples/perturbations/synthetic_lethals/out/python/fig-synthetic-lethals.png)
 :::
 
-Both searches find the same 88 synthetic lethal pairs, but Fast-SL simulates only about a quarter as many double deletions. The saving grows rapidly with the size of the network and with the order of the deletions, which is what makes searches for lethal triplets and quadruplets in genome-scale models feasible.
+Both searches find the same 88 synthetic lethal pairs, but Fast-SL simulates only about a quarter as many double deletions (437, against 1830). The saving grows rapidly with the size of the network and with the order of the deletions, which is what makes searches for lethal triplets and quadruplets in genome-scale models feasible.
 
 Many of the pairs make biological sense. The reactions of upper glycolysis (PGI, PFK, FBA, TPI) are each paired with reactions of the pentose phosphate pathway (G6PDH2r, PGL, GND, RPE, TALA, TKT1, TKT2): the two pathways are alternative routes from glucose 6-phosphate into lower glycolysis, and the cell can use either, but not neither. Glutamate can be made by glutamate dehydrogenase (GLUDy) or by glutamate synthase (GLUSy), and anaplerotic PEP carboxylase (PPC) is backed up by the glyoxylate shunt (ICL, MALS). Other pairs, such as those involving water transport (H2Ot), arise from the way the model is written, and are a reminder that every prediction must be checked against biology (book, §10.7).
 
@@ -137,7 +137,7 @@ FSEOF asks which fluxes rise as the cell is forced to make more of a product. He
 ![](/examples/perturbations/fseof/out/python/fig-fseof.png){width=75%}
 :::
 
-As enforced succinate rises to 90% of its maximum, growth falls from 0.874 to 0.090 h^−1^. Ten reactions rise steadily with it: the glycolytic reactions from `PGI` to `ENO`, phosphoenolpyruvate carboxylase (`PPC`), which feeds oxaloacetate towards succinate, and the succinate exporter `SUCCt3`. These are the candidates for over-expression. Fourteen fall, mostly respiration (`NADH16`, `CYTBD`, `ATPS4r`) and the pentose phosphate pathway, which serve growth. The left panel is the production envelope (§10.6.1).
+As enforced succinate rises to 90% of its maximum, growth falls from 0.874 to 0.090 h^−1^. Ten reactions rise at every step: the glycolytic reactions from `PGI` to `ENO`, phosphoenolpyruvate carboxylase (`PPC`), which feeds oxaloacetate towards succinate, and the succinate exporter `SUCCt3`. These are the candidates for over-expression. Fourteen fall at every step, all of them serving growth: respiration (`NADH16`, `CYTBD`, `ATPS4r`, `O2t`), the non-oxidative pentose phosphate pathway (`RPE`, `RPI`, `TALA`, `TKT1`), the uptake and assimilation of ammonium and phosphate (`NH4t`, `GLNS`, `GLUDy`, `PIt2r`), `ICDHyr` and water transport. The right panel shows a few of these fluxes; note that `AKGDH`, in the TCA cycle, falls to zero, and `CS` falls but not at every step, so neither is in the lists. The left panel is the production envelope (§10.6.1), on which the FSEOF steps lie along the upper edge.
 
 ## Other perturbations
 

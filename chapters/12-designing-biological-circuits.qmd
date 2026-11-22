@@ -21,7 +21,7 @@ $$
 \frac{dp_i}{dt} = -\beta\,(p_i - m_i),
 $$
 
-where $p_j$ is the protein repressing gene $i$, $\alpha$ the rate of transcription from a free promoter, $\alpha_0$ the leak from a repressed one, and $\beta$ the ratio of the protein and mRNA decay rates. Time is measured in units of the mRNA lifetime. By symmetry, the only steady state has $m_i = p_i = s$ for all $i$, with $s$ the root of $s = \alpha/(1 + s^n) + \alpha_0$.
+where $p_j$ is the protein repressing gene $i$, $\alpha_0$ the leak, the rate of transcription from a fully repressed promoter, $\alpha + \alpha_0$ the rate from a free one, and $\beta$ the ratio of the protein and mRNA decay rates. Time is measured in units of the mRNA lifetime. (Note that the book, in §12.2.1, swaps the roles of $\alpha$ and $\alpha_0$; here we follow the original paper.) By symmetry, the only steady state has $m_i = p_i = s$ for all $i$, with $s$ the root of $s = \alpha/(1 + s^n) + \alpha_0$.
 
 ::: {.panel-tabset group="language"}
 ## MATLAB
@@ -78,7 +78,7 @@ where $u$ and $v$ are the two repressors, $a_1$ and $a_2$ the strengths of their
 ![](/examples/dynamics/toggle_switch/out/python/fig-toggle-switch.png)
 :::
 
-With $a_1 = a_2 = 10$ and $n = 2$, the nullclines cross three times. Two of the steady states are stable, one with $u$ high and $v$ low, the other the reverse. Between them lies a saddle at $u = v = 2$, with one positive eigenvalue. Every trajectory ends at one of the two stable states, and the line through the saddle along which trajectories approach it, here the diagonal $u = v$, divides the plane into their two **basins of attraction**. The cell carrying the circuit thus has two distinct states, and stays in whichever it is put.
+With $a_1 = a_2 = 10$ and $n = 2$, the nullclines cross three times. Two of the steady states are stable, one with $u$ high and $v$ low, the other the reverse. Between them lies a saddle at $u = v = 2$, with one positive eigenvalue. Every trajectory ends at one of the two stable states (blue if it reaches high $u$, orange if it reaches high $v$), and the line through the saddle along which trajectories approach it, here the diagonal $u = v$, divides the plane into their two **basins of attraction**. The cell carrying the circuit thus has two distinct states, and stays in whichever it is put.
 
 Bistability needs cooperativity: with $n = 1$, the nullclines cross only once, whatever the promoter strengths (Exercise 1). §12.B follows the switch as it is flipped back and forth.
 
@@ -117,7 +117,7 @@ When the enzyme is saturated, $K \ll x$, the second equation becomes $dx/dt \app
 ![](/examples/robustness/integral_feedback/out/python/fig-integral-feedback.png)
 :::
 
-With $K = 0.01$, the output jumps by about half when the signal doubles, and returns within a few time units to within 0.5% of its earlier level. With $K = 1$, it settles 18% higher. Across the 81 parameter sets, the circuit with the saturated enzyme always adapts to within about 6%, and in four cases out of five to within 1%, while the other changes its output by 3% to 34%, depending on the parameters.
+With $K = 0.01$, the output jumps by about half when the signal doubles at $t = 20$, and returns within a few time units to within 0.5% of its earlier level. With $K = 1$, it settles 18% higher. When the signal falls back at $t = 60$, both circuits dip and return to where they started. Across the 81 parameter sets, the circuit with the saturated enzyme always adapts to within about 6%, and in four cases out of five to within 1%, while the other changes its output by 3% to 34%, depending on the parameters.
 
 Notice what is robust and what is not. The level to which the output returns, $b/a$, varies sixteen-fold across the parameter sets, and the size and duration of the response vary too. What the structure of the circuit guarantees is the *return* to that level. Robustness is always robustness of a particular feature to particular perturbations, and a circuit can be robust in one respect and sensitive in another. Searching all 16,038 connected three-node enzyme circuits, Ma and colleagues found that only two families of topologies adapt well: negative feedback loops with a buffering node, such as this one, and incoherent feed-forward loops [@ma2009] (book, §12.3.1).
 
@@ -204,7 +204,7 @@ In the experiments, the switch was flipped by an inducer that weakens one of the
 
 The steady states form an S-shaped curve, a **bifurcation diagram**. For $a_1$ between about 3.7 and 8.7 (shaded), there are three steady states, two stable and one unstable; outside this range, only one. At each end of the range, a stable state and the unstable one meet and vanish, in what is called a saddle-node bifurcation.
 
-As $a_1$ rises, the circuit stays on the lower branch, with $u$ low, until that branch disappears, and only then jumps up, at $a_1 = 8.75$ in our steps. Lowered again, it stays on the upper branch down to $a_1 = 3.75$. Between these values, the state of the circuit depends on its history as well as on the current value of $a_1$: this is **hysteresis**, a form of memory. A brief pulse of inducer flips the switch, and it stays flipped after the inducer is gone.
+As $a_1$ rises, the circuit stays on the lower branch, with $u$ low, until that branch disappears, and only then jumps up, at $a_1 = 8.75$ in our steps. (The triangle at 8.75 lies a little below the upper branch: so close to the bifurcation the circuit moves slowly, and it has not quite settled in the time allowed for that step.) Lowered again, it stays on the upper branch down to $a_1 = 3.75$. Between these values, the state of the circuit depends on its history as well as on the current value of $a_1$: this is **hysteresis**, a form of memory. A brief pulse of inducer flips the switch, and it stays flipped after the inducer is gone.
 
 ## Exercises {.unnumbered}
 
